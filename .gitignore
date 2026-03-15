@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Training outputs & checkpoints
+outputs/
+*.bin
+*.safetensors
+*.pt
+*.pth
+checkpoint-*/
+
+# Logs
+*.log
+wandb/
+runs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / API keys
+.env
+*.env
+secrets.yaml
+
+# Benchmark data (large files / sensitive)
+benchmark_data/*.json
+!benchmark_data/README.md
