@@ -1,4 +1,4 @@
-# SMalRe — Small Malware Reverse Engineer
+# SMalA — Small Language Model Malware Analysis
 
 **Fine-tuning Small Language Models (SLMs) to perform malware analysis via teacher-student knowledge distillation.**
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-SMalRe implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-4o, Gemini 2.5 Pro, or Qwen-Max) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3 8B, Phi-3, Gemma 7B, or DeepSeek-R1-Distill-Qwen-7B). You can read more about the
+SMalA implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-4o, Gemini 2.5 Pro, or Qwen-Max) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3 8B, Phi-3, Gemma 7B, or DeepSeek-R1-Distill-Qwen-7B). You can read more about the
 
 ```
 Teacher LLM (GPT-4o / Gemini 2.5 Pro / Qwen-Max)
@@ -109,7 +109,7 @@ python eval_suite.py \
 
 ## Benchmarking (CyberSOCEval / Malware Analysis)
 
-SMalRe is aligned with the **CyberSOCEval** malware analysis benchmark. The `eval_suite.py` module reports:
+SMalA is aligned with the **CyberSOCEval** malware analysis benchmark. The `eval_suite.py` module reports:
 
 - **Accuracy** — exact-match on multiple-choice questions
 - **Average Jaccard Score** — partial-credit metric for overlapping answer sets
@@ -141,9 +141,9 @@ Hybrid Analysis sandbox reports often exceed 128k tokens. `data_filter.py` imple
 
 ## Acknowledgements and Disclaimers
 
-SmalRe is a project originally made for Nanyang Technological University's Final Year Project Module SC4079. Special thanks to Gu Wenbo and Professor Liu Yang for their guidance and support in academic matters.
+SmalA is a project originally made for Nanyang Technological University's Final Year Project Module SC4079. Special thanks to Gu Wenbo and Professor Liu Yang for their guidance and support in academic matters.
 
-SmalRe has not been implemented or tested in a production environment. Please use it at your own risk. None of the project contributors assume any responsibility for any damages through this project.
+SmalA has not been implemented or tested in a production environment. Please use it at your own risk. None of the project contributors assume any responsibility for any damages through this project.
 
 ## License
 
