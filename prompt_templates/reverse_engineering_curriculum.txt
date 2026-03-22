@@ -1,7 +1,7 @@
 REVERSE ENGINEERING CURRICULUM TEMPLATES
 =========================================
 Multi-step reasoning task templates for teacher-generated training examples
-in the SMalRe knowledge distillation pipeline.
+in the SMalA knowledge distillation pipeline.
 
 These templates guide the teacher LLM when generating curriculum examples
 targeting specific weaknesses identified during student evaluation.
