@@ -311,8 +311,9 @@ def build_experiment_config(
         "temperature": base_config.get("teacher", {}).get("temperature", 0.7),
     }
 
-    # Override student
+    # Override student – merge with base config to preserve backend and other fields
     config["student"] = {
+        **config.get("student", {}),
         "model_name_or_path": student["model_name_or_path"],
     }
 

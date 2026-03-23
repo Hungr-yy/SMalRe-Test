@@ -51,6 +51,9 @@ SMalA/
 │   ├── TASK_PROMPT                  # Student exam attempt template
 │   ├── EXAM_EVALUATION              # Evaluation + curriculum generation template
 │   └── malware_analysis_task.json   # Structured task definitions
+├── tests/
+│   ├── test_fault_tolerance.py      # Orchestrator resilience tests
+│   └── test_vertex_ai_workflow.py   # Vertex AI config propagation tests
 └── hybrid-analysis/                 # CyberSOCEval benchmark datasets
     ├── infostealers/                # 44 infostealer detonation reports
     ├── killers/                     # 30 EDR/AV killer reports
@@ -89,15 +92,26 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Edit `.env` and fill in your teacher API keys:
+Edit `.env` and fill in all required keys:
 
 ```
+# Teacher LLM API keys (all 3 required for the 3×3 experiment matrix)
 OPENAI_API_KEY=sk-...
 GOOGLE_API_KEY=AIza...
 ANTHROPIC_API_KEY=sk-ant-...
+
+# Student SLM access (required for gated models like Llama 3.3)
+HF_TOKEN=hf_...
+
+# Vertex AI (required when student.backend = "vertex_ai")
+VERTEX_AI_PROJECT=smala-experiment
+VERTEX_AI_LOCATION=us-central1
+VERTEX_AI_STAGING_BUCKET=gs://smala-experiment-data/smala
 ```
 
 The `.env` file is in `.gitignore` and will not be committed.
+
+> **Note:** The `VERTEX_AI_*` environment variables serve as fallbacks when the corresponding fields in `configs/model_config.yaml` are left empty. You can set them in either place.
 
 ### 3. Set up Google Cloud (Vertex AI for student fine-tuning)
 
@@ -123,7 +137,7 @@ gcloud services enable storage.googleapis.com
 gcloud storage buckets create gs://smala-experiment-data --location=us-central1
 ```
 
-Then update `configs/model_config.yaml` with your GCP details:
+Then either set the `VERTEX_AI_*` variables in your `.env` (see step 2), or update `configs/model_config.yaml` directly:
 
 ```yaml
 student:
@@ -228,6 +242,28 @@ vertex_ai:
 ```
 
 Then authenticate: `gcloud auth application-default login`
+
+---
+
+## Tests
+
+The test suite validates orchestration, fault tolerance, and Vertex AI config propagation without requiring API keys or GPU access.
+
+```bash
+# Run all tests
+python -m pytest tests/ -v
+
+# Run only Vertex AI workflow tests
+python -m pytest tests/test_vertex_ai_workflow.py -v
+
+# Run only fault tolerance tests
+python -m pytest tests/test_fault_tolerance.py -v
+```
+
+| Test file | Tests | Covers |
+|-----------|-------|--------|
+| `test_fault_tolerance.py` | 25 | Batch isolation, cross-batch isolation, progress preservation, retry logic, artifact verification, tracker persistence |
+| `test_vertex_ai_workflow.py` | 17 | Config propagation (`student.backend`, `vertex_ai` section), trainer type dispatch, artifact verification with Vertex AI metadata, end-to-end orchestration across all 9 experiments |
 
 ---
 

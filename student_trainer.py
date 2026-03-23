@@ -450,9 +450,9 @@ class VertexAIStudentTrainer:
 
         return cls(
             model_name_or_path=student_cfg.get("model_name_or_path", "meta-llama/Llama-3.3-8B-Instruct"),
-            project=vertex_cfg.get("project", ""),
-            location=vertex_cfg.get("location", "us-central1"),
-            staging_bucket=vertex_cfg.get("staging_bucket", ""),
+            project=vertex_cfg.get("project", "") or os.environ.get("VERTEX_AI_PROJECT", ""),
+            location=vertex_cfg.get("location", "") or os.environ.get("VERTEX_AI_LOCATION", "us-central1"),
+            staging_bucket=vertex_cfg.get("staging_bucket", "") or os.environ.get("VERTEX_AI_STAGING_BUCKET", ""),
             output_dir=cfg.get("output_dir", "outputs/student_adapter"),
             learning_rate=training_cfg.get("learning_rate", 2e-4),
             num_train_epochs=training_cfg.get("num_train_epochs", 3),
