@@ -20,6 +20,7 @@ import ast
 import json
 import logging
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -28,7 +29,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Provider registry
 # ---------------------------------------------------------------------------
-SUPPORTED_PROVIDERS = ("openai", "google", "qwen", "together")
+SUPPORTED_PROVIDERS = ("openai", "google", "anthropic", "qwen", "together")
 
 
 def _build_openai_client(api_key: str):
@@ -42,6 +43,12 @@ def _build_google_client(api_key: str):
 
     genai.configure(api_key=api_key)
     return genai
+
+
+def _build_anthropic_client(api_key: str):
+    from anthropic import Anthropic  # type: ignore
+
+    return Anthropic(api_key=api_key)
 
 
 def _build_together_client(api_key: str):
@@ -130,6 +137,7 @@ class TeacherEngine:
             env_map = {
                 "openai": "OPENAI_API_KEY",
                 "google": "GOOGLE_API_KEY",
+                "anthropic": "ANTHROPIC_API_KEY",
                 "qwen": "QWEN_API_KEY",
                 "together": "TOGETHER_API_KEY",
             }
@@ -140,6 +148,8 @@ class TeacherEngine:
         elif provider == "google":
             self._client = _build_google_client(api_key)
             self._google_model = self._client.GenerativeModel(model)
+        elif provider == "anthropic":
+            self._client = _build_anthropic_client(api_key)
         elif provider in ("qwen", "together"):
             self._client = _build_together_client(api_key)
         else:
@@ -149,11 +159,43 @@ class TeacherEngine:
     # Internal completion helper
     # ------------------------------------------------------------------
 
-    def _complete(self, prompt: str) -> str:
-        """Return a text completion for *prompt* using the teacher LLM."""
+    def _complete(self, prompt: str, max_retries: int = 3) -> str:
+        """Return a text completion for *prompt* using the teacher LLM.
+
+        Retries up to *max_retries* times on transient errors (network
+        failures, rate limits, server errors) with exponential backoff.
+        """
+        last_exc: Exception | None = None
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                return self._call_provider(prompt)
+            except Exception as exc:
+                last_exc = exc
+                if attempt < max_retries:
+                    wait = 2 ** attempt  # 2s, 4s, 8s
+                    logger.warning(
+                        "Teacher API call failed (attempt %d/%d): %s  — retrying in %ds",
+                        attempt, max_retries, exc, wait,
+                    )
+                    time.sleep(wait)
+
+        raise last_exc  # type: ignore[misc]
+
+    def _call_provider(self, prompt: str) -> str:
+        """Dispatch a single completion call to the configured provider."""
         if self.provider == "google":
             response = self._google_model.generate_content(prompt)
             return response.text
+
+        if self.provider == "anthropic":
+            response = self._client.messages.create(
+                model=self.model,
+                max_tokens=8192,
+                temperature=self.temperature,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            return response.content[0].text
 
         # OpenAI-compatible path (openai / together / qwen)
         response = self._client.chat.completions.create(

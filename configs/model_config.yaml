@@ -14,7 +14,7 @@
 # Teacher LLM
 # ------------------------------------------------------------------
 teacher:
-  # Provider: openai | google | qwen | together
+  # Provider: openai | google | anthropic | qwen | together
   provider: openai
   # Model identifier
   model: gpt-4o
@@ -27,7 +27,7 @@ teacher:
 # ------------------------------------------------------------------
 student:
   # HuggingFace model ID or local path
-  model_name_or_path: meta-llama/Meta-Llama-3-8B
+  model_name_or_path: meta-llama/Llama-3.3-8B-Instruct
 
 # ------------------------------------------------------------------
 # Data source (Hybrid Analysis reports + task definitions)

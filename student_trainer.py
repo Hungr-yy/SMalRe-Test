@@ -173,7 +173,7 @@ class StudentTrainer:
         lora_cfg = cfg.get("lora", {})
 
         return cls(
-            model_name_or_path=student_cfg.get("model_name_or_path", "meta-llama/Meta-Llama-3-8B"),
+            model_name_or_path=student_cfg.get("model_name_or_path", "meta-llama/Llama-3.3-8B-Instruct"),
             output_dir=cfg.get("output_dir", "outputs/student_adapter"),
             use_4bit=training_cfg.get("use_4bit", True),
             lora_r=lora_cfg.get("r", 16),

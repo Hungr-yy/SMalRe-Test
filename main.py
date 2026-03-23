@@ -18,14 +18,11 @@ Key NVIDIA data flywheel principles implemented:
 
 Usage
 -----
+    # Single experiment (CLI)
     python main.py --config configs/model_config.yaml [options]
 
-    Options:
-      --config PATH            Path to model_config.yaml (default: configs/model_config.yaml)
-      --rounds INT             Maximum distillation rounds (default: 5)
-      --target-accuracy FLOAT  Stop when student accuracy exceeds this threshold (default: 0.80)
-      --output-dir PATH        Where to save adapters and results (default: outputs/)
-      --truncate-input         Apply DataFilter truncation to reports
+    # 3x3 experiment matrix (see run_experiments.py)
+    python run_experiments.py --config configs/model_config.yaml
 """
 
 from __future__ import annotations
@@ -40,6 +37,9 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv()  # Load API keys from .env file
 
 logging.basicConfig(
     level=logging.INFO,
@@ -160,7 +160,31 @@ def run_distillation_loop(
     target_accuracy: float,
     output_dir: str,
     truncate_input: bool,
-) -> None:
+) -> dict[str, Any]:
+    """Run the iterative distillation loop and return results.
+
+    Parameters
+    ----------
+    config:
+        Configuration dict.  Must contain ``teacher`` and ``student`` sections.
+        The ``student`` section must include ``model_name_or_path``.
+        Optionally include ``_config_path`` for YAML-based StudentTrainer init,
+        or set student config directly for programmatic use.
+    rounds:
+        Maximum distillation rounds.
+    target_accuracy:
+        Stop early when this accuracy is reached.
+    output_dir:
+        Directory to save adapters, curricula, and results.
+    truncate_input:
+        Apply DataFilter truncation to reports.
+
+    Returns
+    -------
+    dict
+        Results dict with keys: ``best_accuracy``, ``final_proficiency``,
+        ``rounds_completed``, ``round_results`` (list of per-round metrics).
+    """
     from teacher_engine import TeacherEngine, load_template
     from student_trainer import StudentTrainer
 
@@ -174,15 +198,35 @@ def run_distillation_loop(
         api_key=teacher_cfg.get("api_key") or None,
         temperature=teacher_cfg.get("temperature", 0.7),
     )
-    logger.info(
-        "Teacher: %s / %s", teacher_cfg.get("provider"), teacher_cfg.get("model")
-    )
+    teacher_name = f"{teacher_cfg.get('provider')}/{teacher_cfg.get('model')}"
+    logger.info("Teacher: %s", teacher_name)
 
     # ------------------------------------------------------------------
     # Initialise student
     # ------------------------------------------------------------------
-    student = StudentTrainer.from_config(config["_config_path"])
-    logger.info("Student: %s", config.get("student", {}).get("model_name_or_path"))
+    if "_config_path" in config:
+        student = StudentTrainer.from_config(config["_config_path"])
+    else:
+        # Programmatic construction (used by run_experiments.py)
+        student_cfg = config.get("student", {})
+        training_cfg = config.get("training", {})
+        lora_cfg = config.get("lora", {})
+        student = StudentTrainer(
+            model_name_or_path=student_cfg["model_name_or_path"],
+            output_dir=output_dir,
+            use_4bit=training_cfg.get("use_4bit", True),
+            lora_r=lora_cfg.get("r", 16),
+            lora_alpha=lora_cfg.get("alpha", 32),
+            lora_dropout=lora_cfg.get("dropout", 0.05),
+            learning_rate=training_cfg.get("learning_rate", 2e-4),
+            num_train_epochs=training_cfg.get("num_train_epochs", 3),
+            per_device_train_batch_size=training_cfg.get("per_device_train_batch_size", 4),
+            gradient_accumulation_steps=training_cfg.get("gradient_accumulation_steps", 4),
+            max_seq_length=training_cfg.get("max_seq_length", 2048),
+        )
+
+    student_name = config.get("student", {}).get("model_name_or_path", "unknown")
+    logger.info("Student: %s", student_name)
 
     # ------------------------------------------------------------------
     # Load task description and data source
@@ -209,13 +253,15 @@ def run_distillation_loop(
     feedback: str = "N/A"
     accumulated_curriculum: list[dict[str, Any]] = []
     best_accuracy = 0.0
+    round_results: list[dict[str, Any]] = []
 
     # ------------------------------------------------------------------
     # Iterative loop
     # ------------------------------------------------------------------
     for round_num in range(1, rounds + 1):
         logger.info("=" * 60)
-        logger.info("Distillation round %d / %d", round_num, rounds)
+        logger.info("[%s → %s] Round %d / %d",
+                     teacher_name, student_name, round_num, rounds)
         logger.info("=" * 60)
 
         round_dir = Path(output_dir) / f"round_{round_num}"
@@ -300,6 +346,17 @@ def run_distillation_loop(
             weak_areas = [w.get("area_name", "unknown") for w in weaknesses[:5]]
             logger.info("Top weaknesses: %s", weak_areas)
 
+        # Record round results
+        round_results.append({
+            "round": round_num,
+            "proficiency": new_proficiency,
+            "accuracy": accuracy,
+            "avg_jaccard": avg_jaccard,
+            "num_new_examples": len(new_dataset),
+            "num_accumulated_examples": len(accumulated_curriculum) + len(new_dataset),
+            "weaknesses": [w.get("area_name", "") for w in weaknesses],
+        })
+
         # Update state for next round (data flywheel)
         proficiency = str(new_proficiency)
         feedback = new_feedback
@@ -347,6 +404,16 @@ def run_distillation_loop(
     # Save final accumulated curriculum
     with open(Path(output_dir) / "accumulated_curriculum.json", "w") as fh:
         json.dump(accumulated_curriculum, fh, indent=2)
+
+    # Return results for experiment orchestrator
+    return {
+        "teacher": teacher_name,
+        "student": student_name,
+        "best_accuracy": best_accuracy,
+        "final_proficiency": proficiency,
+        "rounds_completed": len(round_results),
+        "round_results": round_results,
+    }
 
 
 # ---------------------------------------------------------------------------
