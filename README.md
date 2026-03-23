@@ -74,7 +74,7 @@ SMalA/
 | Teacher | Anthropic | Claude Sonnet 4.6                        |
 | Student | Meta      | Llama 3.3 8B Instruct                    |
 | Student | Google    | Gemma 3 4B                               |
-| Student | Alibaba / Qwen | Qwen 2.5 7B Instruct                |
+| Student | Qwen      | Qwen 2.5 7B Instruct                |
 
 ---
 
