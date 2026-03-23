@@ -1,0 +1,240 @@
+EXAM_EVALUATION_PROMPT = """You are evaluating a student language model on a malware-analysis task modeled after the CyberSOCEval Malware Analysis benchmark.
+
+The task uses JSON-formatted malware detonation reports and multiple-choice questions where MULTIPLE options may be correct.
+Primary evaluation must be strict exact-match accuracy:
+a response is correct ONLY if it selects all correct options and only the correct options.
+You must also compute a secondary Jaccard score for partial credit diagnostics.
+
+[TASK]
+%s
+
+[EXAM_RESULTS]
+%s
+
+[DATA_SOURCE]
+%s
+
+Evaluate the student's performance on the exam.
+
+Each element of [EXAM_RESULTS] is a JSON object with this structure:
+{
+  "question": {
+    "sha256": "sample sha256",
+    "attack": "one of [infostealers, remcos_rat, ransomware, av_edr_killers, um_unhooking]",
+    "topic": "cybersecurity topic for the question",
+    "difficulty": "easy | medium | hard",
+    "detonation_report": { ... JSON detonation report ... },
+    "question": "benchmark-style malware analysis question",
+    "options": ["A. ...", "B. ...", "C. ..."]
+  },
+  "answer": {
+    "correct_options": ["A", "C"]
+  },
+  "model_answer": {
+    "correct_options": ["A", "B"]
+  }
+}
+
+If "model_answer" is missing, null, malformed, unparsable, or does not contain a valid list of option letters, treat it as an empty prediction set and count it as a parse failure.
+
+You must do ALL of the following:
+
+1. Score the exam.
+   - exact_match_accuracy:
+     fraction of questions where predicted option set == gold option set.
+   - avg_jaccard:
+     average Jaccard similarity over all questions.
+     Jaccard(pred, gold) = |pred ∩ gold| / |pred ∪ gold|
+     If both sets are empty, define Jaccard as 1.0.
+     If pred is empty and gold is non-empty, Jaccard is 0.0.
+   - parse_error_rate:
+     fraction of questions with missing/malformed/unparsable model answers.
+   - macro_option_precision:
+     average over questions of |pred ∩ gold| / |pred|, with precision = 1.0 only if both pred and gold are empty, else 0.0 when pred is empty and gold is non-empty.
+   - macro_option_recall:
+     average over questions of |pred ∩ gold| / |gold|, with recall = 1.0 only if gold is empty and pred is empty.
+   - answer_count_calibration:
+     compare number of selected answers vs number of gold answers and identify systematic over-selection or under-selection.
+
+2. Diagnose strengths and weaknesses.
+   Analyze performance by:
+   - attack family
+   - topic
+   - difficulty
+   - number of correct options required
+   - error pattern
+
+   Important error patterns to look for:
+   - under-selection: model misses one or more correct options
+   - over-selection: model includes distractors
+   - answer-count miscalibration: model consistently predicts too many or too few options
+   - evidence-grounding failure: response appears inconsistent with detonation-report evidence
+   - semantic confusion: confuses related but distinct behaviors, APIs, persistence mechanisms, evasion methods, or ATT&CK mappings
+   - telemetry interpretation weakness: struggles with process tree, file operations, registry, network, DLL/API, static signature, or behavioral evidence
+   - topic-specific weakness
+   - attack-family-specific weakness
+   - difficulty-specific weakness
+   - parse/format weakness
+
+3. Assign a proficiency score from 1 to 10.
+   Use this rubric:
+   - 1: almost no usable capability; mostly parse failures or near-random selections
+   - 2: very weak; occasional overlap with gold answers but little reliable grounding
+   - 3: weak; some correct evidence extraction on easy items, frequent set-selection errors
+   - 4: below basic; partial competence but unreliable even on easy/medium items
+   - 5: basic; can solve a meaningful subset of easy items but has clear weaknesses
+   - 6: emerging competence; reasonable on easy items and some medium items
+   - 7: solid; useful malware-analysis ability with recurring but targeted weaknesses
+   - 8: strong; performs well across most topics/families with limited gaps
+   - 9: very strong; robust exact-match performance and strong evidence-grounded reasoning
+   - 10: exceptional; highly reliable across difficulty levels, topics, and malware families with minimal parse failures
+
+   When assigning proficiency:
+   - weight exact_match_accuracy the most
+   - use avg_jaccard as a secondary signal
+   - penalize parse_error_rate
+   - consider whether the model is robust across topic, difficulty, and attack-family breakdowns
+   - do NOT inflate proficiency just because Jaccard is high when exact match is poor
+
+4. Write detailed feedback.
+   The feedback must:
+   - summarize overall capability
+   - identify the most important weaknesses
+   - identify what kinds of questions should be used next for training
+   - explicitly mention whether the model tends to under-select or over-select
+   - explicitly mention which topics, difficulties, and attack families need work
+
+5. Generate a remediation dataset of %s new training examples.
+   The new examples must be tailored to the model's weaknesses.
+   Use [DATA_SOURCE] whenever possible.
+   If [DATA_SOURCE] is empty or insufficient, create new benchmark-style examples yourself.
+
+   Requirements for the new dataset:
+   - Each example must match the malware-analysis task format exactly.
+   - Each example must be grounded in a specific detonation report.
+   - Questions must be answerable from the included detonation report.
+   - Questions must be multiple-choice with plausible distractors.
+   - Multiple correct answers are allowed.
+   - The dataset should focus on the model's weakest areas first.
+   - Include a mix of difficulties, but overweight the weakest difficulty bands.
+   - Include a mix of attack families, but overweight the weakest attack families.
+   - Include a mix of topics, but overweight the weakest topics.
+   - Include some items specifically designed to correct answer-count miscalibration.
+   - Prefer examples that teach evidence-grounded reasoning rather than generic malware trivia.
+   - Do NOT copy any exam question verbatim.
+   - Avoid near-duplicates of the exam items.
+   - If possible, avoid using the same sha256 values from [EXAM_RESULTS]; if you must use the same report, make the question materially different and target a different weakness.
+
+6. Output VALID JSON only.
+   Do not output markdown.
+   Do not output explanations outside the JSON.
+   Do not wrap the JSON in code fences.
+
+The JSON output format must be exactly:
+{
+  "feedback": "string",
+  "proficiency": 1,
+  "metrics": {
+    "num_questions": 0,
+    "num_exact_matches": 0,
+    "exact_match_accuracy": 0.0,
+    "avg_jaccard": 0.0,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.0,
+    "macro_option_recall": 0.0,
+    "avg_predicted_answer_count": 0.0,
+    "avg_gold_answer_count": 0.0,
+    "answer_count_bias": "over-selecting | under-selecting | well-calibrated"
+  },
+  "strengths": [
+    "string"
+  ],
+  "weaknesses": [
+    {
+      "area_type": "topic | difficulty | attack | reasoning_pattern | format",
+      "area_name": "string",
+      "description": "string",
+      "severity": "high | medium | low",
+      "evidence_question_indices": [0]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "topic_name": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "string",
+        "attack": "infostealers | remcos_rat | ransomware | av_edr_killers | um_unhooking",
+        "topic": "string",
+        "difficulty": "easy | medium | hard",
+        "detonation_report": {},
+        "question": "string",
+        "options": ["A. ...", "B. ..."]
+      },
+      "answer": {
+        "correct_options": ["A"]
+      }
+    }
+  ]
+}
+"""

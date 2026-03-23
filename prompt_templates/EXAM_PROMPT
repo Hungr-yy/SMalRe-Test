@@ -1,0 +1,46 @@
+EXAM_PROMPT = """
+[TASK]
+%s
+
+[DATA SOURCE]
+%s
+
+[PREVIOUS_EXAM_RESULTS]
+Proficiency: %s
+Feedback: %s
+
+Create an exam of %s questions for the malware-analysis task.
+
+Requirements:
+1. Each exam item must be grounded in a specific Hybrid Analysis detonation report from [DATA SOURCE].
+2. Match the CyberSOCEval Malware Analysis style:
+   - multi-select multiple-choice
+   - plausible distractors
+   - grounded in report evidence
+   - balanced across topic, difficulty, and attack family where possible
+3. Prioritize the student's weak areas described in [PREVIOUS_EXAM_RESULTS].
+4. Do NOT copy benchmark questions verbatim unless explicitly asked.
+5. Prefer questions that require reasoning from report evidence rather than generic malware trivia.
+6. Each question must be answerable from the detonation report included in the item.
+7. The answer must contain only the correct option letters.
+
+Output VALID JSON only in this exact format:
+{
+  "exam": [
+    {
+      "question": {
+        "sha256": "...",
+        "attack": "...",
+        "topic": "...",
+        "difficulty": "...",
+        "detonation_report": { ... },
+        "question": "...",
+        "options": ["A. ...", "B. ...", "C. ..."]
+      },
+      "answer": {
+        "correct_options": ["A", "C"]
+      }
+    }
+  ]
+}
+"""

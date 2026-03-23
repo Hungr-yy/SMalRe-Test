@@ -1,0 +1,28 @@
+TASK_PROMPT = """You are given a Hybrid Analysis malware detonation report and a multiple-choice question.
+
+Your job is to select ALL correct answer options and ONLY the correct answer options.
+Base your answer only on evidence grounded in the detonation report and the question.
+
+[INPUT_JSON]
+%s
+
+The input JSON has this structure:
+{
+  "sha256": "sample sha256",
+  "attack": "one of [infostealers, remcos_rat, ransomware, av_edr_killers, um_unhooking]",
+  "topic": "one benchmark topic",
+  "difficulty": "easy | medium | hard",
+  "detonation_report": { ... JSON-formatted Hybrid Analysis report ... },
+  "question": "benchmark-style malware analysis question",
+  "options": [
+    "A. ...",
+    "B. ...",
+    "C. ..."
+  ]
+}
+
+Return VALID JSON only:
+{
+  "correct_options": ["A", "C"]
+}
+"""

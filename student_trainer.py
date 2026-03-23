@@ -33,27 +33,69 @@ def _load_yaml(path: str) -> dict[str, Any]:
 
 
 def _build_dataset(examples: list[dict[str, Any]]):
-    """Convert a list of instruction/input/output dicts to a HuggingFace Dataset."""
+    """Convert curriculum examples to a HuggingFace Dataset.
+
+    Supports two formats:
+      1. **EXAM_EVALUATION format** (question/answer dicts from the teacher's
+         remediation dataset) – converted using the TASK_PROMPT template.
+      2. **Legacy format** (instruction/input/output dicts) – kept for
+         backwards compatibility.
+    """
     from datasets import Dataset  # type: ignore
 
     records = []
     for ex in examples:
-        instruction = ex.get("instruction", "")
-        context = ex.get("input", "")
-        response = ex.get("output", "")
-        if context:
-            text = (
-                f"### Instruction:\n{instruction}\n\n"
-                f"### Input:\n{context}\n\n"
-                f"### Response:\n{response}"
-            )
+        if "question" in ex and "answer" in ex:
+            # EXAM_EVALUATION format: question/answer pairs
+            text = _format_qa_example(ex)
         else:
-            text = (
-                f"### Instruction:\n{instruction}\n\n"
-                f"### Response:\n{response}"
-            )
+            # Legacy instruction/input/output format
+            text = _format_instruction_example(ex)
         records.append({"text": text})
     return Dataset.from_list(records)
+
+
+def _format_qa_example(ex: dict[str, Any]) -> str:
+    """Format a question/answer pair as training text.
+
+    Uses the TASK_PROMPT structure so the student learns to answer
+    in the same format used during exam evaluation.
+    """
+    import json
+
+    question_data = ex["question"]
+    answer_data = ex["answer"]
+
+    input_json = json.dumps(question_data, indent=2)
+    response_json = json.dumps(answer_data)
+
+    return (
+        f"You are given a Hybrid Analysis malware detonation report "
+        f"and a multiple-choice question.\n\n"
+        f"Your job is to select ALL correct answer options and ONLY "
+        f"the correct answer options.\n"
+        f"Base your answer only on evidence grounded in the detonation "
+        f"report and the question.\n\n"
+        f"[INPUT_JSON]\n{input_json}\n\n"
+        f"### Response:\n{response_json}"
+    )
+
+
+def _format_instruction_example(ex: dict[str, Any]) -> str:
+    """Format a legacy instruction/input/output example as training text."""
+    instruction = ex.get("instruction", "")
+    context = ex.get("input", "")
+    response = ex.get("output", "")
+    if context:
+        return (
+            f"### Instruction:\n{instruction}\n\n"
+            f"### Input:\n{context}\n\n"
+            f"### Response:\n{response}"
+        )
+    return (
+        f"### Instruction:\n{instruction}\n\n"
+        f"### Response:\n{response}"
+    )
 
 
 # ---------------------------------------------------------------------------

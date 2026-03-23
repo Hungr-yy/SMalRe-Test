@@ -2,6 +2,12 @@
 # ============================================================
 # Edit this file to configure the teacher LLM, student SLM,
 # training hyperparameters, and distillation loop settings.
+#
+# Implements the NVIDIA data flywheel approach:
+#   - Teacher generates exams informed by prior proficiency/feedback
+#   - Evaluation + curriculum generation in one pass (EXAM_EVALUATION)
+#   - Curriculum accumulates across rounds
+#   - Progressive difficulty based on student proficiency (1-10 scale)
 # ============================================================
 
 # ------------------------------------------------------------------
@@ -22,6 +28,17 @@ teacher:
 student:
   # HuggingFace model ID or local path
   model_name_or_path: meta-llama/Meta-Llama-3-8B
+
+# ------------------------------------------------------------------
+# Data source (Hybrid Analysis reports + task definitions)
+# ------------------------------------------------------------------
+data_source:
+  # Path to malware analysis task definitions
+  task_definitions: prompt_templates/malware_analysis_task.json
+  # Path to directory containing Hybrid Analysis detonation reports
+  hybrid_analysis_dir: hybrid-analysis
+  # Number of reports sampled per round (balanced across families)
+  reports_per_round: 10
 
 # ------------------------------------------------------------------
 # Output
@@ -62,7 +79,7 @@ exam:
 # Curriculum generation
 # ------------------------------------------------------------------
 curriculum:
-  # Training examples generated per round.
+  # Training examples generated per round (via EXAM_EVALUATION template).
   # For production use 10000–100000; keep small for quick iteration.
   num_examples: 100
 

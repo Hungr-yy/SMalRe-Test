@@ -2,19 +2,25 @@
 teacher_engine.py
 =================
 Interacts with a high-capability "teacher" LLM (OpenAI GPT-4o, Google Gemini,
-or Alibaba Qwen) to drive the three core steps of the distillation loop:
+or Alibaba Qwen) to drive the NVIDIA-inspired data flywheel distillation loop:
 
-  1. Exam Generation   – create multiple-choice questions from a malware report
-  2. Evaluation        – score the student's answers and identify weaknesses
-  3. Curriculum Generation – produce synthetic training examples targeting weaknesses
+  1. Exam Generation   – create exam questions from malware reports, informed by
+                          prior proficiency and feedback (EXAM_PROMPT template)
+  2. Evaluation + Curriculum – score student answers, diagnose weaknesses, and
+                                generate targeted remediation examples in one pass
+                                (EXAM_EVALUATION template)
+
+Templates are loaded from the ``prompt_templates/`` directory rather than being
+hardcoded, enabling iterative prompt engineering without code changes.
 """
 
 from __future__ import annotations
 
+import ast
 import json
 import logging
 import os
-import textwrap
+from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -45,11 +51,46 @@ def _build_together_client(api_key: str):
 
 
 # ---------------------------------------------------------------------------
+# Template loading
+# ---------------------------------------------------------------------------
+
+def load_template(name: str, templates_dir: str = "prompt_templates") -> str:
+    """Load a prompt template file by name.
+
+    Template files are Python string assignments (e.g., ``EXAM_PROMPT = \"\"\"...\"\"\"``).
+    The string value is extracted safely using :mod:`ast`.
+    """
+    path = Path(templates_dir) / name
+    if not path.exists():
+        raise FileNotFoundError(f"Template not found: {path}")
+
+    text = path.read_text()
+
+    # Extract the string value from a Python assignment
+    try:
+        tree = ast.parse(text)
+        for node in ast.iter_child_nodes(tree):
+            if isinstance(node, ast.Assign):
+                value = node.value
+                if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                    return value.value
+    except SyntaxError:
+        pass
+
+    # Fallback: return raw file content
+    return text
+
+
+# ---------------------------------------------------------------------------
 # TeacherEngine
 # ---------------------------------------------------------------------------
 
 class TeacherEngine:
     """Wraps a teacher LLM and exposes exam / evaluation / curriculum methods.
+
+    Uses prompt templates from ``prompt_templates/`` to construct prompts,
+    enabling the NVIDIA-inspired data flywheel approach where proficiency
+    and feedback from prior rounds inform subsequent exam generation.
 
     Parameters
     ----------
@@ -62,6 +103,8 @@ class TeacherEngine:
         ``*_API_KEY`` environment variable when not supplied.
     temperature:
         Sampling temperature used for all completions.
+    templates_dir:
+        Directory containing prompt template files.
     """
 
     def __init__(
@@ -70,6 +113,7 @@ class TeacherEngine:
         model: str,
         api_key: str | None = None,
         temperature: float = 0.7,
+        templates_dir: str = "prompt_templates",
     ) -> None:
         provider = provider.lower()
         if provider not in SUPPORTED_PROVIDERS:
@@ -80,6 +124,7 @@ class TeacherEngine:
         self.provider = provider
         self.model = model
         self.temperature = temperature
+        self.templates_dir = templates_dir
 
         if api_key is None:
             env_map = {
@@ -119,147 +164,113 @@ class TeacherEngine:
         return response.choices[0].message.content
 
     # ------------------------------------------------------------------
-    # Step 1 – Exam Generation
+    # Step 1 – Exam Generation (template-driven)
     # ------------------------------------------------------------------
 
     def generate_exam(
         self,
-        report_summary: str,
+        task_description: str,
+        data_source: str,
+        proficiency: str = "N/A",
+        feedback: str = "N/A",
         num_questions: int = 5,
     ) -> list[dict[str, Any]]:
-        """Generate multiple-choice exam questions from a malware report.
+        """Generate exam questions using the EXAM_PROMPT template.
+
+        The template incorporates prior proficiency and feedback so that
+        the teacher adjusts difficulty and focus areas each round (the
+        NVIDIA data flywheel approach).
 
         Parameters
         ----------
-        report_summary:
-            A condensed string representation of the malware detonation report
-            (e.g., produced by :class:`report_parser.ReportParser`).
+        task_description:
+            Description of the malware analysis task (from malware_analysis_task.json).
+        data_source:
+            JSON string of filtered Hybrid Analysis detonation reports for the
+            teacher to ground questions in.
+        proficiency:
+            Proficiency score from the previous round (1-10 or "N/A").
+        feedback:
+            Teacher feedback from the previous round identifying weaknesses.
         num_questions:
-            How many questions to generate.
+            How many exam questions to generate.
 
         Returns
         -------
         list[dict]
-            A list of question dicts, each with keys:
-            ``question``, ``options`` (list), ``answer`` (list of correct option labels).
+            A list of exam item dicts, each with ``question`` and ``answer`` keys.
         """
-        prompt = textwrap.dedent(f"""
-            You are a malware analysis expert creating an exam for a junior analyst.
-
-            Below is a summary of a malware sandbox detonation report:
-            ---
-            {report_summary}
-            ---
-
-            Generate {num_questions} multiple-choice questions to test understanding
-            of the malware's behavior, attack techniques, and indicators of compromise.
-
-            Rules:
-            - Each question must have between 4 and 10 answer options labelled A–J.
-            - One or more options may be correct (multi-select).
-            - Return a JSON array where each element has the keys:
-              "question" (string), "options" (object mapping label→text),
-              "answer" (array of correct labels).
-            - Return ONLY valid JSON, no prose.
-        """).strip()
+        template = load_template("EXAM_PROMPT", self.templates_dir)
+        prompt = template % (
+            task_description,
+            data_source,
+            proficiency,
+            feedback,
+            num_questions,
+        )
 
         raw = self._complete(prompt)
-        return self._parse_json(raw, default=[])
+        parsed = self._parse_json(raw, default={"exam": []})
+
+        # The template returns {"exam": [...]}, extract the list
+        if isinstance(parsed, dict):
+            return parsed.get("exam", [])
+        return parsed
 
     # ------------------------------------------------------------------
-    # Step 3 – Evaluation & Feedback
+    # Steps 3+4 – Evaluation + Curriculum Generation (combined)
     # ------------------------------------------------------------------
 
-    def evaluate_exam(
+    def evaluate_and_generate_curriculum(
         self,
-        questions: list[dict[str, Any]],
-        student_answers: list[list[str]],
+        task_description: str,
+        exam_results: list[dict[str, Any]],
+        data_source: str,
+        num_examples: int = 100,
     ) -> dict[str, Any]:
-        """Score the student's answers and identify conceptual weaknesses.
+        """Evaluate student answers and generate a remediation curriculum.
+
+        Uses the EXAM_EVALUATION template which combines scoring, weakness
+        diagnosis, and targeted training data generation in a single teacher
+        call.  This is the core of the NVIDIA data flywheel: the teacher
+        both evaluates and produces the next round's training curriculum.
 
         Parameters
         ----------
-        questions:
-            The exam questions as returned by :meth:`generate_exam`.
-        student_answers:
-            A list of answer-label lists, one per question.
+        task_description:
+            Description of the malware analysis task.
+        exam_results:
+            List of exam result dicts, each containing ``question``,
+            ``answer`` (gold), and ``model_answer`` (student prediction).
+        data_source:
+            JSON string of Hybrid Analysis reports for grounding new examples.
+        num_examples:
+            Number of remediation training examples to generate.
 
         Returns
         -------
         dict
-            Keys: ``score`` (float 0–1), ``feedback`` (str),
-            ``weaknesses`` (list of topic strings).
+            Keys: ``feedback``, ``proficiency``, ``metrics``, ``strengths``,
+            ``weaknesses``, ``breakdowns``, ``dataset``.
         """
-        qa_pairs = []
-        for i, (q, ans) in enumerate(zip(questions, student_answers)):
-            qa_pairs.append(
-                f"Q{i+1}: {q['question']}\n"
-                f"  Correct: {q.get('answer', [])}\n"
-                f"  Student: {ans}"
-            )
-
-        prompt = textwrap.dedent(f"""
-            You are evaluating a student's performance on a malware analysis exam.
-
-            Questions and answers:
-            {chr(10).join(qa_pairs)}
-
-            Produce a JSON object with:
-            - "score": float between 0 and 1 (fraction of fully correct answers)
-            - "feedback": a paragraph explaining overall performance
-            - "weaknesses": a list of specific topic strings the student struggled with
-              (e.g., "process injection detection", "MITRE ATT&CK mapping")
-
-            Return ONLY valid JSON.
-        """).strip()
+        template = load_template("EXAM_EVALUATION", self.templates_dir)
+        prompt = template % (
+            task_description,
+            json.dumps(exam_results, indent=2),
+            data_source,
+            num_examples,
+        )
 
         raw = self._complete(prompt)
-        return self._parse_json(raw, default={"score": 0.0, "feedback": "", "weaknesses": []})
-
-    # ------------------------------------------------------------------
-    # Step 4 – Curriculum Generation
-    # ------------------------------------------------------------------
-
-    def generate_curriculum(
-        self,
-        weaknesses: list[str],
-        num_examples: int = 100,
-    ) -> list[dict[str, Any]]:
-        """Produce a synthetic training dataset targeting the student's weaknesses.
-
-        Parameters
-        ----------
-        weaknesses:
-            Topics identified by :meth:`evaluate_exam`.
-        num_examples:
-            Number of training examples to generate (10 k–100 k in production;
-            keep small for quick iteration).
-
-        Returns
-        -------
-        list[dict]
-            Training examples, each with keys ``instruction``, ``input``, ``output``.
-        """
-        topics = ", ".join(weaknesses) if weaknesses else "general malware analysis"
-        prompt = textwrap.dedent(f"""
-            You are building a training curriculum for a small language model that
-            specialises in malware reverse engineering.
-
-            The student struggles with: {topics}
-
-            Generate {num_examples} diverse training examples that target these weaknesses.
-            Each example should be a realistic malware analysis task.
-
-            Return a JSON array where each element has:
-            - "instruction": the task description
-            - "input": relevant context (e.g., a snippet of a sandbox report or assembly)
-            - "output": the ideal expert response
-
-            Return ONLY valid JSON.
-        """).strip()
-
-        raw = self._complete(prompt)
-        return self._parse_json(raw, default=[])
+        return self._parse_json(raw, default={
+            "feedback": "",
+            "proficiency": 1,
+            "metrics": {},
+            "strengths": [],
+            "weaknesses": [],
+            "breakdowns": {},
+            "dataset": [],
+        })
 
     # ------------------------------------------------------------------
     # Utility
