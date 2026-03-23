@@ -44,6 +44,15 @@ Usage
       --max-parallel INT       Max parallel experiments per batch (default: 3)
       --max-retries INT        Max retry rounds for failed experiments (default: 2)
       --truncate-input         Apply DataFilter truncation to reports
+      --teachers NAME [NAME ...] Select teachers (default: all)
+      --students NAME [NAME ...] Select students (default: all)
+
+    Examples:
+      # All 3 teachers → Qwen only
+      python run_experiments.py --teachers gpt4o gemini2.5pro claude_sonnet4.6 --students qwen2.5_7b
+
+      # Gemini + Claude → Llama + Gemma
+      python run_experiments.py --teachers gemini2.5pro claude_sonnet4.6 --students llama3.1_8b gemma3_4b
 """
 
 from __future__ import annotations
@@ -107,16 +116,32 @@ STUDENTS = [
     },
 ]
 
-# Latin square: each batch pairs teachers with students such that all 9
-# combinations are covered across 3 batches.
-BATCHES = [
-    # Batch 1: T1→S1, T2→S2, T3→S3
-    [(0, 0), (1, 1), (2, 2)],
-    # Batch 2: T1→S2, T2→S3, T3→S1
-    [(0, 1), (1, 2), (2, 0)],
-    # Batch 3: T1→S3, T2→S1, T3→S2
-    [(0, 2), (1, 0), (2, 1)],
-]
+# Name-to-index lookup for CLI filtering
+_TEACHER_NAMES = {t["name"]: i for i, t in enumerate(TEACHERS)}
+_STUDENT_NAMES = {s["name"]: i for i, s in enumerate(STUDENTS)}
+
+
+def _build_batches(
+    teacher_indices: list[int],
+    student_indices: list[int],
+    max_parallel: int = 3,
+) -> list[list[tuple[int, int]]]:
+    """Build batches of (teacher_idx, student_idx) pairs.
+
+    All selected teacher×student combinations are generated, then chunked
+    into batches of ``max_parallel`` experiments each.
+    """
+    pairs = [
+        (ti, si)
+        for ti in teacher_indices
+        for si in student_indices
+    ]
+    # Chunk into batches
+    return [pairs[i:i + max_parallel] for i in range(0, len(pairs), max_parallel)]
+
+
+# Default: full 3×3 Latin square (used by tests and when no --teachers/--students given)
+BATCHES = _build_batches(list(range(len(TEACHERS))), list(range(len(STUDENTS))))
 
 
 # ---------------------------------------------------------------------------
@@ -769,6 +794,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         dest="truncate_input",
         help="Apply DataFilter truncation to reports",
     )
+    parser.add_argument(
+        "--teachers",
+        nargs="+",
+        metavar="NAME",
+        help=(
+            "Teacher names to run (default: all). "
+            f"Choices: {', '.join(_TEACHER_NAMES)}"
+        ),
+    )
+    parser.add_argument(
+        "--students",
+        nargs="+",
+        metavar="NAME",
+        help=(
+            "Student names to run (default: all). "
+            f"Choices: {', '.join(_STUDENT_NAMES)}"
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -779,17 +822,46 @@ def main(argv: list[str] | None = None) -> None:
         logger.error("Config file not found: %s", args.config)
         sys.exit(1)
 
+    # Resolve selected teachers/students (default: all)
+    if args.teachers:
+        teacher_indices = []
+        for name in args.teachers:
+            if name not in _TEACHER_NAMES:
+                logger.error("Unknown teacher: %s. Choices: %s", name, list(_TEACHER_NAMES))
+                sys.exit(1)
+            teacher_indices.append(_TEACHER_NAMES[name])
+    else:
+        teacher_indices = list(range(len(TEACHERS)))
+
+    if args.students:
+        student_indices = []
+        for name in args.students:
+            if name not in _STUDENT_NAMES:
+                logger.error("Unknown student: %s. Choices: %s", name, list(_STUDENT_NAMES))
+                sys.exit(1)
+            student_indices.append(_STUDENT_NAMES[name])
+    else:
+        student_indices = list(range(len(STUDENTS)))
+
+    # Build batches dynamically from selected models
+    global BATCHES
+    BATCHES = _build_batches(teacher_indices, student_indices, args.max_parallel)
+
+    selected_teachers = [TEACHERS[i]["name"] for i in teacher_indices]
+    selected_students = [STUDENTS[i]["name"] for i in student_indices]
+    num_experiments = len(teacher_indices) * len(student_indices)
+
     from main import load_config
 
     base_config = load_config(args.config)
 
-    logger.info("SMalA 3×3 Experiment Matrix")
-    logger.info("Teachers: %s", [t["name"] for t in TEACHERS])
-    logger.info("Students: %s", [s["name"] for s in STUDENTS])
-    logger.info("Batches:  %d (3 experiments each)", len(BATCHES))
-    logger.info("Rounds:   %d per experiment", args.rounds)
-    logger.info("Parallel: %d per batch", args.max_parallel)
-    logger.info("Retries:  %d max", args.max_retries)
+    logger.info("SMalA Experiment Matrix")
+    logger.info("Teachers:    %s", selected_teachers)
+    logger.info("Students:    %s", selected_students)
+    logger.info("Experiments: %d (%d batches)", num_experiments, len(BATCHES))
+    logger.info("Rounds:      %d per experiment", args.rounds)
+    logger.info("Parallel:    %d per batch", args.max_parallel)
+    logger.info("Retries:     %d max", args.max_retries)
     logger.info("")
 
     run_all_experiments(

@@ -424,15 +424,16 @@ class TestHFTokenPassthrough:
 
 
 # ---------------------------------------------------------------------------
-# Test Group 4: Round 1 inference fallback (Vertex AI base endpoint)
+# Test Group 4: Round 1 inference fallback (HuggingFace Inference API)
 # ---------------------------------------------------------------------------
 
 class TestRound1InferenceFallback:
-    """Before any fine-tuning (Round 1), generate() must deploy and use
-    a Vertex AI base model endpoint for ALL student models."""
+    """Before any fine-tuning (Round 1), generate() must use HuggingFace
+    Inference API for base model inference. After training, it uses the
+    Vertex AI tuned endpoint."""
 
-    def test_generate_deploys_base_endpoint_when_no_tuned_endpoint(self):
-        """When _tuned_endpoint is None, generate() must deploy a base endpoint."""
+    def test_generate_uses_hf_inference_when_no_tuned_endpoint(self):
+        """When _tuned_endpoint is None, generate() must call HF Inference API."""
         from student_trainer import VertexAIStudentTrainer
 
         trainer = VertexAIStudentTrainer(
@@ -442,25 +443,15 @@ class TestRound1InferenceFallback:
             staging_bucket="gs://test-bucket/smala",
         )
         assert trainer._tuned_endpoint is None
-        assert trainer._base_endpoint is None
 
-        mock_endpoint = mock.MagicMock()
-        mock_endpoint.predict.return_value = mock.MagicMock(
-            predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
-        )
-
-        with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
-            def set_endpoint():
-                trainer._base_endpoint = mock_endpoint
-            mock_deploy.side_effect = set_endpoint
-
+        with mock.patch.object(trainer, "_hf_inference", return_value='{"correct_options": ["A"]}') as mock_hf:
             result = trainer.generate("test prompt")
 
-        mock_deploy.assert_called_once()
+        mock_hf.assert_called_once_with("test prompt", 512)
         assert result == '{"correct_options": ["A"]}'
 
-    def test_base_endpoint_reused_across_calls(self):
-        """Once deployed, the base endpoint must be reused, not redeployed."""
+    def test_hf_inference_called_for_each_generate(self):
+        """Each generate() call without a tuned endpoint must hit HF Inference API."""
         from student_trainer import VertexAIStudentTrainer
 
         trainer = VertexAIStudentTrainer(
@@ -470,23 +461,14 @@ class TestRound1InferenceFallback:
             staging_bucket="gs://test-bucket/smala",
         )
 
-        mock_endpoint = mock.MagicMock()
-        mock_endpoint.predict.return_value = mock.MagicMock(
-            predictions=[{"generated_text": '{"correct_options": ["B"]}'}]
-        )
-        # Pre-set the base endpoint (simulating it was already deployed)
-        trainer._base_endpoint = mock_endpoint
-
-        with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
+        with mock.patch.object(trainer, "_hf_inference", return_value='{"correct_options": ["B"]}') as mock_hf:
             trainer.generate("prompt 1")
             trainer.generate("prompt 2")
 
-        # Should NOT redeploy
-        mock_deploy.assert_not_called()
-        assert mock_endpoint.predict.call_count == 2
+        assert mock_hf.call_count == 2
 
-    def test_all_three_students_deploy_base_endpoint_on_round1(self):
-        """All 3 student models must deploy a base endpoint on Round 1."""
+    def test_all_three_students_use_hf_inference_on_round1(self):
+        """All 3 student models must use HF Inference API on Round 1."""
         from run_experiments import STUDENTS
         from student_trainer import VertexAIStudentTrainer
 
@@ -498,20 +480,11 @@ class TestRound1InferenceFallback:
                 staging_bucket="gs://test-bucket/smala",
             )
 
-            mock_endpoint = mock.MagicMock()
-            mock_endpoint.predict.return_value = mock.MagicMock(
-                predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
-            )
-
-            with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
-                def set_endpoint():
-                    trainer._base_endpoint = mock_endpoint
-                mock_deploy.side_effect = set_endpoint
-
+            with mock.patch.object(trainer, "_hf_inference", return_value='{"correct_options": ["A"]}') as mock_hf:
                 result = trainer.generate("test prompt", max_new_tokens=128)
 
-            mock_deploy.assert_called_once(), (
-                f"{student['name']}: base endpoint not deployed on Round 1"
+            mock_hf.assert_called_once_with("test prompt", 128), (
+                f"{student['name']}: HF Inference API not called on Round 1"
             )
             assert isinstance(result, str) and len(result) > 0, (
                 f"{student['name']}: generate() returned empty on Round 1"
@@ -539,15 +512,15 @@ class TestRound1InferenceFallback:
         gcp_modules, mock_aiplatform = _mock_gcp_modules()
 
         with mock.patch.dict("sys.modules", gcp_modules), \
-             mock.patch.object(trainer, "_deploy_base_endpoint") as mock_base_deploy:
+             mock.patch.object(trainer, "_hf_inference") as mock_hf:
             result = trainer.generate("test prompt")
 
         mock_model.deploy.assert_called_once()
-        mock_base_deploy.assert_not_called()
+        mock_hf.assert_not_called()
         assert result == '{"correct_options": ["C"]}'
 
-    def test_generate_falls_back_to_base_endpoint_when_tuned_fails(self):
-        """If tuned endpoint raises, generate() must fall back to base endpoint."""
+    def test_generate_falls_back_to_hf_inference_when_tuned_fails(self):
+        """If tuned endpoint raises, generate() must fall back to HF Inference API."""
         from student_trainer import VertexAIStudentTrainer
 
         trainer = VertexAIStudentTrainer(
@@ -561,22 +534,17 @@ class TestRound1InferenceFallback:
         mock_model.deploy.side_effect = RuntimeError("endpoint unavailable")
         trainer._tuned_endpoint = mock_model
 
-        mock_base = mock.MagicMock()
-        mock_base.predict.return_value = mock.MagicMock(
-            predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
-        )
-        trainer._base_endpoint = mock_base
-
         gcp_modules, _ = _mock_gcp_modules()
 
-        with mock.patch.dict("sys.modules", gcp_modules):
+        with mock.patch.dict("sys.modules", gcp_modules), \
+             mock.patch.object(trainer, "_hf_inference", return_value='{"correct_options": ["A"]}') as mock_hf:
             result = trainer.generate("test prompt")
 
-        mock_base.predict.assert_called_once()
+        mock_hf.assert_called_once()
         assert result == '{"correct_options": ["A"]}'
 
-    def test_deploy_base_endpoint_passes_hf_token(self):
-        """_deploy_base_endpoint must pass HF_TOKEN to the serving container."""
+    def test_hf_inference_passes_hf_token(self):
+        """_hf_inference must pass HF_TOKEN to the InferenceClient."""
         from student_trainer import VertexAIStudentTrainer
 
         trainer = VertexAIStudentTrainer(
@@ -586,19 +554,17 @@ class TestRound1InferenceFallback:
             staging_bucket="gs://test-bucket/smala",
         )
 
-        gcp_modules, mock_aiplatform = _mock_gcp_modules()
-        mock_uploaded_model = mock.MagicMock()
-        mock_aiplatform.Model.upload.return_value = mock_uploaded_model
-        mock_uploaded_model.deploy.return_value = mock.MagicMock()
+        mock_client_instance = mock.MagicMock()
+        mock_client_instance.text_generation.return_value = "test response"
 
-        with mock.patch.dict("sys.modules", gcp_modules), \
-             mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test_deploy"}):
-            trainer._deploy_base_endpoint()
+        with mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test_token"}), \
+             mock.patch("student_trainer.InferenceClient", return_value=mock_client_instance) as mock_client_cls:
+            result = trainer._hf_inference("test prompt", 128)
 
-        upload_kwargs = mock_aiplatform.Model.upload.call_args.kwargs
-        env_vars = upload_kwargs.get("serving_container_environment_variables", {})
-        assert env_vars["MODEL_ID"] == "meta-llama/Llama-3.1-8B-Instruct"
-        assert env_vars["HF_TOKEN"] == "hf_test_deploy"
+        mock_client_cls.assert_called_once_with(
+            model="meta-llama/Llama-3.1-8B-Instruct", token="hf_test_token"
+        )
+        assert result == "test response"
 
     def test_cleanup_base_endpoint(self):
         """cleanup_base_endpoint must undeploy and delete the endpoint."""

@@ -29,6 +29,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from huggingface_hub import InferenceClient
 
 logger = logging.getLogger(__name__)
 
@@ -436,9 +437,8 @@ class VertexAIStudentTrainer:
         self._tuned_endpoint = None
         self._tuning_job_count = 0
 
-        # Vertex AI endpoint for base model inference (Round 1, before fine-tuning).
-        # Lazy-deployed on first generate() call when no tuned endpoint exists.
-        self._base_endpoint = None
+        # No base endpoint needed — Round 1 uses HuggingFace Inference API.
+        self._base_endpoint = None  # kept for cleanup_base_endpoint compat
 
     # ------------------------------------------------------------------
     # Factory
@@ -566,52 +566,25 @@ class VertexAIStudentTrainer:
     # Inference
     # ------------------------------------------------------------------
 
-    def _deploy_base_endpoint(self) -> None:
-        """Deploy the base HuggingFace model to a Vertex AI endpoint.
+    def _hf_inference(self, prompt: str, max_new_tokens: int) -> str:
+        """Run inference via HuggingFace Inference API (serverless).
 
-        Used for inference before any fine-tuning has completed (Round 1).
-        The endpoint is kept alive and reused across rounds until a tuned
-        endpoint becomes available.  Works for all model families (Llama,
-        Gemma, Qwen) since it uses the same PEFT serving container that
-        the training pipeline produces.
+        Used for base model inference before any fine-tuning (Round 1).
+        Much faster than deploying a Vertex AI endpoint — no cold start,
+        no GPU provisioning.  Same model weights, same results.
         """
-        from google.cloud import aiplatform
-
-        aiplatform.init(project=self.project, location=self.location)
-
-        display_name = (
-            f"smala-base-{self.model_name_or_path.split('/')[-1]}"
-        )
+        hf_token = os.environ.get("HF_TOKEN", "") or None
+        client = InferenceClient(model=self.model_name_or_path, token=hf_token)
 
         logger.info(
-            "Deploying base model to Vertex AI endpoint: %s", self.model_name_or_path
+            "Running HF Inference API for base model: %s", self.model_name_or_path
         )
-
-        # Build environment variables for the serving container
-        env_vars = {"MODEL_ID": self.model_name_or_path}
-        hf_token = os.environ.get("HF_TOKEN", "")
-        if hf_token:
-            env_vars["HF_TOKEN"] = hf_token
-
-        # Upload model with the serving container
-        model = aiplatform.Model.upload(
-            display_name=display_name,
-            serving_container_image_uri=(
-                "us-docker.pkg.dev/vertex-ai/"
-                "vertex-vision-model-garden-dockers/"
-                "pytorch-peft-serve:latest"
-            ),
-            serving_container_environment_variables=env_vars,
+        response = client.text_generation(
+            prompt,
+            max_new_tokens=max_new_tokens,
+            temperature=0.7,
         )
-
-        # Deploy to an endpoint
-        self._base_endpoint = model.deploy(
-            machine_type="g2-standard-8",
-            accelerator_type="NVIDIA_L4",
-            accelerator_count=1,
-            deploy_request_timeout=1800,
-        )
-        logger.info("Base model endpoint deployed: %s", self._base_endpoint.resource_name)
+        return response
 
     def _predict_endpoint(self, endpoint, prompt: str, max_new_tokens: int) -> str:
         """Run a prediction against a Vertex AI endpoint."""
@@ -624,10 +597,9 @@ class VertexAIStudentTrainer:
         """Run inference with the student model.
 
         Tries the Vertex AI tuned endpoint first (available after at least
-        one training round).  Falls back to a Vertex AI-hosted base model
-        endpoint — this is deployed on-demand on Round 1 before any
-        fine-tuning has occurred and works for all model families (Llama,
-        Gemma, Qwen).  No local GPU required.
+        one training round).  Falls back to HuggingFace Inference API for
+        base model inference — this avoids Vertex AI endpoint provisioning
+        and is used on Round 1 before any fine-tuning has occurred.
         """
         # Try the tuned endpoint first (available after training)
         if self._tuned_endpoint is not None:
@@ -645,16 +617,13 @@ class VertexAIStudentTrainer:
                 return result
             except Exception as exc:
                 logger.warning(
-                    "Tuned endpoint inference failed, falling back to base endpoint: %s",
+                    "Tuned endpoint inference failed, falling back to HF Inference API: %s",
                     exc,
                 )
 
-        # Fallback: deploy and use the base model on Vertex AI.
-        # Lazy-deployed on first call, reused across subsequent rounds.
-        if self._base_endpoint is None:
-            self._deploy_base_endpoint()
-
-        return self._predict_endpoint(self._base_endpoint, prompt, max_new_tokens)
+        # Fallback: use HuggingFace Inference API for base model.
+        # No GPU provisioning needed — serverless and fast.
+        return self._hf_inference(prompt, max_new_tokens)
 
     def cleanup_base_endpoint(self) -> None:
         """Undeploy and clean up the base model endpoint.
