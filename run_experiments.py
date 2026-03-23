@@ -17,7 +17,7 @@ Teachers:
 Students:
     S1 = Llama 3.3 8B Instruct       (Meta)
     S2 = Gemma 3 4B                   (Google)
-    S3 = Mistral-7B-Instruct          (Mistral AI)
+    S3 = Qwen 2.5 7B Instruct         (Alibaba / Qwen)
 
 Each experiment saves its adapters and results under:
     outputs/<batch_N>/<teacher_short>_<student_short>/
@@ -102,8 +102,8 @@ STUDENTS = [
         "model_name_or_path": "google/gemma-3-4b-it",
     },
     {
-        "name": "mistral_7b",
-        "model_name_or_path": "mistralai/Mistral-7B-Instruct-v0.3",
+        "name": "qwen2.5_7b",
+        "model_name_or_path": "Qwen/Qwen2.5-7B-Instruct",
     },
 ]
 

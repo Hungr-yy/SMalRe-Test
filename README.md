@@ -6,14 +6,14 @@
 
 ## Overview
 
-SMalA implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-4o, Gemini 2.5 Pro, or Claude Sonnet 4.6) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3.3 8B Instruct, Gemma 3 4B, or Mistral-7B-Instruct).
+SMalA implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-4o, Gemini 2.5 Pro, or Claude Sonnet 4.6) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3.3 8B Instruct, Gemma 3 4B, or Qwen 2.5 7B Instruct).
 
 ```
 Teacher LLM (GPT-4o / Gemini 2.5 Pro / Claude Sonnet 4.6)
        │
        ▼  1. Generate exam from malware detonation report
        │
-Student SLM (Llama 3.3 8B Instruct / Gemma 3 4B / Mistral-7B-Instruct)
+Student SLM (Llama 3.3 8B Instruct / Gemma 3 4B / Qwen 2.5 7B Instruct)
        │
        ▼  2. Student attempts exam
        │
@@ -74,7 +74,7 @@ SMalA/
 | Teacher | Anthropic | Claude Sonnet 4.6                        |
 | Student | Meta      | Llama 3.3 8B Instruct                    |
 | Student | Google    | Gemma 3 4B                               |
-| Student | Mistral AI | Mistral-7B-Instruct                     |
+| Student | Alibaba / Qwen | Qwen 2.5 7B Instruct                |
 
 ---
 
@@ -100,7 +100,9 @@ OPENAI_API_KEY=sk-...
 GOOGLE_API_KEY=AIza...
 ANTHROPIC_API_KEY=sk-ant-...
 
-# Student SLM access (required for gated models like Llama 3.3)
+# Student SLM access (required for gated models: Llama 3.3, Gemma 3)
+# Accept each model's license on its HuggingFace page first.
+# Not needed for Qwen 2.5 7B Instruct (open access).
 HF_TOKEN=hf_...
 
 # Vertex AI (required when student.backend = "vertex_ai")
@@ -129,13 +131,22 @@ gcloud auth application-default login
 gcloud projects create smala-experiment --name="SMalA Experiment"
 gcloud config set project smala-experiment
 
-# d) Enable required APIs
+# d) Enable billing (required for GPU instances)
+# Link a billing account at: https://console.cloud.google.com/billing
+
+# e) Enable required APIs
 gcloud services enable aiplatform.googleapis.com
 gcloud services enable storage.googleapis.com
 
-# e) Create a GCS bucket for training data and adapter storage
-gcloud storage buckets create gs://smala-experiment-data --location=us-central1
+# f) Request GPU quota (new projects often have 0 GPU quota by default)
+# Go to: https://console.cloud.google.com/iam-admin/quotas
+# Filter for "NVIDIA L4" in your region (asia-southeast1) and request quota >= 1
+
+# g) Create a GCS bucket for training data and adapter storage
+gcloud storage buckets create gs://smala-experiment-data --location=asia-southeast1
 ```
+
+> **Important:** New GCP projects often have **zero GPU quota** by default. You must request NVIDIA L4 quota in your region before running experiments, or the training/inference jobs will fail. Quota requests are typically approved within minutes for small amounts.
 
 Then either set the `VERTEX_AI_*` variables in your `.env` (see step 2), or update `configs/model_config.yaml` directly:
 
@@ -145,7 +156,7 @@ student:
 
 vertex_ai:
   project: smala-experiment
-  location: us-central1
+  location: asia-southeast1
   staging_bucket: gs://smala-experiment-data/smala
 ```
 
@@ -173,9 +184,9 @@ This runs all 9 teacher-student combinations across 3 sequential batches (3 expe
 
 | Batch | Experiment 1       | Experiment 2            | Experiment 3             |
 |-------|--------------------|-------------------------|--------------------------|
-| 1     | GPT-4o → Llama 3.3 | Gemini 2.5 Pro → Gemma 3 | Claude Sonnet 4.6 → Mistral |
-| 2     | GPT-4o → Gemma 3   | Gemini 2.5 Pro → Mistral | Claude Sonnet 4.6 → Llama 3.3 |
-| 3     | GPT-4o → Mistral   | Gemini 2.5 Pro → Llama 3.3 | Claude Sonnet 4.6 → Gemma 3 |
+| 1     | GPT-4o → Llama 3.3 | Gemini 2.5 Pro → Gemma 3 | Claude Sonnet 4.6 → Qwen 2.5 |
+| 2     | GPT-4o → Gemma 3   | Gemini 2.5 Pro → Qwen 2.5 | Claude Sonnet 4.6 → Llama 3.3 |
+| 3     | GPT-4o → Qwen 2.5  | Gemini 2.5 Pro → Llama 3.3 | Claude Sonnet 4.6 → Gemma 3 |
 
 Each experiment saves adapters and results to `outputs/batch_N/<teacher>__<student>/`. A summary comparison table is saved to `outputs/experiment_summary.json`.
 
@@ -237,11 +248,25 @@ student:
 
 vertex_ai:
   project: your-gcp-project-id
-  location: us-central1
+  location: asia-southeast1
   staging_bucket: gs://your-bucket/smala
 ```
 
 Then authenticate: `gcloud auth application-default login`
+
+### Vertex AI cost notes
+
+The Vertex AI backend uses GPU-accelerated cloud instances. Key cost drivers:
+
+| Resource | When | Machine | Approx. cost |
+|----------|------|---------|-------------|
+| **Base model endpoint** | Round 1 inference (before any fine-tuning) | `g2-standard-8` + L4 GPU | ~$1–2/hr |
+| **Fine-tuning job** | Each training round | `n1-standard-8` + L4 GPU | ~$1–2/hr |
+| **GCS storage** | Training data + adapter checkpoints | Standard storage | Negligible |
+
+The base model endpoint is deployed once per experiment, reused for all Round 1 inference calls, then automatically cleaned up after the first training round completes. Fine-tuning jobs run for the duration of training only.
+
+For the full 3×3 matrix (9 experiments, up to 5 rounds each), expect roughly **$30–80 in Vertex AI compute costs** depending on how many rounds run before early stopping.
 
 ---
 
@@ -263,7 +288,7 @@ python -m pytest tests/test_fault_tolerance.py -v
 | Test file | Tests | Covers |
 |-----------|-------|--------|
 | `test_fault_tolerance.py` | 25 | Batch isolation, cross-batch isolation, progress preservation, retry logic, artifact verification, tracker persistence |
-| `test_vertex_ai_workflow.py` | 17 | Config propagation (`student.backend`, `vertex_ai` section), trainer type dispatch, artifact verification with Vertex AI metadata, end-to-end orchestration across all 9 experiments |
+| `test_vertex_ai_workflow.py` | 29 | Config propagation (`student.backend`, `vertex_ai` section), trainer type dispatch, HF_TOKEN passthrough to training/serving containers, Round 1 base endpoint deployment and inference for all models, endpoint cleanup, artifact verification with Vertex AI metadata, end-to-end orchestration across all 9 experiments |
 
 ---
 

@@ -410,7 +410,7 @@ class VertexAIStudentTrainer:
     _VERTEX_MODEL_MAP = {
         "meta-llama/Llama-3.3-8B-Instruct": "meta/llama-3.3-8b-instruct",
         "google/gemma-3-4b-it": "google/gemma-3-4b-it",
-        "mistralai/Mistral-7B-Instruct-v0.3": "mistralai/mistral-7b-instruct-v0.3",
+        "Qwen/Qwen2.5-7B-Instruct": "Qwen/Qwen2.5-7B-Instruct",
     }
 
     def __init__(
@@ -436,6 +436,10 @@ class VertexAIStudentTrainer:
         self._tuned_endpoint = None
         self._tuning_job_count = 0
 
+        # Vertex AI endpoint for base model inference (Round 1, before fine-tuning).
+        # Lazy-deployed on first generate() call when no tuned endpoint exists.
+        self._base_endpoint = None
+
     # ------------------------------------------------------------------
     # Factory
     # ------------------------------------------------------------------
@@ -451,7 +455,7 @@ class VertexAIStudentTrainer:
         return cls(
             model_name_or_path=student_cfg.get("model_name_or_path", "meta-llama/Llama-3.3-8B-Instruct"),
             project=vertex_cfg.get("project", "") or os.environ.get("VERTEX_AI_PROJECT", ""),
-            location=vertex_cfg.get("location", "") or os.environ.get("VERTEX_AI_LOCATION", "us-central1"),
+            location=vertex_cfg.get("location", "") or os.environ.get("VERTEX_AI_LOCATION", "asia-southeast1"),
             staging_bucket=vertex_cfg.get("staging_bucket", "") or os.environ.get("VERTEX_AI_STAGING_BUCKET", ""),
             output_dir=cfg.get("output_dir", "outputs/student_adapter"),
             learning_rate=training_cfg.get("learning_rate", 2e-4),
@@ -522,6 +526,13 @@ class VertexAIStudentTrainer:
             ),
         )
 
+        # Build environment variables for the training container.
+        # HF_TOKEN is required for gated models (e.g. Llama 3.3 8B Instruct).
+        env_vars = {}
+        hf_token = os.environ.get("HF_TOKEN", "")
+        if hf_token:
+            env_vars["HF_TOKEN"] = hf_token
+
         # Launch the training job
         model = tuning_job.run(
             args=[
@@ -537,6 +548,7 @@ class VertexAIStudentTrainer:
             accelerator_type="NVIDIA_L4",
             accelerator_count=1,
             model_display_name=display_name,
+            environment_variables=env_vars if env_vars else None,
         )
 
         logger.info("Tuning job complete: %s", model.resource_name)
@@ -551,50 +563,112 @@ class VertexAIStudentTrainer:
         self._tuned_endpoint = model
 
     # ------------------------------------------------------------------
-    # Inference (Vertex AI)
+    # Inference
     # ------------------------------------------------------------------
 
-    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
-        """Run inference via Vertex AI prediction endpoint.
+    def _deploy_base_endpoint(self) -> None:
+        """Deploy the base HuggingFace model to a Vertex AI endpoint.
 
-        If no tuned model has been deployed yet (first round), falls back
-        to the base model via the Vertex AI Model Garden.
+        Used for inference before any fine-tuning has completed (Round 1).
+        The endpoint is kept alive and reused across rounds until a tuned
+        endpoint becomes available.  Works for all model families (Llama,
+        Gemma, Qwen) since it uses the same PEFT serving container that
+        the training pipeline produces.
         """
         from google.cloud import aiplatform
 
         aiplatform.init(project=self.project, location=self.location)
 
+        display_name = (
+            f"smala-base-{self.model_name_or_path.split('/')[-1]}"
+        )
+
+        logger.info(
+            "Deploying base model to Vertex AI endpoint: %s", self.model_name_or_path
+        )
+
+        # Build environment variables for the serving container
+        env_vars = {"MODEL_ID": self.model_name_or_path}
+        hf_token = os.environ.get("HF_TOKEN", "")
+        if hf_token:
+            env_vars["HF_TOKEN"] = hf_token
+
+        # Upload model with the serving container
+        model = aiplatform.Model.upload(
+            display_name=display_name,
+            serving_container_image_uri=(
+                "us-docker.pkg.dev/vertex-ai/"
+                "vertex-vision-model-garden-dockers/"
+                "pytorch-peft-serve:latest"
+            ),
+            serving_container_environment_variables=env_vars,
+        )
+
+        # Deploy to an endpoint
+        self._base_endpoint = model.deploy(
+            machine_type="g2-standard-8",
+            accelerator_type="NVIDIA_L4",
+            accelerator_count=1,
+            deploy_request_timeout=1800,
+        )
+        logger.info("Base model endpoint deployed: %s", self._base_endpoint.resource_name)
+
+    def _predict_endpoint(self, endpoint, prompt: str, max_new_tokens: int) -> str:
+        """Run a prediction against a Vertex AI endpoint."""
+        response = endpoint.predict(
+            instances=[{"prompt": prompt, "max_tokens": max_new_tokens}]
+        )
+        return response.predictions[0].get("generated_text", "")
+
+    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
+        """Run inference with the student model.
+
+        Tries the Vertex AI tuned endpoint first (available after at least
+        one training round).  Falls back to a Vertex AI-hosted base model
+        endpoint — this is deployed on-demand on Round 1 before any
+        fine-tuning has occurred and works for all model families (Llama,
+        Gemma, Qwen).  No local GPU required.
+        """
+        # Try the tuned endpoint first (available after training)
         if self._tuned_endpoint is not None:
-            # Use the fine-tuned model endpoint
             try:
+                from google.cloud import aiplatform
+
+                aiplatform.init(project=self.project, location=self.location)
                 endpoint = self._tuned_endpoint.deploy(
                     machine_type="n1-standard-4",
                     accelerator_type="NVIDIA_L4",
                     accelerator_count=1,
                 )
-                response = endpoint.predict(
-                    instances=[{"prompt": prompt, "max_tokens": max_new_tokens}]
-                )
+                result = self._predict_endpoint(endpoint, prompt, max_new_tokens)
                 endpoint.undeploy_all()
-                return response.predictions[0].get("generated_text", "")
+                return result
             except Exception as exc:
-                logger.warning("Tuned endpoint inference failed, falling back to base: %s", exc)
+                logger.warning(
+                    "Tuned endpoint inference failed, falling back to base endpoint: %s",
+                    exc,
+                )
 
-        # Fallback: use the base model via Vertex AI GenerativeModel
-        try:
-            import vertexai
-            from vertexai.generative_models import GenerativeModel
+        # Fallback: deploy and use the base model on Vertex AI.
+        # Lazy-deployed on first call, reused across subsequent rounds.
+        if self._base_endpoint is None:
+            self._deploy_base_endpoint()
 
-            vertexai.init(project=self.project, location=self.location)
-            vertex_model_id = self._VERTEX_MODEL_MAP.get(
-                self.model_name_or_path, self.model_name_or_path
-            )
-            model = GenerativeModel(vertex_model_id)
-            response = model.generate_content(prompt)
-            return response.text
-        except Exception as exc:
-            logger.warning("Vertex AI base model inference failed: %s", exc)
-            return ""
+        return self._predict_endpoint(self._base_endpoint, prompt, max_new_tokens)
+
+    def cleanup_base_endpoint(self) -> None:
+        """Undeploy and clean up the base model endpoint.
+
+        Called after training produces a tuned endpoint, or at experiment end.
+        """
+        if self._base_endpoint is not None:
+            try:
+                self._base_endpoint.undeploy_all()
+                self._base_endpoint.delete()
+                logger.info("Base model endpoint cleaned up.")
+            except Exception as exc:
+                logger.warning("Failed to clean up base endpoint: %s", exc)
+            self._base_endpoint = None
 
     # ------------------------------------------------------------------
     # Persistence

@@ -14,6 +14,7 @@ configuration through the full pipeline:
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -157,7 +158,7 @@ class TestBuildExperimentConfig:
 
         build_experiment_config(
             teacher=TEACHERS[0],
-            student=STUDENTS[2],  # mistral_7b
+            student=STUDENTS[2],  # qwen2.5_7b
             base_config=base,
             output_dir="/tmp/test",
         )
@@ -262,7 +263,382 @@ class TestCreateStudentTrainer:
 
 
 # ---------------------------------------------------------------------------
-# Test Group 3: Artifact verification with Vertex AI metadata
+# Test Group 3: HF_TOKEN passthrough to Vertex AI training container
+# ---------------------------------------------------------------------------
+
+def _mock_gcp_modules():
+    """Inject mock google.cloud modules into sys.modules so train() can import them."""
+    mock_aiplatform = mock.MagicMock()
+    mock_storage = mock.MagicMock()
+    mock_google = mock.MagicMock()
+    mock_google.cloud.aiplatform = mock_aiplatform
+    mock_google.cloud.storage = mock_storage
+
+    patches = {
+        "google": mock_google,
+        "google.cloud": mock_google.cloud,
+        "google.cloud.aiplatform": mock_aiplatform,
+        "google.cloud.storage": mock_storage,
+    }
+    return patches, mock_aiplatform
+
+
+class TestHFTokenPassthrough:
+    """HF_TOKEN must be passed to the Vertex AI training container for gated models."""
+
+    def test_hf_token_passed_to_training_job(self):
+        """When HF_TOKEN is set, it must appear in environment_variables."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="meta-llama/Llama-3.3-8B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_job = mock.MagicMock()
+        mock_job.run.return_value = mock.MagicMock(resource_name="projects/test/models/123")
+
+        gcp_modules, mock_aiplatform = _mock_gcp_modules()
+        mock_aiplatform.CustomTrainingJob.return_value = mock_job
+
+        curriculum = [{"question": {"question": "q", "options": ["A. a"]},
+                       "answer": {"correct_options": ["A"]}}]
+
+        with mock.patch.dict("sys.modules", gcp_modules), \
+             mock.patch.object(trainer, "_upload_to_gcs"), \
+             mock.patch.object(trainer, "_download_from_gcs"), \
+             mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test_token_123"}):
+            trainer.train(curriculum)
+
+        call_kwargs = mock_job.run.call_args
+        env_vars = call_kwargs.kwargs.get("environment_variables")
+        assert env_vars is not None
+        assert env_vars["HF_TOKEN"] == "hf_test_token_123"
+
+    def test_no_hf_token_passes_none(self):
+        """When HF_TOKEN is not set, environment_variables should be None."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="Qwen/Qwen2.5-7B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_job = mock.MagicMock()
+        mock_job.run.return_value = mock.MagicMock(resource_name="projects/test/models/123")
+
+        gcp_modules, mock_aiplatform = _mock_gcp_modules()
+        mock_aiplatform.CustomTrainingJob.return_value = mock_job
+
+        curriculum = [{"question": {"question": "q", "options": ["A. a"]},
+                       "answer": {"correct_options": ["A"]}}]
+
+        # Ensure HF_TOKEN is NOT in the environment
+        env = {k: v for k, v in os.environ.items() if k != "HF_TOKEN"}
+        with mock.patch.dict("sys.modules", gcp_modules), \
+             mock.patch.object(trainer, "_upload_to_gcs"), \
+             mock.patch.object(trainer, "_download_from_gcs"), \
+             mock.patch.dict("os.environ", env, clear=True):
+            trainer.train(curriculum)
+
+        call_kwargs = mock_job.run.call_args
+        env_vars = call_kwargs.kwargs.get("environment_variables")
+        assert env_vars is None
+
+    def test_all_three_students_get_hf_token_when_set(self):
+        """All 3 student models must receive HF_TOKEN in their training jobs."""
+        from run_experiments import STUDENTS
+        from student_trainer import VertexAIStudentTrainer
+
+        for student in STUDENTS:
+            trainer = VertexAIStudentTrainer(
+                model_name_or_path=student["model_name_or_path"],
+                project="test-project",
+                location="us-central1",
+                staging_bucket="gs://test-bucket/smala",
+            )
+
+            mock_job = mock.MagicMock()
+            mock_job.run.return_value = mock.MagicMock(resource_name="projects/test/models/123")
+
+            gcp_modules, mock_aiplatform = _mock_gcp_modules()
+            mock_aiplatform.CustomTrainingJob.return_value = mock_job
+
+            curriculum = [{"question": {"question": "q", "options": ["A. a"]},
+                           "answer": {"correct_options": ["A"]}}]
+
+            with mock.patch.dict("sys.modules", gcp_modules), \
+                 mock.patch.object(trainer, "_upload_to_gcs"), \
+                 mock.patch.object(trainer, "_download_from_gcs"), \
+                 mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test_token"}):
+                trainer.train(curriculum)
+
+            call_kwargs = mock_job.run.call_args
+            env_vars = call_kwargs.kwargs.get("environment_variables")
+            assert env_vars is not None, (
+                f"{student['name']}: HF_TOKEN not passed to training job"
+            )
+            assert env_vars["HF_TOKEN"] == "hf_test_token", (
+                f"{student['name']}: HF_TOKEN has wrong value"
+            )
+
+    def test_training_job_args_contain_correct_model_id(self):
+        """The --model_id arg must match the student's HuggingFace model path."""
+        from run_experiments import STUDENTS
+        from student_trainer import VertexAIStudentTrainer
+
+        for student in STUDENTS:
+            trainer = VertexAIStudentTrainer(
+                model_name_or_path=student["model_name_or_path"],
+                project="test-project",
+                location="us-central1",
+                staging_bucket="gs://test-bucket/smala",
+            )
+
+            mock_job = mock.MagicMock()
+            mock_job.run.return_value = mock.MagicMock(resource_name="projects/test/models/123")
+
+            gcp_modules, mock_aiplatform = _mock_gcp_modules()
+            mock_aiplatform.CustomTrainingJob.return_value = mock_job
+
+            curriculum = [{"question": {"question": "q", "options": ["A. a"]},
+                           "answer": {"correct_options": ["A"]}}]
+
+            with mock.patch.dict("sys.modules", gcp_modules), \
+                 mock.patch.object(trainer, "_upload_to_gcs"), \
+                 mock.patch.object(trainer, "_download_from_gcs"), \
+                 mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test"}):
+                trainer.train(curriculum)
+
+            call_kwargs = mock_job.run.call_args
+            args_list = call_kwargs.kwargs.get("args")
+            model_id_arg = f"--model_id={student['model_name_or_path']}"
+            assert model_id_arg in args_list, (
+                f"{student['name']}: expected {model_id_arg} in training args, "
+                f"got {args_list}"
+            )
+
+
+# ---------------------------------------------------------------------------
+# Test Group 4: Round 1 inference fallback (Vertex AI base endpoint)
+# ---------------------------------------------------------------------------
+
+class TestRound1InferenceFallback:
+    """Before any fine-tuning (Round 1), generate() must deploy and use
+    a Vertex AI base model endpoint for ALL student models."""
+
+    def test_generate_deploys_base_endpoint_when_no_tuned_endpoint(self):
+        """When _tuned_endpoint is None, generate() must deploy a base endpoint."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="meta-llama/Llama-3.3-8B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+        assert trainer._tuned_endpoint is None
+        assert trainer._base_endpoint is None
+
+        mock_endpoint = mock.MagicMock()
+        mock_endpoint.predict.return_value = mock.MagicMock(
+            predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
+        )
+
+        with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
+            def set_endpoint():
+                trainer._base_endpoint = mock_endpoint
+            mock_deploy.side_effect = set_endpoint
+
+            result = trainer.generate("test prompt")
+
+        mock_deploy.assert_called_once()
+        assert result == '{"correct_options": ["A"]}'
+
+    def test_base_endpoint_reused_across_calls(self):
+        """Once deployed, the base endpoint must be reused, not redeployed."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="Qwen/Qwen2.5-7B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_endpoint = mock.MagicMock()
+        mock_endpoint.predict.return_value = mock.MagicMock(
+            predictions=[{"generated_text": '{"correct_options": ["B"]}'}]
+        )
+        # Pre-set the base endpoint (simulating it was already deployed)
+        trainer._base_endpoint = mock_endpoint
+
+        with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
+            trainer.generate("prompt 1")
+            trainer.generate("prompt 2")
+
+        # Should NOT redeploy
+        mock_deploy.assert_not_called()
+        assert mock_endpoint.predict.call_count == 2
+
+    def test_all_three_students_deploy_base_endpoint_on_round1(self):
+        """All 3 student models must deploy a base endpoint on Round 1."""
+        from run_experiments import STUDENTS
+        from student_trainer import VertexAIStudentTrainer
+
+        for student in STUDENTS:
+            trainer = VertexAIStudentTrainer(
+                model_name_or_path=student["model_name_or_path"],
+                project="test-project",
+                location="us-central1",
+                staging_bucket="gs://test-bucket/smala",
+            )
+
+            mock_endpoint = mock.MagicMock()
+            mock_endpoint.predict.return_value = mock.MagicMock(
+                predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
+            )
+
+            with mock.patch.object(trainer, "_deploy_base_endpoint") as mock_deploy:
+                def set_endpoint():
+                    trainer._base_endpoint = mock_endpoint
+                mock_deploy.side_effect = set_endpoint
+
+                result = trainer.generate("test prompt", max_new_tokens=128)
+
+            mock_deploy.assert_called_once(), (
+                f"{student['name']}: base endpoint not deployed on Round 1"
+            )
+            assert isinstance(result, str) and len(result) > 0, (
+                f"{student['name']}: generate() returned empty on Round 1"
+            )
+
+    def test_generate_uses_tuned_endpoint_when_available(self):
+        """After training, generate() must try the tuned endpoint first."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="google/gemma-3-4b-it",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_endpoint = mock.MagicMock()
+        mock_endpoint.predict.return_value = mock.MagicMock(
+            predictions=[{"generated_text": '{"correct_options": ["C"]}'}]
+        )
+        mock_model = mock.MagicMock()
+        mock_model.deploy.return_value = mock_endpoint
+        trainer._tuned_endpoint = mock_model
+
+        gcp_modules, mock_aiplatform = _mock_gcp_modules()
+
+        with mock.patch.dict("sys.modules", gcp_modules), \
+             mock.patch.object(trainer, "_deploy_base_endpoint") as mock_base_deploy:
+            result = trainer.generate("test prompt")
+
+        mock_model.deploy.assert_called_once()
+        mock_base_deploy.assert_not_called()
+        assert result == '{"correct_options": ["C"]}'
+
+    def test_generate_falls_back_to_base_endpoint_when_tuned_fails(self):
+        """If tuned endpoint raises, generate() must fall back to base endpoint."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="meta-llama/Llama-3.3-8B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_model = mock.MagicMock()
+        mock_model.deploy.side_effect = RuntimeError("endpoint unavailable")
+        trainer._tuned_endpoint = mock_model
+
+        mock_base = mock.MagicMock()
+        mock_base.predict.return_value = mock.MagicMock(
+            predictions=[{"generated_text": '{"correct_options": ["A"]}'}]
+        )
+        trainer._base_endpoint = mock_base
+
+        gcp_modules, _ = _mock_gcp_modules()
+
+        with mock.patch.dict("sys.modules", gcp_modules):
+            result = trainer.generate("test prompt")
+
+        mock_base.predict.assert_called_once()
+        assert result == '{"correct_options": ["A"]}'
+
+    def test_deploy_base_endpoint_passes_hf_token(self):
+        """_deploy_base_endpoint must pass HF_TOKEN to the serving container."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="meta-llama/Llama-3.3-8B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        gcp_modules, mock_aiplatform = _mock_gcp_modules()
+        mock_uploaded_model = mock.MagicMock()
+        mock_aiplatform.Model.upload.return_value = mock_uploaded_model
+        mock_uploaded_model.deploy.return_value = mock.MagicMock()
+
+        with mock.patch.dict("sys.modules", gcp_modules), \
+             mock.patch.dict("os.environ", {"HF_TOKEN": "hf_test_deploy"}):
+            trainer._deploy_base_endpoint()
+
+        upload_kwargs = mock_aiplatform.Model.upload.call_args.kwargs
+        env_vars = upload_kwargs.get("serving_container_environment_variables", {})
+        assert env_vars["MODEL_ID"] == "meta-llama/Llama-3.3-8B-Instruct"
+        assert env_vars["HF_TOKEN"] == "hf_test_deploy"
+
+    def test_cleanup_base_endpoint(self):
+        """cleanup_base_endpoint must undeploy and delete the endpoint."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="Qwen/Qwen2.5-7B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+
+        mock_endpoint = mock.MagicMock()
+        trainer._base_endpoint = mock_endpoint
+
+        trainer.cleanup_base_endpoint()
+
+        mock_endpoint.undeploy_all.assert_called_once()
+        mock_endpoint.delete.assert_called_once()
+        assert trainer._base_endpoint is None
+
+    def test_cleanup_is_idempotent(self):
+        """Calling cleanup when no endpoint exists must not raise."""
+        from student_trainer import VertexAIStudentTrainer
+
+        trainer = VertexAIStudentTrainer(
+            model_name_or_path="Qwen/Qwen2.5-7B-Instruct",
+            project="test-project",
+            location="us-central1",
+            staging_bucket="gs://test-bucket/smala",
+        )
+        assert trainer._base_endpoint is None
+
+        # Should not raise
+        trainer.cleanup_base_endpoint()
+        assert trainer._base_endpoint is None
+
+
+# ---------------------------------------------------------------------------
+# Test Group 5: Artifact verification with Vertex AI metadata
 # ---------------------------------------------------------------------------
 
 class TestVertexAIArtifactVerification:

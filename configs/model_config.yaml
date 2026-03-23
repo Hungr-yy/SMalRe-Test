@@ -37,8 +37,8 @@ student:
 vertex_ai:
   # GCP project ID
   project: ""
-  # GCP region
-  location: us-central1
+  # GCP region (asia-southeast1 = Singapore, us-central1 = Iowa)
+  location: asia-southeast1
   # GCS bucket for staging training data and adapter checkpoints
   # e.g. gs://my-bucket/smala
   staging_bucket: ""

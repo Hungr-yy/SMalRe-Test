@@ -381,6 +381,10 @@ def run_distillation_loop(
         student.train(accumulated_curriculum)
         student.save(adapter_path)
 
+        # Clean up base model endpoint now that a tuned endpoint exists
+        if hasattr(student, "cleanup_base_endpoint"):
+            student.cleanup_base_endpoint()
+
         # Track best performance
         if accuracy > best_accuracy:
             best_accuracy = accuracy
@@ -398,6 +402,10 @@ def run_distillation_loop(
             break
 
     logger.info("Distillation loop complete. Best accuracy: %.4f", best_accuracy)
+
+    # Clean up any remaining base model endpoint
+    if hasattr(student, "cleanup_base_endpoint"):
+        student.cleanup_base_endpoint()
 
     # Save final accumulated curriculum
     with open(Path(output_dir) / "accumulated_curriculum.json", "w") as fh:
