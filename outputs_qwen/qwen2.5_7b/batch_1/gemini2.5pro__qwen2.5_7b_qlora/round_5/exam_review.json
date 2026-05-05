@@ -1,0 +1,302 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The question asks which malware categories describe the sample. The report is a .NET infostealer (YARA matches for generic stealer, WorldWind stealer, Agent Tesla, AsyncRAT, njRAT). The MITRE ATT&CK mapping includes T1486 (Data Encrypted for Impact) as a string-level indicator, but there is no behavioral evidence of actual ransomware activity (no file encryption observed, no ransom note dropped). The correct answer should be 'A' (Infostealer) and possibly 'C' (RAT), but NOT 'B' (Ransomware). Including 'B' in the answer key is factually incorrect based on the report evidence. The T1486 entry appears to be a static string indicator (CryptProtectData API reference), not actual ransomware behavior."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key includes unsupported option"
+        ],
+        "reasoning": "The question asks which malicious capabilities the sample exhibits. Option D ('Deletion of Volume Shadow Copies') is listed as incorrect in the answer key (correct answers are A, B, C), which is appropriate since there is no vssadmin or shadow copy deletion in this report. However, the answer key includes 'B' (Data encryption for impact). While T1486 appears in the MITRE mapping, it is based on a static string reference to CryptProtectData/CryptProtectMemory APIs, not actual file encryption for ransom. The report is an infostealer with credential theft and C2 capabilities. Including 'B' as a correct answer is misleading and not well-supported by the behavioral evidence. Option 'E' (Evasion via user-mode API unhooking) is not supported by the report at all. The answer key is partially incorrect."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques used by the malware. The correct answers (A: Software Packing via UPX on dropped muniw.exe, C: Sandbox Evasion via RDTSCP instruction and environment-aware code branching, D: Process Injection via WriteProcessMemory/VirtualAlloc, F: Self-deletion of initial payload via cmd.exe marking files for deletion) are all well-supported by the detonation report. The distractors (B: Volume Shadow Copy deletion, E: Clearing Windows Event Logs) are not present in the report. The question is technically sound, specific, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about disruptive/evasive actions performed by the Sdbot sample. Correct answers A (VMWare detection via registry), B (service termination via DeleteService API), D (UPX packing), and E (firewall modification via T1562.004) are all supported by the report. Option C (Volume Shadow Copy deletion) is correctly excluded as there is no vssadmin execution in this report. The question is well-constructed and factually accurate."
+      },
+      {
+        "question_index": 4,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Question topic mismatch"
+        ],
+        "reasoning": "The question is labeled 'Ransomware Behaviour Analysis' but the report family is 'killers' (Trojan.Regrun). The question asks which behaviors are 'preparation for a widespread file encryption attack, characteristic of ransomware.' The correct answers given are B (FindFirstFileA for file enumeration) and C (accessing unusual drive letters K:, L:). While these could be consistent with ransomware preparation, the report does not contain any encryption-related indicators, no ransom note, no vssadmin, and no T1486. The question topic is misleading for this sample. Additionally, option A (masquerading via fake system processes) is also a strong ransomware preparation indicator but is excluded from the answer key without justification. The question framing is inappropriate for this malware family."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which evasion/disruptive techniques are supported by evidence in the Backdoor.Hupigon report. Correct answers A (disabling admin shares via net share /del), C (process injection via WriteProcessMemory/VirtualAlloc), and D (Windows service creation via registry-67) are all directly evidenced in the report. Option B (vssadmin volume shadow copy deletion) is correctly excluded as it is not present. Option E (AMSI patching) is also correctly excluded. The question is well-constructed and factually accurate."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about WannaCryptor-specific behaviors. Correct answers A (HTA ransom note via mshta.exe), C (bcrypt.dll loading for encryption), D (desktop background modification via registry-22), and E (blockchain API queries to api.blockcypher.com) are all directly evidenced in the report. Option B (vssadmin volume shadow copy deletion) is correctly excluded as there is no vssadmin process in this report. Option F (process hollowing into explorer.exe) is also correctly excluded. The question is technically sound and well-supported."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about WannaCryptor TTPs from the WannaCry DLL report. Correct answers A (ARP scanning for lateral movement), B (service creation/modification via mssecsvc.exe), and C (killswitch domain query to iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com) are all directly evidenced in the report. Option D (volume shadow copy deletion) is correctly excluded as there is no vssadmin in this report. The question is technically accurate and well-constructed."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Impact tactic behaviors in the IL:Trojan.MSILZilla (remcos family) report. Correct answers B (T1486 Data Encrypted for Impact - present in MITRE mapping with CryptProtectData string indicators) and D (T1491.001 Internal Defacement - present in MITRE mapping, and RegAsm.exe opens many files with write access) are supported. Option A (T1490 shadow copy inhibition) is correctly excluded. Option C (keylogging) is a Collection/Credential Access technique, not Impact. Option E (file deletion T1070.004) is present but not listed as correct, which is debatable but acceptable. The answer key is defensible."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in the Remcos report. Correct answers A (VirtualAlloc in remote process - api-20), C (Process Hollowing T1055.012 in MITRE mapping), and D (WriteProcessMemory - api-0) are all directly evidenced. Option B (WScript.exe execution) is correctly excluded as it is a scripting execution technique, not injection evidence. Option E (remcos.exe file creation) is correctly excluded as it is a persistence/installation indicator, not injection evidence. The question is well-constructed."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion evidence from static analysis of a small Remcos stub. Correct answers A (high entropy .text section at 6.4304), C (T1027 Obfuscated Files or Information in MITRE mapping), and E (T1027.009 Embedded Payloads in MITRE mapping) are all directly supported by the report. Options B, D, and F describe behaviors not present in this minimal static-only report. The question is appropriate for the evidence available."
+      },
+      {
+        "question_index": 11,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Question topic mismatch"
+        ],
+        "reasoning": "The question asks about ransomware-related activities in a Trojan.Ursnif report (um_unhooking family). The correct answers given are A (encrypting data T1486) and B (stopping services T1489). While T1486 and T1489 appear in the MITRE ATT&CK mapping, the behavioral evidence in the report does not show actual file encryption or service stopping - these appear to be capability-based mappings from static analysis. The report shows APC injection (NtQueueApcThread), long sleep evasion, and AppInit DLL persistence - none of which are ransomware-specific behaviors. The question topic 'Ransomware Behaviour Analysis' is inappropriate for this sample, and the answer key is not well-supported by the behavioral evidence in the report."
+      },
+      {
+        "question_index": 12,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Question topic mismatch"
+        ],
+        "reasoning": "Similar to question 11, this question asks about ransomware TTPs in a Trojan.Injuke report (um_unhooking family). The correct answers given are A (T1486 Data Encrypted for Impact), C (T1489 Service Stop), and E (T1083 File and Directory Discovery). While T1486 and T1489 appear in the MITRE mapping, the behavioral evidence does not show actual ransomware activity - no file encryption, no ransom note, no vssadmin. The report shows APC injection and long sleep evasion. Including T1486 as a 'ransomware behaviour' answer is misleading. The question topic is inappropriate for this sample."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware/destructive behaviors in a complex malware report (um_unhooking family). Correct answers A (AES encryption via YARA match and CryptStringToBinaryA), B (direct disk partition interaction via \\Device\\Harddisk0\\DR0 - api-59), C (service termination via T1489 and ExitProcess), and E (file/directory enumeration via FindFirstFileA) are all directly evidenced. Option D (volume shadow copy deletion) is correctly excluded as there is no vssadmin in this report. The question is well-constructed and factually accurate."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations suggest the sample is a Remcos RAT. Correct answers A (keylogging and clipboard collection - T1056.001 and T1115 in MITRE mapping), B (mutant 'Rmc-H6V4FW' - a well-known Remcos mutex naming convention), and C (credential/cookie theft from browsers - T1555.003, T1539) are all directly evidenced. Option D (file encryption and service stopping) is correctly excluded as these are not the primary behaviors observed. The question is technically sound and the Remcos mutex naming is a strong indicator."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Crysis/Dharma ransomware TTPs. Correct answers A (vssadmin delete shadows /all /quiet - directly evidenced by the vssadmin.exe process with that exact command line) and B (registry auto-execute modification - registry-0 signature showing SETVAL on HKLM\\SOFTWARE run key) are both directly and unambiguously evidenced in the report. Options C (HTTP exfiltration), D (explorer.exe injection), and E (MBR wiping) are correctly excluded. The question is excellent - specific, technically accurate, and well-supported."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion evidence from static analysis of a second Remcos stub. Correct answers A (high entropy .text section at 6.4304), C (T1027 Obfuscated Files or Information in MITRE mapping), and E (T1027.009 Embedded Payloads in MITRE mapping) are all directly supported. Options B, D, and F describe behaviors not present in this minimal static-only report. This question is nearly identical in structure to question_index 10, which covers the same topic with the same report family and very similar evidence. However, the detonation reports are different samples (different sizes, different entropy values), so it is not plagiarism from the benchmark. It is a near-duplicate of question_index 10 within this generated exam, but that is a content management issue rather than a quality issue. Flagging for near-duplication within the exam."
+      }
+    ],
+    "summary": {
+      "total": 17,
+      "passed": 12,
+      "flagged": 0,
+      "rejected": 5
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key includes option B which is not supported by the report"
+        ],
+        "reasoning": "The question asks which functionalities the malware 'actually exhibits' based on signatures, and specifically notes that T1486 (Data Encrypted for Impact) is listed in the MITRE mapping. The answer key includes A (credential theft from browsers/Windows Vault) and D (keylogging/screenshots), which are well-supported by the signatures (T1555.004, T1555.003, T1056.001, T1113, etc.). However, the answer key also includes B (using Telegram for C2), which is supported by the string 'api.telegram.org' and T1102 (Web Service). The question asks to distinguish what is 'actually exhibited' vs. what T1486 implies. The problem is that option C (encrypting user files and dropping a ransom note) and E (deleting Volume Shadow Copies) are correctly excluded. Option B is actually supported by the report (api.telegram.org string, T1102 mapping). So A, B, D are all correct. However, the question framing is problematic: it asks which functionalities the malware 'actually exhibits' in contrast to T1486 being listed, implying the student must distinguish real behavior from ATT&CK-mapped-but-not-observed behavior. The answer key of [A, B, D] is defensible. BUT: the question stem says 'which of the following functionalities does the malware actually exhibit?' \u2014 this is a valid analytical question. On closer inspection, the answer key appears correct: A (browser/vault credential theft - supported by T1555.003, T1555.004, string-627, string-405), B (Telegram C2 - supported by string-186 'api.telegram.org', T1102), D (keylogging/screenshots - supported by T1056.001, T1113, stream-72, stream-79). C is wrong (no ransom note dropping observed), E is wrong (no VSS deletion observed). The answer key [A, B, D] is factually correct. However, the question topic is listed as 'identify_malware_family' which does not match the actual question content (which is about behavioral capabilities). This is a metadata mismatch. Additionally, the question is well-constructed and not plagiarized. The metadata mismatch (topic says 'identify_malware_family' but question is about behavioral analysis) is a flag-level issue, not a reject. Re-evaluating: the answer key is correct, the question is answerable from the report, not plagiarized. The topic metadata mismatch is a minor issue. Verdict should be 'flag'."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key excludes option E which is clearly supported by the report"
+        ],
+        "reasoning": "The question asks which malware classifications 'most accurately describe this sample's primary functions.' The answer key is [A, C]. Option A (Infostealer - FTP credential harvesting and keylogging) is strongly supported by string-11 (FTP credentials/recentservers.xml), string-556 (keylogger strings), T1552.001, T1056.001. Option C (RAT - YARA signature match for njrat and capabilities like C2 and keylogging) is supported by yara-0 (win_njrat_g0), C2 capabilities, keylogging. Option E (Downloader - drops a secondary executable) is clearly supported by binary-0 ('Client.exe' dropped file), binary-1 ('Drops executable files'), and T1105. The answer key incorrectly excludes E. A professional malware analyst would identify this as an infostealer/RAT that also drops additional payloads, making E a valid correct answer. Option B (Ransomware) is correctly excluded - T1486 appears in the MITRE mapping but no actual encryption of user files is observed in the signatures. Option D (EDR/AV Killer) is correctly excluded - guarded memory regions are anti-debugging, not EDR killing. The answer key [A, C] is incomplete by excluding E, making this a factually incorrect answer key. Verdict: reject."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion and credential access techniques were 'definitively observed' based on signatures and process list. Answer key [A, B] is correct. Option A (Masquerading as legitimate system processes from non-standard directories) is definitively supported by target-33 ('Creates a fake system process' - WINLOGON.EXE at %APPDATA%\\WINDOWS\\WINLOGON.EXE) and the process list showing WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, SMSS.EXE all running from %APPDATA%\\WINDOWS\\ instead of system directories. Option B (Hooking file system and internet-related APIs) is definitively supported by hooks-2 ('Hooks file system APIs' - FindFirstFileW@KERNEL32.DLL in WINLOGON.EXE) and hooks-5 ('Hooks internet related APIs' - send@WS2_32.DLL in WINLOGON.EXE). Option C (Deleting Volume Shadow Copies) is not observed in the signatures. Option D (CreateRemoteThread injection) - while process injection is observed (api-0, api-20), CreateRemoteThread specifically is not mentioned in the signatures. Option E (WMI for persistence) - WMI is not in the MITRE mapping for this sample. The question is well-constructed, not plagiarized, and the answer key is correct. The question is appropriately hard difficulty given the need to distinguish observed vs. mapped-but-not-observed behaviors."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which findings suggest the malware may be packed or obfuscated based on static analysis. Answer key [A, C] is correct. Option A (high entropy in .text section) is directly supported by static-6 ('Section contains high entropy' - .text section with entropy 6.2203). Option C (mapped to T1027 Obfuscated Files or Information) is directly supported by the MITRE ATT&CK mapping (T1027 and T1027.009 Embedded Payloads) and static-157 (Matched Compiler/Packer signature mapped to T1027). Option B (Debug data directory) is present (static-146) but is not an indicator of packing/obfuscation - it's actually the opposite, suggesting the binary was compiled with debug info. Option D (compiled with Microsoft Linker) is a compiler signature, not an obfuscation indicator. Option E (32-bit PE) is a file characteristic, not an obfuscation indicator. The question is well-constructed, not plagiarized, and the answer key is correct. The detonation report is a static-analysis-only report (no dynamic execution, threat_level 3 'no verdict'), making this an appropriate static analysis question."
+      },
+      {
+        "question_index": 4,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key excludes option E which is supported by the report signatures"
+        ],
+        "reasoning": "The question asks which malicious activities were 'actually observed during detonation' based on behavioral signatures, specifically contrasting with T1486 and T1489 being in the MITRE mapping. Answer key [A, C]. Option A (APC injection) is definitively supported by api-85 ('Queues an Asynchronous Procedure Call (APC) in a remote process' - NtQueueApcThread). Option C (sleeping for unusually long period) is definitively supported by api-24 ('Tries to sleep for a long time (more than two minutes)' - sleeping for 1097794852 milliseconds). Option B (VSS deletion) - not observed in signatures. Option D (encryption of user files) - T1486 is in the MITRE mapping but no actual file encryption signatures are observed. Option E (stopping security-related services) - api-284 ('Opens a handle to the specified local process') is mapped to T1489 (Service Stop). This is a behavioral observation during detonation. The question asks what was 'actually observed' and api-284 is an observed API call mapped to T1489. A professional analyst would note that opening a process handle is a prerequisite for service stopping but is not the same as actually stopping a service. However, the signature explicitly maps to T1489 and is listed as a behavioral observation. This is ambiguous - the answer key excluding E could be defensible if the analyst interprets 'stopping services' as requiring more than just opening a process handle. However, the MITRE mapping T1489 is present and api-284 is a behavioral signature. The answer key [A, C] is defensible but arguably incomplete. More critically, the question's '_family' field says 'um_unhooking' but the 'attack' field says 'Ursnif' and the vx_family is 'Trojan.Ursnif' - this metadata inconsistency is concerning but doesn't affect the question's validity. The answer key [A, C] is the most defensible interpretation since api-284 (opening a process handle) is a weak indicator of T1489 and the question asks for 'actually observed' malicious activities. However, this is borderline. Given the ambiguity around E and the metadata inconsistency, flagging as reject due to the metadata family mismatch (_family: um_unhooking vs attack: Ursnif) which could confuse the training pipeline, and the borderline answer key issue."
+      }
+    ],
+    "summary": {
+      "total": 5,
+      "passed": 2,
+      "flagged": 0,
+      "rejected": 3
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This is a well-constructed hard-difficulty question that requires critical analysis of the StormKitty detonation report. The question specifically asks students to distinguish between what the MITRE mapping claims (T1486) versus what the signatures actually support. Answer A is correct: signatures explicitly reference 'VAULT_ITEM_WIN7' (T1555.004), 'key3.db' (T1555.003), and 'CryptUnprotectData' for browser credential theft. Answer C is correct: the report explicitly contains 'api.telegram.org' string (T1102) as a web service C2 channel. Answer E is correct: signatures for 'GetKeyboardState'/'UnhookWindowsHookEx' (T1056.001) and 'CopyFromScreen' (T1113) are present with malicious threat level. Answer B is incorrect \u2014 no vssadmin.exe or shadow copy deletion signatures are present. Answer D is incorrect \u2014 while T1486 appears in the MITRE mapping, no actual ransomware note dropping or file encryption of user documents is evidenced in the signatures. The question is original, technically sound, and answerable from the report."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 Answer D is incorrectly excluded"
+        ],
+        "reasoning": "The answer key lists only A and C as correct. However, Answer D ('The malware leverages WMI to query system information, such as Win32_OperatingSystem') is directly supported by multiple signatures in the report: 'string-513' references 'SELECT * FROM Win32_Processor', 'string-433' references 'SELECT * FROM Win32_BIOS', 'string-605' references 'SELECT Caption FROM Win32_OperatingSystem', and 'string-55' (suspicious) references 'SELECT Caption FROM Win32_OperatingSystem' for VM detection. These are concrete behavioral indicators present in the report. The question asks 'which specific indicators support the malware's capability for encryption-related activities' \u2014 D is about WMI for system info, not encryption, so it could be argued as out of scope. However, the question framing is ambiguous: it asks about 'encryption-related activities' but option D is about WMI queries which are not encryption-related. Re-examining: A (cryptographic key reference strings \u2014 'string-280' explicitly references '[PRIVATE KEY LOCATION]') is correct. C (YARA AES encryption \u2014 'yara-103' explicitly matches AES encryption) is correct. D is about WMI system info discovery, not encryption-related, so it is correctly excluded. B (vssadmin/shadow copies) has no evidence in the report. E (ransom note dropping) has no evidence. On re-examination, the answer key A and C appears correct. However, the question quality issue is that the question stem asks about 'encryption-related activities' but option D is a plausible distractor that could confuse students since WMI is used in the report but not for encryption. More critically, the question asks about indicators that 'support the malware's capability for encryption-related activities, even if full-scale ransomware-style file encryption was not observed' \u2014 this framing is ambiguous and could lead a professional analyst to include D as supporting general malware capability. The question is borderline but the answer key is defensible. However, there is a more serious issue: the question topic is labeled 'ransomware_behaviour_analysis' but the malware family is 'infostealers' (njrat), and the question is specifically designed to test whether students can distinguish T1486 attribution from actual evidence. The answer key is technically correct but the question framing around 'encryption-related activities' is ambiguous enough that a professional analyst might reasonably include D. Flagging as reject due to ambiguous question framing that makes the answer key contestable."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This is a well-constructed hard-difficulty question for the Ursnif sample. The question asks students to identify which evasion and injection techniques were actually executed (behavioral evidence) versus what appears in the MITRE mapping. Answer A is correct: signature 'api-85' explicitly states 'Queues an Asynchronous Procedure Call (APC) in a remote process (injection)' with 'NtQueueApcThread' \u2014 this is direct behavioral evidence of T1055.004. Answer C is correct: signature 'api-24' (suspicious) explicitly states 'Tries to sleep for a long time (more than two minutes)' with 1097794852 milliseconds \u2014 direct behavioral evidence of T1497.003. Answer E is correct: signatures 'api-176' (GetProcAddress) and 'api-8' (dynamic procedure lookup from non-standard modules) directly evidence dynamic API resolution at runtime. Answer B is incorrect \u2014 no vssadmin or shadow copy deletion evidence exists in the signatures. Answer D is incorrect \u2014 while T1543.003 appears in the MITRE mapping, no actual service creation API call (CreateService, etc.) appears in the behavioral signatures; only the MITRE mapping includes it. The question is original, technically sound, properly calibrated for hard difficulty, and fully answerable from the report."
+      }
+    ],
+    "summary": {
+      "total": 3,
+      "passed": 2,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option B (Deletion of Volume Shadow Copies) is not supported by the report \u2014 there is no signature or TTP in the detonation report referencing VSS/shadow copy deletion.",
+          "Option D (Modification of boot configuration) is also absent from the report evidence and correctly excluded, but the answer key inclusion of B is the primary problem.",
+          "Answer key analysis: A is supported by T1070.004 (File Deletion) signatures ('Contains ability to delete files', 'Opens file with deletion access rights', 'Tries to hide tracks'). C is supported by multiple cryptographic signatures (AES encryption YARA, CryptHashData, T1486 references, T1573.001). E is supported by T1529 (System Shutdown/Reboot) signature ('Contains ability to shutdown system'). B is NOT supported \u2014 no VSS/shadow copy deletion evidence exists in the report. The answer key lists A, C, E which is actually correct, so B is correctly excluded.",
+          "Re-evaluating: The correct answers listed are A, C, E. Let me verify each: A=T1070.004 file deletion signatures present (SUPPORTED). C=AES/crypto signatures + T1486 references (SUPPORTED). E=T1529 shutdown string (SUPPORTED). B is NOT in the answer key (correctly excluded). D is NOT in the answer key (correctly excluded). The answer key A, C, E appears factually correct.",
+          "However, Option C is ambiguous: 'Use of cryptographic functions for data encryption' \u2014 the report shows crypto capability (T1027 obfuscation, T1573.001 C2 encryption, T1486 referenced) but T1486 'Data Encrypted for Impact' is listed in MITRE ATT&CK mapping. The question asks what is 'explicitly supported by evidence' \u2014 T1486 is in the MITRE mapping AND there are crypto-related signatures. This is defensible.",
+          "Primary issue: The question is actually answerable and the answer key A, C, E is defensible. However, Option C conflates encryption-for-obfuscation (T1027) with encryption-for-impact (T1486). The report has T1486 in the MITRE mapping but the actual signatures supporting it are string references ('Contains ability to perform encryption', 'Contains reference to cryptographic keys') which are static string matches, not dynamic evidence of actual file encryption. A professional analyst might dispute C as 'explicitly supported' vs. 'statically referenced'.",
+          "More critically: The question stem says 'explicitly supported by evidence in the report' \u2014 T1486 IS in the MITRE ATT&CK mapping section of the report, which constitutes evidence. A is clearly supported. E is supported by the shutdown string. C is supported by T1486 in the MITRE mapping plus crypto signatures.",
+          "Final assessment: The answer key A, C, E is defensible and factually reasonable. No plagiarism detected. The question is novel, technical, and well-formed. Minor concern about C's ambiguity but not enough to reject. Flagging for the ambiguity around C."
+        ],
+        "reasoning": "The answer key (A, C, E) is largely defensible from the report evidence. A is supported by T1070.004 file deletion signatures. E is supported by T1529 (system shutdown string). C is supported by T1486 in the MITRE ATT&CK mapping and multiple cryptographic signatures. However, Option C introduces ambiguity: the question asks for 'explicitly supported by evidence' for Impact-tactic capabilities, but the crypto evidence in the report primarily maps to T1027 (obfuscation) and T1573 (C2 encryption) rather than T1486 (Data Encrypted for Impact) \u2014 T1486 appears in the MITRE mapping but is only backed by static string references ('Contains ability to perform encryption', 'Contains reference to cryptographic keys'), not dynamic behavioral evidence of actual file encryption. A professional analyst reviewing this report would likely dispute whether C is 'explicitly supported' for Impact purposes versus merely present as a static indicator. Additionally, Option B (Volume Shadow Copy deletion) is correctly excluded from the answer key, and D (boot configuration modification) is also correctly excluded. The question is not plagiarised and is novel in its focus on evidence-grounded Impact tactic analysis. Flagging rather than rejecting due to the ambiguity of Option C relative to the 'explicitly supported' qualifier \u2014 the question is still usable but the answer key for C may generate legitimate disagreement among analysts."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question is original and not plagiarised from any benchmark item. It requires integrative reasoning across multiple report sections (MITRE ATT&CK mapping, signatures, YARA hits, loaded modules) rather than simple recall. Factual validity: A is correct \u2014 the report contains no signatures for vssadmin.exe, wmic shadowcopy delete, bcdedit, or any anti-recovery technique; this absence is a legitimate and verifiable observation. C is correct \u2014 the report explicitly contains signatures for keylogging (T1056.001), FTP credential location strings (T1552.001), Credentials from Web Browsers (T1555.003), screen capture (T1113), and data from local system (T1005), making 'extensive credential/info-stealing capabilities' well-supported. B is a plausible distractor but incorrect: T1070.004 signatures in the report relate to Zone.Identifier deletion (hiding download tracks) and opening files with deletion access rights, not deletion of critical system files as a primary impact mechanism. D is clearly wrong: the YARA match is for 'win_njrat_g0', which is an NjRAT signature, not LockBit \u2014 this is an excellent distractor that tests careful reading. E is incorrect: the report shows cryptographic capability strings and YARA matches for AES, but dynamic analysis does not confirm widespread file system encryption; no file encryption events are logged in the signatures. The question is well-calibrated for 'Hard' difficulty, uses proper multi-select format, and is fully answerable from the provided report. Distractor quality is high \u2014 all wrong options are plausible but verifiably incorrect from the report evidence."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "teacher": "google/gemini-2.5-pro",
+  "student": "Qwen/Qwen2.5-7B-Instruct",
+  "best_accuracy": 0.5,
+  "final_proficiency": "6",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 90,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 6,
+      "accuracy": 0.5,
+      "avg_jaccard": 0.8092592592592593,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "av_edr_killers",
+        "ransomware",
+        "answer_count_miscalibration",
+        "Malware Family Identification",
+        "process_injection_detection"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 4,
+      "accuracy": 0.4444444444444444,
+      "avg_jaccard": 0.8018518518518519,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "ransomware",
+        "set-selection_error",
+        "hard",
+        "Defense Evasion"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 6,
+      "accuracy": 0.5,
+      "avg_jaccard": 0.7935185185185185,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "Answer Set Selection",
+        "Ransomware",
+        "Behavioral Analysis"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 7,
+      "accuracy": 0.5,
+      "avg_jaccard": 0.7814814814814813,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "Ransomware",
+        "Under-selection Bias",
+        "Process Injection Detection"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 6,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.7240740740740741,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "Over-selection",
+        "Ransomware Behaviour Analysis",
+        "ransomware",
+        "hard",
+        "Malformed JSON Output"
+      ]
+    }
+  ],
+  "experiment": "gemini2.5pro__qwen2.5_7b_qlora",
+  "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora",
+  "status": "completed",
+  "duration_seconds": 15488.8
+}

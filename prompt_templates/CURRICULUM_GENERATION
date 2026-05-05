@@ -1,0 +1,62 @@
+CURRICULUM_GENERATION_PROMPT = """You are generating a remediation training dataset for a student language model that is learning malware analysis. The student has just been evaluated and you must generate training examples that specifically target its diagnosed weaknesses.
+
+[TASK]
+%s
+
+[EVALUATION RESULTS]
+Feedback: %s
+
+Proficiency score (1-10): %s
+
+Diagnosed weaknesses:
+%s
+
+Performance breakdowns:
+%s
+
+Strengths (do NOT over-represent these — focus on weaknesses):
+%s
+
+[DATA_SOURCE]
+%s
+
+Using the evaluation results above, generate exactly %s new training examples that REMEDIATE the student's specific weaknesses.
+
+Remediation strategy:
+- Weaknesses with severity "high" should receive the MOST examples.
+- If the student is weak on a specific attack family (e.g. low accuracy on ransomware in breakdowns.by_attack), generate MORE examples for that family.
+- If the student is weak at a specific difficulty level (e.g. low accuracy on "hard" in breakdowns.by_difficulty), generate MORE examples at that difficulty.
+- If the student is weak on a specific topic (e.g. low accuracy on "Evasion Techniques" in breakdowns.by_topic), generate MORE examples on that topic.
+- If the student has answer-count miscalibration (over-selecting or under-selecting), include examples that specifically train correct answer-count judgment.
+- Do NOT generate many examples for areas the student already performs well on.
+
+Requirements:
+- Each example must match the malware-analysis task format exactly.
+- Each example must be grounded in a specific detonation report from [DATA_SOURCE].
+- Questions must be answerable from the included detonation report.
+- Questions must be multiple-choice with plausible distractors.
+- Multiple correct answers are allowed.
+- Prefer examples that teach evidence-grounded reasoning rather than generic malware trivia.
+- Do NOT copy any exam question verbatim.
+- Avoid near-duplicates of previously seen items.
+- Leave "detonation_report" as an empty object — it will be injected automatically.
+
+Output VALID JSON only. No markdown, no explanation.
+The JSON output must be exactly a list:
+[
+  {
+    "question": {
+      "sha256": "string",
+      "attack": "infostealers | remcos_rat | ransomware | av_edr_killers | um_unhooking",
+      "topic": "string",
+      "difficulty": "easy | medium | hard",
+      "detonation_report": {},
+      "question": "string",
+      "options": ["A. ...", "B. ...", "C. ..."]
+    },
+    "answer": {
+      "correct_answers": ["A"]
+    }
+  }
+]
+"""

@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically about credential stores targeted by the malware, which is a novel angle not found in the benchmark. The detonation report clearly supports answers A (Firefox browser credentials via 'key3.db' string and T1555.003), B (Windows Vault via 'VAULT_ITEM_WIN7' string and T1555.004), C (Keylogging via T1056.001 and keylogger strings), and D (FTP credentials via 'recentservers.xml' string and T1552.001). Option E (LSASS) is not supported by the report. The answer key [A, B, C, D] is correct and well-supported by the evidence."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about malware family classification, a topic covered in the benchmark but with a genuinely different framing (asking for multiple applicable classifications). The report supports B (Information Stealer) via credential theft signatures and E (Credential Harvester) via browser credential access. A (Ransomware) is partially supported by T1486 in MITRE but the behavioral evidence (browser credential theft, file marking for deletion) is more consistent with an infostealer. The answer key [B, E] is reasonable. C (RAT) could be argued but the report's primary behavioral indicators point to credential theft. The question is factually sound and answerable from the report."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about capabilities and malware types indicated by observed behaviors. The report clearly supports A (FTP credential theft via 'recentservers.xml'), C (RAT/keylogging via keylogger strings and T1056.001), and F (anti-analysis via long sleep timer T1497.003). B (data encryption for ransom) is not behaviorally demonstrated. D (VSS deletion) is not in this report. E (network self-propagation) is not evidenced. The answer key [A, C, F] is correct and well-supported."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques for the Worm.Brontok sample. The report clearly supports A (UPX packing via 'Matched Compiler/Packer signature' for UPX and T1027.002) and B (masquerading as legitimate system processes via 'Creates a fake system process' signature for WINLOGON.EXE, CSRSS.EXE etc. at non-system pathways). C (Timestomping) is listed in MITRE but not explicitly demonstrated in signatures. D (DLL Side-Loading) is in MITRE but not a primary demonstrated behavior. E (Rootkit) is not evidenced. The answer key [A, B] is correct."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about actively demonstrated defense evasion techniques for the Sdbot.Generic sample. A (UPX packing) is confirmed by 'Matched Compiler/Packer signature' for UPX and 'PE file is packed with UPX' signatures. B (VMWare detection) is confirmed by 'Reads the registry for VMWare specific artifacts' signature. C (self-deletion) is confirmed by 'Marks file for deletion' signature where cmd.exe marked C:\\hash.exe for deletion. D (firewall modification) is not evidenced in this report. E (LSASS injection) is not evidenced. The answer key [A, B, C] is correct and well-supported."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about EDR/AV Killer classification for the Dropper.Generic.Dacic sample. A (modifying system services) is supported by 'Contains ability to modify system service (API string)' for ChangeServiceConfigA. D (terminating processes and system shutdown) is supported by 'Contains ability to terminate a process' (ExitProcess) and 'Contains ability to shutdown system' (NtShutdownSystem). B (process/system discovery) is a general capability, not specific to EDR killing. C (dropping secondary payload) is a dropper behavior, not EDR killing. E (VM detection) is evasion, not EDR killing. The answer key [A, D] is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about installation and persistence steps for the Zusy.Generic sample. A (drops executable to temp) is confirmed by 'Writes files in a temp directory' and 'Drops executable files inside temp directory' for 085cda53603755dc.exe. C (marks original for deletion) is confirmed by 'Marks file for deletion' where 085cda53603755dc.exe marked C:\\hash.exe for deletion. D (registry autorun key) is confirmed by 'Modifies auto-execute functionality by setting/creating a value in the registry' (T1547.001). B (Windows Service) is not evidenced. E (explorer.exe injection) - while explorer.exe is referenced in strings, actual injection into it is not confirmed. The answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Crysis/Dharma ransomware behaviors. A (VSS deletion) is confirmed by 'Deletes volume snapshots' signature with vssadmin.exe command. B (registry Run key persistence) is confirmed by 'Modifies auto-execute functionality by setting/creating a value in the registry' (T1547.001). D (renaming encrypted files with ID and email) is confirmed by the dropped files showing '.id-085CDA53._vijurytos@tuta.io_.' extension pattern and 'Renames many files' would be expected, plus the dropped file names show this pattern. C (SMB spreading) is not evidenced. E (PowerShell disabling Defender) is not evidenced. The answer key [A, B, D] is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware techniques for the Ransom.Diavolo sample. A (VSS deletion via WMI) is confirmed by multiple WMIC.exe processes with 'shadowcopy where ID=... delete' command lines and 'Deletes volume snapshots' signature. B (file encryption/renaming) is confirmed by 'Renames many files with double extensions' signature (T1486). C (ransom note 'readme.txt') is confirmed by 'hash.exe writes file c:\\share\\readme.txt'. D (process hollowing) is not specifically evidenced. E (sc.exe disabling services) is not evidenced. The answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Remcos RAT identification. A (Dynamic DNS over non-standard port 9003) is confirmed by 'Contacts Dynamic DNS' for tristansupport.duckdns.org and 'Uses network protocols on unusual ports' for port 9003. B (named mutant 'Rmc-GQZAWL') is confirmed by the mutant creation signature showing '\\Sessions\\1\\BaseNamedObjects\\Rmc-GQZAWL'. C (CreateToolhelp32Snapshot for process enumeration) is a generic behavior, not Remcos-specific. D (Visual Basic with high entropy resources) is a static characteristic, not a behavioral indicator. E (T1486 Data Encrypted for Impact) is in the MITRE mapping but not behaviorally demonstrated. The answer key [A, B] is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about malware categories for the RiskWare/NetSup sample. B (RAT) is supported by keylogging (T1056.001), screen capture (T1113), clipboard data (T1115), and C2 communication. C (Infostealer) is supported by keylogging credential access. A (Ransomware) is not behaviorally demonstrated despite T1486 in MITRE mapping. D (Downloader) - while it drops files, the primary function is RAT/infostealer. The answer key [B, C] is reasonable and well-supported."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about static file characteristics. A (high entropy .text section with entropy 6.4304) is confirmed by 'Section contains high entropy' signature. B (Visual Basic compiler) is confirmed by 'File contains Visual Basic code' in file_analysis and the file_compositions showing '.BAS Files compiled with C2.EXE 5.0 (Visual Basic 6)'. C (UPX packer) is not evidenced - the packer signature shows 'Microsoft Linker', not UPX. D (64-bit) is contradicted by 'Uses 32 bit executable PE'. E (digital signature) is not evidenced - no certificate signatures present. The answer key [A, B] is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion/anti-analysis indicators for the um_unhooking sample. A (high entropy .text section with entropy 6.6194) is confirmed by 'Section contains high entropy' signature. B (API strings not in IAT) is confirmed by 'Input file contains API references not part of its Import Address Table (IAT)' for FlsAlloc. D (loading dbghelp.dll) is confirmed by 'Loads the debugger/analysis tool module' signature. C (vssadmin.exe) is not present in this report. E (new system service) is not evidenced. The answer key [A, B, D] is correct."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about information gathering capabilities. A (keystrokes) is confirmed by keylogger strings '[TAB]' and T1056.001. B (clipboard data) is confirmed by 'GetClipboardData' API string and T1115. C (browser cookies) - while T1555 is present, specific cookie theft is not explicitly evidenced in signatures. D (Shadow Copies) is not evidenced. E (screen captures) is confirmed by 'GetDIBits' API string and T1113. F (email client data) is confirmed by 'Found mail information locations related strings' for Outlook registry path and T1114. The answer key [A, B, E, F] is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion techniques for the Fugrafa.Generic sample. A (Safengine Shielden packer) is confirmed by 'Matched Compiler/Packer signature' showing 'Safengine Shielden v2.1.6.' and T1027.002. B (Zone.Identifier deletion) is confirmed by 'Tries to hide tracks of having downloaded a file from the internet' signature. C (long sleep timer) is confirmed by 'Tries to sleep for a long time (more than two minutes)' for 1566804069 milliseconds. D (anti-VM tricks) is confirmed by 'The input sample contains a known anti-VM trick' for VMware. E (Event Log clearing) is in MITRE mapping but not confirmed by signatures. F (registry key modification for security tools) is not specifically evidenced. The answer key [A, B, C, D] is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Remcos RAT behavioral indicators for the file.exe sample. A (Rmc- mutex) is confirmed by '\\Sessions\\1\\BaseNamedObjects\\Rmc-Y7B4RN' mutant creation. B (API hooks on file system and network) is confirmed by 'Hooks file system APIs' (FindFirstFileW) and 'Hooks internet related APIs' (send@WS2_32.DLL) in remcos.exe. C (Dynamic DNS over non-standard port 2404) is confirmed by DNS query to 'liveos.zapto.org' and 'Uses network protocols on unusual ports' for port 2404, plus Suricata alert for Remcos. D (VSS deletion) is not evidenced. E (mass file encryption) is not evidenced. The answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence for the Trojan.BrsecmonE sample. B (process created in suspended mode) is confirmed by 'Creates a process in suspended mode (likely for process injection)' signature for evryposw.exe calling CreateProcessA. C (svchost.exe initiating network connections) is confirmed by 'Windows system process connects to a network' for svchost.exe connecting to port 443. D (PE header written to another process's memory) is confirmed by 'Writes PE header to memory' signature for evryposw.exe. A (service creation) is a persistence technique, not process injection evidence. E (firewall rule for svchost) is a defense evasion technique, not process injection evidence. The answer key [B, C, D] is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion and execution techniques for the UPX-packed Trojan.Dinwod sample. A (UPX packing) is confirmed by 'PE file is packed with UPX', 'Matched Compiler/Packer signature' for UPX, and T1027.002. B (code injection into remote processes) is confirmed by 'Writes data to a remote process' malicious signature and T1055. C (stopping security services) is in MITRE (T1489) but not behaviorally demonstrated in signatures. D (Windows Service creation) is not evidenced. E (file deletion after execution) is in MITRE (T1070.004) but not specifically confirmed by signatures. The answer key [A, B] is correct."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

@@ -1,0 +1,2502 @@
+{
+  "feedback": "Overall, the model shows moderate understanding of process injection and related ATT&CK mappings, but its exact-match performance is limited by frequent inclusion of extra options and occasional omission of required ones. Jaccard scores indicate that it often identifies at least some of the correct techniques, yet it struggles to select exactly the correct subset of options.\n\nQuantitatively, the model answered 4 out of 20 questions with perfect exact matches (20% exact-match accuracy), while the average Jaccard similarity is substantially higher (~0.57), meaning partial overlap is common. There were no parse/format failures. Precision (~0.63) and recall (~0.70) at the per-question level show that it tends to pick a reasonable number of relevant options but often adds distractors or misses one correct choice.\n\nThe dominant failure pattern is over-selection: in 8 questions the model chose more options than the gold set (and usually added plausible but unsupported sub-techniques such as DLL injection or generic T1055 when only sub-techniques were evidenced). Under-selection occurred in 4 questions, where the model correctly identified some techniques but failed to include all required ones. In 4 questions the predicted and gold answer counts matched, but in half of those the specific options still differed.\n\nBy topic and attack family, nearly all questions are Hard and focused on process injection, ATT&CK mapping, and EDR/unhooking scenarios. The model performs best on general ATT&CK mapping and high-level detection of process injection presence, but shows weaknesses in fine-grained discrimination among T1055 sub-techniques (e.g., confusing generic process injection with DLL injection, APC injection, or process hollowing) and in distinguishing evidence-based techniques from those only listed in high-level MITRE tables.\n\nFor further training, the model would benefit from:\n- More calibrated multi-label training where it is penalized for adding plausible but unsupported options, to reduce over-selection.\n- Focused exercises on discriminating among T1055 sub-techniques (generic injection vs DLL injection vs APC injection vs process hollowing vs EWM injection vs thread hijacking), all using realistic API sequences and memory artifacts.\n- Tasks that emphasize grounding answers strictly in concrete evidence (API calls, strings, signatures, process relationships) rather than generic ATT&CK mappings.\n- Additional hard-level questions on um_unhooking/EDR-evasion scenarios, since errors are frequent there.\n\nIn summary, the model has emerging competence in this domain: it often recognizes the right family of behaviors and partially correct answer sets, but is not yet reliable for strict multi-answer grading. It tends to over-select more than under-select, and needs better calibration and sharper semantic distinctions among related process injection techniques.",
+  "proficiency": 6,
+  "metrics": {
+    "num_questions": 20,
+    "num_exact_matches": 4,
+    "exact_match_accuracy": 0.2,
+    "avg_jaccard": 0.5758333333333334,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.6272222222222221,
+    "macro_option_recall": 0.7033333333333334,
+    "avg_predicted_answer_count": 1.95,
+    "avg_gold_answer_count": 2.2,
+    "answer_count_bias": "under-selecting"
+  },
+  "strengths": [
+    "No parse or formatting errors: model consistently returns well-formed option sets.",
+    "Often identifies at least one correct technique per question, leading to moderate Jaccard and recall.",
+    "Reasonable performance on general MITRE ATT&CK mapping questions that are not purely about sub-technique discrimination (e.g., correctly identifying multiple techniques in a mixed ATT&CK mapping question).",
+    "Shows understanding of the existence of multiple process injection sub-techniques and attempts to map behaviors to them."
+  ],
+  "weaknesses": [
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Over-selection of plausible but unsupported options",
+      "description": "Frequently adds extra options such as DLL injection or generic T1055 when the evidence supports only specific sub-techniques, reducing exact-match accuracy.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        2,
+        5,
+        7,
+        9,
+        10,
+        11,
+        13,
+        14,
+        18
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Under-selection (missing one of several correct techniques)",
+      "description": "Sometimes selects only a subset of the correct options, especially when both generic injection and a specific sub-technique or an additional related technique (e.g., credential API hooking) are required.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        4,
+        8,
+        17
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Semantic confusion among T1055 sub-techniques",
+      "description": "Shows difficulty discriminating between generic process injection and specific sub-techniques such as DLL injection, APC injection, process hollowing, and extra window memory injection; often selects the wrong sub-technique or adds it without evidence.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        16
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Evidence-grounding weakness",
+      "description": "Sometimes appears to rely on high-level MITRE tables or generic expectations instead of the concrete API calls and signatures specified in the question, leading to selection of techniques that are not explicitly evidenced.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        11,
+        12,
+        14,
+        16
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Process Injection and EDR/um_unhooking scenarios",
+      "description": "On um_unhooking / EDR-evasion related questions, the model frequently over-selects and confuses which injection and evasion techniques are concretely evidenced.",
+      "severity": "high",
+      "evidence_question_indices": [
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "Hard questions",
+      "description": "All questions are Hard; accuracy is relatively low at this level, indicating difficulty with complex, fine-grained discrimination tasks.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 8,
+        "exact_match_accuracy": 0.25,
+        "avg_jaccard": 0.65625,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 5,
+        "exact_match_accuracy": 0.2,
+        "avg_jaccard": 0.6266666666666667,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.3333333333333333,
+        "avg_jaccard": 0.611111111111111,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.3333333333333333,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.2333333333333333,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 19,
+        "exact_match_accuracy": 0.15789473684210525,
+        "avg_jaccard": 0.5526315789473684,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Process Injection Detection": {
+        "num_questions": 9,
+        "exact_match_accuracy": 0.2222222222222222,
+        "avg_jaccard": 0.6,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection and Credential API Hooking": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.4,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Detection and Classification": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5555555555555556,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion and Persistence Technique Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Ransomware Behaviour Analysis / Impact vs Defense Evasion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Technique Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.4,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Technique Mapping and Calibration": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Technique Identification (Remcos)": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.25,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Technique Identification": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK v14": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "Obfuscation and Embedded Payloads": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.6666666666666666,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection and EDR Evasion Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Zusy.Generic infostealer sample, which options best describe the evidenced process injection techniques? Focus only on what is concretely supported by API calls and signatures, not on the generic MITRE list.",
+        "options": [
+          "A. Generic process injection (T1055) via remote memory allocation and WriteProcessMemory",
+          "B. DLL injection (T1055.001) via LoadLibraryA/LoadLibraryW in a remote process",
+          "C. Thread execution hijacking (T1055.003) within the same process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection and Classification",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Malware.SF.Generic infostealer sample, which injection-related techniques are directly evidenced by the behaviour and strings, as opposed to only appearing in the generic MITRE mapping?",
+        "options": [
+          "A. Thread execution hijacking (T1055.003) in the microsofthelp.exe process",
+          "B. DLL injection (T1055.001) into another process using LoadLibraryA from a remote thread",
+          "C. Generic process injection (T1055) suggested by CreateThread and \"inject code\" API strings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ransom sample (single-process ransomware), which behaviours are clearly supported by the report and correspond to impact or collection techniques, rather than just generic discovery?",
+        "options": [
+          "A. Data Encrypted for Impact (T1486), as indicated by high-entropy content and dropped ransom notes",
+          "B. Screen Capture (T1113) used to collect victim desktop imagery",
+          "C. Internal Defacement (T1491.001) via dropped README ransom note files and modified messages"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom.Spora.Generic sample, which options are justified by concrete evidence as impact-related ransomware behaviour (not just generic C2 or discovery activity)?",
+        "options": [
+          "A. Data Encrypted for Impact (T1486) via file renaming with double extensions and encrypted content",
+          "B. Inhibit System Recovery (T1490) through deletion of volume shadow copies using WMIC shadowcopy delete",
+          "C. Service Stop (T1489) by terminating security or backup services with taskkill.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Ransom.Diavolo.Generic (Trojan.Filecoder) sample, which specific anti-recovery technique is directly evidenced in the process tree and signatures?",
+        "options": [
+          "A. Deleting individual user files using del.exe",
+          "B. Deleting multiple VSS shadow copies via WMIC shadowcopy delete commands",
+          "C. Disabling Windows Defender via registry policy changes"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Identification (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the high-confidence Remcos.Generic sample, which process injection techniques are supported by concrete evidence (API imports, memory dumps, or signatures), as opposed to only being listed in the generic MITRE mapping?",
+        "options": [
+          "A. Generic process injection (T1055) via WriteProcessMemory into a remote process",
+          "B. Process hollowing (T1055.012) based on explicit hollowing signatures or PE replacement in a child process",
+          "C. Thread execution hijacking (T1055.003) in the same process using CreateThread on self"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Dump:Generic.Dacic.A9349469.A sample (also flagged as Remcos-like), which injection behaviours are concretely evidenced, and which sub-techniques should NOT be selected due to lack of direct proof?",
+        "options": [
+          "A. Generic process injection (T1055) indicated by WriteProcessMemory to a remote process",
+          "B. Asynchronous Procedure Call (APC) injection (T1055.004) via NtQueueApcThread into another process",
+          "C. DLL injection (T1055.001) explicitly evidenced by LoadLibrary in a remote process context"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection and EDR Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Looking at the Trojan.Ursnif sample (classified under um_unhooking/EDR-evasion), which injection-related techniques are supported by concrete evidence (e.g., NtQueueApcThread, memory PE headers), rather than only being present in the generic MITRE table?",
+        "options": [
+          "A. Asynchronous Procedure Call injection (T1055.004) via NtQueueApcThread in a remote thread",
+          "B. Process hollowing (T1055.012) demonstrated by hollowed child processes with replaced images",
+          "C. Generic process injection (T1055) evidenced by PE headers in memory and code injection APIs"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection and EDR Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Win/malicious_confidence_100% sample (Trojan.Injuke/Llac, um_unhooking-focused), which injection sub-techniques are directly evidenced by the report, and which should be avoided due to lack of concrete support?",
+        "options": [
+          "A. Asynchronous Procedure Call injection (T1055.004) via NtQueueApcThread",
+          "B. Generic process injection (T1055) via VirtualAllocEx/WriteProcessMemory into another process",
+          "C. Process hollowing (T1055.012) by creating a suspended process and replacing its image"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Technique Identification (UM Unhooking vs Other Evasion)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ursnif um_unhooking sample, which evasion-related techniques are clearly evidenced by the report and should be selected, without over-selecting unrelated ones?",
+        "options": [
+          "A. Virtualization/Sandbox Evasion (T1497) using NtQuerySystemInformation and VM-related strings",
+          "B. Bootkit persistence (T1542.003) via direct writes to the disk MBR",
+          "C. User Activity Based Checks (T1497.002) using GetTickCount and cursor/mouse-based timing checks"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Technique Identification (Evidence Grounding)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Win/malicious_confidence_100% (Trojan.Injuke/Llac) sample, which evidence-backed evasion techniques are present, as opposed to generic ATT&CK entries?",
+        "options": [
+          "A. Time-based evasion (T1497.003) using very long Sleep or WaitForSingleObject delays",
+          "B. Bootkit (T1542.003) by modifying \\Device\\Harddisk0\\DR0",
+          "C. Obfuscated Files or Information (T1027) via packed code and high-entropy .text section"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence Technique Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample that targets AV/EDR, which defence evasion techniques are concretely evidenced and should be selected without adding unsupported ones?",
+        "options": [
+          "A. Disable or Modify Tools (T1562.001) by modifying proxy settings and targeting AV-related services like SymProxySvc",
+          "B. Code Signing Policy Modification (T1553.006) through explicit registry changes to trust additional CAs",
+          "C. Clear Windows Event Logs (T1070.001) via ClearEventLogA and OpenEventLogA usage"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Malware Family Identification (AV/EDR Killers vs Generic Infostealers)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Comparing Sdbot.Generic and Zusy.Generic, which characteristics in Sdbot.Generic most strongly support classifying it as an AV/EDR killer rather than a pure infostealer?",
+        "options": [
+          "A. Presence of many keylogging APIs like GetAsyncKeyState and [BACK] strings",
+          "B. Targeting of security services and tools (e.g., SymProxySvc, wuauserv) and event log clearing",
+          "C. Exclusive use of HTTP C2 on port 80 only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification (Infostealer vs Dropper)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Dacic.A9349469.A.Generic sample (Dump:Generic.Dacic), which evidence best supports classifying it as a Remcos-like infostealer/backdoor rather than just a generic dropper?",
+        "options": [
+          "A. Presence of dynamic DNS C2 (duckdns.org) and non-standard port 9003, plus keylogging-related strings",
+          "B. Exclusive behaviour of dropping another PE and immediately exiting without network activity",
+          "C. Only reading local configuration files without any C2 or credential-related behaviour"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "MITRE ATT&CK Technique Mapping (Evidence-Grounded)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Zusy.Generic infostealer sample, which MITRE techniques are directly evidenced by the report and should be selected, avoiding generic but unsupported items?",
+        "options": [
+          "A. Data from Local System (T1005) via CopyFileW and reading configuration and browser files",
+          "B. Screen Capture (T1113) using CreateCompatibleBitmap and BitBlt APIs",
+          "C. Credentials from Password Stores (T1555) based solely on high entropy in the binary"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Network IOC Extraction and ATT&CK Mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample contacting remcos2010.duckdns.org, which network-related ATT&CK techniques are clearly evidenced?",
+        "options": [
+          "A. Application Layer Protocol: Web Protocols (T1071.001) over HTTP/HTTPS",
+          "B. DNS (T1071.004) via dynamic DNS resolution of remcos2010.duckdns.org",
+          "C. Exfiltration Over C2 Channel (T1041) via SMTP traffic to port 25"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection and Credential API Hooking",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Malware.SF.Generic infostealer sample, which credential-access behaviours are supported by explicit evidence (hooks and API strings) and should be selected without over-adding other sub-techniques?",
+        "options": [
+          "A. Credential API Hooking (T1056.004) via hooks on FindNextFileW and send@WS2_32.DLL",
+          "B. Keylogging (T1056.001) via GetAsyncKeyState and keylogger marker strings like [BACK]",
+          "C. Credentials from Password Stores (T1555) through direct DPAPI decryption of browser vaults"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Malware Family Identification (Killers vs Ransomware)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Trojan.Generic kernel driver sample (classified under killers), which behaviours most strongly indicate an AV/EDR killer or kernel helper rather than ransomware?",
+        "options": [
+          "A. Kernel-mode capabilities like ZwCreateFile, IoCreateDevice, and IoDeleteDevice with device driver access",
+          "B. Mass file renaming with double extensions and ransom notes in user directories",
+          "C. Use of vssadmin or WMIC shadowcopy to delete volume shadow copies"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Identification and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Dropper.Generic.Dacic.3035 sample (Trojan.Chydo dropper), which behaviours are clearly evidenced and should be selected as process injection or persistence techniques, avoiding generic but unsupported ones?",
+        "options": [
+          "A. Generic process injection (T1055) via WriteProcessMemory into a remote process",
+          "B. Registry Run Keys / Startup Folder (T1547.001) persistence via writing to user Startup path",
+          "C. Extra Window Memory Injection (T1055.011) using SetWindowLongPtr on shell_traywnd"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Based on the sandbox report for the Ursnif/Emotet-style sample (hash.exe, 369152 bytes, Trojan.Ursnif), which specific process injection techniques are evidenced? Focus only on techniques that have explicit API or signature support, and do NOT select options that are only generically implied by T1055 without concrete sub-technique evidence.",
+        "options": [
+          "A. Generic Process Injection (T1055) without specifying a sub-technique",
+          "B. Asynchronous Procedure Call (APC) Injection (T1055.004) via NtQueueApcThread",
+          "C. Process Hollowing (T1055.012) via unmapping and replacing a suspended process image",
+          "D. Extra Window Memory Injection (T1055.011) by abusing shell_traywnd window class",
+          "E. Dynamic-link Library Injection (T1055.001) using LoadLibrary in a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection and EDR Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Injuke sample (hash.exe, 366592 bytes, Trojan.Llac) under the um_unhooking category, which ATT&CK injection sub-techniques are directly supported by the observed APIs and signatures? Select only techniques that have explicit evidence such as NtQueueApcThread, CreateThread in self, or Extra Window Memory Injection indicators.",
+        "options": [
+          "A. Thread Execution Hijacking (T1055.003) by creating threads in its own process",
+          "B. Asynchronous Procedure Call (APC) Injection (T1055.004) via NtQueueApcThread",
+          "C. Process Hollowing (T1055.012) by starting a suspended process and replacing its image",
+          "D. Extra Window Memory Injection (T1055.011) suggested by shell_traywnd window class usage",
+          "E. Dynamic-link Library Injection (T1055.001) proved by remote LoadLibrary calls"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evidence-Grounded Injection Classification",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Considering the Win/malicious_confidence_100% sample (hash.exe, 356352 bytes, Trojan.Ursnif/um_unhooking), which of the following are supported by the report as present injection-related techniques? Do not infer techniques that lack explicit API, memory-dump, or string evidence.",
+        "options": [
+          "A. Generic Process Injection (T1055) indicated by CreateThread and VirtualAllocEx/WriteProcessMemory usage",
+          "B. Process Hollowing (T1055.012) indicated by PE headers in a remote process and section remapping",
+          "C. Extra Window Memory Injection (T1055.011) indicated by use of Shell_TrayWnd and FindWindowA/PostMessageA",
+          "D. DLL Search Order Hijacking (T1574.001) indicated by tampering with PATH and DLL locations",
+          "E. Asynchronous Procedure Call Injection (T1055.004) indicated by NtQueueApcThread"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Identification (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample (hash.exe, 494592 bytes, Remcos RAT), which process injection techniques are concretely evidenced by the sandbox data? Consider the presence of WriteFile to dropped binaries, section entropy, and any explicit T1055 sub-technique indicators.",
+        "options": [
+          "A. Generic Process Injection (T1055) via writing to a remote process (api-0)",
+          "B. Process Hollowing (T1055.012) via PE headers in the memory of a legitimate process",
+          "C. Dynamic-link Library Injection (T1055.001) via LoadLibraryA in another process",
+          "D. Thread Execution Hijacking (T1055.003) via CreateRemoteThread in a foreign process",
+          "E. No specific injection technique is evidenced beyond packing/obfuscation"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection and Credential API Hooking (Calibration)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Dump:Generic.Dacic.A9349469.A Remcos-related sample (hash.exe, 439808 bytes), the report shows a memory dump with a PE header (\"Found PE header 'MZ'\"), imports of GetCommandLineA, and generic T1055 flags. Which statements about its injection behavior are supported?",
+        "options": [
+          "A. It performs generic process injection (T1055) as indicated by \"Writes data to a remote process\" (api-0).",
+          "B. It specifically uses Process Hollowing (T1055.012), as evidenced by suspended process creation and image replacement.",
+          "C. It uses DLL Injection (T1055.001) by calling LoadLibraryA in a remote process context.",
+          "D. The presence of a PE header in its own memory (memorydump-8) alone is sufficient to prove cross-process injection.",
+          "E. It uses Extra Window Memory Injection (T1055.011) via Shell_TrayWnd string and window message APIs."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "EDR Evasion vs. Injection Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Sdbot.Generic killer sample (hash.exe, 668449 bytes, Sdbot.Generic), which of the following are clearly evidenced defense evasion techniques related to EDR/AV, as opposed to mere generic injection flags? Select all that have explicit registry, string, or API support.",
+        "options": [
+          "A. Disabling or modifying security tools (T1562.001) via modifying proxy settings and AV-related services",
+          "B. DLL Side-Loading (T1574.002) via failing to load api-ms-win-* DLLs and dropping dlldsk32.exe into system32",
+          "C. Code Signing Policy Modification (T1553.006) via registry changes to signature enforcement",
+          "D. Extra Window Memory Injection (T1055.011) via PostMessageA and shell window manipulation",
+          "E. Direct Syscall Evasion using unhooked syscalls (no user-mode hooks)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection vs. Persistence Evidence-Grounding",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the same Sdbot.Generic killer sample, which ATT&CK techniques are directly supported by the evidence of dropped and executed dlldsk32.exe in the Windows system directory and creation of services-related registry keys? Focus on persistence and masquerading rather than assumed injection.",
+        "options": [
+          "A. Masquerading (T1036) via dropping dlldsk32.exe into system32 with a system-like name",
+          "B. Windows Service persistence (T1543.003) via creating/modifying services in HKLM\\SYSTEM\\CurrentControlSet\\Services",
+          "C. Process Hollowing (T1055.012) of dlldsk32.exe",
+          "D. Kernel Module persistence (T1547.006) by loading drivers through \\Device\\HarddiskVolume",
+          "E. Registry Run Keys / Startup Folder (T1547.001) via HKCU\\...\\Run modifications"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Impact vs. Defense Evasion Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Diavolo generic ransomware sample (hash.exe, 201184 bytes, Trojan.Filecoder), which techniques related to impact and anti-recovery are explicitly evidenced by the use of WMIC shadowcopy delete commands and double-extension renames?",
+        "options": [
+          "A. Inhibit System Recovery (T1490) via deleting volume shadow copies using WMIC shadowcopy delete",
+          "B. Data Encrypted for Impact (T1486) via renaming many files with double extensions and high-entropy drops",
+          "C. Service Stop (T1489) via controlling services through ChangeServiceConfig and WMIC",
+          "D. Internal Defacement (T1491.001) via changing the desktop background",
+          "E. Boot or Logon Autostart Execution (T1547) via Run key modification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Evidence-Calibrated Technique Selection (Ransom.Spora)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom.Spora sample (hash.exe, 262913 bytes), the report shows mshta.exe executing a .hta ransom note, changes to the desktop background, and heavy use of HTTPS with Bitcoin-related domains. Which ATT&CK techniques are supported by this evidence?",
+        "options": [
+          "A. Mshta (T1218.005) as a signed binary proxy executing the ransom HTA file",
+          "B. Data Encrypted for Impact (T1486) due to renaming and encrypting many files (double extensions, high entropy)",
+          "C. Internal Defacement (T1491.001) via changing the desktop wallpaper to a ransom image",
+          "D. Exfiltration Over Web Service (T1567) via HTTPS connections to api.blockcypher.com",
+          "E. Bootkit (T1542.003) via writes to \\Device\\Harddisk0\\DR0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware vs. Infostealer Behavior Discrimination",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Ransom sample (hash.exe, 150528 bytes) shows loading bcrypt.dll, high file entropy, dropping many encrypted-looking files, and ransom-note style strings (\"YOUR FILES ARE ENCRYPTED\"). However, it also accesses browser-related files. Which classification best matches the dominant behavior evidenced?",
+        "options": [
+          "A. Pure infostealer focused on credential theft from browsers",
+          "B. Ransomware encrypting local data for impact (T1486), with some secondary infostealing indicators",
+          "C. Benign backup tool using encryption and browser history for indexing",
+          "D. Remote access trojan (RAT) without encryption functionality"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "MITRE Mapping Calibration for Infostealer vs. RAT",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The first Zusy.Generic infostealer sample (hash.exe, size ~6.7MB) drops muniv.exe, performs screen capture (CreateCompatibleBitmap), keylogging, and exfiltrates via HTTP on non-standard ports (11110/11170). Which technique set is most strictly supported (avoid adding plausible but unevidenced items)?",
+        "options": [
+          "A. Screen Capture (T1113), Keylogging (T1056.001), Non-Standard Port (T1571), Application Layer Protocol (T1071)",
+          "B. Screen Capture (T1113), Remote Desktop Protocol (T1021.001), Non-Standard Port (T1571)",
+          "C. Keylogging (T1056.001), Data Encrypted for Impact (T1486), Service Stop (T1489)",
+          "D. DNS over HTTPS (DoH) (T1071.004), Screen Capture (T1113), Keylogging (T1056.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection vs. C2-only Behavior (Dinwod)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Dinwod infostealer sample (hash.exe, 341563 bytes), the report shows a deep process chain (multiple numeric .exe names), UPX packing, and a generic T1055 flag (api-0: writes data to a remote process). There is no explicit NtQueueApcThread, CreateRemoteThread, or PE header in another process. Which statements are justified?",
+        "options": [
+          "A. Only generic Process Injection (T1055) is supported; no specific sub-technique can be confidently assigned.",
+          "B. Process Hollowing (T1055.012) is clearly used, as indicated by the process chain alone.",
+          "C. APC Injection (T1055.004) is proven by the presence of NtQueueApcThread.",
+          "D. DLL Injection (T1055.001) is proven by remote LoadLibrary calls.",
+          "E. No injection at all occurs; T1055 is a false positive."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Network IOC Extraction and Evidence-Grounded Mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Remcos.Generic sample (hash.exe, 494592 bytes), which network IOCs and corresponding ATT&CK techniques are directly evidenced by the report?",
+        "options": [
+          "A. C2 domain remcos2010.duckdns.org using DNS (T1071.004) and Web Service C2 (T1102)",
+          "B. SMTP-based exfiltration via port 25 (T1071.003)",
+          "C. IRC-based C2 using irc.quakenet.org (T1071)",
+          "D. Non-Standard Port C2 on TCP/9003 (T1571) with dynamic DNS",
+          "E. DNS over HTTPS (DoH) tunneling (T1071.004) via api.ipify.org"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "UM Unhooking vs. Generic Obfuscation (Kernel Driver Sample)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The small PE32 native driver-like sample (hash.exe, 13056 bytes, Trojan.Generic, _family: killers) uses ZwCreateFile, IoCreateDevice, IoDeleteDevice, high-entropy sections, and kernel driver APIs. Which defense evasion behaviors are explicitly evidenced, and which are NOT?",
+        "options": [
+          "A. Software Packing (T1027.002) based on packer signature \"Visual C++ 2003 DLL\" and high-entropy section",
+          "B. Disable or Modify Tools (T1562.001) via IoDeleteDevice targeting security drivers",
+          "C. Kernel Modules and Extensions persistence/privilege escalation (T1547.006) via driver-like APIs",
+          "D. User-mode API unhooking (T1055/T1562) via direct syscalls",
+          "E. Time Based Evasion (T1497.003) via KeWaitForSingleObject sleep behavior"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "EDR Unhooking vs. Keylogging and C2 (Ursnif UM Sample)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Win/malicious_confidence_100% um_unhooking sample (hash.exe, 356352 bytes, Trojan.Ursnif), which of the following behaviors are clearly supported and should be mapped, without over-claiming unhooking specifics?",
+        "options": [
+          "A. Keylogging (T1056.001) via VkKeyScanA and CallNextHookEx-based keyboard hooks",
+          "B. UM API unhooking via direct syscalls (no explicit evidence of syscalls in the report)",
+          "C. External IP discovery (T1016) via api.ipify.org lookups and Suricata \"External IP Lookup\" alert",
+          "D. Bootkit (T1542.003) via writes to \\Device\\Harddisk0\\DR0",
+          "E. Screen Capture (T1113) via GetDIBits/BitBlt"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification: Infostealer vs. AV Killer",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Dacic.A9349469.A sample (hash.exe, 480768 bytes, _family: remcos but labeled Dacic) communicates with tristansupport.duckdns.org on port 9003, creates a mutex Rmc-GQZAWL, and drops no ransomware artifacts. Which high-level family best fits the observed behavior?",
+        "options": [
+          "A. Remcos-like Remote Access Trojan (RAT) with credential theft capabilities",
+          "B. Pure AV/EDR killer focused only on disabling security tools",
+          "C. Ransomware encryptor targeting local files",
+          "D. Benign remote administration tool with no malicious behavior"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Answer-Count Calibration: Generic T1055 vs. Sub-Techniques",
+        "difficulty": "easy",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample, the report includes api-0 (\"Writes data to a remote process\") and a generic T1055 flag, but no explicit NtQueueApcThread, CreateRemoteThread, or PE header in a remote process. Which is the safest, evidence-grounded choice regarding injection techniques?",
+        "options": [
+          "A. Only generic Process Injection (T1055) should be selected; sub-techniques are not evidenced.",
+          "B. Both Process Injection (T1055) and Process Hollowing (T1055.012) should be selected based on packer signatures.",
+          "C. DLL Injection (T1055.001) should be selected because LoadLibraryA is imported in hash.exe.",
+          "D. APC Injection (T1055.004) should be selected due to multiple spawned processes."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection vs. Persistence (Remcos Light Stub)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The very small Remcos stub (hash.exe, 6801 bytes, _family: remcos) only shows high-entropy .text, packing signatures, and no process tree or API logs indicating remote memory operations. Which conclusion about process injection is best supported?",
+        "options": [
+          "A. No evidence of process injection is present; only obfuscation/packing (T1027/T1027.009) is supported.",
+          "B. Process Hollowing (T1055.012) is clearly used because the file is small.",
+          "C. DLL Injection (T1055.001) is proven by the presence of a .text section.",
+          "D. APC Injection (T1055.004) is indicated by the lack of imports."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Zusy.Generic infostealer sample, which options best describe the process injection behaviour that is actually evidenced by the report?",
+        "options": [
+          "A. Generic process injection using WriteProcessMemory/remote memory allocation (T1055, no specific sub-technique)",
+          "B. DLL injection via LoadLibrary in a remote process (T1055.001)",
+          "C. APC injection using NtQueueApcThread (T1055.004)",
+          "D. Process hollowing by unmapping and replacing a child process image (T1055.012)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection and Classification",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Malware.SF.Generic infostealer sample, which injection-related techniques are explicitly supported by the evidence?",
+        "options": [
+          "A. Thread execution hijacking within the same process (T1055.003)",
+          "B. DLL injection into a remote process via LoadLibraryA (T1055.001)",
+          "C. Generic process injection (T1055) without a clearly identified sub-technique",
+          "D. Extra window memory injection using window message\u2013based injection (T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Process Injection Technique Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Screenlocker.Generic ransomware sample, which process injection techniques are concretely indicated by the API and stream evidence?",
+        "options": [
+          "A. Generic process injection using WriteProcessMemory and CreateRemoteThread (T1055)",
+          "B. DLL injection into a remote process (T1055.001) via CreateRemoteThread and FreeLibrary",
+          "C. Process hollowing by creating a suspended process and replacing its image (T1055.012)",
+          "D. Extra window memory injection by targeting shell_traywnd window class (T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom sample, which behaviours are clearly related to impact (encrypting and signalling compromise) rather than just generic discovery or staging?",
+        "options": [
+          "A. Dropping ransom note files like \"cbNhUvy60.README.txt\" in user directories",
+          "B. Enumerating logical drives with GetLogicalDriveStringsW",
+          "C. Stealing browser data via low-level disk access to browser storage",
+          "D. Writing high-entropy data and loading bcrypt.dll, consistent with cryptographic operations"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Inhibit System Recovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Ransom.Diavolo.Generic sample, which options correspond to evidence-backed techniques used to inhibit system recovery and ensure data encryption impact?",
+        "options": [
+          "A. Deleting multiple VSS shadow copies via WMIC shadowcopy delete (T1490)",
+          "B. Deleting volume snapshots by directly overwriting \\\\Device\\\\Harddisk0 (boot sector) (T1542.003)",
+          "C. Renaming many files with double extensions to indicate encryption (T1486/T1036.007)",
+          "D. Disabling Windows Defender via registry policy changes (T1562.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence Technique Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample, which defence-evasion behaviours are directly evidenced and should be selected?",
+        "options": [
+          "A. Disabling or modifying security tools by targeting AV-related services and registry (T1562.001)",
+          "B. Kernel-mode rootkit loading via a malicious driver (T1547.006)",
+          "C. Clearing Windows event logs using ClearEventLogA and OpenEventLogA (T1070.001)",
+          "D. Code signing policy modification to allow unsigned drivers (T1553.006)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection and EDR Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Malware.PfPk.Generic killer sample, which injection-related techniques are truly supported by the report, and which are only listed generically in MITRE mappings?",
+        "options": [
+          "A. Generic process injection into explorer.exe using remote memory allocation and WriteProcessMemory (T1055)",
+          "B. DLL injection into explorer.exe via LoadLibraryA in the remote process (T1055.001)",
+          "C. Thread execution hijacking limited to the malware's own process (self-injection) (T1055.003)",
+          "D. Extra window memory injection into shell_traywnd based on the \"shell_traywnd\" string (T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Technique Identification (Ursnif/Emotet)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ursnif sample (labelled AD.Emotet), which specific process injection sub-techniques are evidenced by API usage and memory artefacts?",
+        "options": [
+          "A. Asynchronous Procedure Call (APC) injection via NtQueueApcThread (T1055.004)",
+          "B. Generic process injection using VirtualAllocEx/WriteProcessMemory without a clear sub-technique (T1055)",
+          "C. DLL injection into a remote process via LoadLibraryA (T1055.001)",
+          "D. Process hollowing using a suspended process and image replacement (T1055.012)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection and User-Mode Evasion (Trojan.Injuke)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Injuke sample, which injection behaviours are clearly evidenced and should be selected, avoiding unsupported sub-techniques?",
+        "options": [
+          "A. APC-based injection using NtQueueApcThread into another process (T1055.004)",
+          "B. DLL injection into a remote process via LoadLibraryA (T1055.001)",
+          "C. Process hollowing (T1055.012)",
+          "D. Extra window memory injection into Shell_TrayWnd (T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "User-Mode Unhooking vs Generic Injection (Ursnif-like)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ursnif/Emotet-like um_unhooking sample, which options are best supported by the evidence as user-mode evasion or unhooking behaviours, not just generic injection?",
+        "options": [
+          "A. Scanning for Shell_TrayWnd and other GUI windows to inject via window hooks (T1055.011/T1055.015)",
+          "B. Using GetCursorPos and GetTickCount to detect sandbox or user inactivity (T1497.001/T1497.003)",
+          "C. Direct syscalls to bypass user-mode API hooks (unhooking via syscalls)",
+          "D. Importing and using CallNextHookEx and SetWindowsHookEx for potential input capture and hook replacement (T1056.001/T1055.015)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Identification (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample, which injection techniques are evidenced by the report rather than only listed in the MITRE mapping?",
+        "options": [
+          "A. Process hollowing (T1055.012) based on explicit evidence of suspended process creation and image replacement",
+          "B. Generic process injection (T1055) via WriteProcessMemory into another process",
+          "C. DLL injection into a remote process via LoadLibraryA (T1055.001)",
+          "D. Asynchronous Procedure Call injection via NtQueueApcThread (T1055.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection and Credential Access (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Dump:Generic.Dacic.A9349469.A sample (Remcos-related), which options correctly distinguish between evidenced process injection and merely generic credential-access techniques?",
+        "options": [
+          "A. Generic process injection via WriteProcessMemory into a remote process (T1055)",
+          "B. DLL injection into a remote process via LoadLibraryA (T1055.001)",
+          "C. Credential stealing from web browsers via DPAPI decryption (T1555.003)",
+          "D. APC injection using NtQueueApcThread (T1055.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Execution Guardrails and Environment Checks (Remcos)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample, which behaviours are clearly used as execution guardrails or environment checks rather than direct injection?",
+        "options": [
+          "A. Creating a mutex like \"Rmc-E3OCRB\" to ensure a single instance (T1480)",
+          "B. Checking OS version via GetVersionExA/RtlGetVersion (T1082)",
+          "C. Directly overwriting \\\\Device\\\\Harddisk0 to install a bootkit (T1542.003)",
+          "D. Querying services-related registry keys for security software discovery (T1007/T1518.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Evidence-Grounded ATT&CK Mapping (Zusy.Generic)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Zusy.Generic infostealer sample, which ATT&CK techniques are strongly supported by concrete evidence (API calls, registry access, dropped files) rather than just the high-level MITRE list?",
+        "options": [
+          "A. Data from Local System (T1005) via CopyFileW and reading configuration files",
+          "B. Screen Capture (T1113) via CreateCompatibleBitmap",
+          "C. Keylogging (T1056.001) via GetAsyncKeyState",
+          "D. Mshta proxy execution (T1218.005) via mshta.exe child processes"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection vs Child-Process Spawning (Dinwod)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Dinwod sample, which statement best reflects the evidence about how additional payloads are launched?",
+        "options": [
+          "A. Multiple code-injected processes are created via CreateRemoteThread into legitimate processes (T1055.001)",
+          "B. A long chain of new PE executables (e.g., 442800.exe, 282462.exe, etc.) is dropped and spawned as child processes (T1105/T1106) rather than injected into existing ones",
+          "C. APC injection is used to queue shellcode into svchost.exe (T1055.004)",
+          "D. Process hollowing is used to replace the image of explorer.exe (T1055.012)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion vs Impact (Dacic/Remcos Dropper)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Dropper.Generic.Dacic.3035 sample, which options correspond to defence evasion rather than impact or collection?",
+        "options": [
+          "A. Dropping high-entropy packed child executable gegdsimsogm.exe into %TEMP% (T1027/T1105)",
+          "B. Modifying file attributes via SetFileAttributesA to hide files (T1222/T1564)",
+          "C. Enumerating Outlook/Skype registry locations for data theft (T1114/T1005)",
+          "D. Shutting down the system using NtShutdownSystem to cause impact (T1529)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "UM Unhooking vs Generic Sandbox Evasion (Sdbot.Generic)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Sdbot.Generic killer sample, which behaviours are clearly sandbox/VM-evasion or environment checks, not direct unhooking?",
+        "options": [
+          "A. Reading VMware-specific registry keys under HKLM\\SOFTWARE\\VMware, Inc. (T1497.001)",
+          "B. Checking for vboxguestadditions and other virtualization artefacts (T1497.001)",
+          "C. Opening \\\\Device\\\\KsecDD to disable kernel-mode hooks (direct unhooking)",
+          "D. Using GetTickCount and sleeping to detect timing anomalies (T1497.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evidence-Calibrated Multi-Label Selection (Ursnif-like)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Given the Ursnif/Emotet um_unhooking report, which set of techniques is best supported by evidence, avoiding over-selection of unevidenced items?",
+        "options": [
+          "A. Keylogging (T1056.001), Screen Capture (T1113), and Direct Volume Access (T1006)",
+          "B. Keylogging (T1056.001) via keyboard-related APIs, Clipboard Data collection (T1115), and Web Protocol C2 (T1071.001)",
+          "C. Bootkit installation via direct disk writes (T1542.003) and VSS deletion (T1490)",
+          "D. DNS tunnelling for C2 (T1071.004) and Tor-based multi-hop proxy (T1090.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection vs Code Packing (Small Remcos Stub)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the small Remcos stub sample (size ~6.8 KB, only T1027/T1027.009 mapped), which conclusion about process injection is best supported?",
+        "options": [
+          "A. The stub clearly performs DLL injection into another process using LoadLibraryA (T1055.001)",
+          "B. The stub clearly performs process hollowing of a child process (T1055.012)",
+          "C. There is no direct evidence of process injection yet; only obfuscation/packing is observed (T1027/T1027.009)",
+          "D. The stub uses APC injection via NtQueueApcThread (T1055.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Based on the first infostealer sample (Zusy.Generic), which process injection techniques are concretely evidenced by the sandbox report and should be selected (no more, no fewer)?",
+        "options": [
+          "A. Generic process injection (T1055) via remote memory allocation and WriteProcessMemory",
+          "B. DLL injection (T1055.001) via LoadLibraryA into a remote process",
+          "C. Thread execution hijacking (T1055.003) in a remote process",
+          "D. Extra window memory injection (T1055.011) using SetWindowLong/SendMessage",
+          "E. Self-injection only (no cross-process injection is observed)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection and Credential API Hooking (Calibration)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the second infostealer sample (Malware.SF.Generic), which techniques related to process injection and credential API hooking are directly supported by the evidence and should ALL be selected?",
+        "options": [
+          "A. Generic process injection (T1055) indicated by \"Writes data to a remote process\"",
+          "B. Thread execution hijacking (T1055.003) in a remote process",
+          "C. DLL injection (T1055.001) into another process using LoadLibraryA as an injection vector",
+          "D. Credential API hooking (T1056.004) as shown by hooks on file system and internet APIs",
+          "E. No process injection; only local thread creation (self-injection)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ransom sample (single-process ransomware with cbNhUvy60.README.txt), which ATT&CK techniques related to impact and data staging are concretely demonstrated and should be selected?",
+        "options": [
+          "A. Data Encrypted for Impact (T1486), based on ransom note and mass file access",
+          "B. Internal Defacement (T1491.001), via changing content presented to the user with ransom text",
+          "C. Inhibit System Recovery (T1490), via deletion of shadow copies using vssadmin or WMIC",
+          "D. Local Data Staging (T1074.001), via creation of temporary files in %TEMP%",
+          "E. Service Stop (T1489), via explicit stopping of backup or AV services"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Impact vs Inhibit System Recovery (Evidence-grounding)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.Diavolo.Generic sample (Trojan.Filecoder) that uses WMIC.exe shadowcopy delete, which impact-related techniques are explicitly evidenced and should be chosen (no extras)?",
+        "options": [
+          "A. Inhibit System Recovery (T1490) by deleting multiple Volume Shadow Copies via WMIC shadowcopy delete",
+          "B. Data Encrypted for Impact (T1486) by renaming many files with double extensions",
+          "C. Service Stop (T1489) by stopping backup or AV services",
+          "D. System Shutdown/Reboot (T1529) by calling ExitWindowsEx",
+          "E. Internal Defacement (T1491.001) by changing desktop wallpaper"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / WMIC vs vssadmin Calibration",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Comparing the two ransomware families Trojan.Ransom.Spora and Ransom.Diavolo.Generic, which sample explicitly uses WMIC/WMIC.exe for shadow copy manipulation, and how is that reflected in ATT&CK mapping?",
+        "options": [
+          "A. Only Trojan.Ransom.Spora uses WMIC.exe to delete shadow copies, mapped to Inhibit System Recovery (T1490)",
+          "B. Only Ransom.Diavolo.Generic uses WMIC.exe shadowcopy delete, mapped to Inhibit System Recovery (T1490)",
+          "C. Both use WMIC.exe shadowcopy delete and thus both map to Inhibit System Recovery (T1490)",
+          "D. Neither uses WMIC; they rely solely on vssadmin.exe delete shadows",
+          "E. Both rely on direct NTFS manipulation without WMIC or vssadmin"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence Technique Mapping (EDR/AV killers)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Sdbot.Generic killer sample, which defense evasion techniques are clearly demonstrated by concrete evidence (registry changes, strings, or APIs) and should be selected?",
+        "options": [
+          "A. Disable or Modify Tools (T1562.001) by modifying proxy/security settings and AV-related services",
+          "B. Clear Windows Event Logs (T1070.001) via ClearEventLogA and OpenEventLogA usage",
+          "C. Disable or Modify System Firewall (T1562.004) via editing firewall-related registry keys",
+          "D. Code Signing Policy Modification (T1553.006) via altering driver signing registry keys",
+          "E. Masquerading (T1036) via dropping executables into %WINDIR%\\system32 with benign names"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection vs Masquerading in Killers (Calibration)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample, which of the following process-related techniques are directly supported by evidence and should be selected, avoiding plausible but unevidenced sub-techniques?",
+        "options": [
+          "A. Generic process injection (T1055) via Writes data to a remote process and remote memory allocation",
+          "B. Process Hollowing (T1055.012) via creating a suspended process and rewriting its image",
+          "C. Thread Execution Hijacking (T1055.003) only in self process, not remote",
+          "D. Masquerading (T1036) by dropping dlldsk32.exe into %WINDIR%\\system32",
+          "E. Extra Window Memory Injection (T1055.011) using window message-based injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "EDR/AV Killer Classification from Behaviour",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Looking at the kernel-mode Trojan.Generic sample (small PE32 native driver), which behaviors best support classifying it as an AV/EDR killer rather than a pure infostealer or ransomware?",
+        "options": [
+          "A. Use of IoCreateDevice, IoDeleteDevice, and \\Device\\HardDiskVolume%d strings indicating driver creation and manipulation",
+          "B. Extensive screen capture APIs and keylogging hooks",
+          "C. WMIC.exe shadowcopy deletion and ransom note drops",
+          "D. High-entropy packed sections with no driver-related APIs",
+          "E. Use of ZwReadFile and ZwQueryInformationFile for user document enumeration only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Technique Identification (Ursnif/um_unhooking)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ursnif sample (classified under um_unhooking), which specific process injection sub-technique is explicitly indicated by the report and should be selected without adding unevidenced ones?",
+        "options": [
+          "A. Asynchronous Procedure Call (APC) injection (T1055.004) via NtQueueApcThread",
+          "B. Process Hollowing (T1055.012) via CreateProcess in suspended state and image replacement",
+          "C. Extra Window Memory Injection (T1055.011) via shell_traywnd window class usage",
+          "D. Generic process injection only (T1055) with no sub-technique detail",
+          "E. No process injection; only local code execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Technique Identification (Llac/um_unhooking)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Llac sample (also under um_unhooking), which process injection technique(s) are clearly evidenced and should be selected, considering NtQueueApcThread and other APIs?",
+        "options": [
+          "A. APC injection (T1055.004) using NtQueueApcThread into a remote thread",
+          "B. Thread Execution Hijacking (T1055.003) by changing a thread's start address without APC",
+          "C. Process Hollowing (T1055.012) via suspended process image replacement",
+          "D. Extra Window Memory Injection (T1055.011) via window procedure overwrite",
+          "E. Only self-injection (no cross-process injection) through CreateThread in current process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking vs Generic Injection (Remcos/um_unhooking)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample (Remcos RAT with many T1055 sub-techniques listed), which process injection techniques are actually supported by concrete evidence (APIs, memory dumps, hooks) and should be selected, avoiding those present only in high-level MITRE lists?",
+        "options": [
+          "A. Generic process injection (T1055) via Writes data to a remote process and PE header in memory",
+          "B. Process Hollowing (T1055.012) via explicit suspended process creation and section remapping",
+          "C. DLL injection (T1055.001) suggested by LoadLibraryA in conjunction with remote thread creation",
+          "D. Extra Window Memory Injection (T1055.011) via FindWindowA targeting Shell_TrayWnd",
+          "E. No process injection; only dynamic API resolution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Identification (Remcos minimal sample)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the small Remcos \"Trojan[Backdoor]/Remcos\" sample (only static packing indicators, no runtime injection APIs), which of the following process injection techniques are supported by the evidence?",
+        "options": [
+          "A. Generic process injection (T1055)",
+          "B. DLL injection (T1055.001)",
+          "C. Process Hollowing (T1055.012)",
+          "D. No process injection technique is evidenced in this detonation",
+          "E. Extra Window Memory Injection (T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "MITRE ATT&CK v14 Mapping for Remcos C2",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the full Remcos.Generic sample that contacts remcos2010.duckdns.org over a non-standard port, which command-and-control techniques are directly evidenced and should be selected?",
+        "options": [
+          "A. Application Layer Protocol: Web Protocols (T1071.001) via HTTP(S)-style communication",
+          "B. Non-Standard Port (T1571) via TCP connections to port 9003 (or other high ports)",
+          "C. DNS (T1071.004) via DNS queries for remcos2010.duckdns.org",
+          "D. Exfiltration Over C2 Channel (T1041) explicitly shown by data uploads",
+          "E. Domain Generation Algorithms (T1568.002) via high-entropy pseudo-random domains"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Network IOC Extraction and Calibration (Dinwod infostealer)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Dinwod sample that spawns a chain of numeric-named executables, which network IOCs and techniques are concretely observable and should be selected?",
+        "options": [
+          "A. Use of HTTP on port 80 without standard headers (T1071.001) as noted by HTTP-less traffic on TCP 80",
+          "B. Use of HTTPS/TLS (T1573) with JA3 fingerprints to hide C2",
+          "C. Use of non-standard port (T1571) such as 9003 for C2 traffic",
+          "D. DNS queries for dynamic DNS domains (T1102) similar to duckdns.org",
+          "E. No network activity; purely local infostealing"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "MITRE ATT&CK Technique Mapping (Chydo Dropper)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Chydo dropper sample (Dropper.Generic.Dacic.3035), which techniques related to execution and persistence are explicitly evidenced and should be selected?",
+        "options": [
+          "A. Command and Scripting Interpreter: Windows Command Shell (T1059.003) via GetCommandLineA and cmd.exe usage",
+          "B. Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder (T1547.001) via writing into the Startup folder path",
+          "C. Windows Service (T1543.003) via creating new services in HKLM\\SYSTEM\\CurrentControlSet\\Services",
+          "D. DLL Side-Loading (T1574.002) via failed loads of api-ms-win-* DLLs alone",
+          "E. AppInit DLLs (T1546.010) via explicit modification of AppInit_DLLs registry value"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification (Infostealer vs RAT vs Ransomware)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Considering the first large Zusy.Generic sample, which family classification is best supported by the combined behaviors (screen capture, keylogging, credential access, C2 over high ports) and should be selected?",
+        "options": [
+          "A. Classical ransomware focused on encryption and shadow copy deletion",
+          "B. Banking/credential infostealer with C2 exfiltration",
+          "C. Pure AV/EDR killer focusing on service tampering and event log clearing",
+          "D. Simple downloader that only drops and runs another binary",
+          "E. Benign remote administration tool used for IT support"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Evasion Technique Identification (User-mode vs Kernel-mode)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Across the Sdbot.Generic killer and the kernel-mode Trojan.Generic driver sample, which evasion-related techniques are clearly present in BOTH and should be selected (intersection only)?",
+        "options": [
+          "A. Software Packing (T1027.002) as indicated by UPX/MPRESS/other packer signatures",
+          "B. Embedded Payloads (T1027.009) via high-entropy sections containing encrypted code",
+          "C. Disable or Modify Tools (T1562.001) via proxy or AV-related registry modifications",
+          "D. Execution Guardrails (T1480) via mutex-based single-instance checks",
+          "E. Time Based Evasion (T1497.003) via long sleeps or GetTickCount-based delays"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking vs Generic Evasion (Evidence-grounding)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ursnif sample, which of the following best reflects user-mode unhooking or anti-monitoring behavior supported by the evidence, and should be selected?",
+        "options": [
+          "A. Reading and rewriting system DLLs in memory to remove EDR hooks (UM unhooking)",
+          "B. Importing and using NtQuerySystemInformation and GetTickCount for sandbox and debugger checks (T1497, T1622)",
+          "C. Direct Syscalls to bypass ntdll.dll entirely",
+          "D. Kernel-mode driver loading to remove kernel hooks",
+          "E. No unhooking or anti-monitoring behavior is present"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Ursnif/Emotet-style sample (sha256=hash, _family \"um_unhooking\" with APC-based injection), which ATT&CK process injection techniques are directly evidenced by the sandbox data and should be selected, based strictly on the presence of NtQueueApcThread and related artifacts?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic)",
+          "B. T1055.004 \u2013 Asynchronous Procedure Call (APC) Injection",
+          "C. T1055.001 \u2013 Dynamic-link Library Injection",
+          "D. T1055.012 \u2013 Process Hollowing",
+          "E. T1055.003 \u2013 Thread Execution Hijacking"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection and Classification",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (sha256=hash, _family \"infostealers\" with processes hash.exe \u2192 bauqs.exe \u2192 xyzuqi.exe), which process injection techniques are concretely supported by the report (e.g., \"Writes data to a remote process\", remote VirtualAlloc, and \"Spawned processes likely due to injection\")? Select only what is explicitly evidenced.",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic)",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection",
+          "C. T1055.003 \u2013 Thread Execution Hijacking in a remote process",
+          "D. T1055.003 \u2013 Thread Execution Hijacking in the same (self) process",
+          "E. T1055.011 \u2013 Extra Window Memory Injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Identification (Option Count Calibration)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the second infostealer sample (sha256=hash, _family \"infostealers\" with hash.exe dropping microsofthelp.exe and using CreateRemoteThread-style APIs only as strings), which of the following ATT&CK techniques are truly evidenced by runtime behavior, not just by imported or referenced APIs? Focus on injection-related techniques.",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), based on \"Writes data to a remote process\"",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection, proven by LoadLibrary in a remote process",
+          "C. T1055.003 \u2013 Thread Execution Hijacking, based on \"Creates a thread in a self process\"",
+          "D. T1055.004 \u2013 Asynchronous Procedure Call (APC) Injection, based on NtQueueApcThread",
+          "E. No injection-related technique is concretely evidenced at runtime"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis / Impact vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Diavolo/Filecoder ransomware sample (sha256=hash, _family \"ransomware\" with multiple WMIC.exe shadowcopy deletions and many files renamed with double extensions), which ATT&CK impact/evasion techniques are explicitly demonstrated?",
+        "options": [
+          "A. T1486 \u2013 Data Encrypted for Impact (file renaming with ransomware indicators)",
+          "B. T1490 \u2013 Inhibit System Recovery (deleting volume shadow copies via WMIC)",
+          "C. T1070.004 \u2013 File Deletion (generic log cleanup only)",
+          "D. T1491.001 \u2013 Internal Defacement (changing desktop background/ransom note)",
+          "E. T1489 \u2013 Service Stop (terminating services with taskkill.exe)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis \u2013 Evidence Grounding",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Spora-style ransomware sample (sha256=hash, _family \"ransomware\" with mshta.exe, HTML ransom note, and Bitcoin API lookups), which ATT&CK techniques are directly supported by the report? Base your selection only on explicit indicators such as \"Deletes volume snapshots\", ransom note drops, and Bitcoin address checks.",
+        "options": [
+          "A. T1486 \u2013 Data Encrypted for Impact",
+          "B. T1491.001 \u2013 Internal Defacement (changing desktop wallpaper / ransom message)",
+          "C. T1490 \u2013 Inhibit System Recovery (volume shadow copy deletion via WMIC)",
+          "D. T1114.001 \u2013 Local Email Collection (Outlook-related file access)",
+          "E. T1583.001 \u2013 Acquire Infrastructure: Domains (short-term SSL cert for chain.so / blockcypher)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware vs Infostealer Technique Disambiguation",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Comparing the Trojan.Ransom sample (sha256=hash, _family \"ransomware\") with the Spora sample, which techniques are clearly present in Trojan.Ransom based on ransom note strings (\"YOUR FILES ARE ENCRYPTED\"), many dropped files, and use of Bcrypt, but are not explicitly evidenced in the Spora report?",
+        "options": [
+          "A. T1486 \u2013 Data Encrypted for Impact",
+          "B. T1491.001 \u2013 Internal Defacement",
+          "C. T1027 \u2013 Obfuscated Files or Information",
+          "D. T1489 \u2013 Service Stop",
+          "E. T1114 \u2013 Email Collection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion \u2013 EDR/AV Killers vs Generic Process Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot/Sdbot-like killer sample (sha256=hash, _family \"killers\" with dlldsk32.exe, AV service names, and ClearEventLog usage), which defense evasion techniques related to EDR/AV killing are clearly supported by the evidence?",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools (modifying proxy settings and AV-related services)",
+          "B. T1070.001 \u2013 Clear Windows Event Logs (ClearEventLogA, OpenEventLogA)",
+          "C. T1036 \u2013 Masquerading (dropping to system32 with benign-looking name dlldsk32.exe)",
+          "D. T1055.001 \u2013 DLL Injection into security tools (explicit remote LoadLibrary into AV process)",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall (editing firewall-related registry keys)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence Technique Mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the small kernel-mode Trojan.Generic sample (sha256=hash, _family \"killers\" with ZwCreateFile, IoCreateDevice, IoDeleteDevice, and high-entropy packed sections), which techniques are explicitly indicated by the report?",
+        "options": [
+          "A. T1547.006 \u2013 Kernel Modules and Extensions (driver-like behavior via IoCreateDevice)",
+          "B. T1562.001 \u2013 Disable or Modify Tools (IoDeleteDevice used to remove security drivers)",
+          "C. T1027.002 \u2013 Software Packing (Visual C++ 2003 DLL packer signature)",
+          "D. T1055 \u2013 Process Injection (generic, into user-mode processes)",
+          "E. T1480 \u2013 Execution Guardrails (indicator combination)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking / EDR Evasion vs Generic Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ursnif / um_unhooking sample (sha256=hash, _family \"um_unhooking\"), which behaviors suggest user-mode API unhooking or tampering with instrumentation vs. simple process injection only? Base your answer on evidence like imported NtQuerySystemInformation, NtQueryInformationProcess, sandbox-detection strings, and GetCursorPos usage.",
+        "options": [
+          "A. T1497.001 \u2013 System Checks (using NtQuerySystemInformation, GetTickCount for sandbox detection)",
+          "B. T1055 \u2013 Process Injection (generic), clearly evidenced by NtQueueApcThread and PE header in memory",
+          "C. T1564 \u2013 Hide Artifacts (using SHFileOperationW to move files into hidden locations)",
+          "D. T1562.001 \u2013 Disable or Modify Tools (explicit patching of AV DLL exports)",
+          "E. T1497.002 \u2013 User Activity Based Checks (GetCursorPos, keylogging-style checks)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking / Process Injection Technique Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Injuke um_unhooking sample (sha256=hash, _family \"um_unhooking\"), NtQueueApcThread is present along with CreateThread and high-entropy packed text. Which specific T1055 sub-techniques are supported by this evidence, and which remain only generic or unsupported?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), due to writing code into another process and queuing APCs",
+          "B. T1055.004 \u2013 Asynchronous Procedure Call (APC) Injection, due to NtQueueApcThread in a remote thread",
+          "C. T1055.012 \u2013 Process Hollowing, clearly indicated by hollowed suspended processes",
+          "D. T1055.001 \u2013 DLL Injection, proven by remote LoadLibraryA into a target process",
+          "E. Only generic process injection (no specific sub-techniques evidenced)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking vs Screenlocker Ransomware Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.Screenlocker.Generic sample (sha256=hash, _family \"infostealers\" but av_label screenlocker-like) shows WriteProcessMemory, CreateRemoteThread, and PE headers in memory. Which of the following correctly describes the injection behavior evidenced, without over-claiming unhooking or hollowing?",
+        "options": [
+          "A. Generic T1055 Process Injection plus T1055.001 DLL Injection",
+          "B. Generic T1055 Process Injection only (no specific sub-technique conclusively shown)",
+          "C. T1055.012 Process Hollowing, because a suspended process is un-mapped and replaced",
+          "D. T1055.004 APC Injection, because NtQueueApcThread is present",
+          "E. No injection is evidenced; only self-thread creation is observed"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Injection Technique Identification (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the main Remcos RAT sample (sha256=hash, _family \"remcos\" contacting remcos2010.duckdns.org), which injection-related techniques are strongly supported by the evidence: CreateRemoteThread/RtlCreateUserThread strings, WriteProcessMemory, PE headers in memory, and Process Hollowing listed in mitre_attcks?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic)",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection (remote LoadLibraryA into a target process)",
+          "C. T1055.012 \u2013 Process Hollowing (explicitly listed and consistent with PE header in memory of a spawned process)",
+          "D. T1055.004 \u2013 APC Injection (NtQueueApcThread present)",
+          "E. T1055.003 \u2013 Thread Execution Hijacking in self process only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion and Persistence Technique Mapping (Remcos Service)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos-like Dacic sample (sha256=hash, _family \"remcos\" with service creation in HKLM\\SYSTEM\\CurrentControlSet\\Services and high-entropy .text), which persistence and defense evasion techniques are explicitly evidenced?",
+        "options": [
+          "A. T1543.003 \u2013 Windows Service (service registry keys created)",
+          "B. T1547.001 \u2013 Registry Run Keys / Startup Folder (auto-start entries in HKCU/HKLM Run)",
+          "C. T1027.002 \u2013 Software Packing (VC8 packer signature, high-entropy sections)",
+          "D. T1055 \u2013 Process Injection (generic) with remote writes",
+          "E. T1564.003 \u2013 Hidden Window (ShowWindow usage only for UI)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Network IOC Extraction \u2013 Dynamic DNS and C2",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Remcos sample that contacts remcos2010.duckdns.org over a non-standard port, which network-based ATT&CK techniques are directly supported by the report?",
+        "options": [
+          "A. T1071.001 \u2013 Web Protocols (HTTP-based C2 over standard ports only)",
+          "B. T1102 \u2013 Web Service (Dynamic DNS domain used as C2 endpoint)",
+          "C. T1571 \u2013 Non-Standard Port (TCP C2 on port 9003 or similar)",
+          "D. T1095 \u2013 Non-Application Layer Protocol (raw TCP sockets)",
+          "E. T1071.004 \u2013 DNS (DNS queries to the Dynamic DNS domain)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Network IOC Extraction \u2013 External IP Lookup vs C2",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking infostealer sample that queries api.ipify.org and time-a.nist.gov, which network behaviors should be mapped as discovery or C2-related techniques, based strictly on the report?",
+        "options": [
+          "A. T1016 \u2013 System Network Configuration Discovery (external IP lookup via api.ipify.org)",
+          "B. T1041 \u2013 Exfiltration Over C2 Channel (uploading stolen data to api.ipify.org)",
+          "C. T1071.001 \u2013 Web Protocols (HTTP GET to api.ipify.org)",
+          "D. T1568.002 \u2013 Domain Generation Algorithms (DGA) for api.ipify.org",
+          "E. T1095 \u2013 Non-Application Layer Protocol (raw TCP only)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Evidence-Grounded Credential Access vs Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot/Sdbot-like killer+infostealer sample (sha256=hash, _family \"killers\" with GetAsyncKeyState, clipboard access, and keylogger strings), which techniques related to credential capture and data collection are explicitly indicated?",
+        "options": [
+          "A. T1056.001 \u2013 Keylogging (GetAsyncKeyState, \"[BACK]\" keylog strings)",
+          "B. T1115 \u2013 Clipboard Data (GetClipboardData usage)",
+          "C. T1555 \u2013 Credentials from Password Stores (direct browser password DB access)",
+          "D. T1005 \u2013 Data from Local System (browser typed URLs registry keys)",
+          "E. T1056.004 \u2013 Credential API Hooking (API hooks on FindNextFileW and send@WS2_32)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection and Credential API Hooking \u2013 Answer Count Discipline",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the second infostealer sample (sha256=hash, _family \"infostealers\" with microsofthelp.exe hooking FindNextFileW and send@WS2_32), which ATT&CK techniques are supported regarding both injection and credential capture?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), due to \"Writes data to a remote process\" and injected microsofthelp.exe",
+          "B. T1056.004 \u2013 Credential API Hooking (hooks on filesystem and network APIs)",
+          "C. T1055.001 \u2013 DLL Injection, as there is a remote LoadLibrary into explorer.exe",
+          "D. T1056.001 \u2013 Keylogging, because GetAsyncKeyState is imported",
+          "E. T1562.001 \u2013 Disable or Modify Tools, due to proxy-setting modification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification \u2013 Infostealer vs RAT vs Ransomware",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The first large sample (sha256=hash, _family \"infostealers\") reads browser configuration files, captures screenshots, collects clipboard data, enumerates processes, and uses non-standard ports for C2. There is no evidence of file encryption or ransom notes. Which high-level family classification is most appropriate based on behavior?",
+        "options": [
+          "A. Ransomware (file encryption and ransom notes)",
+          "B. Infostealer / Spyware (data theft and surveillance)",
+          "C. Remote Access Trojan (full remote control capabilities)",
+          "D. EDR/AV Killer only (no data theft)",
+          "E. Benign system utility"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Evasion Technique Identification \u2013 Sandbox and VM Checks",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Across the Sdbot killer sample (sha256=hash, _family \"killers\" with vboxguestadditions, VMWare Tools registry checks, GetTickCount branches, and user-activity strings), which virtualization/sandbox evasion techniques are explicitly evidenced?",
+        "options": [
+          "A. T1497 \u2013 Virtualization/Sandbox Evasion (generic)",
+          "B. T1497.001 \u2013 System Checks (VMware registry keys, CPU/PEB checks)",
+          "C. T1497.002 \u2013 User Activity Based Checks (GetCommandLineA/user interaction heuristics)",
+          "D. T1497.003 \u2013 Time Based Evasion (GetTickCount and long sleeps)",
+          "E. No virtualization or sandbox checks are evidenced"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Technique Mapping and Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Based on the sandbox data for the Zusy.Generic infostealer sample, which MITRE ATT&CK process injection techniques are concretely evidenced by the report (consider generic vs. sub-techniques)?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), evidenced by remote memory allocation and WriteProcessMemory-style behaviour",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection, evidenced by LoadLibrary-based remote thread creation into another process",
+          "C. T1055.003 \u2013 Thread Execution Hijacking, evidenced only by creating a thread in its own process",
+          "D. T1055.011 \u2013 Extra Window Memory Injection, evidenced by use of window message\u2013based injection APIs",
+          "E. No process injection is evidenced; T1055 appears only as a static mapping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection and Credential API Hooking \u2013 Answer Count Calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Malware.SF.Generic infostealer sample using microsofthelp.exe, which ATT&CK techniques related to process injection and credential API hooking are directly supported by the sandbox evidence (hooks, APIs, and mappings)? Select all that apply.",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), indicated by 'Writes data to a remote process' and 'Spawned processes likely due to injection'",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection, indicated by LoadLibraryA being used explicitly as the remote payload loader",
+          "C. T1055.003 \u2013 Thread Execution Hijacking, indicated only by 'Creates a thread in a self process' in microsofthelp.exe",
+          "D. T1056.004 \u2013 Credential API Hooking, indicated by multiple 'Hooks API calls' and 'Hooks file system/internet APIs' in microsofthelp.exe",
+          "E. T1055.004 \u2013 Asynchronous Procedure Call, indicated by explicit NtQueueApcThread usage"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour vs. Defense Evasion Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Diavolo/Filecoder ransomware sample that repeatedly invokes WMIC.exe to delete shadow copies, which ATT&CK impact and defense evasion techniques are explicitly evidenced by the report?",
+        "options": [
+          "A. T1490 \u2013 Inhibit System Recovery, via WMIC.exe shadowcopy delete commands",
+          "B. T1486 \u2013 Data Encrypted for Impact, via renaming many files with double extensions and dropping encrypted content",
+          "C. T1070.004 \u2013 File Deletion, via DeleteFileA calls used to remove original documents",
+          "D. T1491.001 \u2013 Internal Defacement, via changing the desktop background and dropping ransom notes",
+          "E. T1070.006 \u2013 Timestomp, via SetFileTime usage on files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM Unhooking vs. Generic Process Injection Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ursnif sample (classified under um_unhooking), which process injection sub-techniques are actually supported by the sandbox evidence, and which are only generic or not evidenced? Focus on concrete API usage such as NtQueueApcThread and the presence of PE headers in memory.",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), supported by PE headers found in memory and self-process handle operations",
+          "B. T1055.004 \u2013 Asynchronous Procedure Call, supported by the explicit NtQueueApcThread call",
+          "C. T1055.001 \u2013 Dynamic-link Library Injection, supported by FreeLibrary and LoadLibraryA imports alone with no remote thread evidence",
+          "D. T1055.012 \u2013 Process Hollowing, supported by full image replacement of a benign process in the report",
+          "E. T1055.011 \u2013 Extra Window Memory Injection, supported by shell_traywnd string alone"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "EDR/UM Unhooking vs. Keylogging and C2 \u2013 Evidence Grounding",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Win/malicious_confidence_100% sample (Trojan.Ursnif, um_unhooking category), which ATT&CK techniques related to keylogging and C2 are explicitly demonstrated by the sandbox evidence, as opposed to only suggested by family knowledge?",
+        "options": [
+          "A. T1056.001 \u2013 Keylogging, evidenced by GetAsyncKeyState/VkKeyScanA usage and keylogger-style strings like '[TAB]'",
+          "B. T1056.004 \u2013 Credential API Hooking, evidenced by hooks on Win32 credential APIs such as CredEnumerate",
+          "C. T1071.001 \u2013 Web Protocols, evidenced by HTTP GET strings and Suricata HTTP alerts without full headers",
+          "D. T1568.002 \u2013 Domain Generation Algorithms, evidenced by high-entropy domain names in DNS queries",
+          "E. T1041 \u2013 Exfiltration Over C2 Channel, evidenced by explicit upload of collected archives in the report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process Hollowing vs. Generic Injection (Remcos)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample that maps to both T1055 (Process Injection) and T1055.012 (Process Hollowing), which injection techniques are concretely supported by the sandbox evidence, and which appear only as high-level mappings?",
+        "options": [
+          "A. T1055 \u2013 Process Injection (generic), supported by 'Writes data to a remote process' and remote memory modifications",
+          "B. T1055.012 \u2013 Process Hollowing, supported by full replacement of a suspended child process image in memory",
+          "C. T1055.003 \u2013 Thread Execution Hijacking, supported by CreateRemoteThread usage into another process",
+          "D. None of the listed injection techniques are evidenced; they are all only static ATT&CK mappings",
+          "E. Both T1055 and T1055.012 are fully evidenced by explicit hollowing APIs like ZwUnmapViewOfSection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "AV/EDR Killer vs. Generic Discovery \u2013 Evidence-Calibrated Mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Considering the Sdbot.Generic killer sample that enumerates AV services and modifies service-related registry keys, which ATT&CK techniques specifically related to disabling or modifying security tools are supported by the sandbox evidence?",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools, supported by registry writes that modify proxy/security-related settings and strings referencing AV services (e.g., SymProxySvc, McShield.exe)",
+          "B. T1518.001 \u2013 Security Software Discovery, supported by strings and registry queries targeting AV-related keys and services",
+          "C. T1562.004 \u2013 Disable or Modify System Firewall, supported by strings referencing firewall policy registry paths",
+          "D. T1489 \u2013 Service Stop, supported by DeleteService and ControlService usage against security services",
+          "E. T1543.003 \u2013 Windows Service persistence, supported by creating a benign new service unrelated to AV"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    }
+  ]
+}

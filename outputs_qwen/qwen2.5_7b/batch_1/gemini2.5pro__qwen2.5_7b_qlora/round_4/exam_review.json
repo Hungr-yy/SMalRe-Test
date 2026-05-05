@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about malicious capabilities demonstrated by the sample. The report clearly supports: A (CryptUnprotectData, SQL queries for browser credentials = T1555.003), C (network traffic to t.me, DNS query, HTTP GET to t.me = Telegram C2), D (CopyFromScreen API string, stream-72 'Contains ability to capture the screen' = T1113). Option B (deleting VSS) is not supported by the report. Option E (spreading via network shares) is not supported. The answer key [A, C, D] is correct and well-supported. The question is original, technical, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which capabilities are directly supported by evidence in the report for a sample with both infostealer and ransomware characteristics. B (FTP credentials via FileZilla strings = T1552.001, string-11 'Found FTP credentials location strings') is supported. C (T1486 Data Encrypted for Impact is in MITRE mappings, encryption APIs present) is supported. E (keylogging strings found = T1056.001) is supported. F (T1529 System Shutdown/Reboot is in MITRE mappings, string-406 'Contains ability to shutdown system') is supported. A (VSS deletion) is not evidenced. D (SMTP exfiltration) is not evidenced. Answer key [B, C, E, F] is correct and well-grounded in the report."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about behavioral analysis of a packer-based infostealer. A (system reconnaissance - RtlGetVersion, GetVersionExA, CreateToolhelp32Snapshot, GetLocaleInfoA, Process32FirstW) is well-supported. C (packer detected as ACProtect/tElock, cmd.exe erases original file, marks file for deletion) is well-supported. D (regedit.exe silently imports .reg file via batch script) is well-supported. B (VSS deletion) is not evidenced. E (data encryption/ransom) is not evidenced. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Impact tactic techniques for a 'killers' family sample. The MITRE ATT&CK mappings explicitly include T1489 (Service Stop) and T1529 (System Shutdown/Reboot). T1486 (Data Encrypted for Impact) is NOT in this report's MITRE mappings (unlike the second question). T1490 (Inhibit System Recovery) is also not present. The answer key [A, C] is correct and directly supported by the MITRE mappings in the report."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion and analysis-hindering techniques. A (WaitForSingleObject = T1497.003 Time Based Evasion) is supported. B (VSS deletion) is not evidenced. C (GetKeyboardLayoutList = T1614.001 System Language Discovery) is supported. D (direct syscalls) is not evidenced. E (registry key for installed applications = T1497.002 User Activity Based Checks) is supported. F (YARA match for embedded PE in .rsrc section = T1027.009 Embedded Payloads) is supported. Answer key [A, C, E, F] is correct."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about impact techniques for a 'killers' family backdoor (Hupigon). B (deleting admin shares C$, Z$, admin$ via net.exe commands) is directly evidenced in the process tree. C (DeleteService API import = T1489 Service Stop) is supported. E (marks file for deletion = T1070.004) is supported. A (VSS deletion via vssadmin) is not evidenced. D (clearing event logs) is not evidenced. F (file encryption) is not evidenced. Answer key [B, C, E] is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Impact tactic techniques for a ransomware sample. The MITRE mappings include T1489 (Service Stop) and T1529 (System Shutdown/Reboot). T1490 (Inhibit System Recovery) is NOT in the mappings. T1486 (Data Encrypted for Impact) is NOT in this specific report's mappings. T1565.001 (Stored Data Manipulation) is not present. Answer key [A, D] is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question is about WannaCry propagation behaviors. A (large number of ARP broadcasts for network device lookup = network-31, network-32) is directly evidenced. B (mssecsvc.exe created, OpenSCManager/OpenService called = service-based propagation) is directly evidenced. C (DNS lookup to the kill-switch domain triggering Suricata alert) is a kill-switch check, not propagation to other systems. D (dropping tasksche.exe) is local installation, not propagation. E (reading cryptographic GUID) is reconnaissance, not propagation. Answer key [A, B] is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware-related activities observed in the report. A (T1489 Service Stop is in MITRE mappings) is supported. C (executable files dropped = T1105, binary-1) is supported. D (GetKeyState API call for keylogging = T1056.001, api-40) is supported. F (opens file with deletion access rights = T1070.004, api-25) is supported. B (VSS deletion) is not evidenced. E (Windows cryptographic library encryption) is not directly evidenced as file encryption. Answer key [A, C, D, F] is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about data collection techniques for a Remcos-like sample. A (GetKeyState API = T1056.001 Keylogging, api-40) is supported. B (CreateCompatibleBitmap = T1113 Screen Capture, api-105) is supported. C (T1115 Clipboard Data is in MITRE mappings) is supported. F (T1135 Network Share Discovery is in MITRE mappings) is supported. D (VSS deletion) is not evidenced. E (browser credential theft) is not evidenced in this specific report. Answer key [A, B, C, F] is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about primary functionalities of a Remcos RAT sample. A (registry-67 'Creates or modifies windows services' = T1543.003) is supported. B (encryption for extortion) is not the primary function; T1486 is in MITRE but this is labeled Remcos RAT. C (Dynamic DNS contact to tristansupport.duckdns.org, Suricata alerts for DynDNS) is supported. D (keylogging via GetKeyState, C2 on port 9003, screen capture) is supported. E (removable media spreading) is not evidenced. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware impact techniques supported by evidence. A (T1486 Data Encrypted for Impact is in MITRE mappings, Bcrypt module loaded, AES YARA match) is supported. C (T1489 Service Stop is in MITRE mappings) is supported. B (VSS deletion) is not evidenced. D (ransom note) is not evidenced. E (bcdedit) is not evidenced. Answer key [A, C] is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Impact tactic techniques for an Ursnif-like sample. A (T1486 Data Encrypted for Impact is in MITRE mappings) is supported. B (api-284 'Opens a handle to the specified local process' = T1489 Service Stop) is supported. C (Windows Service persistence via registry-67) is supported but is a Persistence technique, not Impact. D (VSS deletion) is not evidenced. E (keylogging = T1056.001) is a Credential Access/Collection technique, not Impact. Answer key [A, B] is correct - A for the MITRE mapping and B for the process handle API linked to T1489."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Impact techniques for a ransomware sample. A (T1489 Service Stop is in MITRE mappings) is supported. C (T1529 System Shutdown/Reboot is in MITRE mappings, string-406 'Contains ability to shutdown system') is supported. D (api-59 'Interacts with the primary disk partition (DR0)' = T1542.003 Bootkit) is directly evidenced. E (string-308 'Contains ability to delete files/directories') is supported. F (string-406 shutdown string, T1529) is supported. B (VSS deletion via vssadmin) is not evidenced. Answer key [A, C, D, E, F] is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware preparation and execution behaviors. A (FindFirstFileW = T1083 File and Directory Discovery, api-102) is supported as preparation for encryption. C (Bcrypt module loaded = T1486 Data Encrypted for Impact preparation) is supported. F (T1486 Data Encrypted for Impact is in MITRE mappings) is supported. B (AdjustTokenPrivileges = privilege escalation, not directly ransomware preparation) is less directly tied. D (Zone.Identifier deletion = evasion, not ransomware preparation). E (active computer name = reconnaissance). Answer key [A, C, F] is correct and well-reasoned."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about installation and persistence mechanisms based on the process tree. A (sc.exe creates service 'fbjtauwa' with binPath pointing to evryposw.exe) is directly evidenced in the process tree. B (netsh.exe adds firewall rule for svchost.exe) is directly evidenced. E (cmd.exe moves evryposw.exe from %TEMP% to %WINDIR%\\system32\\fbjtauwa\\) is directly evidenced. C (injection into explorer.exe) is not evidenced. D (RunOnce registry key) is not evidenced. Answer key [A, B, E] is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection technique specifics. A (nhhyjsjl.exe calls CreateProcessA in suspended mode = api-129 'Creates a process in suspended mode') is directly evidenced. B (api-83 'Writes PE header to memory' by nhhyjsjl.exe = T1055.002 Portable Executable Injection, which is the mechanism for process hollowing) is directly evidenced. C (hash.exe writes to remote process but this is not the hollowing step) - the hollowing is done by nhhyjsjl.exe, not hash.exe directly injecting into pre-existing svchost. D (sc.exe creates service but doesn't inject into services.exe) is incorrect. E (svchost.exe connects to network after hollowing, but netsh.exe is spawned by hash.exe not hollowed svchost) - netsh is a sibling process, not spawned by svchost. Answer key [A, B] is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion techniques for a UPX-packed Trojan.Dinwod sample. A (UPX packer detected = T1027.002 Software Packing, static-7 'PE file is packed with UPX') is directly evidenced. B (api-0 'Writes data to a remote process' = T1055 Process Injection) is directly evidenced. C (T1489 Service Stop is in MITRE but no specific service stopping action is evidenced in signatures) - actually T1489 is in MITRE mappings but no direct evidence of stopping services. D (VSS deletion) is not evidenced. E (api-242 writes files like dhxhp.exe, api-43 writes PE header to disc, binary-1 drops executables) is directly evidenced. Answer key [A, B, E] is correct."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

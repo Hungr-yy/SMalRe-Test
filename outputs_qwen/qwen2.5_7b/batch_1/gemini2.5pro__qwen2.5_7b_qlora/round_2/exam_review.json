@@ -1,0 +1,184 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion methods supported by evidence in the report. The correct answers (A, C, D, F) are all directly supported: A - VMProtect and UPX packer signatures are explicitly in the report; C - 'Writes data to a remote process' is a malicious-level signature; D - RDTSCP instruction artifact is explicitly flagged; F - 'Modifies proxy settings' via DELETEVAL on HKCU proxy key is in the report. Option B (VSS deletion) is not in the report. Option E (direct syscalls/unhooking) is not evidenced. The question is well-formed, technical, and not plagiarised from the benchmark."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key - answer D is not supported by the report"
+        ],
+        "reasoning": "The correct answers are listed as B, C, D. Option B (Service Stop T1489) is supported by the MITRE mapping and 'Contains ability to terminate a process' signature. Option C (UPX packing) is explicitly confirmed by multiple signatures. However, Option D (Timestomping T1070.006) - while present in the MITRE ATT&CK mapping, the specific evidence in the signatures is only 'Contains ability to retrieve file time (API string)' via GetSystemTimeAsFileTime, which is a weak indicator. More critically, Option A (VSS deletion) is NOT in the report at all, and the answer key correctly excludes it. However, the answer key includes D but the report's Timestomp evidence is only a string reference to GetSystemTimeAsFileTime, not a direct timestomping action. This is borderline, but the MITRE mapping explicitly includes T1070.006 (Timestomp) and the signature 'Contains ability to retrieve file time' supports it. On reflection, the answer key is defensible. However, re-examining: the question asks about 'defense evasion or system impact techniques specifically identified' - Service Stop (T1489) is an Impact technique, not Defense Evasion. The question says 'defense evasion or system impact' so B is valid. The answer key of B, C, D appears correct. Reinstating as pass."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers B (Service Stop - T1489 is in MITRE mapping, 'Contains ability to terminate a process' signature present), C (UPX packing - explicitly confirmed by multiple signatures including 'PE file is packed with UPX'), and D (Timestomping - T1070.006 is in MITRE mapping, 'Contains ability to retrieve file time' signature present) are all supported by the report. Options A (VSS deletion) and E (kernel unhooking) are not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (API hooking - 'Hooks API calls', 'Hooks file system APIs' are malicious-level signatures), B (MPRESS packer - 'Matched Compiler/Packer signature' for MPRESS is in the report), and C (file deletion - 'Marks file for deletion' and 'Opens file with deletion access rights' are in the report) are all directly supported. Option D (VSS deletion) is not in the report. Option E (firewall rules) is not evidenced. Option F (ransomware) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (AV process name check - 'Possibly checks for the presence of an Antivirus engine' with 'bdagent.exe' is explicitly in the report) and B (service manipulation/stop - T1489 Service Stop is in MITRE mapping, 'Contains ability to close a handle to a service', 'Contains ability to start a service', 'Contains ability to modify system service' are all present) are supported. Options C (VSS deletion), D (ETW patching), and E (ntdll reload) are not evidenced in the report. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (UAC modification - 'Modifies the UAC/LUA settings' is a malicious-level signature explicitly in the report), C (access token manipulation - T1134 is in MITRE mapping, 'Calls an API typically used to enable or disable privileges in the specified access token' via AdjustTokenPrivileges is present), and D (service termination - T1489 Service Stop is in MITRE mapping) are all supported. Option B (VSS deletion) is not in the report. Option E (ETW patching) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (fake system process masquerading - 'Creates a fake system process' is a malicious-level signature with WINLOGON.EXE, LSASS.EXE etc. at non-system paths) and B (API hooking - 'Hooks API calls', 'Hooks file system APIs', 'Hooks internet related APIs' are all malicious-level signatures) are directly supported. Option C (VSS deletion) is not in the report. Option D (injecting into existing processes) - while process injection is present, the report specifically shows fake processes being created, not injection into existing legitimate ones. Option E (file deletion) - 'Marks file for deletion' is present but the question asks about defense evasion, and this is more of a cleanup action. The answer key A and B is correct and well-supported."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (VSS deletion via vssadmin and wmic), B (bcdedit to disable recovery), and D (wbadmin to delete backup catalog) are all directly evidenced by the process list with explicit command lines. Option C (MBR corruption) is not in the report. Option E (terminating backup/AV services) is not evidenced. The question is well-formed, technically accurate, and not plagiarised."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (vssadmin delete shadows - explicitly in process list), C (file renaming with email extension - 'Renames many files with double extensions' malicious signature and 'The analysis extracted file with a known ransomware suffix' are present), and D (YARA rule 'dharma_ransomware' - explicitly in the report) are all directly supported. Option B (wbadmin) is NOT in this report's process list (only vssadmin is present). Option E (MBR encryption) is not evidenced. The answer key correctly excludes B. Well-formed and not plagiarised."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (file encryption/renaming - 'Renames many files with double extensions' malicious signature, T1486 Data Encrypted for Impact in MITRE mapping) and B (VSS deletion via WMIC - multiple cmd.exe processes with WMIC shadowcopy delete commands are in the process list) are directly supported. Option C (Windows service creation - 'Creates or modifies windows services' is present but this is persistence, not direct ransomware impact) - actually the question asks about 'direct impact on the system' and service creation is persistence. Option D (MBR modification) is not evidenced. The answer key A and B is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (Service Stop T1489 - in MITRE mapping), C (VMware trick detection - 'The input sample contains a known anti-VM trick' with 'VMware trick' is a malicious-level signature), and D (software packing - 'Matched Compiler/Packer signature' for Borland Delphi 6.0-7.0 and T1027.002 Software Packing in MITRE mapping) are all supported. Option B (VSS deletion) is not in the report. Option E (file encryption) - while T1486 is in MITRE mapping, there is no direct evidence of file encryption in the signatures (no crypto module loading, no file renaming signatures). The answer key A, C, D is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (Virtualization/Sandbox Evasion - T1497 is in MITRE mapping, 'Makes a code branch decision directly after an API that is environment aware' is present), B (software packing - 'BobSoft Mini Delphi' packer signature and T1027.002 in MITRE mapping), and C (process injection - T1055 in MITRE mapping, 'Contains ability to inject code into another process' string present) are all supported. Option D (VSS deletion) is not in the report. Option E (Timestomping) is not evidenced in the signatures. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (CVE-2017-0199 exploitation - Suricata alert 'ET EXPLOIT SUSPICIOUS Possible CVE' and vx_family 'CVE-2017-0199' confirm this), C (LNK persistence - 'Creates/edits LNK file' and 'Drops files inside appdata directory' with hash.xls.LNK are in the report), and E (C2 communication with malicious domain - 'Application communicates with a malicious domain' malicious signature with 'loooooooooooooooooooog.com' is present) are all directly supported. Option B (ransomware) is not evidenced. Option D (EDR/AV process termination) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (procedure lookup obfuscation - 'Tries to hide a procedure lookup using single characters' is a malicious-level signature), C (software packing/high entropy - 'PE file has unusual entropy sections' with '.monor' section entropy 7.70 is a suspicious signature), and E (KsecDD interaction - 'Opens the Kernel Security Device Driver (KsecDD) of Windows' is explicitly in the report) are all directly supported. Option B (VSS deletion) is not in the report. Option D (process injection into remote process) is not evidenced in the signatures. Option F (Timestomping) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers B (APC injection - 'Queues an Asynchronous Procedure Call (APC) in a remote process' via NtQueueApcThread is explicitly in the report), C (Service Stop T1489 - in MITRE mapping), D (Timestomping T1070.006 - in MITRE mapping), and F (system checks/user activity checks - T1497.001 System Checks and T1497.002 User Activity Based Checks are both in MITRE mapping) are all supported. Option A (VSS deletion) is not in the report. Option E (direct syscalls) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (disk partition interaction - 'Interacts with the primary disk partition (DR0)' is a malicious-level signature, T1542.003 Bootkit in MITRE mapping), B (vmtoolsd.exe check - 'Able to identify sandbox environment running process' with 'vmtoolsd.exe' string is explicitly in the report), and E (Windows event hooks via CallNextHookEx - 'Contains ability to hook/unhook windows functions' with 'CallNextHookEx' string is in the report) are all directly supported. Option C (VSS deletion) is not in the report. Option D (AMSI patching) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (process injection - 'Writes data to a remote process' and 'Allocates virtual memory in a remote process' are malicious-level signatures), C (installer cleanup/file deletion - 'Marks file for deletion' and 'Opens file with deletion access rights' are suspicious-level signatures for hab.exe), and E (proxy settings modification - 'Modifies proxy settings' via DELETEVAL on HKCU proxy key is a suspicious-level signature) are all directly supported. Option B (Timestomping) is not evidenced. Option D (Windows Event Log clearing) is not evidenced. Option F (AMSI patching) is not evidenced. The question is well-formed and not plagiarised."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (cryptographic modules for encryption - bcrypt.dll loading and RNGCryptoServiceProvider references support T1486 Data Encrypted for Impact), B (WMI VM detection and long sleep - 'Found a reference to a WMI query string known to be used for VM detection' and 'Tries to sleep for a long time' are both suspicious-level signatures), and E (debugger detection - 'Queries kernel debugger information' and 'Tries to detect debugger using ProcessDebugPort' are both suspicious-level signatures) are all directly supported. Option C (child process spawning) is a general behavior, not specifically defense evasion or ransomware impact. Option D (system info enumeration) is discovery, not evasion/impact. Option F (service/startup persistence) is persistence, not evasion/impact. The answer key A, B, E is correct and well-reasoned."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Correct answers A (UPX packing - 'PE file is packed with UPX', 'Matched Compiler/Packer signature' for UPX are explicitly in the report), C (process injection - 'Writes data to a remote process' is a malicious-level signature), and D (Service Stop T1489 - in MITRE mapping) are all supported. Option B (VSS deletion) is not in the report. The question is well-formed and not plagiarised. Note: The _family is 'infostealers' but the question topic is 'EDR/AV Killers' - this is a minor inconsistency in the metadata but does not affect the question quality."
+      }
+    ],
+    "summary": {
+      "total": 19,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question is original and not a close match to any benchmark question. It asks specifically about evasion techniques 'explicitly supported by the provided static or hybrid analysis signatures,' which is a more precise and evidence-grounded framing than generic evasion technique questions in the benchmark. The answer key (A and C) is factually correct: UPX packing is confirmed by multiple signatures (static-7, static-18, static-157, 'PE file is packed with UPX'), and remote process injection via thread creation and memory writing is confirmed by stream-34 (WriteProcessMemory), stream-5 (RtlCreateUserThread), and string-92 (CreateThread for code injection). Option B (Volume Shadow Copy deletion) has no supporting evidence in the report. Option D (Timestomping) is listed as a MITRE technique (T1070.006) but the supporting signature (string-249) is only about retrieving file time via GetSystemTimeAsFileTime, which is a weak/indirect indicator \u2014 the question correctly excludes it since it is not 'explicitly supported' as an active timestomping behavior. The distractor quality is good: B and D are plausible evasion techniques for this malware family but are not directly evidenced in the signatures. The question is technically precise, multi-select, and consistent with CyberSOCEval conventions."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

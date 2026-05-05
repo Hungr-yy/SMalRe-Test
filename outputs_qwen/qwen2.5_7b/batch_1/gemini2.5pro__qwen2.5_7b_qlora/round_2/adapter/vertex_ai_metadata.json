@@ -1,0 +1,13 @@
+{
+  "backend": "vertex_ai",
+  "model_name_or_path": "Qwen/Qwen2.5-7B-Instruct",
+  "project": "gen-lang-client-0189849369",
+  "location": "asia-southeast1",
+  "staging_bucket": "gs://smala",
+  "tuning_jobs_completed": 2,
+  "adapter_files": [
+    "adapter_model.safetensors",
+    "training_args.bin"
+  ],
+  "qlora_inference": true
+}

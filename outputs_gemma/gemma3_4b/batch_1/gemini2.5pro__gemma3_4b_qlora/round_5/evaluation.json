@@ -1,0 +1,2406 @@
+{
+  "feedback": "The model demonstrates a basic but unreliable capability for malware analysis. While it successfully identifies a high proportion of correct behavioral indicators (reflected in a high recall of 0.894 and a decent average Jaccard score of 0.742), its overall performance is severely hampered by a low exact-match accuracy of 27.8%. The primary issue is a consistent pattern of over-selecting answers; the model includes correct options but fails to distinguish them from plausible but incorrect distractors. This suggests a weakness in precise evidence-grounding and an inability to meet the strict requirements of multiple-correct answer sets. Performance is particularly poor on Infostealer, EDR/AV Killer, and UM Unhooking malware families, where it achieved 0% exact-match accuracy. Future training should focus on negative examples and tasks that require the model to differentiate between closely related techniques, forcing it to justify why an option is *not* selected based on the absence of specific evidence in the report.",
+  "proficiency": 5,
+  "metrics": {
+    "num_questions": 18,
+    "num_exact_matches": 5,
+    "exact_match_accuracy": 0.278,
+    "avg_jaccard": 0.742,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.769,
+    "macro_option_recall": 0.894,
+    "avg_predicted_answer_count": 3.33,
+    "avg_gold_answer_count": 2.83,
+    "answer_count_bias": "over-selecting"
+  },
+  "strengths": [
+    "The model exhibits a high recall rate, successfully identifying most of the correct options within the provided choices.",
+    "Achieved perfect exact-match scores on a small subset of 'Hard' difficulty questions, indicating some capability on complex tasks when evidence is unambiguous.",
+    "Demonstrates robust output formatting, with a 0% parse error rate on all questions."
+  ],
+  "weaknesses": [
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Over-selection",
+      "description": "The model's most significant weakness is its consistent tendency to select correct options alongside incorrect distractors. It struggles with the precision required for exact-match scoring, leading to a low accuracy despite a high Jaccard score. This suggests a failure to strictly ground its reasoning in the provided evidence, instead opting for any plausible-sounding technique.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        13,
+        14,
+        16
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "infostealers",
+      "description": "The model performed very poorly on questions related to Infostealers, achieving 0% exact-match accuracy across 4 questions. This indicates a significant gap in understanding the specific TTPs associated with this malware category.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        2,
+        6,
+        16
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "av_edr_killers",
+      "description": "The model failed to achieve any exact matches on questions pertaining to EDR/AV Killers. While the Jaccard score was not zero, the inability to select the precise set of correct answers indicates a critical weakness in this area.",
+      "severity": "high",
+      "evidence_question_indices": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "um_unhooking",
+      "description": "The model achieved 0% exact-match accuracy on questions related to User-Mode Unhooking techniques, showing a lack of specialized knowledge in this domain.",
+      "severity": "high",
+      "evidence_question_indices": [
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Semantic Confusion",
+      "description": "In several instances, the model substituted a correct option for a semantically similar but incorrect one (e.g., confusing Timestomping with Shadow Copy Deletion). This points to a weakness in making fine-grained distinctions between related malware behaviors.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        2,
+        11,
+        12
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.63,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.667,
+        "avg_jaccard": 0.833,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.875,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.697,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.583,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 18,
+        "exact_match_accuracy": 0.278,
+        "avg_jaccard": 0.742,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Defense Evasion": {
+        "num_questions": 11,
+        "exact_match_accuracy": 0.273,
+        "avg_jaccard": 0.699,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion and Impact Analysis": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Technique Identification": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.855,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Techniques": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This .NET malware sample demonstrates multiple information stealing capabilities. Based on the static and dynamic analysis signatures, which specific types of data is it designed to collect?",
+        "options": [
+          "A. FTP credentials from FileZilla configuration files.",
+          "B. System information, including OS and hardware details, via WMI queries.",
+          "C. The host's external IP address using a public web service.",
+          "D. System restore points by enumerating Volume Shadow Copies."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware masquerades as system processes to evade detection. Based on the process tree and file system activity, which of the following actions does it take?",
+        "options": [
+          "A. Creates and executes fake system processes like WINLOGON.EXE and CSRSS.EXE from a non-system directory (%APPDATA%).",
+          "B. Injects its code into the legitimate, running lsass.exe process.",
+          "C. Hooks file system and internet-related APIs to monitor or redirect system functions.",
+          "D. Modifies the Master Boot Record (MBR) to persist across reboots."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion via Process Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates a process injection sequence. Which specific API calls and behaviors support the conclusion that Process Hollowing is the technique being used?",
+        "options": [
+          "A. A legitimate process (svchost.exe) is created in a suspended state.",
+          "B. The malware writes a new PE header into the memory space of the suspended process.",
+          "C. The malware uses `NtQueueApcThread` to queue execution in another process's thread.",
+          "D. The malware modifies the `AppInit_DLLs` registry key to load a malicious DLL into all processes."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Collection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer uses various methods to gather data. Based on the behavioral signatures, which specific collection techniques are employed?",
+        "options": [
+          "A. Hooking credential-related APIs to intercept passwords.",
+          "B. Capturing screenshots of the user's desktop.",
+          "C. Stealing cookies and credentials from web browsers.",
+          "D. Accessing system logs by querying the Windows Event Log service."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample attempts to disable security controls. Which of the following registry modifications, specifically intended to weaken system defenses, is observed in the report?",
+        "options": [
+          "A. Modifying the UAC/LUA (User Account Control) settings to suppress elevation prompts.",
+          "B. Disabling the Windows Firewall via `netsh` command.",
+          "C. Adding a new trusted root certificate to the system store.",
+          "D. Deleting the `HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender` key."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion and Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware employs multiple techniques to establish persistence and evade security products. Which of the following behaviors are directly evidenced in the report?",
+        "options": [
+          "A. Creating a new Windows service pointing to a dropped executable.",
+          "B. Using 'netsh.exe' to add a firewall rule allowing its own process.",
+          "C. Hooking low-level APIs like 'NtCreateFile' to intercept file operations.",
+          "D. Modifying the system's HOSTS file to redirect traffic."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact and Anti-Recovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This ransomware sample takes several actions to cause impact and inhibit recovery. Based on the process and file activity, which specific actions are confirmed?",
+        "options": [
+          "A. Deleting Volume Shadow Copies using the 'WMIC.exe' command-line tool.",
+          "B. Renaming a large number of user files with a double extension (e.g., '.txt.alcatel-lucent').",
+          "C. Disabling Windows Defender by stopping the 'WinDefend' service.",
+          "D. Encrypting the Master Boot Record (MBR) of the system drive."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The provided report for this .NET sample indicates information stealing behavior. Which of the following credential harvesting methods are supported by the analysis data?",
+        "options": [
+          "A. Capturing screenshots of the active desktop.",
+          "B. Searching the registry for Outlook email profile data.",
+          "C. Using `CryptUnprotectData` to decrypt credentials stolen from browser databases.",
+          "D. Dumping LSASS process memory to extract Windows credentials."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware uses command-line tools to alter the system's security posture and destroy evidence. Which of the following destructive or evasive actions are observed?",
+        "options": [
+          "A. Deleting its original executable file from disk after execution.",
+          "B. Disabling Task Manager by modifying a registry policy key.",
+          "C. Deleting the current boot configuration entry using `bcdedit.exe`.",
+          "D. Wiping free space on the disk using `cipher.exe`."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample exhibits multiple anti-analysis and anti-VM behaviors. Based on the signatures, which specific techniques does it employ to detect or evade analysis environments?",
+        "options": [
+          "A. Checking for the presence of VMware-related artifacts or processes.",
+          "B. Executing a long sleep cycle to evade automated sandbox analysis.",
+          "C. Setting the 'ThreadHideFromDebugger' flag to prevent debuggers from attaching.",
+          "D. Checking for a low number of CPU cores."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Evasion and Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer uses several methods to persist and hide. Based on the report, which of the following techniques are used?",
+        "options": [
+          "A. Dropping a packed executable into the Temp directory for subsequent execution.",
+          "B. Creating a registry `Run` key to ensure the dropped executable starts on logon.",
+          "C. Modifying system proxy settings to intercept network traffic.",
+          "D. Deleting its original executable after the main payload is launched."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Persistence and Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This Remcos RAT variant establishes persistence and hides its presence. Based on the process and file system analysis, which mechanisms does it use?",
+        "options": [
+          "A. Copying its executable to a new location and masquerading as a legitimate application ('Word.exe').",
+          "B. Creating a registry Run key pointing to the new executable path for persistence.",
+          "C. Injecting code into a legitimate `explorer.exe` process.",
+          "D. Hooking internet and cryptographic APIs in the context of the new process."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware, identified as an AV/EDR killer, performs several evasive actions. From the provided signatures, which of the following techniques are evident?",
+        "options": [
+          "A. Embedding a PE file within its resource section to hide the payload.",
+          "B. Modifying the system's UAC/LUA settings via the registry.",
+          "C. Packing the main executable, with the entrypoint in an uncommon section.",
+          "D. Terminating services related to Windows Defender."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the use of software packers and other obfuscation. Which evasion techniques are specifically identified by the static analysis signatures?",
+        "options": [
+          "A. Packing with both VMProtect and UPX.",
+          "B. Using a high number of junk API calls to confuse analysts.",
+          "C. Encrypting or compressing sections of the executable, resulting in high entropy.",
+          "D. The presence of anti-debugging instructions like RDTSCP."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware sample is tagged as 'um_unhooking'. While direct evidence of unhooking is subtle, which of the following observed behaviors are common precursors or alternatives to unhooking for evading EDR?",
+        "options": [
+          "A. Writing a fresh copy of a system DLL from disk to memory.",
+          "B. Allocating virtual memory in a remote process (`svchost.exe`).",
+          "C. Creating a new service (`sc.exe create`) to run its payload with higher privileges.",
+          "D. Modifying the system firewall with `netsh.exe`."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Initial Access & C2",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample is delivered via a malicious Office document exploiting CVE-2017-0199. Based on the network signatures, what actions does the initial document take to fetch and execute the Remcos payload?",
+        "options": [
+          "A. Makes a DNS query for a suspicious domain (link.emcdn.ru).",
+          "B. Sends an HTTP GET request to download a file with a '.hta' extension.",
+          "C. Communicates over a non-standard port for C2.",
+          "D. Sends stolen data via an HTTP POST request."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion and Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware attempts to establish persistence as a service. Based on the observed process command lines, which steps does it take to achieve this?",
+        "options": [
+          "A. Creates a new directory in `system32` to store its payload.",
+          "B. Moves the dropped payload (`clfkcbws.exe`) into the newly created directory.",
+          "C. Uses `sc.exe create` to register the payload as a new service named 'njrbicei' set to auto-start.",
+          "D. Uses `reg.exe` to add a Run key pointing to the payload."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report shows several advanced defense evasion techniques. Which of the following are supported by the API calls and memory operations listed?",
+        "options": [
+          "A. Querying for kernel debugger information to detect analysis.",
+          "B. Setting the `ThreadHideFromDebugger` flag to evade debuggers.",
+          "C. Creating a process in a suspended state, likely for process hollowing or injection.",
+          "D. Reloading ntdll.dll from disk to bypass API hooks."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact and Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample appears to be ransomware. Which of the following observed behaviors are characteristic of this malware type, as opposed to general trojan behavior?",
+        "options": [
+          "A. Dropping a file named 'README.txt' containing a ransom note.",
+          "B. Establishing persistence by creating a new Windows service.",
+          "C. Attempting to steal credentials from web browsers.",
+          "D. Using WMI queries to gather system information like the OS caption."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion and Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This packed malware uses a loader to execute its main payload. Which of the following actions are performed during its execution chain?",
+        "options": [
+          "A. Drops a new executable file to the Windows system directory and names it 'xmloder.exe'.",
+          "B. Uses 'regedit.exe' to silently import a .reg file and modify system settings.",
+          "C. Spawns 'cmd.exe' to execute a batch file from the Temp directory.",
+          "D. The initial executable erases itself from disk after launching the next stage."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample is an infostealer. Based on the report's signatures and observed API calls, which specific types of user data is it designed to collect?",
+        "options": [
+          "A. It enumerates running processes and active window titles to find targets.",
+          "B. It encrypts user documents and demands a payment for their release.",
+          "C. It looks for sensitive data by searching for files on the local system.",
+          "D. It attempts to capture screenshots of the user's desktop."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer uses multiple stages. Which of the following signatures provides evidence that the initial executable is a packed dropper that deploys a second-stage payload?",
+        "options": [
+          "A. Signature 'static-18' identifies the sample as being packed with tElock.",
+          "B. Signature 'api-43' detects the writing of a PE file header to disk.",
+          "C. APIs 'FindResourceA' and 'LoadResource' are called to access embedded data.",
+          "D. Signature 'registry-27' shows modification of proxy settings."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The YARA signature 'win_njrat_g0' identifies this malware as a Remote Access Trojan (RAT). Which specific *infostealing* capabilities of this RAT are confirmed by other signatures in the report?",
+        "options": [
+          "A. Searching for and parsing files related to FTP client credentials.",
+          "B. Capturing user keystrokes via keylogging.",
+          "C. Encrypting system files and demanding a ransom.",
+          "D. Spreading to other systems on the network via removable media."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware masquerades as legitimate system processes to evade detection. What is the key evidence from the process tree that supports this conclusion?",
+        "options": [
+          "A. It executes legitimate system utilities like 'cmd.exe' and 'regedit.exe'.",
+          "B. It spawns an excessive number of processes in a short time.",
+          "C. Critical system processes like 'WINLOGON.EXE' and 'CSRSS.EXE' are observed running from an unusual location (%APPDATA%).",
+          "D. It injects code into 'explorer.exe' to gain its privileges."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the use of API hooking for defense evasion. According to the 'hooks-2' and 'hooks-5' signatures, which functions does the malware intercept?",
+        "options": [
+          "A. File system APIs such as 'FindNextFileA', likely to hide its presence from EDR scanners.",
+          "B. Network-related APIs like 'send', likely to conceal its C2 traffic.",
+          "C. User-interface APIs like 'GetForegroundWindow' to monitor user activity.",
+          "D. Cryptographic APIs to steal encryption keys from other processes."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware establishes persistence using a new Windows Service. Which command-line utilities are used in sequence to achieve this, as shown in the process list?",
+        "options": [
+          "A. 'netsh.exe' to configure the service's network access.",
+          "B. 'sc.exe create' to register the new service.",
+          "C. 'sc.exe start' to run the new service.",
+          "D. 'bcdedit.exe' to ensure the service runs at boot."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The API calls in this report are indicative of Process Hollowing. Which sequence of events correctly describes this technique?",
+        "options": [
+          "A. A legitimate process is created in a suspended state.",
+          "B. The malware writes a PE header into the memory of the suspended process.",
+          "C. The malware uses 'CreateRemoteThread' to execute code in a running process.",
+          "D. The malware modifies the Thread Local Storage (TLS) of the target process."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample employs anti-debugging and anti-analysis techniques. Based on the report signatures, which specific methods are used?",
+        "options": [
+          "A. Querying the ProcessDebugPort flag to detect an attached debugger.",
+          "B. Allocating memory with a PAGE_GUARD flag to disrupt memory analysis.",
+          "C. Checking for the presence of 'vmtoolsd.exe' to identify a sandbox.",
+          "D. Using a long sleep timer to evade automated analysis."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Privilege Escalation",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "To perform actions like process injection, malware often needs to elevate its privileges. What specific privilege does this sample enable for itself, as indicated by signature 'api-28'?",
+        "options": [
+          "A. SeShutdownPrivilege, to reboot the system.",
+          "B. SeTakeOwnershipPrivilege, to modify protected files.",
+          "C. SeDebugPrivilege, to inspect and write to the memory of other processes.",
+          "D. SeLoadDriverPrivilege, to install a kernel-mode driver."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware exhibits rootkit-like behavior by hooking APIs. Based on signatures 'hooks-2' and 'hooks-1', which system functionalities does it attempt to control or hide?",
+        "options": [
+          "A. File system operations, likely to hide its files from security software.",
+          "B. Boot processes, by modifying the Master Boot Record (MBR).",
+          "C. Cryptographic functions, potentially to intercept encrypted data.",
+          "D. Network traffic, by installing a malicious NDIS driver."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This ransomware attempts to prevent system recovery. Which specific command, visible in the process list, is used to delete Volume Shadow Copies?",
+        "options": [
+          "A. 'vssadmin.exe delete shadows /all /quiet'",
+          "B. 'bcdedit.exe /set {default} recoveryenabled No'",
+          "C. 'WMIC.exe shadowcopy where \"ID=...\" delete'",
+          "D. 'wbadmin.exe delete catalog -quiet'"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Which behaviors observed in this report are definitive indicators of a file-encrypting ransomware attack?",
+        "options": [
+          "A. The mass renaming of over 100 files with a double extension, as noted by signature 'api-200'.",
+          "B. The deletion of Volume Shadow Copies using 'wmic.exe'.",
+          "C. The discovery of dropped files with a known ransomware extension, '.alcatel-lucent'.",
+          "D. The execution of a suspicious process named 'Word.exe' from a non-standard directory."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware attempts to bypass UAC (User Account Control). According to signature 'registry-10', how does it achieve this?",
+        "options": [
+          "A. By using a COM object elevation moniker.",
+          "B. By modifying registry values under 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System' to disable LUA.",
+          "C. By injecting code into a high-integrity process like 'explorer.exe'.",
+          "D. By exploiting a vulnerable trusted binary."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer gathers data from multiple sources. Which two signatures specifically indicate it targets credentials from both web browsers and FTP clients?",
+        "options": [
+          "A. 'string-11' (Found FTP credentials location strings).",
+          "B. 'string-556' (Found strings related to keylogger).",
+          "C. 'api-96' (Tries to steal browser sensitive information).",
+          "D. 'string-16' (Contains SQL queries)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The successful injection by this malware is confirmed by a key network indicator. What is this indicator?",
+        "options": [
+          "A. A legitimate Windows system process ('svchost.exe') is observed initiating a suspicious network connection.",
+          "B. The initial malware executable makes numerous DNS requests to a dynamic DNS provider.",
+          "C. The malware writes to the system's 'hosts' file to redirect traffic.",
+          "D. Encrypted traffic is sent over a non-standard port."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware directly modifies the system's firewall configuration. Which command-line utility and signature combination demonstrates this activity?",
+        "options": [
+          "A. Using 'bcdedit.exe' to alter boot settings.",
+          "B. Using 'sc.exe' to stop the 'MpsSvc' (Windows Firewall) service.",
+          "C. Using 'netsh.exe advfirewall firewall add rule', as confirmed by signature 'target-15'.",
+          "D. Using 'reg.exe' to delete firewall registry keys."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Malware Family Identification",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample is a Remcos RAT. Which of the following indicators are highly characteristic of this specific family, as opposed to generic malware behavior?",
+        "options": [
+          "A. The creation of a mutex with the prefix 'Rmc-'.",
+          "B. Communication with a C2 server using a dynamic DNS domain ('duckdns.org').",
+          "C. Dropping a copy of itself into the %APPDATA% folder for persistence.",
+          "D. Hooking file system and network APIs for evasion."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The detonation report indicates this sample exploits CVE-2017-0199. What is the initial execution vector for this vulnerability?",
+        "options": [
+          "A. A user is tricked into enabling macros in a Microsoft Office document.",
+          "B. An embedded Flash object in a document triggers a use-after-free vulnerability.",
+          "C. A Microsoft Office application downloads and executes a malicious HTA file from a remote server.",
+          "D. The malware exploits a buffer overflow in the Equation Editor component."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This .NET infostealer is protected by the 'Confuser' obfuscator. Which signature directly confirms the use of this specific tool?",
+        "options": [
+          "A. The presence of the string 'ConfusedByAttribute' in the binary.",
+          "B. The use of guarded memory regions to prevent debugging.",
+          "C. The file having a high entropy value, indicating it is packed or encrypted.",
+          "D. The loading of the .NET Common Language Runtime (CLR)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This Remcos RAT variant establishes persistence by copying itself to a new location and creating a registry run key. Which pieces of evidence confirm this specific persistence mechanism?",
+        "options": [
+          "A. Signature 'api-123' shows 'CopyFileW' being used to copy the executable to '%ALLUSERSPROFILE%\\Program\\Word.exe'.",
+          "B. A new Windows Service is created using 'sc.exe'.",
+          "C. Signature 'registry-0' indicates a value was set in the 'HKCU\\...\\Run' registry key.",
+          "D. A new scheduled task is created to launch the malware at logon."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Based on the provided report, which specific methods of information stealing can be confirmed? Select ALL correct answers.",
+        "options": [
+          "A. Capturing keystrokes to steal typed credentials and messages.",
+          "B. Taking screenshots of the user's desktop.",
+          "C. Stealing credentials stored in the Windows Vault.",
+          "D. Exfiltrating browser cookies and saved passwords from local databases."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ],
+        "explanation": "A is correct as evidenced by signature `string-556` ('Found strings related to keylogger') which mentions '[Esc]' and other key-related strings, pointing to T1056.001 (Keylogging). B is correct due to signature `api-105` ('Calls an API possibly used to take screenshots') which references `CreateCompatibleBitmap`, a common API for screen capture (T1113). C is incorrect; while credential access is a theme, there is no specific evidence of interacting with the Windows Vault. D is incorrect because although browser credential theft is common for infostealers, this report lacks specific indicators like accessing 'Login Data' files or other browser-specific artifacts. The model must rely only on the evidence provided."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware employs several anti-analysis and anti-debugging techniques. Which of the following are explicitly supported by the evidence in the report? Select ALL correct answers.",
+        "options": [
+          "A. Allocating memory with a PAGE_GUARD flag to trigger an exception when accessed by a debugger.",
+          "B. Querying for the presence of a kernel debugger.",
+          "C. Using long sleep calls to evade automated sandbox analysis.",
+          "D. Patching the `AmsiScanBuffer` function in memory to bypass AMSI."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ],
+        "explanation": "A is correct, as shown by signature `api-1` ('Creates guarded memory regions...'), which is a known anti-debugging technique. B is correct, as evidenced by signature `api-10` ('Queries kernel debugger information'). C is also correct, confirmed by signature `api-24` ('Tries to sleep for a long time'), which notes a sleep time of over two minutes to outlast typical sandbox execution windows. D is incorrect; while AMSI bypass is a common evasion technique, this report contains no evidence of `AmsiScanBuffer` patching or related PowerShell obfuscation. This question requires distinguishing between multiple correct, evidenced techniques and a plausible but unsubstantiated one."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to steal credentials from specific applications. Based on the report's signatures, which application is a confirmed target? Select only ONE answer.",
+        "options": [
+          "A. The PuTTY SSH client by searching for saved session information in the registry.",
+          "B. The FileZilla FTP client by reading its configuration files.",
+          "C. The Google Chrome browser by querying the 'Login Data' SQLite database.",
+          "D. The Outlook email client by accessing MAPI profiles."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ],
+        "explanation": "B is the only correct answer. Signature `string-11` ('Found FTP credentials location strings') explicitly references `FileZilla\\recentservers.xml`, confirming it as a target for credential theft (T1552.001). A, C, and D are plausible targets for infostealers but are incorrect because the report provides no specific evidence, such as registry keys for PuTTY, file access to Chrome's 'Login Data' file, or MAPI-related API calls for Outlook."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware masquerades as legitimate Windows processes to evade detection. Which of the following processes are impersonated by being run from an incorrect, non-system directory? Select ALL correct answers.",
+        "options": [
+          "A. svchost.exe",
+          "B. WINLOGON.EXE",
+          "C. CSRSS.EXE",
+          "D. explorer.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ],
+        "explanation": "B and C are correct. Signature `target-33` ('Creates a fake system process') and the process list show `WINLOGON.EXE` and `CSRSS.EXE` running from the non-standard `%APPDATA%\\WINDOWS` directory. This is a clear indicator of masquerading (T1036.005). A and D are incorrect because while they are commonly impersonated processes, this specific report does not show them running from an unusual location. This question tests the ability to ground answers in the process execution data provided."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the use of API hooking as a defense evasion and collection technique. Which categories of APIs were observed being hooked? Select ALL correct answers.",
+        "options": [
+          "A. Internet-related APIs like 'send'.",
+          "B. File system APIs like 'FindNextFileA'.",
+          "C. Registry manipulation APIs like 'RegOpenKeyExW'.",
+          "D. Cryptographic functions from the CryptoAPI."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ],
+        "explanation": "A is correct, as shown by signature `hooks-5` ('Hooks internet related APIs'), which explicitly lists `send@WS2_32.DLL`. B is correct, as shown by signature `hooks-2` ('Hooks file system APIs'), which lists `FindNextFileA@KERNEL32.DLL`. C and D are incorrect; although API hooking is present, the report's signatures do not provide any evidence that registry or cryptographic functions were specifically targeted for hooking. The student must differentiate between the general capability (hooking) and the specific, evidenced targets."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware attempts to disable User Account Control (UAC) to escalate privileges and reduce security warnings. What specific action, observed in the report, confirms this behavior?",
+        "options": [
+          "A. It modifies the 'EnableLUA' registry value to 0.",
+          "B. It uses the `sc.exe` utility to stop the 'UACSvc' service.",
+          "C. It leverages a known UAC bypass technique involving 'fodhelper.exe'.",
+          "D. It sends a specific window message to the UAC prompt to simulate a user clicking 'Yes'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ],
+        "explanation": "A is the correct answer. Signature `registry-10` ('Modifies the UAC/LUA settings (Account Control)') provides direct evidence of this registry modification. The other options describe plausible but uncorroborated UAC bypass or modification techniques. The report contains no evidence of `sc.exe` usage for this purpose, `fodhelper.exe` execution, or window message manipulation. This forces a precise evidence-based choice over a thematically related but incorrect one."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware uses process injection to hide its activity within a legitimate system process. Based on the process tree and signatures, which process is the target of this injection? Select only ONE answer.",
+        "options": [
+          "A. explorer.exe",
+          "B. svchost.exe",
+          "C. cmd.exe",
+          "D. services.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ],
+        "explanation": "B is the correct answer. The process tree shows the malware's child process `clfkcbws.exe` spawning `svchost.exe` as its own child, which is highly anomalous. This is confirmed by signature `target-269` ('Windows system process connects to a network'), which states 'Process \"svchost.exe\" connects to <IPv4>:443'. Legitimate instances of `svchost.exe` are typically children of `services.exe`, not a random executable. The other processes are either not spawned in this anomalous way or do not exhibit suspicious network behavior in the report."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware employs Process Hollowing to evade defenses. Which of the following API call patterns and signatures from the report provides the strongest evidence for this technique? Select only ONE answer.",
+        "options": [
+          "A. Signature `binary-8` indicating a known VMware trick to detect virtualization.",
+          "B. Signature `api-129` ('Creates a process in suspended mode') combined with signature `api-83` ('Writes PE header to memory').",
+          "C. Signatures `sc.exe create` and `sc.exe start` showing the creation and execution of a new service.",
+          "D. Signature `netsh.exe advfirewall firewall add rule` indicating modification of the system firewall."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ],
+        "explanation": "B is the correct answer. The combination of creating a process in a suspended state (`CreateProcessA` with the `CREATE_SUSPENDED` flag, noted in `api-129`) and then writing a new PE header into its memory space (`api-83`) is the classic sequence for Process Hollowing (T1055.012). A, C, and D are all valid defense evasion or persistence techniques found in the report, but they do not describe Process Hollowing. This question forces the model to differentiate between several observed evasion techniques and select the one that matches the specific definition of Process Hollowing."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware implements several anti-debugging techniques. Which specific methods are confirmed by the signatures in this report? Select ALL correct answers.",
+        "options": [
+          "A. Checking for the presence of a debugger by querying the ProcessDebugPort flag.",
+          "B. Patching the DbgBreakPoint function in memory.",
+          "C. Using the `IsDebuggerPresent` API call.",
+          "D. Hiding threads from a debugger by setting the 'ThreadHideFromDebugger' flag."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ],
+        "explanation": "A is the only correct answer. Signature `api-238` ('Tries to detect debugger using ProcessDebugPort') explicitly confirms this technique. Options B, C, and D describe other common anti-debugging methods, but there are no corresponding signatures or API calls in this specific report to substantiate them. This question is designed to remediate over-selection by forcing the model to select only the technique for which there is direct, explicit evidence."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to inhibit system recovery by deleting Volume Shadow Copies. Which specific command-line tool is used to accomplish this, according to the process execution data? Select only ONE answer.",
+        "options": [
+          "A. bcdedit.exe",
+          "B. vssadmin.exe",
+          "C. WMIC.exe",
+          "D. diskpart.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ],
+        "explanation": "C is the correct answer. The process list clearly shows multiple executions of `WMIC.exe` with the command line argument 'shadowcopy where \"ID=...\" delete'. This is direct evidence for T1490. While `vssadmin.exe` (Option B) is a very common tool for the same purpose, it is not present in this report's process list, making it a strong distractor to test for evidence-grounded reasoning vs. general knowledge. `bcdedit.exe` and `diskpart.exe` are used for other system recovery or disk management tasks and are incorrect."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Beyond file encryption, what are the primary indicators of this sample's classification as ransomware, based on the provided signatures? Select ALL correct answers.",
+        "options": [
+          "A. The malware drops hundreds of files across the filesystem.",
+          "B. The malware attempts to steal credentials from web browsers.",
+          "C. The malware drops a file containing a ransom message.",
+          "D. The malware modifies the system's Master Boot Record (MBR)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ],
+        "explanation": "A and C are the correct answers. Signature `binary-10` ('The input sample dropped very many files') notes that 791 files were dropped, a common behavior for ransomware encrypting files and dropping notes. Signature `string-13` ('Detected indicator that file is ransomware') explicitly quotes the ransom message text: 'YOUR FILES ARE ENCRYPTED'. B is incorrect; while signature `api-96` shows an attempt to steal browser information, this is more characteristic of an infostealer, not a primary ransomware indicator. D is incorrect; there is no evidence of MBR modification, which is a technique used by a specific sub-class of ransomware/wipers not represented here."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer performs system discovery to identify its environment and potential targets. Which of the following discovery actions are confirmed by the API calls and strings in the report? Select ALL that apply.",
+        "options": [
+          "A. Enumerating running processes using CreateToolhelp32Snapshot.",
+          "B. Enumerating network shares using WNetEnumResource.",
+          "C. Identifying the system's language and locale using GetLocaleInfoA.",
+          "D. Discovering attached peripheral devices."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ],
+        "explanation": "A is correct, as evidenced by signature `api-103`, which reports the use of `CreateToolhelp32Snapshot` for taking a snapshot of processes (T1057). C is correct, confirmed by signature `api-147` showing a call to `GetLocaleInfoA` to retrieve language information (T1614). B is incorrect; while Network Share Discovery (T1135) is a valid discovery technique, there is no evidence of `WNetEnumResource` calls or other network share enumeration in this report. D is incorrect; the report lacks evidence of enumerating peripheral devices."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This Remcos RAT variant uses multiple techniques for persistence and defense evasion. Based on the report, which actions does it take after the initial execution? Select ALL correct answers.",
+        "options": [
+          "A. It copies itself to the %ALLUSERSPROFILE%\\Program directory and masquerades as 'Word.exe'.",
+          "B. It injects code into 'explorer.exe' to hide its process.",
+          "C. It establishes persistence by creating a new Windows service.",
+          "D. It hooks cryptographic, file system, and internet-related APIs."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ],
+        "explanation": "A is correct. The process list shows the original sample spawning `Word.exe` from the `%ALLUSERSPROFILE%\\Program\\` directory, and signature `binary-27` confirms an executable was dropped there. This is a combination of masquerading (T1036) and persistence. D is correct, as evidenced by signatures `hooks-1` (CryptoAPI), `hooks-2` (file system), and `hooks-5` (internet APIs). B is incorrect; there is no evidence of injection into `explorer.exe`. C is incorrect; while service creation is a common persistence method for Remcos, this specific sample uses a Run key for persistence (signature `registry-0`), not a service."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to detect if it is running in a virtualized environment. Which specific sandbox evasion technique is confirmed by the signatures in this report?",
+        "options": [
+          "A. Checking the MAC address of the network adapter against a blacklist of virtualization vendors.",
+          "B. Searching for the 'VBoxGuestAdditions.exe' process.",
+          "C. Executing a low-level instruction that behaves differently on virtual vs. physical CPUs (VMware trick).",
+          "D. Measuring execution timing of certain operations to detect CPU-based analysis slowdowns."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ],
+        "explanation": "C is the correct answer. Signature `binary-8` explicitly states 'Found VM detection artifact \"VMware trick\" in \"sample.bin\"', which refers to using specific I/O port communications or low-level instructions to query the hypervisor. A, B, and D are all plausible sandbox evasion techniques, but there is no evidence in this report to support them (no MAC address checks, no search for VirtualBox processes, and no explicit timing checks mentioned). This question requires identifying the specific, evidenced technique among several plausible distractors."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Which of the following destructive and evasive behaviors are observed in this sample's execution, aimed at impairing system stability and defense mechanisms? Select ALL correct answers.",
+        "options": [
+          "A. Deleting the boot configuration data for the current operating system.",
+          "B. Wiping the Master Boot Record (MBR) of the primary hard drive.",
+          "C. Adding a registry key to disable the Task Manager.",
+          "D. Recursively deleting the `system32\\drivers` directory."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ],
+        "explanation": "A is correct, as the process list shows the execution of `bcdedit /delete {current}`. C is correct, evidenced by the `reg.exe` command `... /v DisableTaskMgr /d 1 ...`. D is correct, as shown by the command `cmd /c rd %WINDIR%\\system32\\drivers/s/q`. B is incorrect; while highly destructive, there is no evidence in the report of direct disk access or tools used to wipe the MBR. This question targets the model's ability to precisely identify multiple correct but distinct destructive actions from the command-line evidence."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware exhibits characteristics of User-Mode hook evasion. What is the strongest piece of evidence in the report that suggests the malware is attempting to get a 'clean' version of a critical system DLL?",
+        "options": [
+          "A. It writes a new PE file to disk.",
+          "B. It reads the `ntdll.dll` file directly from the `C:\\Windows\\System32` directory.",
+          "C. It allocates memory with PAGE_GUARD access rights.",
+          "D. It queries for the presence of a kernel debugger."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ],
+        "explanation": "B is the correct answer and the strongest evidence for unhooking. The 'Reads files' signature (`api-243`) shows the process reading `c:\\windows\\system32\\ntdll.dll`. A process typically uses the already-loaded memory version of ntdll.dll. Manually re-reading it from disk is a classic technique to get an unmodified copy of the module's .text section, which can then be used to find original syscall stubs and bypass EDR hooks. A, C, and D are evasion techniques, but they are not directly indicative of the specific unhooking process of obtaining a clean DLL copy."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware establishes persistence on the system. Based on the report's signatures, which specific mechanism is used? Select only ONE answer.",
+        "options": [
+          "A. Creating a new Windows service.",
+          "B. Dropping a file in the user's Startup folder.",
+          "C. Creating a new value in a 'Run' key in the registry.",
+          "D. Using a scheduled task."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ],
+        "explanation": "C is the correct answer. Signature `registry-0` ('Modifies auto-execute functionality...') explicitly states that the malware created a registry value for persistence, and its description often points to the `HKCU\\...\\Run` key (T1547.001). A, B, and D are all plausible persistence mechanisms, but this report lacks evidence for service creation (`sc.exe`), file operations in the Startup folder, or scheduled task creation (`schtasks.exe`). This question targets the over-selection weakness by requiring a specific answer based on registry evidence."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware uses an embedded payload to evade static analysis of the initial file. Which signatures best support the conclusion that a PE file is stored within and extracted from the initial executable? Select ALL correct answers.",
+        "options": [
+          "A. Signature `static-97`: 'PE file contains executable resources'.",
+          "B. Signature `static-6`: 'Section contains high entropy'.",
+          "C. Signature `api-43`: 'Writes a PE file header to disc'.",
+          "D. Signature `stream-32`: 'Contains ability to find and load resources of a specific module'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ],
+        "explanation": "A is correct because it directly identifies an embedded PE file within the resource section of the original sample during static analysis (T1027.009). C is correct because it provides the dynamic evidence, showing the process writing bytes that start with a PE header to a new file on disk, which is the extraction of the embedded payload. B is plausible, as embedded payloads often increase entropy, but it is not as specific as A or C. D is a generic capability and does not confirm that the resource being loaded is a full PE file. The combination of A and C provides the most complete evidence."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample demonstrates several sandbox evasion techniques. From the list below, which are directly supported by signatures in the report? Select ALL correct answers.",
+        "options": [
+          "A. It checks for the presence of VMware-related artifacts or behaviors.",
+          "B. It allocates memory regions with PAGE_GUARD to act as an anti-debugging measure.",
+          "C. It uses a long sleep to wait out the sandbox's analysis window.",
+          "D. It checks for a low number of CPU cores."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ],
+        "explanation": "A is correct, as confirmed by signature `binary-8` ('The input sample contains a known anti-VM trick', which specifies the 'VMware trick'). B is correct, as per signature `api-1` ('Creates guarded memory regions...'). C is also correct, as evidenced by signature `api-24` ('Tries to sleep for a long time...'). D is incorrect. While checking for CPU core count is a valid sandbox evasion technique, this report provides no evidence (such as WMI queries for `Win32_Processor` or specific API calls) that the malware performs this check. The model must learn to exclude plausible but unsubstantiated techniques."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware is packed or protected to hinder analysis. What is the primary evidence for this in the report? Select only ONE answer.",
+        "options": [
+          "A. The file has a high entropy of 7.66.",
+          "B. The entrypoint of the PE header is in an uncommon section named '.perplex'.",
+          "C. The malware allocates virtual memory in a remote process.",
+          "D. The report identifies a specific packer signature, 'tElock'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ],
+        "explanation": "D provides the most specific and conclusive evidence. Signature `static-18` ('Matched Compiler/Packer signature') explicitly identifies 'tElock v1.0'. While A and B are strong indicators of packing (high entropy, unusual section name), they are heuristic observations. D is a direct signature match, which is more definitive. C describes process injection, which is a different technique from packing. The question asks for the primary evidence, and a specific signature match is stronger than general heuristics."
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates this infostealer is targeting credentials from multiple sources. Based on the strings and file access patterns, which specific applications and techniques are used for credential theft?",
+        "options": [
+          "A. Stealing credentials from the FileZilla FTP client.",
+          "B. Using WMI queries to find and parse browser password databases.",
+          "C. Dumping memory from the Local Security Authority Subsystem Service (LSASS).",
+          "D. Searching for locally stored private keys for cryptocurrency wallets.",
+          "E. Accessing configuration files related to FTP credentials."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to evade detection by masquerading as legitimate system processes. According to the process tree and file paths, which of the following represent instances of this masquerading behavior?",
+        "options": [
+          "A. Executing `WINLOGON.EXE` from the `%APPDATA%\\WINDOWS` directory.",
+          "B. Spawning a legitimate `IExplorer.exe` process from `%WINDIR%\\system32`.",
+          "C. Running `CSRSS.EXE` from a subdirectory within `%APPDATA%`.",
+          "D. Launching `D3_08.exe` from the primary `%WINDIR%` directory.",
+          "E. Executing `svchost.exe` from its correct path in `%WINDIR%\\System32`."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report details a process injection sequence where `clfkcbws.exe` launches `svchost.exe`. Which specific indicators point towards Process Hollowing rather than other injection techniques like classic DLL injection or APC injection?",
+        "options": [
+          "A. The use of `NtQueueApcThread` to execute code in the target process.",
+          "B. The creation of the target process in a suspended state (`CREATE_SUSPENDED` flag).",
+          "C. The malware writing a new PE header into the memory space of the suspended `svchost.exe` process.",
+          "D. The use of `CreateRemoteThread` to start execution in the target process.",
+          "E. The loading of a malicious DLL into the address space of a running `svchost.exe`."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer sample demonstrates a wide range of collection capabilities. Based *only* on the evidence present in the report's signatures, which of the following data types is the malware configured to collect?",
+        "options": [
+          "A. Screenshots of the active desktop.",
+          "B. A list of running processes.",
+          "C. Passwords stored in web browsers.",
+          "D. Keystrokes typed by the user.",
+          "E. Data from the Windows clipboard."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report shows several attempts to modify system security settings to weaken defenses. Which of the following actions are directly confirmed by the registry and process signatures?",
+        "options": [
+          "A. Modifying the User Account Control (UAC) settings by writing to `HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System`.",
+          "B. Stopping the Windows Defender service using `sc.exe stop WinDefend`.",
+          "C. Patching `ntdll.dll` in memory to unhook EDR functions.",
+          "D. Querying kernel debugger information, likely to detect analysis environments.",
+          "E. Creating a process with guarded memory regions to prevent memory dumping."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample is identified as ransomware. Which specific behaviors, characteristic of modern ransomware, are observed in this report to inhibit system recovery and notify the user?",
+        "options": [
+          "A. Deleting Volume Shadow Copies using the `WMIC.exe` command-line utility.",
+          "B. Modifying the Master Boot Record (MBR) with a custom bootloader.",
+          "C. Renaming hundreds of files with a unique, double extension (`.alcatel-lucent`).",
+          "D. Stopping the SQL Server database service to unlock database files for encryption.",
+          "E. Dropping a text file named `readme.txt` which serves as the ransom note."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware uses API hooking as a method for defense evasion and information gathering. According to the 'Hook Detection' signatures, which categories of APIs were hooked by the malware?",
+        "options": [
+          "A. Internet-related APIs, such as `send`.",
+          "B. Cryptographic functions within the CryptoAPI.",
+          "C. File system APIs, such as `FindNextFileW`.",
+          "D. Windows message handling APIs like `SendMessageW`.",
+          "E. Registry access APIs like `RegOpenKeyExW`."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer uses several techniques to evade analysis and hide its presence. Which of the following evasion techniques are supported by the provided report signatures?",
+        "options": [
+          "A. The malware is packed or protected, indicated by high entropy sections and a packer signature.",
+          "B. It attempts to detect a virtualized environment by checking for VMware-related artifacts.",
+          "C. It uses a long sleep call (`> 2 minutes`) to evade automated sandbox analysis.",
+          "D. It clears the Windows Event Log to erase forensic evidence.",
+          "E. It hides its main window from the user's view."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware establishes persistence as a new service. Based on the process command lines, what are the name, binary path, and display name of the created service?",
+        "options": [
+          "A. Service Name: `njrbicei`, Binary Path: `%WINDIR%\\system32\\njrbicei\\clfkcbws.exe`, Display Name: `wifi support`",
+          "B. Service Name: `wifi support`, Binary Path: `%TEMP%\\clfkcbws.exe`, Display Name: `njrbicei`",
+          "C. Service Name: `Host-process`, Binary Path: `%WINDIR%\\system32\\svchost.exe`, Display Name: `Host-process for services of Windows`",
+          "D. Service Name: `njrbicei`, Binary Path: `%WINDIR%\\system32\\svchost.exe`, Display Name: `wifi internet conection`"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Command and Control",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware communicates with its command-and-control server. Which of the following statements accurately describe its C2 communication based on the network traffic analysis?",
+        "options": [
+          "A. It communicates over a non-standard port (e.g., 11110, 11170).",
+          "B. It exfiltrates data by encoding it in DNS queries.",
+          "C. It uses a common application layer protocol like HTTP for communication.",
+          "D. It attempts to proxy its traffic through a legitimate service.",
+          "E. It communicates over standard TCP, but not on a common web port."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample uses masquerading to evade detection. Based on the process tree and file signatures, which specific masquerading technique is employed?",
+        "options": [
+          "A. It drops a malicious executable named `Word.exe` into a non-standard directory (`%ALLUSERSPROFILE%\\Program`).",
+          "B. It injects its code into a legitimate, running `explorer.exe` process.",
+          "C. It registers a new file extension to be opened by the malicious `Word.exe`.",
+          "D. It replaces the legitimate `Word.exe` binary in the `Program Files` directory."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware sample performs several destructive and anti-recovery actions. Based on the executed commands, which of the following actions are taken?",
+        "options": [
+          "A. Disabling the Task Manager by modifying the registry.",
+          "B. Deleting all shadow copies using `vssadmin.exe`.",
+          "C. Deleting the current boot entry using `bcdedit.exe`.",
+          "D. Disabling User Account Control (UAC) by setting `EnableLUA` to 0.",
+          "E. Deleting the entire `hklm` registry hive."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the use of anti-debugging and anti-analysis techniques. Which specific evasion methods are confirmed by the API calls and binary analysis?",
+        "options": [
+          "A. The malware allocates guarded memory regions to prevent memory dumping.",
+          "B. It calls `IsDebuggerPresent` repeatedly to check for an attached debugger.",
+          "C. It uses a long sleep timer to outlast automated sandbox execution.",
+          "D. It queries for the presence of a kernel debugger using `NtQuerySystemInformation`.",
+          "E. It checks for VMware-related artifacts on the system."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware establishes persistence and executes its payload by creating a new Windows service. Which sequence of command-line tools is used to achieve this?",
+        "options": [
+          "A. `net.exe` is used to start the newly created service.",
+          "B. `cmd.exe` is used to create a new directory for the malicious binary.",
+          "C. `sc.exe` is used to create and start the service.",
+          "D. `netsh.exe` is used to add a firewall rule for the service.",
+          "E. `cmd.exe` is used to move the payload into the new directory."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This .NET malware sample is obfuscated. Which signature in the report specifically points to the use of the 'Confuser' obfuscator?",
+        "options": [
+          "A. The static signature match for `.NET` in the PE header.",
+          "B. The presence of the string `GetExecutingAssembly` in memory.",
+          "C. The use of a long sleep call to evade sandboxes.",
+          "D. The presence of the string `ConfusedByAttribute` within the binary."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware performs multiple actions related to process injection and manipulation. Which specific low-level API calls and behaviors indicate an attempt to evade EDR hooks by interacting directly with system services?",
+        "options": [
+          "A. Hooking file system APIs like `FindNextFileW` in `cmd.exe`.",
+          "B. The use of `NtQueueApcThread` to schedule code execution in another thread.",
+          "C. Calling `GetProcAddress` to dynamically resolve API locations.",
+          "D. Writing a PE header to a remote process after creating it in a suspended state.",
+          "E. Modifying the `hosts` file to redirect network traffic."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware establishes persistence on the host machine. Based on the observed registry modifications, what is the primary method of persistence used?",
+        "options": [
+          "A. Creating a new service using `sc.exe`.",
+          "B. Creating a value in the `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run` registry key.",
+          "C. Hijacking the COM interface for a legitimate application.",
+          "D. Dropping a file into the user's Startup folder."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report shows that the malware uses `rundll32.exe` to execute `user32.dll,UpdatePerUserSystemParameters`. What is the most likely purpose of this action in the context of the malware's overall behavior?",
+        "options": [
+          "A. To encrypt the `user32.dll` file.",
+          "B. To force the operating system to apply registry changes immediately, such as a modified wallpaper or disabled Task Manager.",
+          "C. To inject malicious code into the `rundll32.exe` process.",
+          "D. To delete system restore points by updating system parameters."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample uses a multi-stage process involving evasion and injection. Which of the following statements accurately describes the observed behavior, distinguishing it from similar but incorrect techniques?",
+        "options": [
+          "A. The malware uses Asynchronous Procedure Call (APC) injection to run code in a remote process.",
+          "B. The malware injects code into a legitimate Windows process (`svchost.exe`) after creating it in a suspended state, which is characteristic of Process Hollowing.",
+          "C. The malware reflectively loads a DLL from memory into a target process without the DLL touching the disk.",
+          "D. The malware achieves persistence by creating a new Windows service and modifying its description."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malicious document exploits a known vulnerability to achieve code execution. Based on the network requests and Suricata alerts, which CVE is most likely being exploited?",
+        "options": [
+          "A. CVE-2012-0158 (MSCOMCTL.OCX RCE)",
+          "B. CVE-2017-0199 (Microsoft Office/WordPad RCE w/ HTA file)",
+          "C. CVE-2017-11882 (Microsoft Office Memory Corruption Vulnerability)",
+          "D. CVE-2010-3333 (Microsoft RTF Stack Buffer Overflow)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Collection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Based on the detonation report, which specific data collection techniques, characteristic of an infostealer, are evident?",
+        "options": [
+          "A. Capturing screenshots of the active desktop.",
+          "B. Stealing credentials from web browser password stores.",
+          "C. Deleting Volume Shadow Copies to hinder recovery.",
+          "D. Logging keystrokes to capture typed information.",
+          "E. Encrypting local user files for ransom."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates this malware attempts to evade defenses by masquerading and manipulating system processes. Which of the following specific techniques are supported by the evidence?",
+        "options": [
+          "A. Masquerading as a legitimate Windows process by creating a fake 'WINLOGON.EXE' in a non-system directory.",
+          "B. Hooking file system and internet-related APIs to intercept and control system behavior.",
+          "C. Disabling security tools by directly modifying the 'DisableAntiSpyware' registry key.",
+          "D. Injecting malicious code into the legitimate 'lsass.exe' process to harvest credentials.",
+          "E. Deleting its original executable after launching to cover its tracks."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates process injection. What specific evidence points towards Process Hollowing, a technique often used to evade EDR hooks by running code in a fresh process space?",
+        "options": [
+          "A. A legitimate process (svchost.exe) is spawned by the malware's child process.",
+          "B. The malware creates a process in a suspended state, which is a prerequisite for hollowing.",
+          "C. The malware allocates new memory and writes a PE header into a remote process.",
+          "D. The newly created system process (svchost.exe) is observed making outbound network connections, indicating the payload is active.",
+          "E. The malware uses Asynchronous Procedure Calls (APC) to execute code in another thread."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware attempts to steal sensitive information. According to the report's signatures, which specific data sources does it target for credential theft?",
+        "options": [
+          "A. The Windows Credential Manager.",
+          "B. Configuration files for FTP clients like FileZilla.",
+          "C. Keystrokes typed by the user via a keylogger.",
+          "D. Stored logins and cookies from web browsers."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to weaken the system's security posture by modifying the registry. Which specific setting does it alter to gain elevated privileges without user prompts?",
+        "options": [
+          "A. It disables User Account Control (UAC) by modifying the 'EnableLUA' registry value.",
+          "B. It disables Windows Defender by setting the 'DisableAntiSpyware' registry value.",
+          "C. It adds an exclusion path to Windows Defender to prevent scanning of its files.",
+          "D. It clears the system event logs by modifying their storage location."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware exhibits complex defense evasion behavior. Given the evidence of API hooking and process hollowing, which combination of actions strongly suggests an attempt at user-mode unhooking?",
+        "options": [
+          "A. It hooks system APIs in various processes, indicating a need to monitor or alter system behavior.",
+          "B. It writes a new PE header into a suspended process, replacing the original legitimate code.",
+          "C. It spawns 'netsh.exe' to add a new firewall rule.",
+          "D. It creates a new Windows service named 'njrbicei' for persistence."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This ransomware attempts to inhibit system recovery. Based on the process tree and command lines, which specific anti-recovery technique is being used?",
+        "options": [
+          "A. Using 'bcdedit.exe' to disable the Windows recovery environment.",
+          "B. Using 'WMIC.exe' to find and delete all Volume Shadow Copies.",
+          "C. Timestomping critical system files to hide modifications.",
+          "D. Deleting the Windows Update service to prevent system patching."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the malware drops and executes files. Which actions are taken to disguise the dropped payload and evade detection?",
+        "options": [
+          "A. The malware drops an executable file into the Windows system directory, masquerading as a system component.",
+          "B. The dropped executable has a high entropy level, suggesting it is packed or encrypted.",
+          "C. The malware's resource section contains an embedded PE file, which is extracted at runtime.",
+          "D. The malware modifies the system's HOSTS file to redirect traffic."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware attempts to disable system protections. Which command line tool is used to modify the local system's network defenses?",
+        "options": [
+          "A. 'sc.exe' is used to stop security-related services.",
+          "B. 'netsh.exe' is used to add a firewall rule.",
+          "C. 'bcdedit.exe' is used to alter boot configuration.",
+          "D. 'reg.exe' is used to delete firewall-related registry keys."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware sample uses a multi-stage injection process. Based on the API calls and process activity, which specific injection technique is used to execute code within the 'svchost.exe' process?",
+        "options": [
+          "A. Process Hollowing, where 'clfkcbws.exe' creates 'svchost.exe' in a suspended state and overwrites its memory.",
+          "B. Direct syscalls to evade EDR hooks on kernel32/ntdll functions.",
+          "C. Asynchronous Procedure Call (APC) Injection to queue a malicious function in a thread of 'svchost.exe'.",
+          "D. DLL Injection via 'CreateRemoteThread' to load a malicious library."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Collection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware is identified as Remcos RAT. Which of the following activities observed in the report are characteristic of this family's keylogging and surveillance functions?",
+        "options": [
+          "A. Hooking cryptographic and file system APIs to monitor activity.",
+          "B. Creating a new Windows service for persistence.",
+          "C. Dropping a log file in the %ProgramData% directory.",
+          "D. Masquerading as 'Word.exe' in a non-standard location."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Command and Control",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The network traffic analysis shows communication with external servers. Which activity is indicative of data exfiltration rather than standard C2 beaconing?",
+        "options": [
+          "A. Repeated connections to multiple IPs on non-standard ports 11110 and 11170.",
+          "B. High entropy in the PE file's sections, suggesting packed data.",
+          "C. SQL queries found in the binary's strings, suggesting database theft.",
+          "D. The presence of signatures for Keylogging (T1056.001) and Credentials from Password Stores (T1555)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The malware attempts to remain hidden by tampering with security settings in the registry. What specific modification is observed?",
+        "options": [
+          "A. Disabling Task Manager by setting the 'DisableTaskMgr' policy.",
+          "B. Deleting the entire HKLM registry hive to cause system instability.",
+          "C. Disabling User Account Control (UAC) by setting 'EnableLUA' to 0.",
+          "D. Removing its own 'Run' key entry after initial execution."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report shows extensive API hooking. Which specific API category is targeted to intercept user and system file operations, a common tactic for both data theft and defense evasion?",
+        "options": [
+          "A. Internet-related APIs like 'send'.",
+          "B. File system APIs like 'FindNextFileW' and 'CreateFileW'.",
+          "C. Cryptographic functions within SSPICLI.DLL.",
+          "D. Resource-loading APIs like 'FindResourceA'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Impact Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Besides dropping a ransom note, what is the most definitive evidence in this report that the malware is encrypting files for impact?",
+        "options": [
+          "A. The malware renames over 100 files with a double extension.",
+          "B. A YARA signature for the MD5 algorithm is matched.",
+          "C. The malware drops executable files with a '.txt' extension.",
+          "D. The malware has a high entropy level, suggesting it contains compressed data."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT establishes persistence on the host. Which combination of techniques is used to ensure it runs automatically and remains hidden?",
+        "options": [
+          "A. It creates a new file named 'Word.exe' in the '%ALLUSERSPROFILE%\\Program' directory to masquerade as a legitimate application.",
+          "B. It adds a 'Run' key to the registry pointing to the masqueraded executable.",
+          "C. It schedules a recurring task using 'schtasks.exe'.",
+          "D. It injects its code into 'explorer.exe' to run as part of the user's shell."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This malware sample, identified as an infostealer, uses a known exploit for initial execution. What behavior in the report is characteristic of the CVE-2017-0199 exploit?",
+        "options": [
+          "A. 'EXCEL.EXE' is observed making HTTP GET requests to download a secondary payload.",
+          "B. The sample is a Composite Document File (CDF/Office document).",
+          "C. The malware injects code into a remote process using 'CreateRemoteThread'.",
+          "D. A Suricata alert triggers for 'Possible HTA Application Download'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This sample displays multiple signs of being an AV/EDR Killer. Which observed behaviors specifically target security product functionality?",
+        "options": [
+          "A. The malware hooks a wide range of file system and network APIs.",
+          "B. The malware creates fake system processes like 'WINLOGON.EXE' in unusual locations.",
+          "C. The malware queries for window names associated with security tools, like 'RegEdit_RegEdit'.",
+          "D. The malware modifies the system's boot configuration using 'bcdedit.exe'."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Information Discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This infostealer uses WMI queries for system reconnaissance before collecting data. Which specific WMI queries are present in the binary's strings?",
+        "options": [
+          "A. 'SELECT * FROM Win32_BIOS' to gather hardware information.",
+          "B. 'SELECT * FROM Win32_Process' to enumerate running processes.",
+          "C. 'SELECT * FROM Win32_VideoController' to check for virtualization.",
+          "D. 'SELECT * FROM Win32_AntivirusProduct' to identify security software."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The report indicates the use of Process Hollowing. What is the primary purpose of this technique in the context of advanced malware trying to evade EDR?",
+        "options": [
+          "A. To achieve persistence by replacing a legitimate auto-starting process.",
+          "B. To escalate privileges by running code within a higher-privileged process.",
+          "C. To bypass user-mode API hooks by loading and executing a clean, un-hooked version of a process from disk.",
+          "D. To exfiltrate data by hiding malicious network traffic within a legitimate process's communications."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    }
+  ]
+}

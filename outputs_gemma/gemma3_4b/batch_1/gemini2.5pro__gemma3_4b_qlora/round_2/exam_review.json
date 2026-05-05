@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically about sandbox/debugger evasion techniques observed in the signatures of a .NET infostealer. The three correct answers (A: kernel debugger query via NtQuerySystemInformation/ProcessDebugPort APIs, C: long sleep call >2 minutes, E: Confuser .NET obfuscator) are all directly supported by named signatures in the report ('Queries kernel debugger information', 'Tries to sleep for a long time', 'Dotnet file packed with confuser protection'). Distractor B (timestomping) is not evidenced in this report's signatures, and D (usermode unhooking) is not present. The question is original, technically precise, and correctly calibrated for medium difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which specific process injection techniques are supported by direct API call and stream analysis signatures in the QuasarRAT report. The correct answers A (Process Hollowing) and C (PE Injection) are directly evidenced by the malicious-level signatures: 'Creates a process in suspended mode', 'Writes PE header to memory' (T1055.002), and 'Writes shellcode to a remote process'. DLL Injection (B) is listed in MITRE but no specific API-level signature directly confirms it beyond the generic 'Writes data to a remote process'. APC Injection (D) is not evidenced. Thread Execution Hijacking (E) appears in MITRE but no specific API signature confirms it. The answer key is defensible and the question is original."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which API-level behaviors are explicitly described in the signatures as evidence for T1055. Options A ('Writes data to a remote process' - api-0, malicious) and B ('Allocates virtual memory in a remote process' - api-20, malicious) are both directly present as malicious-level signatures. Option C (process hollowing by unmapping memory) is not evidenced by any signature in this report. Option D (CreateRemoteThread) is not present in the signatures. The answer key [A, B] is correct and well-supported."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion and privilege escalation techniques observed in a killers-family sample. Correct answers A (UAC registry modification - 'Modifies the UAC/LUA settings' registry-10, malicious), B (process injection - 'Writes data to a remote process' api-0, malicious; 'Allocates virtual memory in a remote process' api-20, malicious), and D (AdjustTokenPrivileges - api-111) are all directly evidenced. C (volume shadow copy deletion) is not present. E (Windows Service creation) is in MITRE but no specific service creation signature is present. F (AMSI patching) is not evidenced. The answer key [A, B, D] is correct."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques in a worm/killers sample. Correct answers A (fake system processes - 'Creates a fake system process' target-33, malicious), C (disabling Registry Editor and Command Prompt - 'Disables Windows Registry Editor' registry-2 and 'Disables Command Prompt' registry-21, both malicious), and E (process injection via VirtualAlloc/WriteProcessMemory - api-0 and api-20, malicious) are all directly evidenced. B (Windows Service creation) is in MITRE but the question asks about defense evasion specifically, and service creation is more persistence. D (file deletion of original executable) is not evidenced. The answer key [A, C, E] is correct and well-supported."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection techniques supported by API call and hook detection signatures in a UPX-packed killers sample. Correct answers A (VirtualAlloc in remote process - api-20, malicious), B (CreateRemoteThread - api-106, malicious), D (WriteProcessMemory - api-0, malicious), and E (hooks file system and internet APIs - hooks-2 and hooks-5, malicious) are all directly evidenced by named signatures. C (Process Hollowing) is not evidenced by any signature. F (APC injection via QueueUserAPC) is not present. The answer key [A, B, D, E] is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which system recovery inhibition techniques are evidenced by the process execution data. Correct answers A (wbadmin delete catalog - target-80, malicious), C (vssadmin delete shadows and wmic shadowcopy delete - target-4, malicious), and D (bcdedit /set bootstatuspolicy ignoreallfailures and recoveryenabled no - target-6, malicious) are all directly evidenced by process command lines and signatures. B (wevtutil event log clearing) is not present in the process list. E (net stop VSS) is not present. The answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion techniques are present in a WannaCry-like ransomware sample based on MITRE ATT&CK mapping and signatures. Correct answers A (Timestomp - T1070.006 in MITRE, SetFileTime string), B (Process Injection - T1055 in MITRE, VirtualFree/CreateThread strings), D (Modify Registry - T1112 in MITRE, RegSetValueExA string), and E (Virtualization/Sandbox Evasion - T1497 in MITRE, RDTSCP instruction binary-26) are all supported. C (Disable Security Tools T1562.001) is NOT in the MITRE ATT&CK list for this sample, and no signature directly evidences it. F (APC Injection T1055.004) is not in the MITRE list. G (Windows Service T1543.003) is in MITRE but is a Persistence/Execution technique, not Defense Evasion in this context. The answer key [A, B, D, E] is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion and persistence techniques in a Zusy ransomware sample based on signatures. Correct answers A (Registry Run Key - registry-0, suspicious: 'Modifies auto-execute functionality'), B (WriteProcessMemory - api-0, malicious: 'Writes data to a remote process'), and E (marks original executable for deletion - api-26, suspicious: 'Marks file for deletion' of C:\\hash.exe) are all directly evidenced. C (Timestomping) is in MITRE but no specific signature evidences it in this report. D (stopping services) is not evidenced. The answer key [A, B, E] is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about classic RAT functionalities observed in a Remcos sample. Correct answers A (Windows Service creation - registry-67, 'Creates or modifies windows services'), B (DuckDNS C2 - network-52, 'Contacts Dynamic DNS' and suricata-0), and D (reading active computer name from registry - registry-35) are all directly evidenced. C (file encryption/ransomware) is not evidenced. E (volume shadow copy deletion) is not evidenced. The answer key [A, B, D] is correct and well-calibrated."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques in a static-only Remcos sample with minimal behavioral data. Correct answers A (obfuscation - T1027 in MITRE, high entropy section static-6, Obfuscated Files or Information) and C (embedded payload - T1027.009 in MITRE, YARA signature for embedded PE, high entropy section) are directly supported. B (process injection) is in MITRE but no behavioral signature evidences it in this minimal report. D (disabling security software) is not evidenced. The answer key [A, C] is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques in an HTML-based dropper that uses PowerShell. Correct answers A (Base64 obfuscation - string-509 'Commandline contains long base64 encoded string', suspicious), B (compile after delivery - target-57 'Invokes the C# compiler', suspicious, T1027.004), and C (process injection - api-0 'Writes data to a remote process', malicious) are all directly evidenced. D (volume shadow copy deletion) is not present. E (timestomping) is in MITRE but only evidenced by FileTimeToSystemTime API call which is weak evidence. The answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection techniques in a um_unhooking family sample that installs a service. Correct answers A (Process Hollowing - api-129 'Creates a process in suspended mode', api-83 'Writes PE header to memory' T1055.002) and C (PE Injection - api-83 'Writes PE header to memory' T1055.002) are directly evidenced. Note that Process Hollowing and PE Injection are closely related; the report specifically maps api-83 to T1055.002 (Portable Executable Injection). B (DLL Injection) is in MITRE but no specific DLL injection API signature is present. D (APC Injection) is not evidenced. The answer key [A, C] is defensible since both map to the same underlying evidence."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators point to process injection capability in a static-analysis-heavy report. Correct answers A (RtlCreateUserThread string - string-79, maps to T1055.001), D (Shell_TrayWnd string - string-4, maps to T1055.011 Extra Window Memory Injection), and F (VirtualAllocEx string - string-439, maps to T1055.003) are all directly evidenced by named signatures. B (CreateToolhelp32Snapshot) is for process enumeration, not injection. C (WmiPrvSE.exe) is for WMI detection. E (IsWow64Process) is for architecture detection. The answer key [A, D, F] is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques in a um_unhooking sample with a minimal signature set. Correct answers A (packed/obfuscated code - static-6 'PE file has unusual entropy sections', static-0 'CRC value mismatch', static-18 'Matched Compiler/Packer signature') and B (dynamic API resolution - static-1 'Imports suspicious APIs' including GetProcAddress/GetModuleHandleA, and the general pattern of hiding procedure lookups via single characters stream-36) are supported. C (Process Hollowing) is not evidenced. D (volume shadow copy deletion) is not evidenced. E (RDP configuration query - registry-61 reads terminal service keys) is present but is more of a discovery/lateral movement indicator than defense evasion. The answer key [A, B] is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about confirmed process-based actions in a RAT dropper (njRAT/Remcos variant). Correct answers A (VirtualAllocEx in remote process - api-20, malicious), B (WriteProcessMemory - api-0, malicious), and D (dropping executable with .txt extension - binary-28 'Drops executable file with image/text extension', malicious T1036.008) are all directly evidenced. C (CreateRemoteThread) is not present as a signature. E (process hollowing of svchost.exe) is not evidenced. F (keylogging via browser API hooking) - keylogging is evidenced (api-40 GetAsyncKeyState) but not specifically in a browser process. The answer key [A, B, D] is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about specific process injection techniques supported by behavioral signatures in a .NET Remcos variant. Correct answers A (APC Injection - api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process', T1055.004), C (Thread Execution Hijacking - api-264 'Creates a thread in a self process', T1055.003), and E (WriteProcessMemory - api-0 'Writes data to a remote process', malicious T1055) are all directly evidenced. B (Process Hollowing) is not evidenced by any signature. D (DLL Injection via CreateRemoteThread) - no CreateRemoteThread signature is present. The answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a UPX-packed SDBot/killers sample. Correct answers A (api-0 'Writes data to a remote process', malicious) and C (string-92 'Contains ability to inject code into another process' referencing CreateThread) are directly evidenced. B (batch file execution) is a persistence/execution indicator, not injection evidence. D (api-264 'Creates a thread in a self process') is thread creation in self, not remote injection. E (dropping dlldsk32.exe to system directory) is a masquerading/persistence indicator. The answer key [A, C] is correct."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

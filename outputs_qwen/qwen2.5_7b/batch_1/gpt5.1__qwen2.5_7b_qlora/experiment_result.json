@@ -1,0 +1,108 @@
+{
+  "teacher": "openai/gpt-5.1",
+  "student": "Qwen/Qwen2.5-7B-Instruct",
+  "best_accuracy": 0.6111111111111112,
+  "final_proficiency": "6",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 86,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 8,
+      "accuracy": 0.6111111111111112,
+      "avg_jaccard": 0.8518518518518519,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "Over-selection of plausible but unsupported options",
+        "Ransomware behavior and impact mapping",
+        "MITRE ATT&CK fine-grained technique mapping",
+        "Ransomware (inhibit recovery & encryption indicators)",
+        "Answer-count calibration"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 8,
+      "accuracy": 0.6111111111111112,
+      "avg_jaccard": 0.8537037037037036,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "Over-selection of plausible but unsupported ATT&CK techniques",
+        "Under-selection / missing one supported technique",
+        "Fine-grained C2 and encryption vs impact discrimination",
+        "Credential API Hooking vs generic process injection",
+        "UM unhooking / defense evasion nuance"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 8,
+      "accuracy": 0.4375,
+      "avg_jaccard": 0.8072916666666667,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 16,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "Fine-grained ATT&CK mapping for encryption and C2",
+        "Fine-grained ATT&CK sub-technique selection for process injection",
+        "Answer-count calibration on hard, multi-correct questions",
+        "um_unhooking / complex multi-technique samples",
+        "Impact vs non-impact encryption (T1486) and data encoding (T1132)"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 6,
+      "accuracy": 0.3125,
+      "avg_jaccard": 0.7395833333333333,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 16,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "Over-selection of options",
+        "Fine-grained process injection mapping",
+        "Evidence-grounding vs high-level MITRE mappings",
+        "UM unhooking / advanced evasion",
+        "Encrypted C2 vs generic encryption",
+        "Hard questions"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 6,
+      "accuracy": 0.3333333333333333,
+      "avg_jaccard": 0.7129629629629629,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "Over-selection of plausible but unsupported options",
+        "Under-selection (missing one of several correct techniques)",
+        "Semantic confusion among T1055 sub-techniques",
+        "Evidence-grounding weakness",
+        "Process Injection and EDR/um_unhooking scenarios",
+        "Hard questions"
+      ]
+    }
+  ],
+  "experiment": "gpt5.1__qwen2.5_7b_qlora",
+  "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora",
+  "status": "completed",
+  "duration_seconds": 12750.3
+}

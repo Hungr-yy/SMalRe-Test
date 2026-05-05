@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks students to distinguish defense evasion/impact behaviors from discovery behaviors in a .NET infostealer report. The correct answers (A: AMSI bypass strings, C: Timestomping via SetLastWriteTime, E: CryptProtectData for Data Encrypted for Impact) are all supported by the detonation report. Option B (OS version queries) and D (process enumeration) are correctly identified as discovery-only. The question is original, technically sound, and well-calibrated for Hard difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are explicitly Defense Evasion vs. discovery in a second infostealer report. Correct answers A (modifying proxy settings) and C (reading Tencent AV registry keys to detect/evade AV) are defensible from the report. B (process enumeration), D (OS version queries), E (service creation), and F (reading crypto GUID) are correctly excluded as discovery or persistence. The answer key is accurate and the question is original."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question distinguishes defense evasion from discovery in a third infostealer report. Correct answers A (long sleep for sandbox evasion, T1497.003), C (PAGE_GUARD memory regions to hinder dumping, T1562.001), and F (Zone.Identifier deletion to hide download origin, T1070.004) are all directly supported by the report signatures. B (OS version checks) and D (WMI queries) are discovery only. E (SeDebugPrivilege) is privilege escalation, not defense evasion. The answer key is accurate."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors correspond to Defense Evasion vs. discovery in a backdoor/killer sample. Correct answers A (software packing/high-entropy sections, T1027.002/T1027.009) and D (virtualization/sandbox checks including time-based and user-activity guardrails, T1497) are directly supported by the MITRE ATT&CK mappings and signatures in the report. B (OS version queries) and C (process enumeration) are discovery only. E (dropping PE to temp) is ingress tool transfer. The answer key is accurate."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are virtualization/sandbox evasion vs. generic discovery in a UPX-packed backdoor. Correct answers A (GetVersionExA with immediate branch decision, T1497), D (GetForegroundWindow/GetWindowTextW for user activity checks, T1497.002), and F (GetSystemTime/GetTickCount for time-based checks, T1497.003) are all supported by the report. B (logical drive enumeration) and C (language queries) are discovery only. E (process enumeration + WOW64 check) is discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion vs. discovery in a small ransomware-family sample. Correct answers A (modifying IE zone/proxy registry settings, T1562.001/T1112), C (PECompact2 packing and high-entropy sections, T1027.002/T1027.009), and E (writing data to remote process and spawning injected child process, T1055) are all supported by the report. B (installed application enumeration) and D (OS version checks) are discovery only. F (service creation) is persistence. The answer key is accurate."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Discovery (not Defense Evasion) in a GandCrab-family ransomware report. Correct answers A (volume information queries, T1120), C (accessing unusual drive letters, T1083), E (monitoring registry keys for changes, T1012), and F (security software discovery, T1518.001) are all mapped to Discovery in the report. B (file deletion/marking for deletion) is Defense Evasion/Indicator Removal. D (API hooking) is Credential Access. The answer key is accurate."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion or Impact vs. discovery in a Spora-family ransomware report. Correct answers A (modifying proxy settings, T1112) and C (terminating original process via taskkill and marking for deletion, T1070.004/T1489) are supported by the report. B (file enumeration) and D (OS version queries) are discovery only. E (installed applications registry) is discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which actions indicate ransomware-style inhibition of system recovery. Correct answers A (vssadmin delete shadows), C (wbadmin delete catalog), and D (bcdedit /set recoveryenabled no) are all directly evidenced by the process tree and mapped to T1490 in the report. B (OS version queries) and E (process snapshots) are discovery/execution. F (FindFirstFileW) is file discovery. The answer key is accurate and well-grounded."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate cross-process injection vs. in-process activity in a Remcos sample. Correct answers A (VirtualAllocEx + WriteProcessMemory + PE header write) and C (CreateProcessA suspended + PE header bytes written to remote process, T1055.002/T1055.012) are directly supported by the report signatures. B (LoadLibrary/GetProcAddress in own space) is not cross-process injection. D (self-thread creation) is in-process. E (named pipe creation) is IPC, not injection. The answer key is accurate."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion vs. discovery in a Borland Delphi backdoor. Correct answers A (T1497/T1497.002/T1497.003 - virtualization/sandbox evasion), C (T1055.001/T1055/T1055.011/T1055.015 - DLL injection and process injection), and E (T1027/T1027.002/T1027.009 - obfuscation/packing/embedded payloads) are all mapped to Defense Evasion in the report. B (system info discovery) and D (screen capture) are Discovery/Collection. F (keylogging) is Credential Access/Collection. The answer key is accurate."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which C2 behaviors are supported by the CVE-2017-0199 Excel document report. Correct answers A (HTTP/HTTPS web protocols, T1071.001), B (DNS queries, T1071.004), D (encrypted channel via TLS, T1573), and F (Base64/Base62 encoding in HTTP, T1132) are all directly evidenced by network signatures. C (RDP) is not present. E (SMTP) is not present. The answer key is accurate."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors correspond to Defense Evasion vs. discovery in a UM unhooking sample. Correct answers A (high-entropy/packed code, T1027.002/T1027.009), C (loading dbghelp.dll to detect security tooling, T1518.001 mapped to Anti-Detection), and D (timestomping via FileTimeToLocalFileTime, T1070.006) are supported by the report. B (registry/OS queries) is discovery. E (file enumeration) is discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion vs. discovery in a Trojan.Injuke sample. Correct answers A (long sleep for sandbox evasion, T1497.003), C (timestomping, T1070.006), and E (software packing/obfuscation/embedded payloads, T1027.002/T1027.009) are all mapped to Defense Evasion in the report. B (computer name/language registry reads) is discovery. D (dbghelp.dll loading + OS version) is security software discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion vs. discovery in a Safengine-packed sample. Correct answers A (Zone.Identifier deletion to hide download origin, T1070.004) and C (long sleep for time-based sandbox evasion, T1497.003) are directly supported by the report. B (OS version queries) and D (logical drive enumeration + process snapshots) are discovery. E (Windows installation language) is discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate cross-process injection in a UM unhooking sample with a complex process tree. Correct answers A (hash.exe writes to remote process + qhdkbaei.exe creates suspended process and writes PE header) and C (qhdkbaei.exe calls CreateProcessA with CREATE_SUSPENDED + writes PE header bytes, T1055.002/T1055.012) are directly supported by the report. B (LoadLibrary/GetProcAddress) is not cross-process. D (self-thread creation) is in-process. E (named pipe) is IPC. The answer key is accurate."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are Defense Evasion vs. discovery in a Trojan.Regrun/killers sample. Correct answers A (fake system processes like WINLOGON.EXE in %APPDATA%, T1036.005), C (hooking filesystem and network APIs in IExplorer.exe, T1056.004), and E (marking files for deletion and opening with delete access, T1070.004) are all supported by the report. B (process enumeration) is discovery. D (OS version queries) is discovery. The answer key is accurate."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE ATT&CK techniques are supported by a low-verdict static-only report. Correct answers A (T1027 - obfuscated files, from DIE signature), C (T1027.009 - embedded payloads, from high-entropy section), and D (T1071 - application layer protocol, from MITRE mapping) are all directly present in the report. B (T1055 - process injection) and E (T1486 - data encrypted for impact) are not present in the report's MITRE mappings or signatures. The answer key is accurate."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

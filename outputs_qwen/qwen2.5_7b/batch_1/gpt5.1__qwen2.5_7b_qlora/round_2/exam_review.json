@@ -1,0 +1,158 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about C2 and impact techniques (T1071, T1041, T1573.001, T1489, T1486) from a Ransom.Screenlocker.Generic report. The answer key (A, C, D) is correct: T1071 is supported by IP:port pairs and URL strings in the report; T1573.001 is explicitly in the MITRE mappings and supported by the 'Shows ability to use encryption for command and control traffic' signature; T1489 is explicitly mapped. T1041 (B) is not in the MITRE mappings and no exfiltration-over-C2 evidence exists. T1486 (E) is not in the MITRE mappings for this sample (it's a Screenlocker, not file-encryptor). The question is original, well-constructed, and tests fine-grained discrimination. Options are plausible distractors."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported vs. generic Windows functionality for a Packer.Malware.NSAnti sample. Answer key (A, B, D, E, F) is correct: T1027 is supported by packer signatures and high-entropy; T1059.003 is supported by cmd.exe spawning 'cmd /c erase' and batch file execution; T1573.001 is in MITRE mappings with encryption-for-C2 signature; T1070.004 is supported by file deletion/marking-for-deletion signatures; T1105 is supported by dropped PE files. T1486 (C) is not in the MITRE mappings and no file-encryption-for-impact evidence exists. Original question, good discrimination between generic and specific behaviors."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about encryption usage mapping for a .NET Trojan.Agent infostealer. Answer key (A, C) is correct: A correctly identifies AES/MD5 YARA hits, CryptHashData, Base64, and HTTPS as supporting T1027/T1132/T1573.001; C correctly notes that while encryption APIs and private key strings exist, there is no explicit mass file-encryption activity typical of ransomware. B is wrong because the report does not show explicit ransomware file-encryption behavior. D is wrong because encryption is used for C2 traffic (T1573.001 is mapped). The question tests a nuanced distinction between generic encryption capability and ransomware impact. Well-constructed and original."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported for a UPX-packed Trojan.Generic (killers family). Answer key (A, C, D) is correct: T1027.002 is supported by UPX packer detection signatures; T1489 is in the MITRE mappings (Service Stop); T1105 is in the MITRE mappings (Ingress Tool Transfer). T1486 (B) is not in the MITRE mappings and no file-encryption evidence exists. T1565.002 (E) is not in the mappings. T1555 (F) is not in the mappings. The question correctly discriminates between what is evidenced vs. what is merely listed in a broad MITRE mapping. Original and well-constructed."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported by telemetry for a Backdoor.Generic (killers family). Answer key (A, C, E) is correct: T1055 is supported by 'Writes data to a remote process' (malicious-level signature); T1574.002 is in MITRE mappings and supported by DLL load failures; T1497 is in MITRE mappings under both Defense Evasion and Discovery. T1041 (B) is not in the MITRE mappings. T1486 (D) is not in the MITRE mappings and no file-encryption evidence exists. Original question testing fine-grained mapping discrimination."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about network behaviors explicitly evidenced for a Ranpax.Generic (killers family) sample. Answer key (B, D) is correct: B is supported by the 'Contacts server' signature showing ports 11120, 11150, 11170 (non-standard) and the 'Spawned process connects to a network' signature; D (T1571) is explicitly mapped and supported by the malicious-level 'Uses network protocols on unusual ports' signature for port 11120. A is wrong because there is no evidence of standard web port (80/443) HTTP/HTTPS traffic. C is wrong (no SMTP evidence). E is wrong (no DNS tunneling). F is wrong (no IRC). Well-constructed original question."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which behaviors map to T1490 (Inhibit System Recovery) for a ransomware sample. Answer key (A, C, D) is correct: A maps to T1490 via 'Deletes volume snapshots' signature (vssadmin delete shadows); C maps to T1490 via 'Deletes backup catalog' signature (wbadmin delete catalog); D maps to T1490 via 'Tries to suppress failures during boot' signature (bcdedit /set recoveryenabled no). B (writing files with double extensions) maps to T1486, not T1490. E (Bcrypt module) is generic encryption, not T1490. F (fake svchost) maps to T1036.005. Excellent discrimination question, original and factually correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about C2 and impact techniques for a Trojan.Ransom.Spora.Generic sample. Answer key (A, C, D, E, F) is correct: A (T1071.001) is supported by HTTP GET requests and web protocol signatures; C (T1095) is supported by 'Sends UDP traffic' signature; D (T1071.004) is supported by 'Queries DNS server' signature; E (T1573) is supported by HTTPS/TLS signatures; F (T1486) is in MITRE mappings and supported by ransomware indicators. B (T1071.003 Mail Protocols) is not evidenced - no SMTP traffic in this report. Original, well-constructed question testing fine-grained C2 discrimination."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about impact/anti-recovery behaviors for a Ransom.HydraCrypt.Generic sample. Answer key (A, C, D) is correct: A is supported by 'Deletes volume snapshots' signature (vssadmin delete shadows); C is supported by 'Tries to suppress failures during boot' signature (bcdedit /set recoveryenabled no); D is supported by 'Deletes backup catalog' signature (wbadmin delete catalog). B (CryptEncrypt API calls) - the report shows Bcrypt module loading and random number generation but no explicit CryptEncrypt calls for file encryption. E (MBR wiping) is not evidenced. Original question with correct answer key."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about encryption vs. ransomware impact for a Trojan.Generic (remcos family) sample. Answer key (A, C, D) is correct: A (symmetric/asymmetric crypto for C2) is supported by T1573.001 and T1573.002 in MITRE mappings and the encrypted channel signatures; C (AES routines without explicit file-encryption impact) is correct - YARA AES match exists but no file-encryption activity is observed; D (non-standard port 55377) is supported by the malicious-level 'Uses network protocols on unusual ports' signature. B is wrong - no explicit file-encryption-for-impact evidence. E (SMTP exfiltration) is not evidenced. Original and well-constructed."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported for a Remcos.Generic (VB6) sample. Answer key (A, C, E) is correct: A (T1055.012 Process Hollowing) is in MITRE mappings under both Privilege Escalation and Defense Evasion; C (T1571 Non-Standard Port) is supported by the malicious-level 'Uses network protocols on unusual ports' signature for port 2404; E (T1497 Virtualization/Sandbox Evasion) is explicitly listed under both Discovery and Defense Evasion in MITRE mappings. B is wrong - no file-encryption evidence. D is wrong - no HTTP/HTTPS traffic on 80/443 evidenced. F is wrong - T1006 Direct Volume Access is in mappings but no raw disk sector encryption evidence. Original question."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about PowerShell and related process behaviors for an HTML dropper (remcos family). Answer key (A, B, C, E) is correct: A (T1027.006 HTML Smuggling) is in MITRE mappings and supported by 'High entropy HTML file' signature and the HTML document file type; B (T1055 Process Injection) is supported by 'Writes data to a remote process' malicious-level signature; C (T1027.004 Compile After Delivery) is supported by 'Invokes the C# compiler' signature (csc.exe); E (T1071.001 Web Protocols) is supported by WinHttpSendRequest/WinHttpReceiveResponse API calls and HTTP GET signatures. D is wrong - CryptStringToBinaryA and Bcrypt are for obfuscation/decoding, not file-encryption-for-impact. Original and well-constructed."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported for a low-detection um_unhooking sample. Answer key (A, C, D, F) is correct: A (T1027.002) is supported by compiler/packer signature detection; C (T1518.001) is supported by 'Loads the debugger/analysis tool module' (dbghelp.dll) signature; D (T1070.006 Timestomp) is in MITRE mappings; F (T1106 Native API) is in MITRE mappings and supported by API references not in IAT. B is wrong - T1055 generic process injection is not in the MITRE mappings for this sample (only T1055.001 DLL injection is). E is wrong - T1489 Service Stop is in mappings but no concrete service-stopping behavior is evidenced in signatures. Original question."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks which ATT&CK techniques are explicitly supported without over-generalizing for a Trojan.Ursnif (um_unhooking family). Answer key (A, C, D) is correct: A (T1027.002) is supported by compiler/packer signatures and unusual entropy resources; C (T1497.003 Time Based Evasion) is supported by the 'Tries to sleep for a long time' suspicious-level signature (1097794852ms sleep); D (T1055.004 APC injection) is supported by the 'Queues an Asynchronous Procedure Call' signature calling NtQueueApcThread. B is wrong - no explicit file-encryption-for-impact evidence. E is wrong - T1562.001 is in mappings but the 'Opens a handle to the specified local process' signature mapped to T1489 is not strong evidence of tool disabling. Original and well-constructed."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about ATT&CK techniques for a legacy um_unhooking sample with old-style MITRE IDs (T1215, T1076, T1002). Answer key (A, B, C) is correct: all three techniques (T1215 Kernel Modules, T1076 RDP, T1002 Data Compressed) are explicitly in the MITRE mappings and supported by corresponding signatures (KsecDD access for T1215, terminal service registry keys for T1076, packer signature for T1002). T1055 (D), T1562 (E), and T1497 (F) are not in the MITRE mappings for this sample. Original question testing direct mapping from report evidence."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about C2 techniques explicitly supported by network telemetry for a Trojan.BrsecmonE (um_unhooking family). Answer key (A, B, D, E) is correct: A (T1071.001 Web Protocols) is supported by HTTPS traffic on port 443 and 'Sends traffic on typical HTTP outbound port' signature; B (T1071.003 Mail Protocols) is supported by the malicious-level 'Sends network traffic on a typical mail related ports' signature (port 25 SMTP) and svchost connecting to port 25; D (T1573 Encrypted Channel) is supported by 'Uses HTTPS for communication' signature; E (T1071.004 DNS) is supported by 'Queries DNS server' signature. C (T1571 Non-Standard Port) is not evidenced - ports 25 and 443 are standard. F (T1132 Data Encoding) is in mappings but no base64 encoding in C2 messages is evidenced. Original question."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Question asks about process injection and API hooking techniques for a Worm.Brontok sample. Answer key (A, D) is correct: A (T1055 Process Injection) is supported by 'Writes data to a remote process' and 'Allocates virtual memory in a remote process' malicious-level signatures; D (T1056.004 Credential API Hooking) is supported by 'Hooks internet related APIs' (send@WS2_32.DLL in IExplorer.exe) - this is the internet-credential-hooking aspect. B is wrong - T1055.001 DLL injection is in mappings but the LoadLibrary calls are generic module loading, not specific DLL injection evidence. C is wrong - hooks on GetNativeSystemInfo and FindFirstFileW are file system/API hooks, not credential-specific hooks (these are mapped to T1056.004 in the report but the question correctly identifies that D is the better answer for credential theft via internet API hooking). Actually reviewing more carefully: C says hooks on GetNativeSystemInfo and FindFirstFileW - these ARE mapped to T1056.004 in the report (hooks-0 and hooks-2 signatures). However, D (hooks on send@WS2_32.DLL) is the more direct credential/data theft via internet API hooking. The answer key excludes C but includes D. This is defensible since the question asks about 'credential theft' specifically, and internet send hooks are more directly credential-theft-relevant than file system hooks. E is wrong - Thread Execution Hijacking is not evidenced by process spawning patterns. The answer key is reasonable."
+      },
+      {
+        "question_index": 17,
+        "verdict": "flag",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Answer key may be incomplete - C (T1056.004 via hooks on CopyFileW and FindFirstFileW in SERVICES.EXE) is also explicitly supported by hooks-0 and hooks-2 signatures mapped to T1056.004, yet is excluded from the answer key"
+        ],
+        "reasoning": "Question asks about credential theft and sensitive data collection for a Trojan.Regrun (killers family). Answer key (A, B, C) is given as correct. A (T1056.004) is supported by hooks-0 (CopyFileW, LoadLibrary hooks in SERVICES.EXE), hooks-2 (FindFirstFileW hooks), and hooks-5 (send@WS2_32.DLL hooks) - all mapped to T1056.004. B (T1113 Screen Capture) is supported by CreateCompatibleBitmap API call. C (T1005 Data from Local System) is supported by CopyFileA call and data collection behaviors. D (T1555) is not in MITRE mappings. E (T1552) is not in MITRE mappings. The answer key (A, B, C) appears correct. Minor flag: the question stem says 'credential theft and sensitive data collection' but T1005 is broader than credential theft - this is a minor framing issue but the answer key is factually correct."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 17,
+      "flagged": 1,
+      "rejected": 0
+    }
+  }
+]

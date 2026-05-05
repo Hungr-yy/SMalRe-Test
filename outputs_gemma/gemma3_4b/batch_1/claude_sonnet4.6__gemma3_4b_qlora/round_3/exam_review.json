@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks students to identify which signatures are rated threat_level 2 (malicious) AND directly evidence process injection behaviour. The detonation report clearly shows api-20 (Allocates virtual memory in a remote process, threat_level 2, T1055) and api-0 (Writes data to a remote process, threat_level 2, T1055) as the correct answers. The other options are either informative-level (api-264 creates thread in self process is informative), suspicious-level (memorydump-8 is informative), or malicious but not process injection (yara-133 is pattern matching). The answer key B and D is correct. Question is original, technically precise, and well-calibrated for hard difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are supported EXCLUSIVELY by malicious-level (threat_level 2) signatures. From the report: api-20 (Allocates virtual memory in remote process, threat_level 2), binary-7 (Drops executable files to Windows system directory, threat_level 2), api-120/WinExec (threat_level 2), static-97 PE file contains executable resources (threat_level 2). Option C (Writes a PE file header to disc, api-43) is threat_level 1 (suspicious). Option F (Drops executable files, binary-1) is threat_level 1. Option G (Uses REGEDIT.EXE, target-118) is threat_level 1. Option H (Section contains high entropy, static-6) is threat_level 1. The answer key A, B, D, E is correct. Original question, well-constructed."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which statements about process injection are supported by threat_level 2 malicious signatures. From the report: api-0 (Writes data to a remote process, threat_level 2, T1055) supports option A. binary-7 (Drops executable files to Windows system directory, threat_level 2, T1036) supports option D. Option B (spawned likely due to injection, target-413) is threat_level 1 suspicious. Option C (Thread Execution Hijacking via CreateRemoteThread) is not evidenced by any malicious-level signature. Option E (CreateToolhelp32Snapshot) is informative. Option F (hooks-2 Hooks file system APIs) is threat_level 2 but is about hooking, not process injection per se. The answer key A and D is correct. Well-constructed hard question."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are supported by threat_level 2 malicious signatures in the killers/Graftor sample. From the report: api-120 WinExec (threat_level 2, T1106) supports G. target-115 Detected Rundll32 process execution (threat_level 2, T1218.011) supports A. static-97 PE file contains executable resources (threat_level 2, T1027.009) supports C. Option B (keylogging) has no malicious-level signature. Option D (marks file for deletion, api-26) is threat_level 1. Option E (process injection into explorer.exe) has no malicious-level signature. Option F (HTTP via WinINet) has no malicious-level signature. Answer key A, C, G is correct. Original and well-calibrated."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which observations are exclusively supported by threat_level 2 malicious signatures in the Pykspa/killers sample. From the report: registry-10 (Modifies the UAC/LUA settings, threat_level 2, T1112) supports A. avtest-8 (CrowdStrike detection, threat_level 2) supports B. Option C (section high entropy, static-6) is threat_level 1. Option D (API references not in IAT, string-64) is threat_level 1. Option E (creates mutant) is informative. Answer key A and B is correct. Original question."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which process injection behaviours are directly evidenced by threat_level 2 malicious signatures in the Ranpax/killers sample. From the report: api-0 (Writes data to a remote process, threat_level 2, T1055) supports A. api-117 (ShellExecuteW, threat_level 2) supports D but this is execution not injection. network-7 (unusual ports, threat_level 2) is network. avtest-8 is external detection. Option B (self-process thread creation, api-264) is informative. Option C (spawned likely due to injection, target-413) is threat_level 1. Option E (DLL side-loading via failed module load) is informative. Option F (CreateToolhelp32Snapshot) is informative. The answer key is A only. The question correctly identifies that only api-0 (writing to remote process) is a malicious-level process injection signature. Correct and well-constructed."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are supported by threat_level 2 malicious signatures in the Spora ransomware sample. From the report: api-0 (Writes data to remote process, threat_level 2) supports A. api-20 (Allocates virtual memory in remote process, threat_level 2) supports F. target-9 (Terminates other processes using taskkill, threat_level 2) supports C. target-113 (Detected mshta.exe process execution, threat_level 2) supports D. api-46 (Checks for bitcoin mining files, threat_level 2) is not in options. network-17 (Contacts many different hosts, threat_level 2) is not in options. network-88 (communicates with malicious domain, threat_level 2) is not in options. Option B (shadow copies) - no malicious-level signature for vssadmin. Option E (keylogging via GetKeyState, api-40) is threat_level 1. Option G (proxy settings modification, registry-27) is threat_level 1. Answer key A, C, D, F is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are evidenced by threat_level 2 malicious signatures in the WannaCry DLL sample. From the report: binary-11 (extracted file identified as malicious, threat_level 2) supports A. network-31 (large number of ARP broadcast requests, threat_level 2) supports C. target-58 (spawned process identified as malicious, threat_level 2) supports E. binary-7 (Drops executable files to Windows system directory, threat_level 2) supports F. suricata-2 (WannaCry DNS lookup alert, threat_level 2) supports G. Option B (hooks-8 Installs hooks/patches, threat_level 1) is suspicious not malicious. Option D (OpenSCManager, api-77) is threat_level 1. Option H (proxy settings, registry-27) is threat_level 1. Answer key A, C, E, F, G is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which signatures are rated threat_level 2 in the WannaCry PE sample. From the report: yara-0 (WannaDecryptor YARA match, threat_level 2) supports B. avtest-8 (CrowdStrike detection, threat_level 2) supports C. Option A (YARA RSA keys, yara-62) is threat_level 1. Option D (section high entropy, static-6) is threat_level 1. Option E (imports suspicious APIs, static-1) is threat_level 1. Option F (YARA AES encryption, yara-103) is informative. Answer key B and C is correct. Original and well-constructed."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which statements about process injection are supported by threat_level 2 malicious signatures in the NetSup/remcos sample. From the report: api-0 (Writes data to a remote process, threat_level 2, T1055) supports A. Options B, C, D, E are not supported by malicious-level signatures. The answer key A is correct. The question correctly identifies that only the WriteProcessMemory-equivalent API call is rated malicious. Well-constructed hard question."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are confirmed at threat_level 2 in the Trojan.Generic/remcos sample. From the report: network-7 (Uses network protocols on unusual ports, port 55377, threat_level 2) supports A. avtest-8 (CrowdStrike detection, threat_level 2) supports C. Option B (Bcrypt module loading) is informative. Option D (high entropy sections) is threat_level 1. Option E (API references not in IAT) is threat_level 1. Option F (spawned process connects to network, target-412) is threat_level 1. Answer key A and C is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which statements are supported by threat_level 2 malicious signatures in the CVE-2017-0199/Excel sample. From the report: network-16 (GETs files from webserver, threat_level 2) supports A. network-88 (communicates with malicious domain loooooooooooooooooooog.com, threat_level 2) supports C. suricata-2 (CVE exploitation alert, threat_level 2) supports D. avtest-8 (CrowdStrike detection, threat_level 2) supports G. Option B (HTTPS TLSv1.2, network-38) is informative. Option E (browser user-agent without browser, network-22) is threat_level 1. Option F (traffic without HTTP header, network-23) is threat_level 1. Answer key A, C, D, G is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which statements about process injection are supported by threat_level 2 malicious signatures in the Fragtor/um_unhooking sample. From the report, the only threat_level 2 signature is avtest-8 (CrowdStrike detection). There are no malicious-level process injection signatures. The answer key A is correct - only CrowdStrike detection is at threat_level 2. The question is well-constructed and tests careful reading of threat levels."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are confirmed at threat_level 2 in the um_unhooking sample. From the report: network-29 (daytime protocol port traffic, threat_level 2) supports D. string-56 (external IP lookup service reference, threat_level 2) supports A. network-24 (tries to identify external IP, threat_level 2) supports A. api-59 (Interacts with primary disk partition DR0, threat_level 2) supports C. suricata-2 (TOR consensus data request, threat_level 2) - this is about TOR not Tor relay. avtest-8 (CrowdStrike, threat_level 2) is not in options. Option B (DLL injection) has no malicious-level signature. Option E (creates/modifies Windows services, registry-67) is informative. Option F (Tor relay, suricata-1) is threat_level 1. Answer key A, C, D is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which process injection behaviours are evidenced by threat_level 2 malicious signatures in the BrsecmonE/um_unhooking sample. From the report: api-0 (Writes data to remote process, threat_level 2) supports D. api-129 (Creates process in suspended mode, threat_level 2) supports A. api-83 (Writes PE header to memory, threat_level 2) supports B. Option C (self-process thread creation, api-264) is informative. Option E (named pipe creation, api-138) is informative. Option F (DLL side-loading via failed module load, api-22) is informative. Answer key A, B, D is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are classified at threat_level 2 in the Trojan.Regrun/killers sample. From the report: api-0 (Writes data to remote process, threat_level 2) supports D. api-20 (Allocates virtual memory in remote process, threat_level 2) supports E. target-33 (Creates fake system process WINLOGON.EXE at non-system path, threat_level 2) supports F. hooks-2 (Hooks file system APIs, threat_level 2) supports A. hooks-5 (Hooks internet related APIs, threat_level 2) supports G. api-31 (Tries to access unusual system drive letters, threat_level 2) supports I. target-14 (Spawns a lot of processes, threat_level 2) is not in options. avtest-8 (CrowdStrike, threat_level 2) is not in options. Option B (marks file for deletion, api-26) is threat_level 1. Option C (hooks-0 Hooks API calls) is threat_level 1. Option H (drops executable files, binary-1) is threat_level 1. Option J (opens file with deletion access rights, api-25) is threat_level 1. Answer key A, D, E, F, G, I is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which statements reflect findings at threat_level >= 1 in the Remcos stub sample. The report has only one signature at threat_level 1: static-6 (Section contains high entropy, T1027.009). The MITRE ATT&CK mapping includes T1027.009 (Embedded Payloads) which is derived from the static-6 signature. Option A is supported by static-6 (threat_level 1). Option C is supported by the MITRE mapping T1027.009 which comes from static-6. Options B, D, F, G, H are not supported by any threat_level >= 1 signature. Option E (writable sections) is informative. Answer key A and C is correct. Well-constructed question."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question asks which behaviours are observed based ONLY on threat_level 2 malicious signatures in the Ransom.Small ransomware sample. From the report: target-58 (spawned svchost.exe identified as malicious by 15/22 AV vendors, threat_level 2) supports A. api-0 (Writes data to remote process, threat_level 2) supports C. target-4 (Deletes volume snapshots via vssadmin, threat_level 2) supports E. api-96 (Tries to steal browser sensitive information, threat_level 2) supports F. target-80 (Deletes backup catalog via wbadmin, threat_level 2) supports H. target-33 (Creates fake system process svchost.exe at %APPDATA%, threat_level 2) supports I. Option B (sleep for long time, api-24) is threat_level 1. Option D (guarded memory regions, api-1) is threat_level 1. Option G (write files with double extensions, api-201) is threat_level 1. Option J (adjusts debug privileges, api-28) is threat_level 1. Answer key A, C, E, F, H, I is correct. Also target-6 (suppress failures during boot, threat_level 2) is not in options. api-20 (allocates virtual memory, threat_level 2) is not in options. The answer key is correct for the options provided."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

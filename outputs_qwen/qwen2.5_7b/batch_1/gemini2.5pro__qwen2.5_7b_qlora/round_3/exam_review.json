@@ -1,0 +1,172 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about core capabilities supported by behavioral, static, or network evidence in the report, requiring synthesis across multiple evidence types. The correct answers (A: Windows Service persistence via registry-67 'Creates or modifies windows services'; B: bank URL artifact string-23; C: process injection via api-0 'Writes data to a remote process'; E: HTTP C2 via network-2 'GETs files from a webserver') are all directly supported by the report. Option D (data encryption/VSS deletion) is correctly excluded as there is no evidence of this in the report. Option F (SMTP exfiltration) is correctly excluded. The question is original, technically sound, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about the malware's execution chain based on process activity and signatures. Correct answers: A (batch script from temp directory - process uid 00000000-00005116 runs '/c %TEMP%\\iyail.bat' and regedit.exe runs 'regedit /s %TEMP%\\xfshejg.reg'); C (drops secondary payload - binary-1 'Drops executable files', api-43 'Writes a PE file header to disc', static-97 'PE file contains executable resources'); E (cmd.exe deletes initial executable - api-26 'Marks file for deletion' and api-25 'Opens file with deletion access rights' on C:\\hash.exe). Option B (DLL injection into explorer.exe) is not evidenced. Option D (vssadmin VSS deletion) is not evidenced. Option F (encrypted HTTP C2) - there is no network traffic in this report. All correct answers are well-supported by the report evidence."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors support the 'Ransom.Screenlocker.Generic' classification. Correct answers: B (screen capture via string-78 'Contains ability to capture screen (API string)' with BitBlt, and FindWindowA for application window discovery T1010); C (network share enumeration via string-313 'Contains ability to enumerate system network resources' WNetOpenEnumA, T1135); D (service termination via string-316 ExitProcess T1489 and string-230 RegDeleteKeyA). Option A (vssadmin VSS deletion) is not evidenced in the report. Option E (process hollowing into explorer.exe) - string-481 references explorer.exe and stream-5 shows CreateRemoteThread, but this is not definitively process hollowing. Option F (DoH C2) is not evidenced. The answer key is reasonable and supported by the report."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about capabilities of an EDR/AV killer (Malware.SPfVo.Generic). Correct answers: A (Windows Service persistence - registry-0 'Modifies auto-execute functionality' T1547.001, registry-67 'Creates or modifies windows services' T1543.003); B (process injection - api-0 'Writes data to a remote process', api-20 'Allocates virtual memory in a remote process', api-106 'CreateRemoteThread'); D (API hooking of file system and internet APIs - hooks-2 'Hooks file system APIs', hooks-5 'Hooks internet related APIs'); E (C2 via DNS query to Siphorix.dyndns.org, network-1 contacts server). Option C (file encryption/VSS deletion) is not evidenced. All correct answers are directly supported by the report."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which techniques impede system recovery and analysis. Correct answers: A (disabling regedit - registry-2 'Disables Windows Registry Editor (regedit)'); C (disabling system restore - registry-23 'Disables system restore'); D (fake system processes - target-33 'Creates a fake system process' for WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, SMSS.EXE in %APPDATA%\\WINDOWS); F (disabling cmd - registry-21 'Disables Command Prompt (cmd)'). Option B (vssadmin VSS deletion) is not evidenced. Option E (CryptEncrypt API) is not evidenced. The answer key is correct and well-supported."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which legitimate Windows process names were masqueraded by running from %APPDATA%\\WINDOWS. From the process list: WINLOGON.EXE (uid 00000000-00002312, path %APPDATA%\\WINDOWS\\WINLOGON.EXE), CSRSS.EXE (uid 00000000-00006024, path %APPDATA%\\WINDOWS\\CSRSS.EXE), SERVICES.EXE (uid 00000000-00001084, path %APPDATA%\\WINDOWS\\SERVICES.EXE), LSASS.EXE (uid 00000000-00003476, path %APPDATA%\\WINDOWS\\LSASS.EXE), SMSS.EXE (uid 00000000-00003904, path %APPDATA%\\WINDOWS\\SMSS.EXE). Correct answers A (CSRSS.EXE), C (LSASS.EXE), E (WINLOGON.EXE), F (SERVICES.EXE) are all confirmed. Option B (svchost.exe) does not appear in %APPDATA%\\WINDOWS. Option D (D3_08.exe) is the malware's own payload, not a masqueraded legitimate process. The answer key is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which information-stealing techniques are directly supported by signatures. Correct answers: A (keylogging - api-40 'Calls an API typically used for keylogging' with GetKeyState, T1056.001); C (screenshots - api-105 'Calls an API possibly used to take screenshots' with CreateCompatibleBitmap, T1113). Option B (file deletion) is present but is not an information-stealing technique. Option D (VSS deletion) is not evidenced. Option E (copying itself) is evidenced by api-123 CopyFileW but is not an information-stealing technique. The question specifically asks about information-stealing techniques, making A and C the correct answers. The answer key is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which TTPs are most indicative of ransomware behavior from the MITRE mapping. Correct answers: A (T1486 Data Encrypted for Impact - directly listed in mitre_attcks); B (T1489 Service Stop - directly listed); E (T1562.001 Disable or Modify Tools - directly listed). Option C (T1055 Process Injection) is a general technique not specific to ransomware. Option D (T1112 Modify Registry) is general. Option F (T1082 System Information Discovery) is general. The question asks which are 'most indicative of ransomware behavior' when considered together - T1486, T1489, and T1562.001 form the classic ransomware triad. The answer key is reasonable and defensible."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion or destructive behaviors. Correct answers: A (long sleep - api-24 'Tries to sleep for a long time' sleeping for 1097794852 milliseconds, T1497.003); B (APC injection - api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process', T1055.004); C (service stop - api-284 'Opens a handle to the specified local process' with T1489 in MITRE mapping, and T1489 Service Stop is in mitre_attcks); D (data encrypted for impact - T1486 is in mitre_attcks). Option E (vssadmin VSS deletion) is not evidenced in signatures. Option F (firewall modification) is not evidenced. The answer key is correct and well-supported."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion techniques and characteristics are directly supported. Correct answers: A (packing/obfuscation - static-6 'Section contains high entropy', static-18 'Matched Compiler/Packer signature' VC8, T1027.002, T1027.009); B (dynamic API resolution - string-64 'Input file contains API references not part of its Import Address Table (IAT)' with FlsAlloc, T1106); C (anti-analysis/debugger detection - module-16 'Loads the debugger/analysis tool module' dbghelp.dll, T1518.001, T1622 Debugger Evasion in MITRE mapping). Option D (VSS deletion) is not evidenced. Option E (process injection into svchost) is not evidenced in signatures. Option F (Windows service persistence) - while T1543 is in MITRE mapping, there are no behavioral signatures supporting service creation. The answer key is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about WannaCry TTPs. Correct answers: A (service persistence - api-77 'Opened the service control manager', api-76 'Requested access to a system service', target-303 context, and mssecsvc.exe creates a service); B (network scanning for lateral movement - network-31 'Detected a large number of ARP broadcast requests', network-32 'Detected increased number of ARP broadcast requests', network-17 'Contacts very many different hosts'); C (kill switch domain - network-0 contacts 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com', network-2 GETs files from this domain - this is the well-known WannaCry kill switch). Option D (VSS deletion) is not evidenced in the signatures. Option E (file exfiltration before encryption) is not evidenced. The answer key is correct and matches known WannaCry behavior."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about primary functionalities of this Remcos-like malware. Correct answers: A (remote access/keylogging/screenshots - api-40 'Calls an API typically used for keylogging' GetAsyncKeyState T1056.001, api-105 'Calls an API possibly used to take screenshots' T1113, network contacts C2); C (scheduled task persistence - process uid 00000000-00000468 runs schtasks.exe '/Create /XML %TEMP%\\SystemCheck.xml /TN System\\SystemCheck', T1053.005); E (multiple payloads - rundl32.exe, Stable_Network.exe, host.exe, GameSDK.exe, CL_Debug_Log.txt all dropped/executed); F (masquerade file type - binary-28 'Drops executable file with image/text extension' CL_Debug_Log.txt is actually a PE32 executable, T1036.008). Option B (file encryption/ransomware) - T1486 is in MITRE but no behavioral evidence supports it. Option D (VSS deletion) is not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques indicated by static analysis. The report has very few signatures - only static analysis findings. Correct answers: A (high entropy section - static-6 'Section contains high entropy' .text with entropy 6.4304, T1027.009 Embedded Payloads); B (embedded payload - T1027.009 is in mitre_attcks, and static-6 indicates embedded/packed content). Option C (file deletion after execution) is not evidenced. Option D (process injection) is not evidenced in signatures. Option E (firewall modification) is not evidenced. The answer key is correct and supported by the limited evidence in this low-signature report."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which information collection techniques were observed for Remcos RAT. Correct answers: A (process snapshots - api-103 'Calls an API typically used for taking snapshot of the specified processes' CreateToolhelp32Snapshot, T1057); B (screenshots - api-105 'Calls an API possibly used to take screenshots' CreateCompatibleBitmap, T1113); C (file/directory search - api-102 'Calls an API typically used for searching a directory for files' FindFirstFileA, T1083). Option D (VSS deletion) is not evidenced. Option E (keylogging) - while T1056.001 is in MITRE mapping, there is no behavioral signature (like GetAsyncKeyState or GetKeyState) in the signatures list for this specific report. The answer key correctly excludes E based on lack of direct behavioral evidence in signatures."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which TTPs are most indicative of ransomware behavior. Correct answers: A (T1486 Data Encrypted for Impact - in mitre_attcks); B (T1489 Service Stop - in mitre_attcks); E (T1562.001 Disable or Modify Tools - in mitre_attcks). Option C (T1055 Process Injection) is general. Option D (T1112 Modify Registry) is general. Option F (T1082 System Information Discovery) is general. This is essentially the same question as question_index 7 with the same report structure and same answer key. However, the detonation reports are different (different SHA256, different family 'um_unhooking' vs 'ransomware'), so this is not plagiarism from the benchmark. The answer key is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion or destructive behaviors. Correct answers: A (long sleep - api-24 'Tries to sleep for a long time' sleeping for 1566804069 milliseconds, T1497.003); B (APC injection - api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process', T1055.004); C (service stop - T1489 Service Stop is in mitre_attcks, api-284 'Opens a handle to the specified local process' with T1489); D (data encrypted for impact - T1486 is in mitre_attcks). Option E (vssadmin) is not evidenced. Option F (firewall modification) is not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion techniques are directly supported. Correct answers: A (high entropy/packing - static-6 'Section contains high entropy', static-18 'Matched Compiler/Packer signature' VC8, T1027.002, T1027.009); B (dynamic API resolution - string-64 'Input file contains API references not part of its Import Address Table (IAT)' FlsAlloc); C (anti-analysis - module-16 'Loads the debugger/analysis tool module' dbghelp.dll, T1518.001, T1622 in MITRE). Option D (VSS deletion) not evidenced. Option E (process injection into svchost) not evidenced. Option F (Windows service persistence) - while in MITRE, no behavioral signatures support it in this report. The answer key is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about GandCrab4 operational lifecycle activities. Correct answers: A (enumerates drives - api-31 'Tries to access unusual system drive letters' touching K:, L:, etc., T1083); C (DGA for C2 - network-6 'Contacts Random Domain Names', network-34 'Detected very many DNS queries for domains that cannot be resolved', network-81 would be high entropy domain, T1568.002 Domain Generation Algorithms in MITRE); E (email file collection - api-52 'Reads mail related files' reading from Firefox profile, T1114.001 Local Email Collection). Option B (vssadmin VSS deletion) - while api-26 'Marks file for deletion' is present, it marks a file in AppData/Local, not VSS. Option D (DLL injection into svchost) is not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about the malware's installation, persistence, and evasion routine based on process execution. Correct answers: A (creates directory and moves executable - cmd.exe '/C mkdir %WINDIR%\\system32\\tpxhoiko\\' and cmd.exe '/C move /Y %TEMP%\\hdvvshgu.exe %WINDIR%\\system32\\tpxhoiko\\'); C (creates and starts Windows service - sc.exe 'create tpxhoiko binPath=...' and sc.exe 'start tpxhoiko', target-303 'Starts service using SC.exe'); D (modifies firewall - netsh.exe 'advfirewall firewall add rule...', target-15 'Modifies firewall settings'). Option B (scheduled task) is not evidenced. Option E (injection into explorer.exe) - while api-0 'Writes data to a remote process' is present, the target is C:\\hash.exe not explorer.exe, and the injection is into svchost.exe via hdvvshgu.exe. The answer key is correct."
+      },
+      {
+        "question_index": 19,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about primary functionalities of Trojan.Remcos. Correct answers: A (Windows Service persistence - registry-67 'Creates or modifies windows services' T1543.003); C (C2 on non-standard port - network-7 'Uses network protocols on unusual ports' TCP port 30204, T1571); D (keylogging with log file - api-159 'Writes log files' writing to C:\\ProgramData\\furas\\registros.dat, T1056.001 Keylogging in MITRE, api-40 GetAsyncKeyState would be expected but api-159 writing log files is direct evidence). Option B (VSS deletion) is not evidenced. Option E (ransom note) is not evidenced. The answer key is correct. Note: T1486 Data Encrypted for Impact is in MITRE but no behavioral evidence supports it, which the question correctly flags as needing verification."
+      }
+    ],
+    "summary": {
+      "total": 20,
+      "passed": 20,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

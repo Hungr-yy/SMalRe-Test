@@ -1,0 +1,2728 @@
+{
+  "feedback": "The model demonstrates solid overall performance with an exact match accuracy of 72.2% (13/18 questions correct) and a high average Jaccard similarity of 0.88. All questions were successfully parsed with no format failures. The model excels at defense evasion identification, static analysis, process injection classification, and persistence mechanism recognition across multiple malware families. It correctly answered all questions for killers (EDR/AV), um_unhooking, and remcos_rat families with perfect or near-perfect scores. The primary weakness is under-selection: in every incorrect answer, the model missed one or more correct options without adding spurious distractors. This systematic under-selection pattern suggests the model is conservative and evidence-grounded but occasionally fails to recognize all relevant behavioral signals, particularly for less obvious indicators. Specific weaknesses include: (1) Process Injection Detection for infostealers \u2014 the model missed C (CreateToolhelp32Snapshot) and D (IsWow64Process) as injection-related evidence, likely because these are reconnaissance APIs rather than direct injection primitives; (2) Credential Access and Data Collection for infostealers \u2014 the model missed D (marks temporary files for deletion) as an infostealer behavior; (3) Defense Evasion for ransomware \u2014 the model selected D (timestomping) instead of G (Safe Mode Boot/T1562.009), indicating confusion between evasion techniques; (4) Anti-Recovery Techniques for ransomware \u2014 the model selected E (opens file with deletion access rights for dotnet.au3) instead of C (renames more than 100 files with double extensions), showing difficulty distinguishing ransomware-specific recovery inhibition from generic file deletion behavior. Training should focus on: (1) ransomware-specific behavioral patterns, especially anti-recovery and defense evasion distinctions; (2) infostealer behavioral completeness, particularly recognizing file-deletion as forensic trace removal; (3) process injection reconnaissance APIs (CreateToolhelp32Snapshot, IsWow64Process) as supporting evidence for injection activity; (4) medium-difficulty questions requiring identification of all correct answers across multiple behavioral categories. The model tends to under-select rather than over-select, meaning it is precise but not always complete in its answer sets.",
+  "proficiency": 8,
+  "metrics": {
+    "num_questions": 18,
+    "num_exact_matches": 13,
+    "exact_match_accuracy": 0.7222,
+    "avg_jaccard": 0.8796,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.9444,
+    "macro_option_recall": 0.8611,
+    "avg_predicted_answer_count": 3.1111,
+    "avg_gold_answer_count": 3.2778,
+    "answer_count_bias": "under-selecting"
+  },
+  "strengths": [
+    "Perfect exact match on all EDR/AV killers questions (4/4), demonstrating strong recognition of persistence, masquerading, and process injection in that family",
+    "Perfect exact match on all um_unhooking questions (5/5), including static analysis, defense evasion, process injection, and persistence mechanisms",
+    "Perfect exact match on all remcos_rat questions (5/5), covering defense evasion, MITRE mapping, and process injection detection",
+    "Zero parse failures across all 18 questions, indicating robust output formatting",
+    "Strong precision (0.94) \u2014 when the model selects an answer, it is almost always correct, with no spurious distractors selected",
+    "Correct identification of complex multi-technique defense evasion patterns including timestomping, proxy modification, AV registry reads, and LOLbin abuse",
+    "Accurate process injection technique classification (DLL injection, thread execution hijacking, ListPlanting, EWM injection) from MITRE ATT&CK mappings"
+  ],
+  "weaknesses": [
+    {
+      "area_type": "attack",
+      "area_name": "ransomware",
+      "description": "The model missed two ransomware questions: (1) incorrectly selected timestomping (D) instead of Safe Mode Boot (G) for defense evasion, and (2) selected file-deletion-access-rights (E) instead of double-extension file renaming (C) for anti-recovery techniques. This indicates confusion between generic evasion/deletion behaviors and ransomware-specific indicators.",
+      "severity": "high",
+      "evidence_question_indices": [
+        6,
+        8
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "infostealers",
+      "description": "Two infostealer questions were missed: (1) process injection detection missed CreateToolhelp32Snapshot and IsWow64Process as supporting injection evidence, and (2) credential access question missed 'marks temporary files for deletion' as an infostealer behavior. The model under-selected in both cases.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection",
+      "description": "In all 5 incorrect questions, the model missed one or more correct answers without adding false positives. This systematic under-selection suggests the model is overly conservative and may require more complete behavioral mapping training.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        6,
+        8
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Anti-Recovery Techniques",
+      "description": "The model confused 'opens file with deletion access rights' (generic file deletion) with 'renames more than 100 files with double extensions' (ransomware encryption indicator) as the anti-recovery evidence. This reflects difficulty distinguishing ransomware-specific inhibit-recovery behaviors from general file operations.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        8
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Process Injection Detection",
+      "description": "The model failed to recognize CreateToolhelp32Snapshot (process enumeration) and IsWow64Process (architecture check) as supporting evidence for process injection activity in the infostealers context, selecting only WriteProcessMemory. These reconnaissance APIs are indirect injection indicators that the model did not associate with injection evidence.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Defense Evasion",
+      "description": "In the ransomware defense evasion question, the model selected timestomping (D) which was not in the gold answer set, and missed Safe Mode Boot (G/T1562.009). This indicates semantic confusion between evasion sub-techniques and difficulty identifying Safe Mode abuse as a defense evasion technique.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        6
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.3333,
+        "avg_jaccard": 0.7222,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 5,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.7708,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 5,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 17,
+        "exact_match_accuracy": 0.7059,
+        "avg_jaccard": 0.8737,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Process Injection Detection": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.875,
+        "parse_error_rate": 0.0
+      },
+      "Credential Access and Data Collection": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Persistence and Defense Evasion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.875,
+        "parse_error_rate": 0.0
+      },
+      "Network Indicator of Compromise Extraction": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Anti-Recovery Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Framework Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Static Analysis": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Masquerading and Process Impersonation": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Persistence Mechanisms": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The detonation report for this ransomware sample (Ransom.Diavolo.Generic) shows several file-related behaviors. Which of the following observed indicators specifically constitute ransomware anti-recovery or encryption activity? Select ALL that apply.",
+        "options": [
+          "A. hash.exe renames more than 100 files with double extensions (e.g., .alcatel-lucent extension observed in dropped filenames)",
+          "B. hash.exe opens 'C:\\dotnet.au3' with delete access rights",
+          "C. WMIC.exe executes 'shadowcopy where ID=...' delete commands via multiple cmd.exe child processes",
+          "D. hash.exe writes ransom note files to 'c:\\share\\readme.txt'",
+          "E. hash.exe loads the Bcrypt module DLL (bcrypt.dll)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the MITRE ATT&CK mappings and signatures for the ransomware sample (Zusy.Generic, SHA256: hash, _family: ransomware), which of the following defense evasion techniques are evidenced in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) \u2014 the sample modifies boot configuration to force Safe Mode execution",
+          "B. Timestomp (T1070.006) \u2014 the sample contains SetFileTime API references",
+          "C. Thread Local Storage injection (T1055.005) \u2014 evidenced in MITRE ATT&CK mappings",
+          "D. Timestomping via GetSystemTimeAsFileTime string reference in memory",
+          "E. File Deletion (T1070.004) \u2014 085cda53603755dc.exe marks C:\\hash.exe for deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the ransomware sample classified as Zusy.Generic (_family: ransomware), the MITRE ATT&CK mappings include 'Safe Mode Boot (T1562.009)' under Defense Evasion. Which of the following best explains why Safe Mode Boot is classified as a defense evasion technique rather than a general persistence mechanism, and what other defense evasion indicators from this report support a multi-technique evasion profile? Select ALL that apply.",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) evades EDR/AV tools by rebooting into Safe Mode where security software is disabled",
+          "B. The sample uses Thread Local Storage (T1055.005) as an injection method, mapped under Defense Evasion",
+          "C. Timestomping (T1070.006) is evidenced by the presence of SetFileTime-related API calls",
+          "D. The sample uses timestomping instead of Safe Mode Boot as its primary evasion technique",
+          "E. Indicator Removal from Tools (T1027.005) is listed in the MITRE mappings for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample spawns multiple cmd.exe \u2192 WMIC.exe child process chains. Reviewing the process tree and signatures, which of the following behaviors are confirmed anti-recovery indicators specific to ransomware, as opposed to generic file deletion or cleanup behaviors? Select ALL that apply.",
+        "options": [
+          "A. WMIC.exe deletes volume shadow copies by ID (e.g., shadowcopy where ID='{811D04C9-...}' delete) \u2014 maps to T1490 Inhibit System Recovery",
+          "B. hash.exe opens 'C:\\dotnet.au3' with delete access rights \u2014 this is ransomware-specific anti-recovery",
+          "C. hash.exe renames more than 100 files with double extensions \u2014 maps to T1486 Data Encrypted for Impact",
+          "D. hash.exe drops files with a known ransomware suffix (e.g., dictionary.alcatel-lucent.*)",
+          "E. hash.exe writes to 'C:\\Program Files\\AutoIt3' log files \u2014 this inhibits system recovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The GandCrab4 ransomware sample (o.exe) shows a distinct behavioral profile compared to the Diavolo sample. Based on the detonation report for o.exe, which of the following behaviors are present? Select ALL that apply.",
+        "options": [
+          "A. Attempts to access unusual system drive letters (K:, L:, etc.) \u2014 consistent with encrypting all available drives",
+          "B. Deletes volume shadow copies using WMIC.exe child processes",
+          "C. Reads mail-related files (e.g., Mozilla Firefox profile data)",
+          "D. Contacts multiple domains via DNS queries, many of which cannot be resolved (DGA-like behavior)",
+          "E. Renames more than 100 files with double extensions"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Trojan.Generic, .NET assembly) exhibits process injection-related behaviors. When assessing whether process injection is occurring, analysts must consider both direct injection primitives AND reconnaissance APIs that support injection. Which of the following API calls or behaviors from this report constitute evidence supporting a process injection assessment? Select ALL that apply.",
+        "options": [
+          "A. WriteProcessMemory \u2014 the sample 'wrote 32 bytes to a remote process'",
+          "B. CreateToolhelp32Snapshot \u2014 called to enumerate running processes, used to select injection targets",
+          "C. IsWow64Process \u2014 called to determine if the target process is 32-bit or 64-bit before injection",
+          "D. AdjustTokenPrivileges \u2014 called to enable SE_DEBUG_PRIVILEGE for cross-process memory access",
+          "E. CreateDirectoryW \u2014 used to create staging directories for injected payloads"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the infostealer sample (Trojan.Dinwod, UPX-packed, _family: infostealers) with a deep process chain spawning 10 processes, which of the following API calls or observations serve as supporting evidence for process injection activity, including both direct primitives and preparatory reconnaissance? Select ALL that apply.",
+        "options": [
+          "A. WriteProcessMemory \u2014 'hash.exe wrote 32 bytes to a remote process'",
+          "B. CreateToolhelp32Snapshot \u2014 called by 4822004.exe to snapshot running processes",
+          "C. IsWow64Process \u2014 called by 4822004.exe to check architecture of target processes",
+          "D. CreateProcessA \u2014 used to spawn child processes in the process chain",
+          "E. LoadLibrary \u2014 used for DLL injection preparation"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The .NET infostealer sample (Trojan.Generic, _family: infostealers) demonstrates credential theft and data collection behaviors. Which of the following observed behaviors are consistent with an infostealer's post-collection cleanup and anti-forensics pattern? Select ALL that apply.",
+        "options": [
+          "A. Tries to steal browser sensitive information \u2014 opens browser credential database files",
+          "B. Tries to steal cryptocurrency wallet information \u2014 accesses wallet file paths",
+          "C. Writes to a temp directory and subsequently marks those temporary files for deletion",
+          "D. Modifies file/console tracing settings in HKLM\\SOFTWARE\\MICROSOFT\\TRACING",
+          "E. Reads the active computer name from registry"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Analysts reviewing the infostealer sample (Trojan.Generic .NET assembly) must identify ALL behaviors that indicate credential harvesting and data staging. Which of the following are confirmed by the detonation report? Select ALL that apply.",
+        "options": [
+          "A. Accesses potentially sensitive information from local browsers (handle access to browser AppData paths)",
+          "B. Attempts to obtain browser login credentials via file access to Login Data files",
+          "C. Copies browser profile data (e.g., CopyFileW to %APPDATA%\\Mozilla path)",
+          "D. Marks temporary files for deletion after staging \u2014 consistent with trace removal post-exfiltration",
+          "E. Creates a Windows service for persistent credential harvesting"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A junior analyst reviewing the Trojan.Generic (.NET) infostealer report argues that CreateToolhelp32Snapshot and IsWow64Process are not injection indicators because they do not directly write to remote process memory. How should a senior analyst respond, and which options correctly characterize the role of these APIs in the injection chain? Select ALL that apply.",
+        "options": [
+          "A. CreateToolhelp32Snapshot is used to enumerate running processes and identify suitable injection targets \u2014 it is a necessary precursor to injection",
+          "B. IsWow64Process determines whether a target process is 32-bit or 64-bit, which affects which shellcode or DLL variant to inject \u2014 it is injection-preparatory",
+          "C. These APIs are purely for discovery and have no evidentiary value for injection classification",
+          "D. The combination of CreateToolhelp32Snapshot + IsWow64Process + WriteProcessMemory constitutes a complete injection reconnaissance-and-execution chain",
+          "E. IsWow64Process is only used by legitimate system tools and should be excluded from injection analysis"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst must distinguish between generic file deletion behaviors and ransomware-specific inhibit-recovery indicators in the Ransom.Diavolo.Generic report. Which of the following correctly identifies the ransomware-specific anti-recovery indicators versus generic file operations? Select ALL that apply.",
+        "options": [
+          "A. 'Renames more than 100 files with double extensions' (api-200, threat_level: malicious) \u2014 this is a ransomware encryption indicator mapped to T1486",
+          "B. 'Opens file with deletion access rights' for C:\\dotnet.au3 \u2014 this is a ransomware-specific anti-recovery behavior",
+          "C. 'Deletes volume snapshots' via WMIC.exe shadowcopy delete commands \u2014 maps to T1490 Inhibit System Recovery",
+          "D. 'Drops executable file with image/text extension' (nyjZw30AWbZ.txt as DOS executable) \u2014 maps to T1036.008 Masquerade File Type",
+          "E. 'Reads .ini configuration files' \u2014 this inhibits system recovery by corrupting configuration"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample includes 'Safe Mode Boot (T1562.009)' in its MITRE ATT&CK Defense Evasion mappings. An analyst must correctly identify this technique and distinguish it from other evasion behaviors present in the same report. Which statements are accurate? Select ALL that apply.",
+        "options": [
+          "A. T1562.009 Safe Mode Boot is a Defense Evasion sub-technique where malware configures the system to boot into Safe Mode, disabling security tools that do not load in Safe Mode",
+          "B. Timestomping (T1070.006) is also present in the Defense Evasion mappings for this sample",
+          "C. The sample uses timestomping as its primary defense evasion technique instead of Safe Mode Boot",
+          "D. Safe Mode Boot is classified under Impact rather than Defense Evasion in ATT&CK v14",
+          "E. Thread Local Storage (T1055.005) appears in the Defense Evasion mappings alongside Safe Mode Boot for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The third infostealer sample (Dump:Generic.Dacic, PE32, spawns rundll32.exe with no parameters) exhibits behaviors that help classify it. Which of the following behavioral indicators most strongly support classifying this sample as an infostealer rather than a generic backdoor? Select ALL that apply.",
+        "options": [
+          "A. rundll32.exe is spawned with an empty command line \u2014 detected as likely process injection (T1218.008)",
+          "B. Reads Antivirus engine related registry keys (HKLM\\SOFTWARE\\TENCENT\\PLATFORM_*)",
+          "C. Tries to steal desktop application information via file access to credential-related paths",
+          "D. Detected rundll32.exe connecting to a remote IP on port 80 \u2014 a system process making network connections indicates injection",
+          "E. Drops a file named 'notepad_.exe' \u2014 indicates keylogger or screenshot capability"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "MITRE ATT&CK Framework Mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Ransom.Diavolo.Generic sample, map the observed behaviors to their correct MITRE ATT&CK technique IDs. Which of the following mappings are correct based on the detonation report? Select ALL that apply.",
+        "options": [
+          "A. WMIC.exe deleting shadow copies by ID \u2192 T1490 Inhibit System Recovery",
+          "B. hash.exe renaming 100+ files with double extensions \u2192 T1486 Data Encrypted for Impact",
+          "C. hash.exe opening dotnet.au3 with delete access rights \u2192 T1490 Inhibit System Recovery",
+          "D. Dropping files with ransomware suffix \u2192 T1491.001 Internal Defacement",
+          "E. Loading Bcrypt module (bcrypt.dll) \u2192 T1486 Data Encrypted for Impact (encryption library)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The .NET infostealer (Trojan.Generic) uses several defense evasion techniques identified in the detonation report. Which of the following are confirmed defense evasion behaviors for this sample? Select ALL that apply.",
+        "options": [
+          "A. Creates guarded memory regions (PAGE_GUARD) \u2014 anti-debugging trick to prevent memory dumping (T1562.001)",
+          "B. Queries kernel debugger information \u2014 debugger evasion (T1622)",
+          "C. Uses a .NET obfuscator (detected via string 'unknown compression method') \u2014 T1140 Deobfuscate/Decode",
+          "D. Modifies file/console tracing settings in HKLM\\SOFTWARE\\MICROSOFT\\TRACING \u2014 T1112 Modify Registry",
+          "E. Timestomps files using SetFileTime API"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Comparing the GandCrab4 (o.exe) and Diavolo ransomware samples, which anti-recovery behaviors are present in the GandCrab4 sample but NOT evidenced in the Diavolo sample's detonation report? Select ALL that apply.",
+        "options": [
+          "A. Contacts random domain names (DGA-like behavior) with many unresolvable DNS queries",
+          "B. Installs hooks/patches on running processes (credential API hooking via T1056.004)",
+          "C. Deletes volume shadow copies using WMIC.exe with specific shadow copy IDs",
+          "D. Writes to the Start Menu (persistence via startup folder)",
+          "E. Accesses unusual system drive letters (K:, L:, etc.) to encrypt removable/network drives"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Graftor.Generic, UPX-packed, spawns cmd.exe \u2192 rundll32.exe with 'InstallService' export) shows process injection indicators. Which combination of API calls and process behaviors in this report provide the strongest evidence of process injection? Select ALL that apply.",
+        "options": [
+          "A. WriteProcessMemory \u2014 'hash.exe wrote 1500 bytes to a remote process'",
+          "B. VirtualAllocEx \u2014 'hash.exe allocated memory in C:\\hash.exe'",
+          "C. CreateToolhelp32Snapshot + Process32FirstW \u2014 process enumeration before injection targeting",
+          "D. rundll32.exe spawned with '%TEMP%\\x27x.dll,InstallService' \u2014 LOLBin abuse for injection",
+          "E. IsWow64Process \u2014 architecture check to select appropriate payload for injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Ransom.Diavolo.Generic report and must provide a complete behavioral profile for incident response. Which of the following statements accurately describe the ransomware's full behavioral chain as evidenced in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. The ransomware encrypts files and appends double extensions, with more than 100 files renamed (T1486)",
+          "B. Shadow copies are deleted via WMIC.exe called from multiple cmd.exe child processes (T1490)",
+          "C. The ransomware uses Safe Mode Boot (T1562.009) to disable security tools before encryption",
+          "D. A ransom note (readme.txt) is written to C:\\share\\ during execution",
+          "E. The sample uses Bcrypt (bcrypt.dll) as its encryption library"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst reviewing the Graftor.Generic infostealer (rundll32.exe-based) selects only 'accesses browser credential files' as the credential access indicator. What additional credential access and data collection behaviors are present in this report that the student missed? Select ALL that apply.",
+        "options": [
+          "A. Keylogging capability \u2014 GetKeyState API reference found in binary strings",
+          "B. Screen capture capability \u2014 CreateCompatibleBitmap API called during execution",
+          "C. Reads Antivirus registry keys to identify installed security products",
+          "D. Email collection \u2014 mail-related domain strings (pop3.163.com) found in binary",
+          "E. Marks files for deletion after access \u2014 rundll32.exe marks C:\\hash.exe for deletion (trace removal)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A student analyst reviewing the Ransom.Diavolo.Generic report selects 'opens file with deletion access rights for dotnet.au3' as the primary anti-recovery indicator. Why is this selection insufficient, and which indicators should be selected instead as the definitive ransomware anti-recovery evidence? Select ALL that apply.",
+        "options": [
+          "A. 'Opens file with deletion access rights for dotnet.au3' is a generic file operation, not a ransomware-specific anti-recovery indicator",
+          "B. 'Renames more than 100 files with double extensions' (api-200, threat_level: malicious, T1486) is the primary encryption/anti-recovery indicator",
+          "C. 'Deletes volume snapshots' via WMIC.exe shadowcopy delete (T1490) is the definitive anti-recovery technique",
+          "D. 'Drops executable file with image/text extension' (T1036.008) is also an anti-recovery indicator in this context",
+          "E. Opening dotnet.au3 with delete access is equivalent in severity to shadow copy deletion for anti-recovery classification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Ransom.Diavolo.Generic) exhibits several anti-recovery behaviors. Which of the following signatures from the detonation report are specific indicators of ransomware anti-recovery activity, as opposed to generic file deletion or cleanup behavior? Select ALL correct answers.",
+        "options": [
+          "A. WMIC.exe executes 'shadowcopy where ID=... delete' multiple times across 6 child processes",
+          "B. hash.exe renames more than 100 files with double extensions (T1486)",
+          "C. hash.exe opens 'C:\\dotnet.au3' with delete access rights",
+          "D. hash.exe drops a file with a known ransomware suffix (e.g., dictionary.alcatel-lucent.*)",
+          "E. hash.exe writes ransom note files to 'c:\\share\\readme.txt'",
+          "F. hash.exe reads configuration files (.ini files) from Program Files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Ransom.Diavolo.Generic detonation, which observed behaviors are definitively ransomware-specific inhibit-recovery techniques (T1490) rather than generic file system operations? Select ALL correct answers.",
+        "options": [
+          "A. Spawning cmd.exe with WMIC shadowcopy delete commands for multiple shadow copy IDs",
+          "B. Opening 'C:\\dotnet.au3' with FILE_DELETE_ON_CLOSE access semantics",
+          "C. Renaming more than 100 files with double extensions",
+          "D. Writing log files to 'C:\\Program Files\\AutoIt3'",
+          "E. Creating or modifying Windows services via registry (T1543.003)",
+          "F. Dropping a file with a ransomware-associated filename extension"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Zusy.Generic, _family: ransomware) with SHA256 'hash' includes a defense evasion technique mapped to T1562.009 (Safe Mode Boot). Which of the following observed behaviors or MITRE ATT&CK mappings from this detonation report support the presence of Safe Mode Boot abuse as a defense evasion technique? Select ALL correct answers.",
+        "options": [
+          "A. The MITRE ATT&CK mapping includes T1562.009 (Safe Mode Boot) under Defense Evasion tactic",
+          "B. The sample modifies auto-execute registry keys (T1547.001) via '085cda53603755dc.exe'",
+          "C. The sample uses timestomping (T1070.006) to alter file timestamps",
+          "D. The sample calls SetFileTime API (string indicator for T1070.006)",
+          "E. The sample drops and executes a child process '085cda53603755dc.exe' that sets run key persistence",
+          "F. The sample performs thread local storage injection (T1055.005)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Analysts must distinguish between timestomping (T1070.006) and Safe Mode Boot abuse (T1562.009) as defense evasion techniques. In the Zusy.Generic ransomware sample, which indicators specifically point to Safe Mode Boot (T1562.009) rather than timestomping (T1070.006)? Select ALL correct answers.",
+        "options": [
+          "A. T1562.009 appears explicitly in the MITRE ATT&CK mappings under Defense Evasion",
+          "B. The sample calls SetFileTime or GetSystemTimeAsFileTime APIs",
+          "C. The child process '085cda53603755dc.exe' modifies registry run keys (T1547.001), which is a prerequisite for Safe Mode persistence",
+          "D. The sample uses timestomping to change file creation timestamps",
+          "E. Thread Local Storage (T1055.005) is mapped under both Privilege Escalation and Defense Evasion",
+          "F. The sample marks 'C:\\hash.exe' for deletion after execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Ransom.Diavolo.Generic sample, which MITRE ATT&CK defense evasion techniques are directly evidenced by sandbox signatures in the detonation report? Select ALL correct answers.",
+        "options": [
+          "A. T1036.007 (Double File Extension) \u2014 evidenced by 'Renames many files with double extensions' signature",
+          "B. T1070.006 (Timestomp) \u2014 mapped in MITRE ATT&CK list",
+          "C. T1562.009 (Safe Mode Boot) \u2014 mapped in MITRE ATT&CK list",
+          "D. T1036.008 (Masquerade File Type) \u2014 evidenced by dropping 'nyjZw30AWbZ.txt' as a DOS executable",
+          "E. T1027.002 (Software Packing) \u2014 evidenced by UPX packer detection",
+          "F. T1497.002 (User Activity Based Checks) \u2014 mapped in MITRE ATT&CK list"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Generic infostealer (.NET assembly) detonation report contains several API calls that collectively support process injection activity. Which of the following observed API calls or behaviors serve as supporting evidence for process injection, including both direct injection primitives AND reconnaissance APIs used to identify injection targets? Select ALL correct answers.",
+        "options": [
+          "A. WriteProcessMemory \u2014 'Writes data to a remote process' (malicious severity)",
+          "B. CreateToolhelp32Snapshot \u2014 used to enumerate running processes before selecting an injection target",
+          "C. IsWow64Process \u2014 used to determine target process architecture (32-bit vs 64-bit) prior to injection",
+          "D. AdjustTokenPrivileges \u2014 enables SeDebugPrivilege to open handles to remote processes",
+          "E. GetVersionExA \u2014 retrieves OS version information",
+          "F. CopyFileW \u2014 copies browser profile files to staging directory"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the context of process injection analysis for the Trojan.Dinwod infostealer (first sample, _family: infostealers), which API calls observed in the detonation report are relevant evidence for process injection activity \u2014 including both the injection mechanism itself and the target selection reconnaissance? Select ALL correct answers.",
+        "options": [
+          "A. WriteProcessMemory \u2014 direct evidence of writing payload into a remote process",
+          "B. CreateToolhelp32Snapshot \u2014 enumerates processes to identify an injection target",
+          "C. IsWow64Process \u2014 checks whether a candidate target process is 32-bit or 64-bit",
+          "D. FindFirstFileW \u2014 searches directories for files",
+          "E. CreateProcessA \u2014 spawns new child processes in the process chain",
+          "F. LoadLibrary \u2014 loads modules at runtime"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst reviewing the Trojan.Generic infostealer (.NET) detonation must identify ALL API calls that constitute evidence for process injection, including indirect indicators. Which of the following API calls from this report should be flagged as injection-related evidence? Select ALL correct answers.",
+        "options": [
+          "A. WriteProcessMemory (via 'Writes data to a remote process' signature at malicious severity)",
+          "B. CreateToolhelp32Snapshot (process enumeration for target selection \u2014 T1057 mapped)",
+          "C. IsWow64Process (architecture check for injection compatibility \u2014 T1057 mapped)",
+          "D. AdjustTokenPrivileges (privilege escalation to enable SeDebugPrivilege for handle acquisition)",
+          "E. CreateThread in self-process (T1055.003 \u2014 Thread Execution Hijacking)",
+          "F. GetVersionExA (OS version query for system information discovery)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Generic infostealer (.NET assembly) detonation report reveals multiple credential access and data collection behaviors. Which of the following observed behaviors are infostealer-specific indicators of credential harvesting and forensic trace removal? Select ALL correct answers.",
+        "options": [
+          "A. Accessing browser credential files (e.g., Login Data, Cookies) \u2014 'Tries to steal browser sensitive information'",
+          "B. Accessing cryptocurrency wallet files \u2014 'Tries to steal Crypto currency wallets information'",
+          "C. Marking temporary files for deletion after exfiltration (T1070.004) \u2014 forensic trace removal",
+          "D. Loading the Bcrypt module (bcrypt.dll) for cryptographic operations",
+          "E. Querying the Windows installation language registry key",
+          "F. Creating a SQLite database file as a dropped artifact (tmpD52D.tmp.tmpdb)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Infostealers typically clean up their traces after harvesting credentials. In the Trojan.Generic (.NET) detonation, which specific behaviors indicate the malware is actively removing forensic evidence of its credential theft activity? Select ALL correct answers.",
+        "options": [
+          "A. 'Marks file for deletion' \u2014 hash.exe marks AppData\\Local files for deletion (T1070.004)",
+          "B. 'Opens file with deletion access rights' \u2014 hash.exe opens AppData\\Local files with delete semantics",
+          "C. Modifying file/console tracing settings in HKLM\\SOFTWARE\\MICROSOFT\\TRACING (T1112)",
+          "D. Writing files to a temp directory (T1005)",
+          "E. Copying browser profile files using CopyFileW to a staging directory",
+          "F. Loading the .NET runtime environment (mscoree.dll)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Dump:Generic.Dacic infostealer (third sample, _family: infostealers) detonation shows credential access alongside anti-forensic behaviors. Which of the following observed behaviors collectively represent the complete picture of credential theft AND forensic trace removal for this sample? Select ALL correct answers.",
+        "options": [
+          "A. Accessing browser login credential files (T1555.003) \u2014 'Attempts to obtain browser login credentials'",
+          "B. Enumerating processes with CreateToolhelp32Snapshot before injection",
+          "C. Opening IEXPLORE.EXE with delete access rights (suspicious file deletion behavior)",
+          "D. Reading AV engine registry keys (HKLM\\SOFTWARE\\TENCENT\\PLATFORM_*) to detect security products",
+          "E. Allocating virtual memory in a remote process and writing data to it (T1055)",
+          "F. Injecting into rundll32.exe which then connects to a remote IP on port 80"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The GandCrab4 ransomware sample (o.exe) exhibits classic ransomware behaviors. Which of the following observed behaviors from the detonation report are definitive ransomware indicators distinguishing it from other malware families? Select ALL correct answers.",
+        "options": [
+          "A. Accessing unusual system drive letters (K:, L:, etc.) \u2014 scanning for additional drives to encrypt",
+          "B. Detected very many DNS queries for unresolvable domains \u2014 possible DGA-based C2",
+          "C. Contacts random domain names \u2014 indicative of DGA infrastructure",
+          "D. Reads mail-related files (Mozilla Firefox profile data) \u2014 T1114.001",
+          "E. Installs hooks/patches the running process (T1056.004)",
+          "F. Writes to the Windows Start Menu (persistence via startup shortcut)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A junior analyst reviewing the Ransom.Diavolo.Generic report must select ALL indicators that specifically evidence ransomware-style inhibit-recovery (T1490) or encryption activity (T1486), as opposed to generic file deletion (T1070.004) or indicator removal. Which options correctly identify ransomware-specific anti-recovery evidence?",
+        "options": [
+          "A. 'Deletes volume snapshots' \u2014 WMIC.exe with 'shadowcopy where ID=... delete' command (T1490)",
+          "B. 'Renames more than 100 files with double extensions' \u2014 mass file renaming consistent with encryption staging (T1486)",
+          "C. 'Opens file with deletion access rights' for C:\\dotnet.au3 \u2014 generic file cleanup",
+          "D. 'Drops executable file with image/text extension' \u2014 nyjZw30AWbZ.txt is a DOS executable (T1036.008)",
+          "E. 'The analysis extracted file with a known ransomware suffix' \u2014 dropped filename with ransomware extension",
+          "F. 'Marks file for deletion' for AppData files \u2014 generic trace removal"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Process injection requires a sequence of steps: target discovery, handle acquisition, memory allocation, payload writing, and execution. In the Dump:Generic.Dacic infostealer detonation, which API calls or behaviors represent each stage of this injection chain? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot + Process32FirstW \u2014 target process enumeration and selection",
+          "B. IsWow64Process \u2014 architecture compatibility check before injection",
+          "C. VirtualAllocEx (via 'Allocates virtual memory in a remote process') \u2014 memory allocation in target",
+          "D. WriteProcessMemory (via 'Writes data to a remote process') \u2014 payload delivery",
+          "E. rundll32.exe connecting to remote IP \u2014 post-injection C2 communication from injected process",
+          "F. FindFirstFileW \u2014 file system enumeration for credential file discovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample uses multiple defense evasion sub-techniques. Which of the following MITRE ATT&CK technique IDs are explicitly mapped in this sample's detonation report under the Defense Evasion tactic? Select ALL correct answers.",
+        "options": [
+          "A. T1562.009 \u2014 Safe Mode Boot",
+          "B. T1055.005 \u2014 Thread Local Storage injection",
+          "C. T1070.006 \u2014 Timestomp",
+          "D. T1027.002 \u2014 Software Packing",
+          "E. T1497.001 \u2014 System Checks",
+          "F. T1543.003 \u2014 Windows Service"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (.NET) infostealer marks temporary files for deletion after accessing them. Why is this behavior classified as an infostealer-specific indicator rather than generic file deletion, and which additional behaviors confirm this interpretation? Select ALL correct answers.",
+        "options": [
+          "A. The files marked for deletion are in AppData\\Local \u2014 the same location as browser credential databases",
+          "B. The deletion behavior follows access to browser login credential files (T1555.003)",
+          "C. The sample drops a SQLite database file (tmpD52D.tmp.tmpdb) \u2014 consistent with copying browser credential stores",
+          "D. The sample modifies HKLM\\SOFTWARE\\MICROSOFT\\TRACING to suppress logging of its activity",
+          "E. The sample uses bcrypt.dll \u2014 indicating cryptographic operations on harvested data",
+          "F. The sample creates guarded memory regions (PAGE_GUARD) to prevent memory dumping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample uses WMIC.exe to delete shadow copies. Which specific process tree and command-line evidence from the detonation report confirms this anti-recovery behavior? Select ALL correct answers.",
+        "options": [
+          "A. hash.exe spawns cmd.exe with '/c %WINDIR%\\System32\\wbem\\WMIC.exe shadowcopy where ID=... delete'",
+          "B. Six separate cmd.exe \u2192 WMIC.exe process pairs are created, each targeting a different shadow copy ID",
+          "C. The 'Deletes volume snapshots' signature (T1490) is triggered by WMIC.exe with commandline 'shadowcopy where ID=... delete'",
+          "D. hash.exe directly calls vssadmin.exe to delete shadows",
+          "E. The process tree shows hash.exe as the root with multiple cmd.exe children each spawning WMIC.exe",
+          "F. bcdedit.exe is invoked to disable recovery mode"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "When analyzing process injection in infostealers, analysts must recognize that reconnaissance APIs are part of the injection workflow. For the Trojan.Dinwod sample (first infostealer), which of the following correctly explains why CreateToolhelp32Snapshot and IsWow64Process are injection-related evidence rather than purely discovery indicators?",
+        "options": [
+          "A. CreateToolhelp32Snapshot enumerates running processes to identify a suitable injection host \u2014 it is the target selection step of the injection chain",
+          "B. IsWow64Process determines whether the candidate target process is 32-bit or 64-bit, which affects the shellcode or DLL architecture used for injection",
+          "C. Both APIs are called in sequence before WriteProcessMemory, forming a coherent injection preparation workflow",
+          "D. CreateToolhelp32Snapshot is only used for process discovery (T1057) and has no relationship to injection",
+          "E. IsWow64Process is exclusively a sandbox evasion check with no injection relevance",
+          "F. These APIs are mapped to T1057 in the sandbox but their context \u2014 preceding WriteProcessMemory \u2014 elevates them to injection evidence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A model must select ALL correct anti-recovery indicators from the Ransom.Diavolo.Generic detonation without under-selecting or over-selecting. Which of the following are genuine ransomware anti-recovery or encryption indicators (NOT generic file operations)? Select ALL correct answers.",
+        "options": [
+          "A. WMIC.exe deletes volume shadow copies (T1490) \u2014 confirmed by 'Deletes volume snapshots' signature",
+          "B. hash.exe renames more than 100 files with double extensions (T1486) \u2014 mass encryption renaming",
+          "C. hash.exe opens 'C:\\dotnet.au3' with delete access rights \u2014 this is cleanup of a script file used during execution, not ransomware anti-recovery",
+          "D. Dropped file with known ransomware suffix (T1491.001) \u2014 'dictionary.alcatel-lucent.*' extension",
+          "E. hash.exe drops 'nyjZw30AWbZ.txt' which is actually a DOS executable (T1036.008) \u2014 masquerading",
+          "F. hash.exe writes 'readme.txt' to 'c:\\share\\' \u2014 ransom note delivery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst must identify the COMPLETE set of credential access and forensic trace removal behaviors in the Trojan.Generic (.NET) infostealer, being careful not to under-select. Which of the following behaviors from the detonation report belong to credential access (T1555, T1555.003, T1539) or forensic trace removal (T1070.004, T1112) categories? Select ALL correct answers.",
+        "options": [
+          "A. 'Tries to steal browser sensitive information (file access)' \u2014 accessing Chrome/Firefox credential databases",
+          "B. 'Attempts to obtain browser login credentials (file access)' \u2014 T1555.003 explicitly mapped",
+          "C. 'Tries to steal Crypto currency wallets information (file access)' \u2014 accessing wallet files",
+          "D. 'Marks file for deletion' \u2014 hash.exe marks AppData\\Local files for deletion after access (T1070.004)",
+          "E. 'Modifies file/console tracing settings' \u2014 HKLM\\SOFTWARE\\MICROSOFT\\TRACING modification (T1112)",
+          "F. 'Accesses potentially sensitive information from local browsers' \u2014 handle access to browser profile files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Ransom.Diavolo.Generic) exhibits several anti-recovery behaviors. Which of the following signatures from the detonation report are SPECIFIC indicators of ransomware anti-recovery activity, as opposed to generic file deletion behavior? Select ALL correct answers.",
+        "options": [
+          "A. WMIC.exe executes 'shadowcopy where ID=... delete' multiple times across six child processes",
+          "B. hash.exe renames more than 100 files with double extensions (T1486)",
+          "C. hash.exe opens 'C:\\dotnet.au3' with deletion access rights",
+          "D. hash.exe drops a file with a known ransomware suffix (e.g., dictionary.alcatel-lucent.*)",
+          "E. hash.exe writes ransom note files to 'c:\\share\\readme.txt'",
+          "F. hash.exe reads configuration files (.ini files) from Program Files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the Ransom.Diavolo.Generic detonation report, which of the following MITRE ATT&CK techniques represent defense evasion behaviors that are specifically observed in this ransomware sample? Select ALL correct answers.",
+        "options": [
+          "A. T1070.006 (Timestomp) \u2014 evidenced by PE timestamp manipulation indicators",
+          "B. T1562.009 (Safe Mode Boot) \u2014 NOT present in this sample's MITRE mappings",
+          "C. T1036.007 (Double File Extension) \u2014 evidenced by the 'Double File Extension' technique in mitre_attcks",
+          "D. T1036.008 (Masquerade File Type) \u2014 evidenced by dropping executable with image/text extension (nyjZw30AWbZ.txt)",
+          "E. T1070.004 (File Deletion) \u2014 evidenced by 'Opens file with deletion access rights' for dotnet.au3",
+          "F. T1497.003 (Time Based Evasion) \u2014 evidenced by time-based evasion indicators in mitre_attcks"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample includes T1562.009 (Safe Mode Boot) in its MITRE ATT&CK mappings under Defense Evasion. Which of the following statements correctly explains why Safe Mode Boot is classified as a defense evasion technique for ransomware, and which other defense evasion techniques are also mapped for this specific sample? Select ALL correct answers.",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) disables security tools that do not load in Safe Mode, allowing ransomware to encrypt files with reduced detection risk",
+          "B. Safe Mode Boot (T1562.009) is equivalent to timestomping and both modify file metadata to hide infection timing",
+          "C. T1070.006 (Timestomp) is also mapped as a defense evasion technique in this sample",
+          "D. T1027.005 (Indicator Removal from Tools) is mapped as a defense evasion technique in this sample",
+          "E. T1134.001 (Token Impersonation/Theft) is mapped as a defense evasion technique in this sample",
+          "F. T1562.001 (Disable or Modify Tools) is mapped as a defense evasion technique in this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Zusy.Generic ransomware sample, which behavioral indicators in the detonation report are SPECIFIC to ransomware inhibit-recovery activity (T1490), as distinct from generic file operations or persistence? Select ALL correct answers.",
+        "options": [
+          "A. '085cda53603755dc.exe' marks 'C:\\hash.exe' for deletion (api-26)",
+          "B. '085cda53603755dc.exe' opens 'C:\\hash.exe' with deletion access rights (api-25)",
+          "C. '085cda53603755dc.exe' modifies auto-execute registry run keys (registry-0, T1547.001)",
+          "D. The sample writes a PE file header to disc (api-43)",
+          "E. The sample translates to Russian binary language (static-8)",
+          "F. None of the above \u2014 this sample does not contain T1490 in its MITRE mappings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The GandCrab4 ransomware sample (o.exe) exhibits several behaviors. Which of the following are ransomware-specific behavioral indicators observed in this detonation report? Select ALL correct answers.",
+        "options": [
+          "A. Contacts many DNS names that cannot be resolved, consistent with Domain Generation Algorithm (DGA) behavior",
+          "B. Tries to access unusual system drive letters (K:, L:, etc.), consistent with enumerating all drives for encryption",
+          "C. Reads Mozilla Firefox profile configuration files, consistent with credential theft before encryption",
+          "D. Installs hooks/patches the running process (T1056.004)",
+          "E. Writes to the Windows Start Menu startup folder",
+          "F. Queries volume information of the entire hard drive (T1120)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Analyzing the first infostealer sample (Trojan.Dinwod, UPX-compressed), which of the following API calls or behavioral indicators from the detonation report serve as supporting evidence for process injection activity, even if they are not direct injection primitives? Select ALL correct answers.",
+        "options": [
+          "A. WriteProcessMemory \u2014 evidenced by 'Writes data to a remote process' (api-0, T1055)",
+          "B. CreateToolhelp32Snapshot \u2014 evidenced by 'Calls an API typically used for taking snapshot of the specified processes' (api-103), used to enumerate target processes before injection",
+          "C. IsWow64Process \u2014 evidenced by 'Calls an API typically used to determine if process is running under WOW64' (api-146), used to check target process architecture before injection",
+          "D. LoadLibrary \u2014 evidenced by 'Calls an API typically used to load libraries' (api-175), used for DLL injection setup",
+          "E. FindFirstFileW \u2014 evidenced by 'Calls an API typically used for searching a directory for files' (api-102)",
+          "F. CreateProcessA \u2014 evidenced by 'Calls an API typically used to create a process' (api-128)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the context of the third infostealer sample (Dump:Generic.Dacic), the process tree shows hash.exe spawning rundll32.exe with no parameters. Which of the following API calls or signatures from the detonation report collectively constitute evidence for process injection into rundll32.exe? Select ALL correct answers.",
+        "options": [
+          "A. 'Writes data to a remote process' \u2014 hash.exe wrote 1500 bytes to a remote process (api-0, T1055)",
+          "B. 'Allocates virtual memory in a remote process' \u2014 hash.exe allocated memory in hash.exe (api-20, T1055)",
+          "C. 'Detected Rundll32 execution with no parameters provided (likely process injection)' (target-248, T1218.008)",
+          "D. 'Windows system process connects to a network' \u2014 rundll32.exe connects to IPv4:80 (target-269, T1055)",
+          "E. 'Creates a thread in a self process' \u2014 rundll32.exe creates thread in process -1 (api-264, T1055.003)",
+          "F. 'Reads Antivirus engine related registry keys' (registry-32, T1518.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The second infostealer sample (Trojan.Generic, .NET assembly) demonstrates credential harvesting and data collection behaviors. Which of the following signatures from the detonation report are indicators of infostealer credential access and forensic trace removal? Select ALL correct answers.",
+        "options": [
+          "A. 'Tries to steal browser sensitive information (file access)' \u2014 opening browser credential files (api-96, T1005)",
+          "B. 'Attempts to obtain browser login credentials (file access)' \u2014 opening browser Login Data (api-281, T1555.003)",
+          "C. 'Tries to steal Crypto currency wallets information (file access)' (api-101, T1005)",
+          "D. 'Marks file for deletion' \u2014 hash.exe marks AppData temp files for deletion (api-26, T1070.004), indicating forensic trace removal after data collection",
+          "E. 'Modifies file/console tracing settings' \u2014 modifying HKLM\\SOFTWARE\\MICROSOFT\\TRACING (registry-30, T1112)",
+          "F. 'Creates guarded memory regions (anti-debugging trick)' (api-1, T1562.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The second infostealer sample marks temporary files for deletion after accessing sensitive data. Why is 'marks temporary files for deletion' (api-26, T1070.004) classified as an infostealer-specific behavior rather than generic file cleanup? Select ALL correct answers that correctly characterize this behavior.",
+        "options": [
+          "A. The deletion targets files in AppData\\Local paths that correspond to temporary copies of browser credential databases, indicating the malware is removing evidence of its data theft",
+          "B. The deletion is performed after 'Accesses potentially sensitive information from local browsers' (handle-0), establishing a temporal relationship between data access and trace removal",
+          "C. File deletion in infostealers serves as Indicator Removal (T1070.004) to prevent forensic recovery of the stolen data copies",
+          "D. The deletion behavior is identical to ransomware anti-recovery and cannot be distinguished from it",
+          "E. The 'Opens file with deletion access rights' (api-25) for the same AppData paths confirms the intent to delete after reading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst reviewing the second infostealer (.NET assembly) detonation report must determine which API calls constitute the full injection evidence chain. The model previously only selected WriteProcessMemory. Which additional APIs, when considered together, complete the process injection evidence? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot (api-103) \u2014 enumerates running processes to identify an injection target",
+          "B. IsWow64Process (api-146) \u2014 checks whether the target process is 32-bit or 64-bit to select the correct shellcode/payload architecture",
+          "C. AdjustTokenPrivileges (api-111) \u2014 elevates privileges needed to open and write to a remote process",
+          "D. GetProcAddress (api-176) \u2014 resolves injection-related API addresses dynamically to evade static analysis",
+          "E. CreateDirectoryW (api-122) \u2014 creates staging directories for injected payloads",
+          "F. GetVersionExA (api-222) \u2014 retrieves OS version to select compatible injection technique"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample maps T1562.009 (Safe Mode Boot) as a defense evasion technique. Which of the following correctly distinguishes Safe Mode Boot evasion from timestomping (T1070.006), and which evidence in the report supports the presence of T1562.009? Select ALL correct answers.",
+        "options": [
+          "A. Timestomping (T1070.006) modifies file timestamps to hide infection timing, while Safe Mode Boot (T1562.009) forces the system to restart in Safe Mode where most security products do not load",
+          "B. Both timestomping and Safe Mode Boot achieve the same goal through identical mechanisms",
+          "C. T1562.009 is listed in the mitre_attcks section under Defense Evasion for this sample, distinguishing it from other samples that only show T1070.006",
+          "D. The presence of T1562.009 explains why the model should NOT select timestomping (T1070.006) as the defense evasion technique for this sample \u2014 both are present but serve different purposes",
+          "E. T1070.006 (Timestomp) is also present in the mitre_attcks for this sample alongside T1562.009",
+          "F. Safe Mode Boot is only applicable to ransomware that uses kernel-level drivers"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst must distinguish between ransomware-specific anti-recovery behaviors and generic file deletion in the Ransom.Diavolo.Generic sample. Which of the following correctly characterizes 'renames more than 100 files with double extensions' (api-200) as an anti-recovery indicator rather than a generic file operation? Select ALL correct answers.",
+        "options": [
+          "A. Renaming files with double extensions (e.g., file.doc.encrypted) is the direct result of encryption \u2014 the original file is replaced, making recovery without the decryption key impossible",
+          "B. The scale (more than 100 files) distinguishes this from routine file operations and is mapped to T1486 (Data Encrypted for Impact)",
+          "C. 'Opens file with deletion access rights' for dotnet.au3 is a stronger anti-recovery indicator than mass file renaming because it targets a specific script file",
+          "D. Double extension renaming serves as both an encryption indicator (T1486) and a masquerading technique (T1036.007), making it a compound anti-recovery signal",
+          "E. Generic file deletion (T1070.004) and mass file renaming with double extensions (T1486) are functionally equivalent anti-recovery techniques",
+          "F. The sandbox signature 'Renames many files with double extensions (often indicator of ransomware infection)' explicitly attributes this behavior to ransomware activity"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (Trojan.Dinwod), the process tree shows a deep chain of 10 processes (hash.exe \u2192 4822004.exe \u2192 26224.exe \u2192 ... \u2192 hrrrr.exe). Which of the following correctly identifies the role of reconnaissance APIs in this injection chain? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot called by 4822004.exe (api-103) enumerates running processes, which is a prerequisite for selecting a target process for injection",
+          "B. IsWow64Process called by 4822004.exe (api-146) determines the bitness of potential target processes, required to select the appropriate injection payload",
+          "C. FindFirstFileW (api-102) is a direct injection primitive equivalent to WriteProcessMemory",
+          "D. The deep process chain itself (10 spawned processes) is evidence of process injection, as each generation may inject into or spawn the next",
+          "E. CreateProcessA called by hash.exe (api-128) creates child processes that serve as injection targets",
+          "F. RtlGetVersion (api-125) is a process injection reconnaissance API"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample uses WMIC.exe to delete volume shadow copies. Which of the following statements about this anti-recovery behavior are correct based on the detonation report? Select ALL correct answers.",
+        "options": [
+          "A. The sample spawns six separate cmd.exe \u2192 WMIC.exe process chains, each targeting a different shadow copy by its GUID",
+          "B. The MITRE technique T1490 (Inhibit System Recovery) is mapped in the mitre_attcks section for this sample",
+          "C. The sandbox signature 'Deletes volume snapshots (often used by ransomware)' (target-4) explicitly identifies this behavior",
+          "D. WMIC.exe shadow copy deletion is equivalent to using vssadmin.exe and maps to the same technique",
+          "E. The sample uses bcdedit.exe to disable recovery mode in addition to WMIC shadow copy deletion",
+          "F. Shadow copy deletion via WMIC is a stronger anti-recovery indicator than file renaming with double extensions"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The third infostealer sample (Dump:Generic.Dacic) exhibits both credential access and data staging behaviors. Which of the following signatures from the detonation report are indicators of credential access or sensitive data collection? Select ALL correct answers.",
+        "options": [
+          "A. 'Contains ability to retrieve information about pressed keystrokes (API string)' \u2014 GetKeyState reference (string-88, T1056.001)",
+          "B. 'Calls an API possibly used to take screenshots' \u2014 CreateCompatibleBitmap (api-105, T1113)",
+          "C. 'Detected known bank URL artifact' \u2014 www.credit-agricole.fr found in memory (string-23)",
+          "D. 'Calls an API typically used to create a directory' \u2014 CreateDirectoryA (api-122, T1074.001) for data staging",
+          "E. 'Modifies proxy settings' \u2014 rundll32.exe deletes proxy registry values (registry-27, T1112)",
+          "F. 'Contains ability to capture screen (API string)' \u2014 GetDesktopWindow reference (string-78, T1113)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Comparing the Ransom.Diavolo.Generic and Zusy.Generic ransomware samples, which defense evasion technique is present in the Zusy.Generic sample but NOT in the Ransom.Diavolo.Generic sample? Select ALL correct answers.",
+        "options": [
+          "A. T1562.009 (Safe Mode Boot) \u2014 present in Zusy.Generic mitre_attcks but absent from Ransom.Diavolo.Generic",
+          "B. T1070.006 (Timestomp) \u2014 present in both samples",
+          "C. T1055.005 (Thread Local Storage) \u2014 present in Zusy.Generic but not in Ransom.Diavolo.Generic",
+          "D. T1027 (Obfuscated Files or Information) \u2014 present in both samples",
+          "E. T1134.003 (Make and Impersonate Token) \u2014 present in Zusy.Generic but not in Ransom.Diavolo.Generic",
+          "F. T1490 (Inhibit System Recovery) \u2014 present in Ransom.Diavolo.Generic but not in Zusy.Generic"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A key diagnostic challenge is distinguishing process injection reconnaissance APIs from unrelated discovery APIs. In the second infostealer sample (.NET assembly), which of the following correctly categorizes each API as either injection-related reconnaissance or general discovery? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot (api-103, T1057) \u2014 injection-related reconnaissance: enumerates processes to find a target for injection",
+          "B. IsWow64Process (api-146, T1057) \u2014 injection-related reconnaissance: checks target process architecture to ensure payload compatibility",
+          "C. GetVersionExA (api-222, T1082) \u2014 general system discovery: retrieves OS version, not directly related to injection targeting",
+          "D. RtlGetVersion (api-125, T1082) \u2014 injection-related reconnaissance: required to determine injection technique compatibility",
+          "E. AdjustTokenPrivileges (api-111, T1134) \u2014 injection-related: elevates privileges needed to open remote process handles for injection",
+          "F. QueryServiceStatusEx \u2014 injection reconnaissance: identifies running security services to avoid injecting into monitored processes"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Ransom.Diavolo.Generic detonation report and must select ALL indicators that constitute ransomware inhibit-recovery behavior (T1490) or encryption activity (T1486). Which options are correct? Select ALL correct answers.",
+        "options": [
+          "A. 'Deletes volume snapshots (often used by ransomware)' via WMIC.exe (target-4, T1490)",
+          "B. 'Renames more than 100 files with double extensions' (api-200, T1486)",
+          "C. 'The analysis extracted file with a known ransomware suffix' \u2014 dictionary.alcatel-lucent.* (binary-22, T1491.001)",
+          "D. 'Opens file with deletion access rights' for dotnet.au3 (api-25, T1070.004)",
+          "E. 'Drops executable file with image/text extension' \u2014 nyjZw30AWbZ.txt (binary-28, T1036.008)",
+          "F. 'Creates or modifies windows services' (registry-67, T1543.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The second infostealer sample (.NET assembly) demonstrates a complete data collection lifecycle. An analyst must identify ALL behavioral stages present in the detonation report, from reconnaissance through trace removal. Which of the following correctly maps each stage to its evidence? Select ALL correct answers.",
+        "options": [
+          "A. Reconnaissance: CreateToolhelp32Snapshot (api-103) and IsWow64Process (api-146) enumerate processes and check architecture before targeting specific applications",
+          "B. Collection: 'Accesses potentially sensitive information from local browsers' (handle-0) and 'Tries to steal browser sensitive information' (api-96) indicate active data harvesting",
+          "C. Staging: 'Calls an API typically used to create a directory' (api-122, T1074.001) and 'Writes log files' to AppData (api-159) indicate local data staging",
+          "D. Trace Removal: 'Marks file for deletion' (api-26, T1070.004) for AppData temp files removes evidence of the stolen data copies",
+          "E. Exfiltration: 'Exfiltration Over C2 Channel' (T1041) is mapped in mitre_attcks, indicating data is sent to the C2 server",
+          "F. The sample does not perform trace removal \u2014 file deletion is only used for anti-recovery purposes in this context"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst must correctly identify ALL ransomware-specific behavioral indicators across the Ransom.Diavolo.Generic detonation report, avoiding both under-selection (missing valid indicators) and over-selection (including generic behaviors). Which of the following are valid ransomware-specific indicators for this sample? Select ALL correct answers.",
+        "options": [
+          "A. Multiple WMIC.exe child processes each deleting a specific shadow copy by GUID (T1490, Inhibit System Recovery)",
+          "B. Mass file renaming with double extensions affecting more than 100 files (T1486, Data Encrypted for Impact)",
+          "C. Loading the Bcrypt module DLL (module-9) \u2014 indicates use of cryptographic functions for file encryption",
+          "D. Writing ransom note files to 'c:\\share\\readme.txt' (api-242)",
+          "E. Dropping a file with a known ransomware suffix (binary-22, T1491.001)",
+          "F. Connecting to LPC ports (api-16, T1559) \u2014 generic IPC behavior not specific to ransomware",
+          "G. Spawning a large number of processes (target-14) \u2014 used to parallelize encryption across multiple threads"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Ransom.Diavolo.Generic) exhibits several anti-recovery behaviors during detonation. Which of the following signatures from the report are specific indicators of ransomware anti-recovery activity, as opposed to generic file deletion or cleanup behavior? Select ALL correct answers.",
+        "options": [
+          "A. 'Renames more than 100 files with double extensions' \u2014 api-200, mapped to T1486",
+          "B. 'Deletes volume snapshots' \u2014 WMIC.exe executing 'shadowcopy where ID=... delete', mapped to T1490",
+          "C. 'Opens file with deletion access rights' for dotnet.au3 \u2014 api-25, mapped to T1070.004",
+          "D. 'Drops executable file with image/text extension' \u2014 binary-28, nyjZw30AWbZ.txt as DOS executable",
+          "E. 'Reads configuration files (.ini files)' \u2014 api-6, reading desktop.ini"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Ransom.Diavolo.Generic detonation, the process tree shows multiple cmd.exe children each invoking WMIC.exe with 'shadowcopy where ID=... delete'. What is the correct MITRE ATT&CK technique ID for this behavior, and why is this classified as anti-recovery rather than defense evasion?",
+        "options": [
+          "A. T1490 (Inhibit System Recovery) \u2014 shadow copy deletion directly prevents restoration of encrypted files, making it a recovery inhibition technique rather than a tool-evasion technique",
+          "B. T1070.004 (File Deletion) \u2014 deleting shadow copies is a form of file deletion and thus falls under indicator removal",
+          "C. T1562.001 (Disable or Modify Tools) \u2014 WMIC is being used to disable a Windows recovery tool",
+          "D. T1489 (Service Stop) \u2014 shadow copy service is stopped as part of the deletion process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample produces several file-related signatures. An analyst must distinguish ransomware-specific inhibit-recovery indicators from generic file operation indicators. Which combination of signatures, taken together, most strongly evidences ransomware encryption and recovery inhibition? Select ALL correct answers.",
+        "options": [
+          "A. api-200: 'Renames more than 100 files with double extensions' (T1486)",
+          "B. target-4: 'Deletes volume snapshots' via WMIC.exe shadowcopy delete commands (T1490)",
+          "C. api-25: 'Opens file with deletion access rights' for dotnet.au3 (T1070.004)",
+          "D. binary-22: 'The analysis extracted file with a known ransomware suffix' \u2014 dropped filename with ransomware extension (T1491.001)",
+          "E. api-6: 'Reads configuration files (.ini files)' \u2014 reading desktop.ini"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Zusy.Generic, _family: ransomware) includes 'Safe Mode Boot' (T1562.009) in its MITRE ATT&CK mappings under Defense Evasion. Which of the following best explains why Safe Mode Boot is classified as Defense Evasion rather than another tactic, and which other defense evasion technique in this sample's MITRE list is most commonly confused with it?",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) is Defense Evasion because booting into Safe Mode disables most security products and EDR agents; it is most commonly confused with Timestomp (T1070.006), which modifies file timestamps rather than the boot environment",
+          "B. Safe Mode Boot (T1562.009) is Defense Evasion because it deletes recovery partitions; it is most commonly confused with File Deletion (T1070.004)",
+          "C. Safe Mode Boot (T1562.009) is Defense Evasion because it prevents EDR kernel drivers from loading; it is most commonly confused with Disable or Modify Tools (T1562.001), which directly terminates security processes",
+          "D. Safe Mode Boot (T1562.009) is a Persistence technique because it ensures the malware runs at every reboot; it is most commonly confused with Boot or Logon Autostart Execution (T1547)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the Zusy.Generic ransomware detonation report, which of the following MITRE ATT&CK technique IDs are explicitly listed under the Defense Evasion tactic in the mitre_attcks field? Select ALL correct answers.",
+        "options": [
+          "A. T1562.009 (Safe Mode Boot)",
+          "B. T1070.006 (Timestomp)",
+          "C. T1055.005 (Thread Local Storage)",
+          "D. T1027.002 (Software Packing)",
+          "E. T1490 (Inhibit System Recovery)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A junior analyst reviewing the Zusy.Generic ransomware report selects 'Timestomp (T1070.006)' as the ransomware's primary defense evasion technique for bypassing EDR at boot time. Why is this incorrect, and which technique from the report's MITRE mappings is the correct answer for boot-time EDR bypass? Select ALL correct answers.",
+        "options": [
+          "A. Timestomp (T1070.006) modifies file timestamps to hide forensic evidence of file creation/modification \u2014 it does not affect EDR loading at boot",
+          "B. Safe Mode Boot (T1562.009) is the correct technique \u2014 booting into Safe Mode prevents most EDR drivers and security services from loading",
+          "C. Timestomp is not present in the Zusy.Generic MITRE mappings at all",
+          "D. Disable or Modify Tools (T1562.001) is the correct technique for boot-time EDR bypass in this sample",
+          "E. Thread Local Storage (T1055.005) is the boot-time EDR bypass technique used in this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The GandCrab4 ransomware sample (o.exe) exhibits specific behavioral indicators during detonation. Which of the following signatures from the report are characteristic of ransomware behavior specifically, as opposed to behaviors shared broadly across malware families? Select ALL correct answers.",
+        "options": [
+          "A. 'Tries to access unusual system drive letters' (K:, L:, etc.) \u2014 api-31, T1083 \u2014 indicating file enumeration across all drives for encryption targeting",
+          "B. 'Contacts Random Domain Names' \u2014 network-6 \u2014 indicating DGA-based C2",
+          "C. 'Detected very many DNS queries for domains that cannot be resolved' \u2014 network-34 \u2014 consistent with DGA encryption key exchange attempts",
+          "D. 'Installs hooks/patches the running process' \u2014 hooks-8, T1056.004",
+          "E. 'Reads mail related files' \u2014 api-52, T1114.001 \u2014 reading Firefox profile data"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the infostealer sample (Trojan.Generic, .NET assembly), the sandbox report includes several API calls relevant to process injection detection. An analyst is asked to identify ALL API calls that serve as supporting evidence for process injection activity \u2014 including both direct injection primitives AND reconnaissance APIs that precede injection. Which of the following should be selected? Select ALL correct answers.",
+        "options": [
+          "A. WriteProcessMemory \u2014 'Writes data to a remote process' (api-0, T1055)",
+          "B. CreateToolhelp32Snapshot \u2014 'Calls an API typically used for taking snapshot of the specified processes' (api-103, T1057) \u2014 used to enumerate target processes before injection",
+          "C. IsWow64Process \u2014 'Calls an API typically used to determine if process is running under WOW64' (api-146, T1057) \u2014 used to check target process architecture before injecting appropriate shellcode",
+          "D. AdjustTokenPrivileges \u2014 'Calls an API typically used to enable or disable privileges in the specified access token' (api-111, T1134)",
+          "E. GetProcAddress \u2014 'Calls an API typically used to retrieve function addresses' (api-176, T1106)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Why are CreateToolhelp32Snapshot and IsWow64Process considered supporting evidence for process injection in an infostealer context, even though they are not direct injection primitives? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot enumerates running processes, which is a prerequisite step for identifying a target process to inject into",
+          "B. IsWow64Process determines whether a target process is 32-bit or 64-bit, which is necessary to select the correct shellcode or DLL architecture for injection",
+          "C. Both APIs are exclusively used for process injection and have no other legitimate use",
+          "D. These APIs appear in the same sample that also shows WriteProcessMemory (api-0), making their injection-reconnaissance role contextually clear",
+          "E. CreateToolhelp32Snapshot directly allocates memory in a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The first infostealer sample (Trojan.Dinwod, UPX-packed, 64 processes spawned) shows a deep process chain: hash.exe \u2192 4822004.exe \u2192 26224.exe \u2192 ... \u2192 hrrrr.exe. The report includes CreateToolhelp32Snapshot and IsWow64Process calls attributed to 4822004.exe. Given that WriteProcessMemory is also present, which of the following statements correctly characterize the injection evidence in this sample? Select ALL correct answers.",
+        "options": [
+          "A. The presence of CreateToolhelp32Snapshot in 4822004.exe suggests it is enumerating processes, likely to select a target for injection",
+          "B. IsWow64Process in 4822004.exe indicates architecture probing, a standard pre-injection step when injecting into processes of potentially different bitness",
+          "C. WriteProcessMemory alone is sufficient to confirm process injection without needing CreateToolhelp32Snapshot or IsWow64Process",
+          "D. The combination of CreateToolhelp32Snapshot + IsWow64Process + WriteProcessMemory in the same sample constitutes a complete process injection reconnaissance-and-execution chain",
+          "E. CreateToolhelp32Snapshot and IsWow64Process are irrelevant to injection detection because they are categorized under T1057 (Process Discovery), not T1055"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (.NET infostealer) sample exhibits multiple credential access and data collection behaviors. Which of the following signatures from the report are indicators of infostealer-specific credential harvesting or forensic trace removal? Select ALL correct answers.",
+        "options": [
+          "A. 'Tries to steal browser sensitive information (file access)' \u2014 api-96, T1005 \u2014 accessing browser credential files",
+          "B. 'Attempts to obtain browser login credentials (file access)' \u2014 api-281, T1555.003",
+          "C. 'Tries to steal Crypto currency wallets information (file access)' \u2014 api-101, T1005",
+          "D. 'Marks file for deletion' \u2014 api-26, T1070.004 \u2014 marking temporary files (AppData\\Local) for deletion to remove forensic traces after data collection",
+          "E. 'Writes log files' \u2014 api-159, T1074.001 \u2014 writing to AppData log files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Trojan.Generic infostealer detonation, the signature api-26 ('Marks file for deletion') is flagged for files in AppData\\Local. Why should an analyst include this as an infostealer behavioral indicator rather than dismissing it as generic file cleanup? Select ALL correct answers.",
+        "options": [
+          "A. Infostealers commonly mark their temporary working files (e.g., copied browser databases, SQLite files) for deletion after exfiltration to remove forensic evidence",
+          "B. The sample also drops a SQLite database file (tmpD52D.tmp.tmpdb) consistent with browser credential extraction, making the deletion behavior part of a complete steal-and-clean pattern",
+          "C. File deletion (T1070.004) is exclusively a ransomware anti-recovery technique and should never be attributed to infostealers",
+          "D. The 'Opens file with deletion access rights' (api-25) signature for the same AppData\\Local path corroborates that the deletion is intentional and targeted",
+          "E. Marking files for deletion is only significant if vssadmin.exe is also invoked"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic infostealer (.NET) report shows the following file access pattern: CopyFileW copies browser profile files to AppData, a SQLite database is dropped as tmpD52D.tmp.tmpdb, browser credential files are opened (api-96, api-281, api-101), and api-26 marks AppData\\Local files for deletion. Which MITRE ATT&CK techniques are evidenced by this complete behavioral sequence? Select ALL correct answers.",
+        "options": [
+          "A. T1555.003 (Credentials from Web Browsers) \u2014 direct access to browser credential storage files",
+          "B. T1005 (Data from Local System) \u2014 copying and reading local browser profile data",
+          "C. T1074.001 (Local Data Staging) \u2014 staging copied data in AppData before exfiltration",
+          "D. T1070.004 (File Deletion / Indicator Removal) \u2014 marking temporary credential files for deletion post-collection",
+          "E. T1486 (Data Encrypted for Impact) \u2014 the SQLite database is encrypted before exfiltration"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The third infostealer sample (Dump:Generic.Dacic, MFC-based) shows the following injection-related signals: api-0 ('Writes data to a remote process', T1055), api-20 ('Allocates virtual memory in a remote process', T1055), target-248 ('Detected Rundll32 execution with no parameters provided \u2014 likely process injection', T1218.008), and target-269 ('Windows system process connects to a network', T1055). Which combination of these signals provides the strongest evidence for process injection specifically into rundll32.exe? Select ALL correct answers.",
+        "options": [
+          "A. api-0 (WriteProcessMemory into remote process) combined with api-20 (VirtualAllocEx in remote process) \u2014 classic allocate-then-write injection sequence",
+          "B. target-248 (rundll32.exe launched with empty command line) \u2014 rundll32 with no DLL argument is a strong indicator of process hollowing or injection use",
+          "C. target-269 (rundll32.exe connecting to network) \u2014 a system process making network connections it would not normally make indicates injected malicious code is executing",
+          "D. api-25 ('Opens file with deletion access rights' for IEXPLORE.EXE) \u2014 this is the primary injection evidence",
+          "E. registry-27 ('Modifies proxy settings') \u2014 proxy modification is the trigger for rundll32 injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Comparing the Ransom.Diavolo.Generic sample with the Zusy.Generic ransomware sample, which behavioral indicators are present in the Ransom.Diavolo.Generic report that confirm active file encryption activity (as opposed to merely preparing for encryption)? Select ALL correct answers.",
+        "options": [
+          "A. api-200: 'Renames more than 100 files with double extensions' \u2014 direct evidence of bulk file renaming consistent with encryption",
+          "B. binary-22: 'The analysis extracted file with a known ransomware suffix' \u2014 a dropped file with a ransomware extension indicates encrypted output",
+          "C. api-162: 'Renames files' \u2014 hash.exe renamed dotnet.au3 to another name \u2014 this is the primary encryption indicator",
+          "D. target-4: 'Deletes volume snapshots' \u2014 WMIC shadow copy deletion confirms post-encryption anti-recovery",
+          "E. module-9: 'Loads the Bcrypt module DLL' \u2014 loading bcrypt.dll indicates use of Windows cryptographic APIs for encryption"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (.NET) sample is classified as an infostealer. Which combination of behavioral indicators from the detonation report most strongly supports this classification over other malware families (e.g., ransomware or RAT)? Select ALL correct answers.",
+        "options": [
+          "A. Accessing browser credential files (api-96, api-281) and cryptocurrency wallet files (api-101) \u2014 targeting credential stores is the primary infostealer indicator",
+          "B. Credential Access MITRE techniques: T1555.003 (Credentials from Web Browsers), T1555 (Credentials from Password Stores), T1539 (Steal Web Session Cookie), T1552.001 (Credentials In Files)",
+          "C. Dropping a SQLite database file (tmpD52D.tmp.tmpdb) \u2014 consistent with extracting browser credential databases",
+          "D. Data Encrypted for Impact (T1486) in the MITRE mappings \u2014 this confirms ransomware behavior",
+          "E. Screen Capture (T1113) and Clipboard Data (T1115) collection \u2014 secondary infostealer data collection capabilities"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample includes both 'Safe Mode Boot (T1562.009)' and 'Timestomp (T1070.006)' under Defense Evasion in its MITRE mappings. An analyst must determine which of these techniques is specifically relevant to disabling security tools at boot time versus hiding file system forensic artifacts. Which statements are correct? Select ALL correct answers.",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) is the technique relevant to disabling security tools at boot \u2014 ransomware configures the system to reboot into Safe Mode where EDR agents and AV services do not load",
+          "B. Timestomp (T1070.006) is relevant to hiding forensic artifacts \u2014 it modifies file creation/modification timestamps to impede forensic timeline analysis",
+          "C. Both T1562.009 and T1070.006 achieve the same goal of disabling security tools at boot",
+          "D. The Zusy.Generic sample also shows Thread Local Storage (T1055.005) injection, which is unrelated to boot-time defense evasion",
+          "E. Timestomp is the correct technique for boot-time EDR bypass because it modifies the boot configuration timestamp"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst reviews the Ransom.Diavolo.Generic detonation and must select ALL anti-recovery technique indicators. The student is tempted to select 'Opens file with deletion access rights for dotnet.au3' (api-25) as an anti-recovery indicator. Why is this incorrect, and what are the true anti-recovery indicators in this report? Select ALL correct answers.",
+        "options": [
+          "A. 'Opens file with deletion access rights for dotnet.au3' (api-25) is NOT an anti-recovery indicator \u2014 it reflects the malware cleaning up its own script/loader file (dotnet.au3 is an AutoIt script), which is generic file deletion (T1070.004), not recovery inhibition",
+          "B. 'Renames more than 100 files with double extensions' (api-200, T1486) IS an anti-recovery indicator \u2014 bulk double-extension renaming is the signature of active ransomware encryption that makes files unrecoverable without the key",
+          "C. 'Deletes volume snapshots' via WMIC.exe (target-4, T1490) IS an anti-recovery indicator \u2014 shadow copy deletion prevents Windows from restoring pre-encryption versions of files",
+          "D. 'Opens file with deletion access rights for dotnet.au3' (api-25) IS an anti-recovery indicator because AutoIt scripts are used for backup restoration",
+          "E. 'Dropped file with known ransomware suffix' (binary-22, T1491.001) is an anti-recovery indicator because renamed files with ransomware extensions cannot be opened without decryption"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the context of the Graftor.Generic infostealer (UPX-packed, spawns cmd.exe \u2192 rundll32.exe with 'InstallService'), the report shows CreateToolhelp32Snapshot (api-103) and IsWow64Process (api-146) calls from hash.exe. Which of the following correctly explains the role of these APIs as injection-supporting evidence in this specific sample? Select ALL correct answers.",
+        "options": [
+          "A. CreateToolhelp32Snapshot is called to enumerate running processes, enabling the malware to identify svchost.exe or another host process to inject its payload into",
+          "B. IsWow64Process is called to determine whether the target process is 32-bit or 64-bit, ensuring the correct payload architecture is used during injection",
+          "C. These APIs are only relevant as injection evidence when WriteProcessMemory is also present in the same report \u2014 which it is not in this sample",
+          "D. The rundll32.exe child process (launched via cmd.exe with 'InstallService') combined with process enumeration APIs suggests the malware is using rundll32 as an injection host",
+          "E. CreateToolhelp32Snapshot is exclusively a ransomware reconnaissance technique"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Dump:Generic.Dacic infostealer (MFC-based, spawns rundll32.exe) includes keylogging capability (T1056.001) alongside browser credential access. Which of the following signatures from the report collectively evidence a multi-vector credential collection strategy? Select ALL correct answers.",
+        "options": [
+          "A. string-88: 'Contains ability to retrieve information about pressed keystrokes' \u2014 GetKeyState reference indicates keylogging capability (T1056.001)",
+          "B. api-105: 'Calls an API possibly used to take screenshots' \u2014 CreateCompatibleBitmap for screen capture (T1113)",
+          "C. string-78: 'Contains ability to capture screen' \u2014 GetDesktopWindow reference (T1113)",
+          "D. api-281 equivalent \u2014 browser credential file access (T1555.003) via rundll32 injection",
+          "E. registry-9: 'Checks warning level of secure to non-secure traffic redirection' \u2014 HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS \u2014 checking browser security settings to facilitate credential interception"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample (Ransom.Diavolo.Generic) exhibits several anti-recovery behaviors during detonation. Which of the following observed behaviors specifically indicate ransomware-style inhibit-recovery or encryption activity? Select ALL that apply.",
+        "options": [
+          "A. WMIC.exe is invoked repeatedly with 'shadowcopy where ID=... delete' commands, deleting volume shadow copies",
+          "B. hash.exe renames more than 100 files with double extensions",
+          "C. hash.exe opens 'C:\\dotnet.au3' with delete access rights",
+          "D. hash.exe writes ransom note files to 'C:\\share\\readme.txt'",
+          "E. hash.exe loads bcrypt.dll for cryptographic operations"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Ransom.Diavolo.Generic detonation, which sandbox signature most specifically and unambiguously identifies ransomware encryption activity (as opposed to generic file deletion or cleanup)?",
+        "options": [
+          "A. api-25: 'Opens file with deletion access rights' for C:\\dotnet.au3",
+          "B. api-200: 'Renames many files with double extensions (often indicator of ransomware infection)'",
+          "C. api-26: 'Marks file for deletion' for AppData files",
+          "D. target-4: 'Deletes volume snapshots (often used by ransomware)' via WMIC.exe",
+          "E. binary-22: 'The analysis extracted file with a known ransomware suffix'"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The ransomware sample classified as Zusy.Generic (vx_family) uses a child process named '085cda53603755dc.exe' dropped to %TEMP%. Which of the following defense evasion techniques are evidenced in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. Safe Mode Boot (T1562.009) \u2014 registry modification to force safe mode reboot",
+          "B. Registry Run Key persistence (T1547.001) \u2014 '085cda53603755dc.exe' modifies auto-execute registry path",
+          "C. Timestomping (T1070.006) \u2014 SetFileTime API reference present in signatures",
+          "D. File Deletion (T1070.004) \u2014 '085cda53603755dc.exe' marks 'C:\\hash.exe' for deletion",
+          "E. Process Injection (T1055) \u2014 hash.exe writes 32 bytes to a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample maps to T1562.009 (Safe Mode Boot) in its MITRE ATT&CK profile. Which of the following statements best explains why Safe Mode Boot is classified as a Defense Evasion technique in the context of ransomware, and which other Defense Evasion techniques are also confirmed by this sample's detonation data? Select ALL correct answers.",
+        "options": [
+          "A. Safe Mode Boot disables most security software and EDR agents, allowing ransomware to encrypt files without interference \u2014 this is why T1562.009 is Defense Evasion",
+          "B. Timestomping (T1070.006) is confirmed by the MITRE mapping in this report",
+          "C. Timestomping (T1070.006) is confirmed because SetFileTime is explicitly called in the process tree",
+          "D. Thread Local Storage injection (T1055.005) is confirmed by the MITRE mapping",
+          "E. Indicator Removal from Tools (T1027.005) is confirmed by the MITRE mapping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Examining the Ransom.GandCrab4.Generic sample (o.exe), which of the following behavioral indicators are present in the detonation report and are specifically relevant to ransomware anti-recovery or inhibit-system-recovery activity? Select ALL that apply.",
+        "options": [
+          "A. The sample queries volume information of drive C:\\ and touches unusual drive letters (K:, L:)",
+          "B. The sample installs hooks/patches on the running process (hooks-8)",
+          "C. The sample generates many unresolvable DNS queries consistent with DGA-based C2",
+          "D. The sample reads mail-related files from Firefox profile directories",
+          "E. The sample contacts random domain names and sends traffic without HTTP headers"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The first infostealer sample (Trojan.Dinwod, UPX-packed) exhibits a deep process chain spawning 10 processes. Which of the following API calls or behavioral signals in the detonation report provide supporting evidence for process injection activity? Select ALL that apply.",
+        "options": [
+          "A. WriteProcessMemory \u2014 'hash.exe wrote 32 bytes to a remote process'",
+          "B. VirtualAllocEx \u2014 'hash.exe allocated memory in C:\\hash.exe'",
+          "C. CreateToolhelp32Snapshot \u2014 called by 4822004.exe to enumerate running processes",
+          "D. IsWow64Process \u2014 called by 4822004.exe to check process architecture",
+          "E. CreateProcessA \u2014 called by hash.exe to spawn child processes"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the context of process injection analysis, why are CreateToolhelp32Snapshot and IsWow64Process considered supporting evidence for injection activity, even though they are not direct injection primitives? Which answer best explains the analytical reasoning?",
+        "options": [
+          "A. They are irrelevant to injection \u2014 only WriteProcessMemory and VirtualAllocEx constitute injection evidence",
+          "B. CreateToolhelp32Snapshot is used to enumerate target processes for injection, and IsWow64Process is used to determine whether the target process is 32-bit or 64-bit, which affects injection payload selection",
+          "C. CreateToolhelp32Snapshot and IsWow64Process are only relevant for keylogging, not injection",
+          "D. IsWow64Process detects sandbox environments and is exclusively an anti-analysis technique",
+          "E. These APIs together with WriteProcessMemory form a classic pre-injection reconnaissance sequence: enumerate processes, check architecture, then inject"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The .NET infostealer (Trojan.Generic, 310784 bytes) exhibits credential theft and data collection behaviors. Which of the following sandbox signatures and behaviors confirm infostealer-specific data collection activity? Select ALL that apply.",
+        "options": [
+          "A. api-281: 'Attempts to obtain browser login credentials (file access)' \u2014 opens browser Login Data files",
+          "B. api-96: 'Tries to steal browser sensitive information (file access)'",
+          "C. api-101: 'Tries to steal Crypto currency wallets information (file access)'",
+          "D. api-26: 'Marks file for deletion' \u2014 marks AppData temporary files for deletion after exfiltration",
+          "E. api-264: 'Creates a thread in a self process' \u2014 creates internal thread for credential parsing"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the .NET infostealer detonation (Trojan.Generic), the signature api-26 ('Marks file for deletion') and api-25 ('Opens file with deletion access rights') appear in the 'System Destruction' category. Why are these signatures relevant to infostealer behavior specifically? Select the BEST answer.",
+        "options": [
+          "A. They are not relevant to infostealers \u2014 file deletion is only a ransomware indicator",
+          "B. Infostealers commonly mark temporary files (e.g., copied browser databases) for deletion after reading them, to remove forensic traces of the theft operation",
+          "C. File deletion only indicates ransomware anti-recovery behavior, not infostealer cleanup",
+          "D. The deletion of AppData files indicates the malware is wiping the victim's data for impact",
+          "E. These signatures confirm the malware is performing timestomping to evade detection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The third infostealer sample (Dump:Generic.Dacic, 86756 bytes) spawns rundll32.exe with no command-line parameters. Which combination of behavioral indicators in this report provides the strongest multi-signal evidence for process injection? Select ALL that apply.",
+        "options": [
+          "A. target-248: 'Detected Rundll32 execution with no parameters provided (likely process injection)'",
+          "B. api-0: 'Writes data to a remote process' \u2014 hash.exe wrote 1500 bytes to a remote process",
+          "C. api-20: 'Allocates virtual memory in a remote process' \u2014 hash.exe allocated memory in C:\\hash.exe",
+          "D. target-269: 'Windows system process connects to a network' \u2014 rundll32.exe connects to IPv4:80",
+          "E. api-103: CreateToolhelp32Snapshot called by hash.exe",
+          "F. api-104: Process32FirstW called to enumerate processes in system snapshot"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample maps T1562.009 (Safe Mode Boot) as a Defense Evasion technique. Which of the following behavioral signals in the detonation report are consistent with Safe Mode Boot abuse, and which signals are NOT consistent with this technique? Select only the signals that ARE consistent with T1562.009.",
+        "options": [
+          "A. registry-67: 'Creates or modifies windows services' \u2014 hash.exe creates a service entry in HKLM\\SYSTEM",
+          "B. api-200: 'Renames many files with double extensions' \u2014 this is encryption activity, not Safe Mode Boot",
+          "C. The MITRE mapping explicitly lists T1562.009 (Safe Mode Boot) under Defense Evasion for this sample",
+          "D. target-4: 'Deletes volume snapshots' \u2014 WMIC.exe deletes shadow copies, which is T1490 not T1562.009",
+          "E. The malware modifying boot configuration or safe mode registry keys would be consistent with T1562.009"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample uses WMIC.exe to delete shadow copies and also renames files with double extensions. Which MITRE ATT&CK technique IDs correctly map to these two behaviors respectively?",
+        "options": [
+          "A. Shadow copy deletion \u2192 T1490 (Inhibit System Recovery); Double extension renaming \u2192 T1486 (Data Encrypted for Impact)",
+          "B. Shadow copy deletion \u2192 T1070.004 (File Deletion); Double extension renaming \u2192 T1036.007 (Double File Extension)",
+          "C. Shadow copy deletion \u2192 T1490 (Inhibit System Recovery); Double extension renaming \u2192 T1036.007 (Double File Extension)",
+          "D. Shadow copy deletion \u2192 T1489 (Service Stop); Double extension renaming \u2192 T1486 (Data Encrypted for Impact)",
+          "E. Shadow copy deletion \u2192 T1490 (Inhibit System Recovery); Double extension renaming \u2192 T1036.008 (Masquerade File Type)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Malware Family Identification",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The .NET infostealer (Trojan.Generic, 310784 bytes) exhibits behaviors across multiple categories. Which combination of behavioral indicators most strongly identifies this sample as an infostealer rather than a RAT or ransomware? Select ALL that apply.",
+        "options": [
+          "A. Accesses browser credential files (Login Data, cookies) via file handle operations",
+          "B. Drops an SQLite database file (tmpD52D.tmp.tmpdb) \u2014 consistent with copying browser credential stores",
+          "C. Executes WMIC shadowcopy delete commands",
+          "D. Maps T1555.003 (Credentials from Web Browsers) and T1539 (Steal Web Session Cookie) in MITRE ATT&CK",
+          "E. Marks temporary files for deletion after accessing them (forensic trace removal)",
+          "F. Spawns more than 10 child processes in a recursive process tree"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Ransom.Diavolo.Generic detonation and must distinguish ransomware-specific anti-recovery indicators from generic file operations. Which of the following correctly classifies each observed behavior?",
+        "options": [
+          "A. 'Opens file with deletion access rights' for C:\\dotnet.au3 \u2192 Ransomware anti-recovery (T1490)",
+          "B. 'Renames more than 100 files with double extensions' \u2192 Ransomware encryption indicator (T1486)",
+          "C. 'Deletes volume snapshots via WMIC.exe' \u2192 Ransomware inhibit system recovery (T1490)",
+          "D. 'Opens file with deletion access rights' for C:\\dotnet.au3 \u2192 Generic file cleanup, NOT a ransomware-specific anti-recovery indicator",
+          "E. 'Drops executable file with image/text extension' \u2192 Ransomware masquerade file type (T1036.008)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The first infostealer sample (Trojan.Dinwod, UPX-compressed) uses several defense evasion techniques identifiable from static analysis alone. Which of the following static indicators confirm defense evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. UPX packing detected (T1027.002 \u2014 Software Packing)",
+          "B. Entrypoint located in UPX1 section \u2014 an uncommon section (T1027 \u2014 Obfuscated Files or Information)",
+          "C. UPX0 section has zero raw size (T1027 \u2014 Obfuscated Files or Information)",
+          "D. Section UPX1 has entropy of 7.97 (T1027.009 \u2014 Embedded Payloads)",
+          "E. The sample uses CreateToolhelp32Snapshot for process enumeration"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Zusy.Generic ransomware sample, the MITRE ATT&CK mapping includes T1562.009 (Safe Mode Boot) but NOT T1070.006 (Timestomping) as a Defense Evasion technique. An analyst must select the correct set of Defense Evasion techniques confirmed by this sample. Which options are confirmed by the detonation data?",
+        "options": [
+          "A. T1562.009 \u2014 Safe Mode Boot",
+          "B. T1070.006 \u2014 Timestomping",
+          "C. T1055.005 \u2014 Thread Local Storage injection",
+          "D. T1027.007 \u2014 Dynamic API Resolution",
+          "E. T1070.004 \u2014 File Deletion",
+          "F. T1055.003 \u2014 Thread Execution Hijacking"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The third infostealer sample (Dump:Generic.Dacic) demonstrates a classic pre-injection reconnaissance pattern followed by actual injection. Arrange the following API calls in the correct logical sequence for a process injection attack, and identify which ones are present in this detonation report. Select ALL APIs that are present AND relevant to injection.",
+        "options": [
+          "A. CreateToolhelp32Snapshot \u2014 present in detonation; used to enumerate running processes as injection targets",
+          "B. Process32FirstW \u2014 present in detonation; used to iterate through the process snapshot",
+          "C. IsWow64Process \u2014 present in detonation; used to check target process architecture before injecting",
+          "D. VirtualAllocEx (api-20) \u2014 present in detonation; allocates memory in remote process",
+          "E. WriteProcessMemory (api-0) \u2014 present in detonation; writes payload to remote process",
+          "F. NtQueueApcThread \u2014 present in detonation as confirmed by MITRE T1055.004 mapping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware Behaviour Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4.Generic sample (o.exe) is detonated in simulated network mode. Which behaviors in this detonation report are characteristic of GandCrab-style ransomware and distinguish it from other malware families? Select ALL that apply.",
+        "options": [
+          "A. Installs hooks/patches on the running process (hooks-8) \u2014 consistent with credential hooking",
+          "B. Contacts many unresolvable domains consistent with a domain generation algorithm (DGA)",
+          "C. Reads Firefox profile configuration files (api-6)",
+          "D. Queries volume information of all drives including unusual drive letters (K:, L:)",
+          "E. Writes to the Windows Start Menu folder (api-53)",
+          "F. Executes WMIC shadowcopy delete commands"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access and Data Collection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Comparing the two infostealer samples in the dataset (Trojan.Dinwod and Trojan.Generic), which credential access and data collection techniques appear in BOTH samples based on their MITRE ATT&CK mappings and behavioral signatures? Select ALL that apply.",
+        "options": [
+          "A. T1005 \u2014 Data from Local System (both samples write/copy files from local system)",
+          "B. T1555.003 \u2014 Credentials from Web Browsers (browser credential file access confirmed in Trojan.Generic)",
+          "C. T1057 \u2014 Process Discovery via CreateToolhelp32Snapshot (present in both samples)",
+          "D. T1119 \u2014 Automated Collection (present in Trojan.Dinwod MITRE mapping)",
+          "E. T1056.001 \u2014 Keylogging (confirmed in Trojan.Generic via T1056.001 mapping)",
+          "F. T1539 \u2014 Steal Web Session Cookie (confirmed in Trojan.Generic)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Anti-Recovery Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst is reviewing the Ransom.Diavolo.Generic report and must answer: which of the following signatures represent TRUE ransomware anti-recovery or encryption indicators, versus which represent generic file operations that could appear in any malware family? Select ONLY the signatures that are ransomware-SPECIFIC anti-recovery or encryption indicators.",
+        "options": [
+          "A. api-200: 'Renames more than 100 files with double extensions' \u2014 RANSOMWARE-SPECIFIC encryption indicator",
+          "B. target-4: 'Deletes volume snapshots (often used by ransomware)' via WMIC.exe \u2014 RANSOMWARE-SPECIFIC anti-recovery",
+          "C. api-25: 'Opens file with deletion access rights' for C:\\dotnet.au3 \u2014 GENERIC file operation, not ransomware-specific",
+          "D. binary-22: 'The analysis extracted file with a known ransomware suffix' \u2014 RANSOMWARE-SPECIFIC indicator",
+          "E. api-264: 'Creates a thread in a self process' \u2014 GENERIC, present in many malware families",
+          "F. binary-28: 'Drops executable file with image/text extension (.txt)' \u2014 RANSOMWARE-SPECIFIC masquerade"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    }
+  ]
+}

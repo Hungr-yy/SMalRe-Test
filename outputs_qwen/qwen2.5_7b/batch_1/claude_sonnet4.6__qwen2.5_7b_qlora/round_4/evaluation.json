@@ -1,0 +1,2558 @@
+{
+  "feedback": "The model demonstrates solid overall capability in Defense Evasion identification tasks, achieving an exact match accuracy of 62.5% (10/16 questions) with a strong average Jaccard of 0.857. The model is well-calibrated in terms of answer count, averaging 3.44 predicted answers versus 3.94 gold answers, indicating a mild but consistent under-selection tendency rather than over-selection. Parse quality is perfect with 0% parse errors.\n\nKey strengths: The model correctly identifies classic Defense Evasion indicators including software packing (UPX, MPRESS, PECompact), high-entropy sections, process injection via WriteProcessMemory, reflective code loading, timestomping, file deletion, and masquerading. It performs perfectly on Hard difficulty questions in several cases and shows strong performance on ransomware and remcos attack families.\n\nPrimary weakness is systematic under-selection: in 6 of the 6 incorrect answers, the model missed one or more correct options while not adding false positives. The model never over-selects. Specifically, the model struggles to recognize: (1) firewall modification via netsh.exe (T1562.004) as Defense Evasion - missed in questions 0 and 11; (2) file deletion/indicator removal (T1070.004) as Defense Evasion when performed by a child process - missed in question 1; (3) masquerading via dropping to Windows system directory (T1036) - missed in question 1; (4) process injection (T1055) as Defense Evasion in the context of Worm.Ludbaruma - incorrectly included in question 5 (over-selected in that case); (5) Disable or Modify Tools (T1562.001) via registry-based task manager disabling - missed in question 12; (6) proxy settings modification (T1112) and file marks for deletion as Defense Evasion in the WannaCry-style report - completely wrong in question 7 (worst performance); (7) file marks for deletion and proxy modification as Defense Evasion in question 9.\n\nThe most problematic question was question 7 (ransomware/WannaCry-style, Hard), where the model selected {A, B, C, D} but the gold was {A, C, F}, indicating confusion about what constitutes Defense Evasion versus Discovery when analyzing service-access patterns and internet cache queries.\n\nFor training, the model should be exposed to: (1) more questions distinguishing T1562.004 (firewall modification) as Defense Evasion; (2) questions on indicator removal behaviors including proxy deletion and file deletion; (3) ransomware Defense Evasion patterns where child processes perform evasive actions; (4) distinguishing Discovery from Defense Evasion for ambiguous API calls like OpenSCManager, OpenService, registry cache queries; (5) T1562.001 via registry-based security tool disabling. The model's under-selection pattern suggests it is conservative and needs to be trained to recognize a broader set of Defense Evasion sub-techniques.",
+  "proficiency": 7,
+  "metrics": {
+    "num_questions": 16,
+    "num_exact_matches": 10,
+    "exact_match_accuracy": 0.625,
+    "avg_jaccard": 0.857,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.9375,
+    "macro_option_recall": 0.8641,
+    "avg_predicted_answer_count": 3.4375,
+    "avg_gold_answer_count": 3.9375,
+    "answer_count_bias": "under-selecting"
+  },
+  "strengths": [
+    "Perfect parse rate: all 16 model answers are well-formed and contain valid option letter sets.",
+    "Strong exact match accuracy of 62.5% on Defense Evasion identification tasks.",
+    "High average Jaccard of 0.857 indicating strong partial credit performance even on missed questions.",
+    "Excellent performance on Hard difficulty questions: 9/13 exact matches.",
+    "Correct identification of software packing indicators (UPX, MPRESS, PECompact, high-entropy sections) as T1027.002/T1027.009.",
+    "Reliable identification of process injection (WriteProcessMemory, RtlCreateUserThread) as Defense Evasion.",
+    "Correct recognition of timestomping (T1070.006) via FileTimeToLocalFileTime and GetSystemTimeAsFileTime.",
+    "Strong performance on ransomware family questions: 3/4 exact matches.",
+    "Strong performance on remcos family questions: 2/2 exact matches.",
+    "Never over-selects: all errors are under-selection, indicating conservative but grounded reasoning."
+  ],
+  "weaknesses": [
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection of firewall modification as Defense Evasion",
+      "description": "The model consistently fails to recognize netsh.exe firewall rule modification (T1562.004) as a Defense Evasion technique. This was missed in question 0 (MSIL.Bladabindi spawning netsh.exe with 'add allowedprogram') and question 11 (netsh.exe advfirewall add rule for svchost.exe). The model likely does not associate firewall modification with Defense Evasion tactic.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        11
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection of indicator removal behaviors",
+      "description": "The model misses file deletion (T1070.004) and proxy settings deletion (T1112) as Defense Evasion in multiple questions. In question 1 it missed E (file deletion by microsofthelp.exe) and H (masquerading via system directory drop). In question 9 it missed C (file deletion) and E (proxy modification). These are clearly documented in the detonation reports.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        9
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "ransomware (WannaCry-style)",
+      "description": "Question 7 (CVE-2017-0147/WannaCry-style) was the worst-performing question. The model selected {A, B, C, D} but gold was {A, C, F}. The model incorrectly included B (OpenSCManager/OpenService access) and D (reading cryptographic GUID) as Defense Evasion, while missing F (proxy settings modification via SETVAL). This indicates confusion between Discovery/lateral movement behaviors and Defense Evasion in the context of worm-style ransomware.",
+      "severity": "high",
+      "evidence_question_indices": [
+        7
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection of Disable or Modify Tools (T1562.001) via registry",
+      "description": "In question 12, the model missed H (svchost.exe disabling Windows Task Manager via HKCU registry modification, T1562.001). This is a direct registry-based security tool disabling behavior that is clearly documented in the Ransom.HydraCrypt report but was not recognized.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        12
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "semantic confusion between Discovery and Defense Evasion for service/registry access APIs",
+      "description": "The model incorrectly included OpenSCManager and OpenService calls as Defense Evasion in question 7, and reading cryptographic GUID as Defense Evasion. These are Discovery behaviors. Conversely, it sometimes misses actual Defense Evasion behaviors. The model needs better calibration on the tactic boundary.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        7
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection of masquerading via system directory drops",
+      "description": "In question 1, the model missed H (hash.exe dropping microsofthelp.exe into Windows system directory as masquerading T1036). Dropping executables to system directories to masquerade as legitimate binaries is a clear Defense Evasion indicator but was not selected.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        1
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "over-selection in Worm.Ludbaruma process injection classification",
+      "description": "In question 5 (Worm.Ludbaruma), the model selected E (VirtualAllocEx/WriteProcessMemory as Process Injection T1055) but the gold answer excluded E and included F (file deletion) and I (file extension change). The model incorrectly classified process injection as a Defense Evasion technique in this specific context where the gold answer did not include it.",
+      "severity": "low",
+      "evidence_question_indices": [
+        5
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "medium difficulty",
+      "description": "The model achieved only 1/3 exact matches on medium difficulty questions (33%), compared to 9/13 on hard (69%). Medium questions 0 and 13 were both missed due to under-selection.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        1,
+        13
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.819,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.667,
+        "avg_jaccard": 0.806,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.667,
+        "avg_jaccard": 0.833,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.333,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 13,
+        "exact_match_accuracy": 0.692,
+        "avg_jaccard": 0.882,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Evasion Technique Identification": {
+        "num_questions": 7,
+        "exact_match_accuracy": 0.714,
+        "avg_jaccard": 0.905,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion": {
+        "num_questions": 7,
+        "exact_match_accuracy": 0.571,
+        "avg_jaccard": 0.821,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Framework Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.6,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample spawns netsh.exe with the command line 'netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE'. Which of the following MITRE ATT&CK techniques does this behavior represent under the Defense Evasion tactic?",
+        "options": [
+          "A. T1562.004 - Disable or Modify System Firewall",
+          "B. T1059.003 - Windows Command Shell",
+          "C. T1055 - Process Injection",
+          "D. T1036 - Masquerading",
+          "E. T1497.003 - Time Based Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the MSIL.Bladabindi detonation, the sandbox signature 'target-186' explicitly notes 'Detects NETSH process execution' with commandline referencing firewall modification, and 'target-15' is labeled 'Modifies firewall settings' with MITRE mapping T1562.004. An analyst reviewing Defense Evasion indicators should select ALL applicable techniques. Which options correctly identify Defense Evasion behaviors evidenced in this report?",
+        "options": [
+          "A. T1562.004 - netsh.exe used to add an allowed firewall program for hash.exe",
+          "B. T1027.002 - Software packing detected (Microsoft Visual C# compiler signature)",
+          "C. T1620 - Reflective code loading via System.Reflection.Load observed in static analysis",
+          "D. T1083 - File and Directory Discovery via FindFirstFileW",
+          "E. T1562.001 - PAGE_GUARD memory allocation used as anti-debugging trick"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample (um_unhooking family) spawns netsh.exe with the command 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes'. The sandbox assigns T1562.004 to both 'target-186' (Detects NETSH process execution) and 'target-15' (Modifies firewall settings). Which Defense Evasion technique does this netsh.exe invocation represent, and why is it classified as Defense Evasion rather than Execution?",
+        "options": [
+          "A. T1562.004 - Disable or Modify System Firewall; firewall rules are modified to permit malicious traffic, reducing detection by network-based controls",
+          "B. T1059.003 - Windows Command Shell; netsh.exe is invoked via command shell",
+          "C. T1036.005 - Match Legitimate Name or Location; svchost.exe name is used to blend in",
+          "D. T1569.002 - Service Execution; the rule enables a service-related binary",
+          "E. T1055 - Process Injection; netsh.exe is used as a proxy for code injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the GenPack:Generic.Malware.SF detonation, hash.exe drops microsofthelp.exe into %WINDIR% (the Windows directory root) and the sandbox signature 'binary-7' states 'Drops executable files to the Windows system directory' mapped to T1036. Separately, 'api-26' and 'api-25' show microsofthelp.exe marking C:\\hash.exe for deletion (T1070.004). Which Defense Evasion techniques are directly evidenced by these two behaviors?",
+        "options": [
+          "A. T1036 - Masquerading; dropping an executable named 'microsofthelp.exe' into the Windows directory mimics a legitimate system file location",
+          "B. T1070.004 - File Deletion; microsofthelp.exe marks the original dropper (C:\\hash.exe) for deletion to remove evidence",
+          "C. T1562.004 - Disable or Modify System Firewall",
+          "D. T1027.002 - Software Packing via MPRESS packer detected in static analysis",
+          "E. T1574.002 - DLL Side-Loading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt detonation, the sandbox reports: (1) 'registry-3' - 'svchost.exe disables Windows Task Manager via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS registry key' mapped to T1562.001; (2) 'target-33' - svchost.exe running from %APPDATA% as a fake system process mapped to T1036.005; (3) 'api-25'/'api-26' - file deletion access and marking files for deletion (T1070.004); (4) 'registry-27' - proxy settings modification via DELETEVAL on HKCU (T1112). Which of the following are correctly identified as Defense Evasion techniques in this report?",
+        "options": [
+          "A. T1562.001 - svchost.exe disables Windows Task Manager via registry modification",
+          "B. T1036.005 - svchost.exe executing from %APPDATA% masquerades as a legitimate Windows process",
+          "C. T1070.004 - Files opened with deletion access rights and marked for deletion",
+          "D. T1112 - Proxy settings deleted via registry DELETEVAL operation",
+          "E. T1490 - vssadmin and wbadmin used to delete volume shadow copies and backup catalog"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The CVE-2017-0147 (WannaCry-style) detonation shows: mssecsvc.exe calls OpenSCManager and OpenService; mssecsvc.exe reads HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY (cryptographic machine GUID); mssecsvc.exe performs SETVAL on HKCU proxy settings (registry-27, T1112); rundll32.exe drops mssecsvc.exe to %WINDIR% (binary-7, T1036). Which of the following behaviors represent Defense Evasion techniques in this report?",
+        "options": [
+          "A. T1036 - Dropping mssecsvc.exe to the Windows system directory to masquerade as a legitimate binary",
+          "B. T1112 - Modifying proxy settings via SETVAL on HKCU registry key",
+          "C. T1007 - OpenSCManager and OpenService calls represent System Service Discovery, not Defense Evasion",
+          "D. T1082 - Reading the cryptographic machine GUID is System Information Discovery, not Defense Evasion",
+          "E. T1562.004 - Firewall modification via netsh.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the CVE-2017-0147 detonation, mssecsvc.exe calls OpenSCManager (api-77) and OpenService (api-76). A student analyst flagged these as Defense Evasion. Which tactic correctly describes OpenSCManager/OpenService API calls in this context, and why?",
+        "options": [
+          "A. Defense Evasion - these calls modify the service control manager to evade detection",
+          "B. Discovery (T1007 - System Service Discovery) - these calls enumerate or query service status and do not themselves modify system defenses",
+          "C. Persistence - opening the SCM is required to install a new service for persistence",
+          "D. Privilege Escalation - SCM access implies token manipulation",
+          "E. Lateral Movement - SCM is used to move between hosts"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the CVE-2017-0147 detonation, mssecsvc.exe reads 'HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY' (registry-1, labeled 'Reads the cryptographic machine GUID'). The sandbox maps this to T1082 (System Information Discovery). A student incorrectly selected this as a Defense Evasion indicator. Which tactic and technique is the correct classification for reading the cryptographic machine GUID?",
+        "options": [
+          "A. Defense Evasion - T1112 (Modify Registry), because the registry is being accessed",
+          "B. Defense Evasion - T1027 (Obfuscated Files or Information), because cryptographic operations indicate obfuscation",
+          "C. Discovery - T1082 (System Information Discovery), because the GUID is read to fingerprint the victim system, not to disable defenses",
+          "D. Credential Access - T1555, because cryptographic stores contain credentials",
+          "E. Collection - T1005, because the GUID is collected as local system data"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma detonation shows: (1) hash.exe calls VirtualAllocEx and WriteProcessMemory (api-0, api-20, T1055); (2) hash.exe marks C:\\share\\XK\\New Folder.exe for deletion (api-26, T1070.004); (3) xk.exe opens a file with deletion access rights (api-25, T1070.004); (4) hash.exe uses FileTimeToLocalFileTime (api-223, T1070.006 Timestomp). A student selected VirtualAllocEx/WriteProcessMemory as a Defense Evasion indicator but the gold answer excluded it and included file deletion and timestomping. Which set of Defense Evasion indicators is MOST accurately supported by the sandbox evidence in this report?",
+        "options": [
+          "A. T1055 (Process Injection via VirtualAllocEx/WriteProcessMemory), T1070.004 (File Deletion), T1070.006 (Timestomp)",
+          "B. T1070.004 (File Deletion - hash.exe marks files for deletion), T1070.006 (Timestomp - FileTimeToLocalFileTime API), T1036.005 (fake system processes in %APPDATA%)",
+          "C. T1055 (Process Injection) only",
+          "D. T1070.006 (Timestomp) only",
+          "E. T1112 (Modify Registry - disables regedit and cmd)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma detonation includes sandbox signatures: 'registry-21' (Disables Command Prompt via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT, T1112), 'registry-2' (Disables Windows Registry Editor via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS, T1112), 'registry-23' (Disables system restore via HKLM, T1112), and 'target-33' (Creates fake system process WINLOGON.EXE at %APPDATA%, T1036.005). Which of these represent Defense Evasion sub-techniques?",
+        "options": [
+          "A. T1562.001 - Disabling Command Prompt and Registry Editor via registry policy keys disables security tools available to defenders",
+          "B. T1036.005 - WINLOGON.EXE running from %APPDATA%\\WINDOWS\\ masquerades as a legitimate Windows process",
+          "C. T1112 - Registry modifications to disable cmd and regedit constitute Modify Registry under Defense Evasion",
+          "D. T1490 - Disabling system restore inhibits system recovery",
+          "E. T1547.001 - Registry Run Keys used for persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt detonation includes 'registry-27' labeled 'Modifies proxy settings' with Access type DELETEVAL on HKCU\\...\\INTERNET SETTINGS, mapped to T1112 (Modify Registry). A student analyst debated whether deleting proxy settings constitutes Defense Evasion or another tactic. Which statement BEST explains why proxy settings deletion is classified as Defense Evasion in this context?",
+        "options": [
+          "A. It is Command and Control (T1090 - Proxy) because proxy settings affect C2 communications",
+          "B. It is Defense Evasion (T1112 - Modify Registry) because removing proxy settings can disable security monitoring tools that route traffic through proxies, and the registry modification itself is an indicator removal behavior",
+          "C. It is Discovery (T1012 - Query Registry) because the registry is being accessed",
+          "D. It is Persistence because registry modifications can survive reboots",
+          "E. It is Credential Access because internet settings may contain stored credentials"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4 detonation (o.exe) shows: 'api-26' marks files for deletion (T1070.004); 'registry-27' in the Ransom.HydraCrypt report shows DELETEVAL on proxy settings (T1112); 'hooks-8' in the GandCrab report shows in-process hooks/patches. For the GandCrab4 sample specifically, which Defense Evasion techniques are directly evidenced by sandbox signatures in its report?",
+        "options": [
+          "A. T1070.004 - File Deletion; o.exe marks files for deletion (api-26, api-25)",
+          "B. T1497.003 - Time Based Evasion; the sample sleeps to evade sandbox analysis",
+          "C. T1562.004 - Firewall modification via netsh.exe",
+          "D. T1056.004 - Credential API Hooking; hooks-8 shows in-process patching",
+          "E. T1027.002 - Software Packing"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (Packer.Krap) ransomware-family detonation shows: '085cda53603755dc.exe' marks C:\\hash.exe for deletion (api-26, T1070.004); '085cda53603755dc.exe' opens C:\\hash.exe with deletion access rights (api-25, T1070.004); 'registry-27' shows 085cda53603755dc.exe performing DELETEVAL on HKCU proxy settings (T1112). The sample also has T1562.009 (Safe Mode Boot) in its MITRE list. Which Defense Evasion behaviors are directly supported by sandbox signatures (not just MITRE list entries)?",
+        "options": [
+          "A. T1070.004 - Child process marks the original dropper for deletion after execution",
+          "B. T1112 - Proxy settings deleted via registry DELETEVAL in child process",
+          "C. T1562.009 - Safe Mode Boot modification",
+          "D. T1027.002 - Software packing (embedded payloads detected in static analysis)",
+          "E. T1562.004 - Firewall modification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE detonation (um_unhooking family) includes these process-tree events: hash.exe spawns netsh.exe with 'advfirewall firewall add rule' for svchost.exe (T1562.004); mojpivf.exe calls CreateProcessA in suspended mode (api-129, T1055); mojpivf.exe writes PE header bytes to a remote process (api-83, T1055.002 Portable Executable Injection); cmd.exe opens files with deletion access rights (api-25, T1070.004). Which of these are Defense Evasion techniques?",
+        "options": [
+          "A. T1562.004 - netsh.exe adds firewall rule to allow svchost.exe inbound connections",
+          "B. T1055.002 - Portable Executable Injection via PE header written to remote process by mojpivf.exe",
+          "C. T1070.004 - cmd.exe opens files with deletion access rights",
+          "D. T1569.002 - sc.exe starts the tpxhoiko service",
+          "E. T1543.003 - sc.exe creates a Windows service for persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ranpax.Generic detonation (killers family) includes: 'registry-179' (Tries to map intranet resources to internet zone, T1562.001); 'api-26' (cmd.exe marks files for deletion, T1070.004); 'registry-27' (hash.exe DELETEVAL on HKCU proxy settings, T1112); 'static-6' (high entropy .text section, T1027.009); 'static-18' (PECompact 2.0x packer, T1027.002). Which of the following are Defense Evasion techniques supported by the sandbox evidence?",
+        "options": [
+          "A. T1562.001 - Intranet-to-internet zone mapping modifies security zone settings to disable warnings",
+          "B. T1070.004 - cmd.exe marks files for deletion as indicator removal",
+          "C. T1112 - Proxy settings deleted via registry DELETEVAL",
+          "D. T1027.002 - PECompact packer detected in static analysis",
+          "E. T1027.009 - High entropy .text section indicating embedded/compressed payload"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt detonation shows svchost.exe (running from %APPDATA%) executing vssadmin delete shadows, wbadmin delete catalog, and bcdedit /set recoveryenabled no. The sandbox maps vssadmin/wbadmin to T1490 (Inhibit System Recovery) under Impact, and bcdedit to T1490 as well. Separately, 'target-33' maps svchost.exe at %APPDATA% to T1036.005 (Defense Evasion). Which tactic correctly classifies the vssadmin/wbadmin/bcdedit commands?",
+        "options": [
+          "A. Defense Evasion - these commands remove indicators of compromise",
+          "B. Impact - T1490 (Inhibit System Recovery); these commands prevent victims from restoring their systems after ransomware encryption",
+          "C. Persistence - disabling recovery prevents rollback of persistence mechanisms",
+          "D. Defense Evasion - T1070 (Indicator Removal) because shadow copies contain forensic artifacts",
+          "E. Discovery - the commands enumerate recovery options"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun detonation (killers family) includes: 'registry-2' (Disables Windows Registry Editor via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS, T1112); 'registry-21' (Disables Command Prompt via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT, T1112); 'target-33' (WINLOGON.EXE at %APPDATA%\\WINDOWS\\, T1036.005); 'api-223' (FileTimeToLocalFileTime, T1070.006). Which of these behaviors specifically map to T1562.001 (Disable or Modify Tools) as a Defense Evasion sub-technique?",
+        "options": [
+          "A. Disabling Windows Registry Editor (regedit) via HKCU registry policy - prevents defenders from inspecting or modifying the registry",
+          "B. Disabling Command Prompt (cmd) via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT - prevents execution of diagnostic and remediation commands",
+          "C. WINLOGON.EXE running from %APPDATA% - masquerading technique",
+          "D. FileTimeToLocalFileTime API call - timestomping technique",
+          "E. api-0 WriteProcessMemory to remote process - process injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Across the CVE-2017-0147 (WannaCry-style) detonation, an analyst must distinguish Defense Evasion behaviors from Discovery behaviors. The report contains: (A) mssecsvc.exe calls OpenSCManager/OpenService; (B) mssecsvc.exe reads cryptographic GUID from HKLM; (C) mssecsvc.exe performs SETVAL on HKCU proxy settings; (D) rundll32.exe drops mssecsvc.exe to %WINDIR% (binary-7, T1036); (E) mssecsvc.exe queries internet cache settings (registry-29). Which items are Defense Evasion and which are Discovery?",
+        "options": [
+          "A. Defense Evasion: C (proxy modification T1112) and D (masquerading T1036); Discovery: A (T1007 service discovery) and B (T1082 system info discovery)",
+          "B. Defense Evasion: A, B, C, D, E - all registry and file operations are Defense Evasion",
+          "C. Defense Evasion: D only; Discovery: A, B, C, E",
+          "D. Defense Evasion: C, D, E; Discovery: A, B",
+          "E. Defense Evasion: A, C, D; Discovery: B, E"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Dinwod (UPX-packed, infostealers family) detonation shows: 'static-7' (PE file packed with UPX, T1027.002); 'static-6' (UPX1 section entropy 7.97, T1027.009); 'api-0' (WriteProcessMemory to remote process, T1055); 'T1070.004' (File Deletion in MITRE list). The sandbox does NOT show a direct api-26/api-25 signature for file deletion in this specific report. Which Defense Evasion techniques are DIRECTLY evidenced by sandbox signatures (not just MITRE list entries)?",
+        "options": [
+          "A. T1027.002 - UPX packer detected by static-7 and static-18 signatures",
+          "B. T1027.009 - High entropy UPX1 section detected by static-6",
+          "C. T1055 - WriteProcessMemory to remote process detected by api-0",
+          "D. T1070.004 - File deletion (only in MITRE list, no direct api-26/api-25 signature in this report)",
+          "E. T1027.007 - Dynamic API Resolution listed in MITRE ATT&CK mappings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Remcos detonation (large 498KB sample) includes: 'registry-179' (Tries to map intranet resources to internet zone, T1562.001); 'registry-27' (Modifies proxy settings via SETVAL, T1112); 'api-264' (Creates thread in self process, T1055.003); 'static-92' (PE resource with unusual entropy, T1027.002); 'api-223' is NOT present in this report but FileTimeToLocalFileTime IS present in the um_unhooking Sibuia sample. Which Defense Evasion techniques are directly evidenced by sandbox signatures in the Remcos 498KB detonation report?",
+        "options": [
+          "A. T1562.001 - Intranet zone mapping modifies security settings (registry-179)",
+          "B. T1112 - Proxy settings modified via SETVAL (registry-27)",
+          "C. T1055.003 - Thread Execution Hijacking via self-process thread creation (api-264)",
+          "D. T1027.002 - Unusual entropy resource detected (static-92)",
+          "E. T1070.006 - Timestomping via FileTimeToLocalFileTime (not present in this specific report)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample (hash.exe) spawns netsh.exe with the command 'netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE'. Which MITRE ATT&CK Defense Evasion technique does this behavior most directly represent?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall",
+          "B. T1055 \u2013 Process Injection",
+          "C. T1027 \u2013 Obfuscated Files or Information",
+          "D. T1070.004 \u2013 File Deletion",
+          "E. T1036 \u2013 Masquerading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the MSIL.Bladabindi detonation report, the sandbox signature 'target-186' notes: 'Detects NETSH process execution \u2013 Process netsh.exe with commandline netsh firewall add allowedprogram' and is tagged T1562.004. A second signature 'string-415' notes a registry location string related to firewall policy, also tagged T1562.004. Which of the following statements correctly explains why T1562.004 is a Defense Evasion technique rather than a network configuration technique?",
+        "options": [
+          "A. Firewall modification via netsh.exe allows the malware to persist across reboots by writing to the Run key",
+          "B. Adding an allowed program rule removes a security control barrier that would otherwise block the malware's outbound C2 traffic, thereby evading host-based defenses",
+          "C. netsh.exe is a LOLBin whose execution is always classified as Defense Evasion regardless of its arguments",
+          "D. The firewall modification disables Windows Defender, which is classified under T1562.001",
+          "E. T1562.004 applies only when the firewall is fully disabled, not when individual program rules are added"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample spawns netsh.exe with the command: 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes'. The sandbox explicitly tags this with T1562.004. Which of the following are correct Defense Evasion classifications for behaviors observed in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall, evidenced by netsh.exe advfirewall firewall add rule for svchost.exe",
+          "B. T1055.002 \u2013 Portable Executable Injection, evidenced by mojpivf.exe writing PE header bytes to a remote process",
+          "C. T1070.004 \u2013 File Deletion, evidenced by cmd.exe opening files with deletion access rights",
+          "D. T1082 \u2013 System Information Discovery, evidenced by reading the active computer name from the registry",
+          "E. T1036 \u2013 Masquerading, evidenced by the firewall rule name 'Host-process for services of Windows' mimicking a legitimate Windows description"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the GenPack:Generic.Malware.SF detonation report, hash.exe drops microsofthelp.exe into %WINDIR%\\microsofthelp.exe, and the sandbox reports: 'binary-7: Drops executable files to the Windows system directory' tagged T1036. Additionally, microsofthelp.exe marks C:\\hash.exe for deletion (T1070.004). Which Defense Evasion techniques are directly evidenced by these two behaviors? Select ALL that apply.",
+        "options": [
+          "A. T1036 \u2013 Masquerading, because dropping an executable to the Windows system directory mimics the location of legitimate system binaries",
+          "B. T1070.004 \u2013 File Deletion / Indicator Removal, because microsofthelp.exe marks the original dropper for deletion",
+          "C. T1055.001 \u2013 Dynamic-link Library Injection, because microsofthelp.exe loads LoadLibraryA",
+          "D. T1027.002 \u2013 Software Packing, because the file is detected as MPRESS",
+          "E. T1562.001 \u2013 Disable or Modify Tools, because the deletion removes the original malware binary that could be analyzed"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The CVE-2017-0147 (WannaCry-style) detonation report includes the following sandbox signatures: (1) api-77: 'mssecsvc.exe called OpenSCManager requesting access' \u2013 no MITRE tag assigned; (2) registry-29: 'Queries the internet cache settings' tagged under Anti-Detection; (3) registry-27: 'Modifies proxy settings \u2013 mssecsvc.exe SETVAL HKCU\\...\\Internet Settings' \u2013 no MITRE tag; (4) api-5: 'rundll32.exe created file %WINDIR%\\mssecsvc.exe' tagged T1055. Which of the following behaviors from this report are correctly classified as Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. rundll32.exe dropping mssecsvc.exe to the Windows directory (T1036 \u2013 Masquerading via system directory placement)",
+          "B. mssecsvc.exe calling OpenSCManager and OpenService (Discovery \u2013 T1007 System Service Discovery, NOT Defense Evasion)",
+          "C. mssecsvc.exe modifying proxy settings via SETVAL to HKCU\\Internet Settings (T1112 \u2013 Modify Registry as Defense Evasion)",
+          "D. mssecsvc.exe reading the cryptographic machine GUID (Discovery \u2013 T1082, NOT Defense Evasion)",
+          "E. Querying internet cache settings to hide footprints in index.dat (T1070 \u2013 Indicator Removal)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst reviewing the CVE-2017-0147 report sees that mssecsvc.exe calls OpenSCManager and OpenService. A junior analyst classifies these as Defense Evasion because 'the malware is hiding by accessing services'. Which of the following correctly explains the proper tactic classification and the reasoning?",
+        "options": [
+          "A. The junior analyst is correct \u2013 OpenSCManager is always Defense Evasion because it is used to manipulate security services",
+          "B. OpenSCManager and OpenService are System Service Discovery (T1007) under the Discovery tactic \u2013 the malware is enumerating services to find a propagation target, not evading defenses",
+          "C. OpenSCManager is Lateral Movement because it enables remote service access",
+          "D. These calls are Execution because they trigger service execution",
+          "E. These calls are Persistence because the malware could install itself as a service"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt.Generic detonation report shows: (1) svchost.exe (dropped to %APPDATA%\\svchost.exe) disables Windows Task Manager via registry-3: 'HKCU\\SOFTWARE\\MICROSOFT\\WIND...' tagged T1562.001; (2) hash.exe deletes proxy settings via registry-27 tagged T1112; (3) hash.exe opens files with deletion access rights (api-25, T1070.004); (4) target-33: svchost.exe runs from %APPDATA% (T1036.005). Which of the following Defense Evasion sub-techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools, because svchost.exe disables Windows Task Manager via HKCU registry modification",
+          "B. T1112 \u2013 Modify Registry, because proxy settings are deleted via DELETEVAL",
+          "C. T1070.004 \u2013 File Deletion / Indicator Removal, because files are opened with deletion access rights",
+          "D. T1036.005 \u2013 Match Legitimate Name or Location, because svchost.exe runs from %APPDATA% instead of %WINDIR%\\system32",
+          "E. T1490 \u2013 Inhibit System Recovery, because vssadmin deletes shadows and bcdedit disables recovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt.Generic report contains sandbox signature registry-3: 'Disables Windows Task Manager (taskmgr) \u2013 svchost.exe at Path HKCU\\SOFTWARE\\MICROSOFT\\WIND...' tagged T1562.001. Why is disabling Task Manager classified as T1562.001 (Disable or Modify Tools) under Defense Evasion rather than under Impact?",
+        "options": [
+          "A. Because Task Manager is a security monitoring tool, and disabling it prevents the user or analyst from observing and terminating the malicious process",
+          "B. Because registry modifications are always Defense Evasion",
+          "C. Because Impact techniques require data encryption, which is a separate behavior",
+          "D. Because T1562.001 specifically covers registry-based modifications to any Windows setting",
+          "E. Because svchost.exe is a system process and its actions are automatically Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ranpax.Generic (killers family) detonation report shows: (1) registry-179: 'Tries to map intranet network resources to internet zone \u2013 SETVAL HKCU\\SOF...' tagged T1562.001; (2) api-26: 'cmd.exe marks file for deletion' tagged T1070.004; (3) target-413: 'biudfw.exe spawned likely due to injection' tagged T1055; (4) static-18: MPRESS packer detected (T1027.002); (5) registry-27: 'Modifies proxy settings \u2013 DELETEVAL HKCU\\...' tagged T1112. Which of the following are correctly classified as Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 mapping intranet resources to internet zone modifies security zone settings to evade zone-based controls",
+          "B. T1070.004 \u2013 cmd.exe marking files for deletion removes indicators of compromise",
+          "C. T1055 \u2013 process injection via biudfw.exe allows code execution within a trusted process context",
+          "D. T1027.002 \u2013 MPRESS packing obfuscates the binary to evade static detection",
+          "E. T1112 \u2013 deleting proxy settings via registry modifies system configuration as an evasion technique"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma detonation report shows: (1) api-26: 'hash.exe marked C:\\share\\XK\\New Folder.exe for deletion' (T1070.004); (2) target-33: 'WINLOGON.EXE at non-system pathway %APPDATA%\\WINDOWS\\WINLOGON.EXE' (T1036.005); (3) registry-21: 'Disables Command Prompt via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT...' (T1112); (4) api-0: 'hash.exe wrote 32 bytes to a remote process' (T1055); (5) api-20: 'hash.exe allocated memory in C:\\hash.exe' (T1055). Which of the following Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion, evidenced by marking New Folder.exe for deletion",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location, evidenced by WINLOGON.EXE running from %APPDATA%",
+          "C. T1112 \u2013 Modify Registry, evidenced by disabling the Command Prompt via policy registry key",
+          "D. T1055 \u2013 Process Injection, evidenced by writing to and allocating memory in a remote process",
+          "E. T1562.001 \u2013 Disable or Modify Tools, evidenced by disabling Command Prompt which prevents security tool execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Worm.Ludbaruma report, the analyst must decide whether VirtualAllocEx/WriteProcessMemory activity (api-0: 'wrote 32 bytes to a remote process', api-20: 'allocated memory in C:\\hash.exe') constitutes Defense Evasion. The gold standard for this sample does NOT include T1055 as a Defense Evasion answer, instead preferring T1070.004 (file deletion) and T1036.005 (masquerading). Which reasoning best explains when process injection should NOT be selected as a Defense Evasion answer?",
+        "options": [
+          "A. Process injection is never Defense Evasion; it is always Privilege Escalation",
+          "B. When the injection target is the malware's own process (self-injection for unpacking), it is primarily an Execution mechanism rather than a Defense Evasion behavior in context",
+          "C. WriteProcessMemory can only be Defense Evasion when used against system processes like svchost.exe or explorer.exe",
+          "D. The sandbox tag for the signature determines the tactic, and if the sandbox does not tag it as Defense Evasion, it should not be selected",
+          "E. Process injection is Defense Evasion only when combined with process hollowing"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Remcos detonation report shows: (1) registry-27: 'Modifies proxy settings \u2013 SETVAL HKCU\\SOF...' tagged T1112; (2) api-26 is absent (no file deletion); (3) T1070.004 is listed in mitre_attcks under Defense Evasion; (4) registry-179: 'Tries to map intranet network resources to internet zone' tagged T1562.001; (5) T1027.002 detected via static-18 (VC8). Which of the following are correctly identified as Defense Evasion in this report? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry, evidenced by SETVAL to proxy settings in HKCU",
+          "B. T1562.001 \u2013 Disable or Modify Tools, evidenced by mapping intranet resources to internet zone (modifying security zone settings)",
+          "C. T1027.002 \u2013 Software Packing, evidenced by VC8 packer detection",
+          "D. T1070.004 \u2013 File Deletion, listed in mitre_attcks but no direct sandbox signature for file deletion in this report",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall, evidenced by proxy settings modification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The RiskWare[RemoteAdmin]/NetSup.gen report (um_unhooking family) shows: (1) api-26: 'hash.exe marked C:\\Users\\%OSUSER%\\AppData\\Local\\... for deletion' (T1070.004); (2) api-25: 'hash.exe opened file with deletion access rights' (T1070.004); (3) registry-27: 'sibjs.exe DELETEVAL HKCU\\...' tagged T1112 (proxy settings deletion); (4) api-223: 'Sibuia.exe called FileTimeToLocalFileTime' (T1070.006 \u2013 Timestomp); (5) api-1: 'sibjs.exe allocating memory with PAGE_GUARD' (T1562.001). Which Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion, evidenced by marking files for deletion and opening with deletion access rights",
+          "B. T1112 \u2013 Modify Registry, evidenced by sibjs.exe deleting proxy registry values",
+          "C. T1070.006 \u2013 Timestomp, evidenced by FileTimeToLocalFileTime call",
+          "D. T1562.001 \u2013 Disable or Modify Tools, evidenced by PAGE_GUARD memory allocation as anti-debugging",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall, evidenced by proxy settings deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst reviews the RiskWare[RemoteAdmin]/NetSup.gen report and sees registry-27: 'sibjs.exe DELETEVAL HKCU\\...' tagged T1112. The analyst must decide if proxy settings deletion is Defense Evasion. Which of the following correctly explains why deleting proxy settings (T1112) qualifies as Defense Evasion?",
+        "options": [
+          "A. Proxy deletion is always Impact because it disrupts network connectivity",
+          "B. Deleting proxy registry values modifies system configuration to remove network interception points that security tools use to inspect traffic, thereby evading monitoring",
+          "C. T1112 is only Defense Evasion when the registry key modified is under HKLM, not HKCU",
+          "D. Proxy deletion is Discovery because the malware reads proxy settings before deleting them",
+          "E. Proxy settings deletion is Persistence because it prevents the system from routing traffic through a proxy on reboot"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (ransomware family) detonation report shows: (1) api-26: '085cda53603755dc.exe marked C:\\hash.exe for deletion' (T1070.004); (2) api-25: '085cda53603755dc.exe opened C:\\hash.exe with deletion access rights' (T1070.004); (3) registry-27: '085cda53603755dc.exe QUERYVAL HKCU\\SOFTWARE\\MICRO...' \u2013 checking warning level (T1012 \u2013 Discovery); (4) T1562.009 \u2013 Safe Mode Boot listed in mitre_attcks; (5) T1027.002 via static-18. Which of the following are Defense Evasion behaviors in this report? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion, because 085cda53603755dc.exe marks the original dropper C:\\hash.exe for deletion",
+          "B. T1027.002 \u2013 Software Packing, because static analysis detects a packer signature",
+          "C. T1012 \u2013 Query Registry, because checking the warning level registry key is a Discovery behavior, NOT Defense Evasion",
+          "D. T1562.009 \u2013 Safe Mode Boot, listed in Defense Evasion mitre_attcks for this sample",
+          "E. T1055 \u2013 Process Injection, because hash.exe writes 32 bytes to a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Injuke (um_unhooking family) detonation report shows: (1) api-85: 'NtQueueApcThread called' (T1055.004 \u2013 APC Injection); (2) T1562.001 \u2013 Disable or Modify Tools listed in mitre_attcks; (3) api-264: 'Creates a thread in self process' (T1055.003); (4) T1070.006 \u2013 Timestomp listed in mitre_attcks; (5) static-18: Microsoft Visual C++ 8 packer (T1027.002). Which Defense Evasion techniques are evidenced by sandbox signatures in this report? Select ALL that apply.",
+        "options": [
+          "A. T1055.004 \u2013 APC Injection, evidenced by NtQueueApcThread API call",
+          "B. T1055.003 \u2013 Thread Execution Hijacking, evidenced by creating a thread in self process",
+          "C. T1027.002 \u2013 Software Packing, evidenced by Microsoft Visual C++ 8 packer detection",
+          "D. T1070.006 \u2013 Timestomp, listed in mitre_attcks and consistent with um_unhooking evasion patterns",
+          "E. T1562.001 \u2013 Disable or Modify Tools, listed in mitre_attcks for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun (killers family) detonation report shows target-33: 'Creates a fake system process \u2013 WINLOGON.EXE at non-system pathway %APPDATA%\\WINDOWS\\WINLOGON.EXE' tagged T1036.005, and binary-37: 'Drops files inside appdata directory \u2013 services.exe' tagged T1036. The malware also marks files for deletion (api-26, T1070.004) and uses FileTimeToLocalFileTime (api-223, T1070.006). Which of the following Defense Evasion techniques are supported by sandbox evidence? Select ALL that apply.",
+        "options": [
+          "A. T1036.005 \u2013 Match Legitimate Name or Location, because WINLOGON.EXE runs from %APPDATA% instead of %WINDIR%\\system32",
+          "B. T1036 \u2013 Masquerading, because services.exe is dropped to %APPDATA%\\WINDOWS instead of %WINDIR%\\system32",
+          "C. T1070.004 \u2013 File Deletion, because hash.exe marks files for deletion",
+          "D. T1070.006 \u2013 Timestomp, because FileTimeToLocalFileTime is called",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall, because WINLOGON.EXE blocks firewall rules"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4.Generic report has a minimal signature set. The mitre_attcks list under Defense Evasion includes only: T1497.003 (Time Based Evasion) and T1070.004 (File Deletion). The sandbox shows api-26: 'C:\\o.exe marked file for deletion' (T1070.004) and api-25: 'o.exe opened C:\\Recovery\\... with deletion access rights' (T1070.004). The report also shows the cryptographic machine GUID being read (registry-1) and OpenSCManager/OpenService are absent. Which of the following correctly identifies all Defense Evasion behaviors evidenced in this report?",
+        "options": [
+          "A. T1070.004 only \u2013 file deletion is the sole Defense Evasion behavior with direct sandbox evidence",
+          "B. T1070.004 and T1497.003 \u2013 file deletion and time-based evasion are both listed in mitre_attcks as Defense Evasion",
+          "C. T1070.004, T1497.003, and T1082 \u2013 the cryptographic GUID read is also Defense Evasion",
+          "D. T1070.004 and T1056.004 \u2013 the hook installation is also Defense Evasion",
+          "E. T1070.004, T1497.003, and T1547.006 \u2013 kernel module loading is also Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Dinwod (infostealers, UPX-compressed) detonation report shows: (1) static-7: 'PE file is packed with UPX' (T1027.002); (2) static-6: 'UPX1 section entropy 7.97' (T1027.009); (3) api-0: 'hash.exe wrote 32 bytes to remote process' (T1055); (4) T1070.004 listed in mitre_attcks; (5) T1027.007 \u2013 Dynamic API Resolution listed in mitre_attcks. No file deletion sandbox signature (api-26) is present. Which of the following Defense Evasion techniques have direct sandbox signature evidence in this report? Select ALL that apply.",
+        "options": [
+          "A. T1027.002 \u2013 Software Packing, evidenced by static-7 UPX packer detection",
+          "B. T1027.009 \u2013 Embedded Payloads / High Entropy Section, evidenced by static-6 UPX1 entropy 7.97",
+          "C. T1055 \u2013 Process Injection, evidenced by api-0 writing to a remote process",
+          "D. T1070.004 \u2013 File Deletion, listed in mitre_attcks but no direct sandbox signature api-26 present",
+          "E. T1027.007 \u2013 Dynamic API Resolution, listed in mitre_attcks but no specific sandbox signature in the report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE (um_unhooking family) detonation report shows: (1) target-15: 'Modifies firewall settings \u2013 netsh.exe advfirewall firewall add rule for svchost.exe' (T1562.004); (2) api-83: 'mojpivf.exe wrote PE header bytes to a remote process' (T1055.002); (3) api-129: 'mojpivf.exe CreateProcessA in suspended mode' (T1055); (4) api-25: 'cmd.exe opened file with deletion access rights' (T1070.004); (5) static-18: VC8 packer (T1027.002). Which Defense Evasion sub-techniques are directly evidenced by malicious-level sandbox signatures? Select ALL that apply.",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall, evidenced by target-15 netsh advfirewall add rule",
+          "B. T1055.002 \u2013 Portable Executable Injection, evidenced by api-83 writing PE header to remote process",
+          "C. T1055 \u2013 Process Injection, evidenced by api-129 creating process in suspended mode",
+          "D. T1070.004 \u2013 File Deletion, evidenced by api-25 opening file with deletion access rights",
+          "E. T1027.002 \u2013 Software Packing, evidenced by static-18 VC8 packer detection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample (hash.exe) spawns netsh.exe with the command 'netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE'. Which of the following MITRE ATT&CK techniques does this behavior directly represent under the Defense Evasion tactic?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall",
+          "B. T1055 \u2013 Process Injection",
+          "C. T1036 \u2013 Masquerading",
+          "D. T1027 \u2013 Obfuscated Files or Information",
+          "E. T1070.004 \u2013 File Deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the MSIL.Bladabindi detonation report, the sandbox signature 'target-186' explicitly tags netsh.exe execution with attck_id T1562.004, and a separate signature 'string-415' references a registry string related to firewall policy also tagged T1562.004. A student analyst reviewing this report must identify all Defense Evasion indicators. Which of the following options correctly identifies T1562.004 as a Defense Evasion technique supported by evidence in this report?",
+        "options": [
+          "A. netsh.exe spawned with 'firewall add allowedprogram' command \u2013 T1562.004 (Disable or Modify System Firewall)",
+          "B. hash.exe calls GetAsyncKeyState \u2013 T1056.001 (Keylogging)",
+          "C. hash.exe allocates memory with PAGE_GUARD \u2013 T1562.001 (Disable or Modify Tools)",
+          "D. hash.exe drops files to %APPDATA% \u2013 T1036 (Masquerading)",
+          "E. netsh.exe loads bcrypt.dll \u2013 T1027 (Obfuscated Files or Information)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The GenPack:Generic.Malware.SF sample (hash.exe) drops microsofthelp.exe into %WINDIR% (the Windows root directory) and a sandbox signature with threat_level 'malicious' states: 'Drops executable files to the Windows system directory' tagged T1036. Additionally, microsofthelp.exe marks C:\\hash.exe for deletion (api-26, T1070.004). Which Defense Evasion techniques are evidenced in this report? Select ALL that apply.",
+        "options": [
+          "A. T1036 \u2013 Masquerading (dropping executable to Windows system directory to blend with legitimate binaries)",
+          "B. T1070.004 \u2013 File Deletion (microsofthelp.exe marks C:\\hash.exe for deletion)",
+          "C. T1562.004 \u2013 Disable or Modify System Firewall",
+          "D. T1027.002 \u2013 Software Packing (MPRESS packer detected on hash)",
+          "E. T1497 \u2013 Virtualization/Sandbox Evasion (GetTickCount used for VM detection)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the CVE-2017-0147 (WannaCry-style) detonation report, the following signatures are observed: (1) mssecsvc.exe calls OpenSCManager and OpenService; (2) mssecsvc.exe reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY; (3) mssecsvc.exe performs a SETVAL on HKCU proxy settings (registry-27, T1112); (4) rundll32.exe drops mssecsvc.exe to %WINDIR% (binary-7, T1036). Which of the following correctly classifies these behaviors by tactic? Select ALL that apply.",
+        "options": [
+          "A. OpenSCManager / OpenService calls by mssecsvc.exe represent Discovery (T1007 \u2013 System Service Discovery), NOT Defense Evasion",
+          "B. Reading the cryptographic machine GUID (HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY) represents Discovery (T1082 \u2013 System Information Discovery), NOT Defense Evasion",
+          "C. SETVAL on proxy settings (HKCU proxy DELETEVAL/SETVAL) represents Defense Evasion via T1112 \u2013 Modify Registry",
+          "D. Dropping mssecsvc.exe to %WINDIR% represents Defense Evasion via T1036 \u2013 Masquerading",
+          "E. OpenSCManager calls represent Defense Evasion via T1562.001 \u2013 Disable or Modify Tools"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A junior analyst reviewing the CVE-2017-0147 sandbox report selects 'OpenSCManager' and 'OpenService' API calls as Defense Evasion indicators. An expert disagrees. Which of the following best explains why OpenSCManager/OpenService calls in this report are NOT Defense Evasion, and what the actual Defense Evasion indicators are?",
+        "options": [
+          "A. OpenSCManager/OpenService are System Service Discovery (T1007), a Discovery technique. Actual Defense Evasion indicators include proxy settings modification (T1112) and dropping mssecsvc.exe to the Windows directory (T1036)",
+          "B. OpenSCManager/OpenService are Lateral Movement indicators. Defense Evasion is represented only by network scanning behavior",
+          "C. OpenSCManager/OpenService are Execution indicators. There are no Defense Evasion techniques in this report",
+          "D. OpenSCManager/OpenService are Defense Evasion because they disable security services",
+          "E. Reading the cryptographic GUID is Defense Evasion because it obfuscates the malware's identity"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt sample spawns svchost.exe from %APPDATA% (non-system path), which then runs vssadmin, wbadmin, and bcdedit to destroy recovery options. The sandbox also reports: (1) svchost.exe disables Windows Task Manager via HKCU registry (registry-3, T1562.001); (2) hash.exe deletes proxy settings via DELETEVAL on HKCU\\...\\Internet Settings (registry-27, T1112); (3) hash.exe marks files for deletion (api-25, T1070.004); (4) svchost.exe runs from %APPDATA% masquerading as a system process (target-33, T1036.005). Which of the following are Defense Evasion techniques evidenced in this report? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools (svchost.exe disables Task Manager via registry key HKCU\\...\\TaskMgr)",
+          "B. T1112 \u2013 Modify Registry (proxy settings deletion via DELETEVAL on Internet Settings)",
+          "C. T1070.004 \u2013 File Deletion (hash.exe opens files with deletion access rights)",
+          "D. T1036.005 \u2013 Match Legitimate Name or Location (svchost.exe running from %APPDATA%)",
+          "E. T1490 \u2013 Inhibit System Recovery (vssadmin delete shadows)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt report, the sandbox signature registry-3 states: 'svchost.exe (Path: HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM) Disables Windows Task Manager (taskmgr)' tagged T1562.001. Which tactic does this behavior belong to, and why?",
+        "options": [
+          "A. Defense Evasion \u2013 T1562.001 (Disable or Modify Tools), because disabling Task Manager prevents users and defenders from inspecting or terminating malicious processes",
+          "B. Persistence \u2013 T1547.001, because registry modifications under HKCU\\SOFTWARE can establish run keys",
+          "C. Discovery \u2013 T1012 (Query Registry), because the malware is reading registry values",
+          "D. Impact \u2013 T1529 (System Shutdown/Reboot), because disabling Task Manager impacts system usability",
+          "E. Privilege Escalation \u2013 T1134, because modifying HKCU policies requires elevated tokens"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample (um_unhooking family) spawns netsh.exe with the command: 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes'. Two sandbox signatures tag this: target-186 (T1562.004) and target-15 (T1562.004). Additionally, cmd.exe opens files with deletion access rights (api-25, T1070.004) and hash.exe modifies proxy settings (registry-27, T1112). Which Defense Evasion techniques are present? Select ALL that apply.",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall (netsh advfirewall add rule for svchost.exe)",
+          "B. T1070.004 \u2013 File Deletion (cmd.exe opens files with deletion access rights)",
+          "C. T1112 \u2013 Modify Registry (proxy settings modification via DELETEVAL)",
+          "D. T1055.002 \u2013 Portable Executable Injection (mojpivf.exe writes PE header to remote process)",
+          "E. T1007 \u2013 System Service Discovery (sc.exe queries service status)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sandbox report shows netsh.exe executing: 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\"'. The sandbox labels this with T1562.004. Why is this classified as Defense Evasion rather than another tactic?",
+        "options": [
+          "A. Because adding a firewall rule to allow svchost.exe inbound traffic modifies the system firewall to permit malicious C2 communication, evading network-based defenses (T1562.004)",
+          "B. Because spawning netsh.exe is a Lateral Movement technique used to pivot to other hosts",
+          "C. Because netsh.exe is a LOLbin used exclusively for Execution via Windows Command Shell",
+          "D. Because firewall rule creation is a Persistence technique ensuring the malware survives reboots",
+          "E. Because the rule name 'Host-process for services of Windows' is a Discovery behavior"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Dinwod (UPX-compressed, infostealers family) report shows: (1) UPX packer detected (static-7, T1027.002); (2) high-entropy UPX1 section (static-6, T1027.009); (3) WriteProcessMemory to remote process (stream-34, T1055); (4) RtlCreateUserThread for DLL injection (stream-5, T1055.001); (5) file deletion via marks-for-deletion (api-26, T1070.004). Which of the following are correctly identified as Defense Evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. T1027.002 \u2013 Software Packing (UPX packer detected)",
+          "B. T1027.009 \u2013 Embedded Payloads (high-entropy UPX1 section)",
+          "C. T1055 \u2013 Process Injection (WriteProcessMemory to remote process)",
+          "D. T1070.004 \u2013 File Deletion (marks file for deletion)",
+          "E. T1547 \u2013 Boot or Logon Autostart Execution (registry run key modification)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma report (killers family) shows: (1) hash.exe marks C:\\share\\XK\\New Folder.exe for deletion (api-26, T1070.004); (2) xk.exe opens files with deletion access rights (api-25, T1070.004); (3) hash.exe creates fake system processes WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE at %APPDATA%\\WINDOWS\\ (target-33, T1036.005); (4) hash.exe disables Windows Registry Editor via HKCU (registry-2, T1112); (5) hash.exe disables Command Prompt via HKCU\\SOFTWARE\\POLICIES (registry-21, T1112). Which of the following represent Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion (hash.exe and xk.exe mark files for deletion)",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location (fake WINLOGON.EXE/CSRSS.EXE at non-system paths)",
+          "C. T1112 \u2013 Modify Registry (disabling regedit and cmd via HKCU policies)",
+          "D. T1562.009 \u2013 Safe Mode Boot (modifying boot configuration)",
+          "E. T1055 \u2013 Process Injection (VirtualAllocEx/WriteProcessMemory to remote process)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ranpax.Generic (killers family) report, the following are observed: (1) hash.exe deletes proxy settings via DELETEVAL on HKCU\\...\\Internet Settings (registry-27, T1112); (2) cmd.exe marks files for deletion (api-26, T1070.004); (3) PECompact2 packer detected (static-18, T1027.002); (4) high-entropy .text section (static-6, T1027.009); (5) hash.exe maps intranet zone to internet zone via SETVAL (registry-179, T1562.001). Which of the following are Defense Evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry (proxy settings deletion)",
+          "B. T1070.004 \u2013 File Deletion (cmd.exe marks files for deletion)",
+          "C. T1027.002 \u2013 Software Packing (PECompact2 detected)",
+          "D. T1027.009 \u2013 Embedded Payloads (high-entropy .text section)",
+          "E. T1562.001 \u2013 Disable or Modify Tools (intranet-to-internet zone mapping via registry SETVAL)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (ransomware family) report shows: (1) 085cda53603755dc.exe marks C:\\hash.exe for deletion (api-26, T1070.004); (2) 085cda53603755dc.exe opens C:\\hash.exe with deletion access rights (api-25, T1070.004); (3) hash.exe is packed with a packer detected in the .eh_fram section (static-60, T1027.002); (4) 085cda53603755dc.exe modifies HKCU run keys (registry-0, T1547.001); (5) T1562.009 Safe Mode Boot is listed in mitre_attcks for Defense Evasion. Which of the following are Defense Evasion techniques evidenced in this report? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion (child process marks parent executable for deletion after execution)",
+          "B. T1027.002 \u2013 Software Packing (unusual section name .eh_fram, packer signature detected)",
+          "C. T1562.009 \u2013 Safe Mode Boot (listed in MITRE ATT&CK Defense Evasion mappings for this sample)",
+          "D. T1547.001 \u2013 Registry Run Keys / Startup Folder (child process modifies HKCU run key)",
+          "E. T1055 \u2013 Process Injection (WriteProcessMemory to remote process)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The RiskWare NetSup (remcos family) report shows: (1) sibjs.exe deletes proxy settings via DELETEVAL on HKCU\\...\\Internet Settings (registry-27, T1112); (2) hash.exe marks files for deletion (api-26, T1070.004); (3) hash.exe opens files with deletion access rights (api-25, T1070.004); (4) sibjs.exe maps intranet zone to internet zone (registry-179, T1562.001); (5) Sibuia.exe calls FileTimeToLocalFileTime (api-223, T1070.006). Which Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry (proxy settings deletion via DELETEVAL)",
+          "B. T1070.004 \u2013 File Deletion (hash.exe marks files for deletion with deletion access rights)",
+          "C. T1562.001 \u2013 Disable or Modify Tools (intranet zone mapped to internet zone via registry SETVAL)",
+          "D. T1070.006 \u2013 Timestomp (FileTimeToLocalFileTime called by Sibuia.exe)",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall (netsh firewall rule modification)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The CVE-2017-0147 (WannaCry-style) report includes the following sandbox signature: registry-29 states 'mssecsvc.exe queries the internet cache settings (often used to hide footprints in index.dat or internet cache)' and registry-27 states 'mssecsvc.exe modifies proxy settings (SETVAL on HKCU proxy)'. How should an analyst classify these behaviors?",
+        "options": [
+          "A. The internet cache query (registry-29) is a Discovery/Defense Evasion indicator for hiding footprints; the proxy SETVAL (registry-27, T1112) is Defense Evasion via Modify Registry",
+          "B. Both are Credential Access indicators because they access browser-related registry keys",
+          "C. Both are Lateral Movement indicators used to redirect network traffic through a proxy",
+          "D. The internet cache query is Execution; the proxy modification is Persistence",
+          "E. Both are purely Discovery behaviors with no Defense Evasion significance"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun (killers family) report shows: (1) hash.exe creates fake processes WINLOGON.EXE, CSRSS.EXE at %APPDATA%\\WINDOWS (target-33, T1036.005); (2) IExplorer.exe hooks WinExec, GetNativeSystemInfo, FindFirstFileW, and send@WS2_32.DLL (hooks-0, hooks-2, hooks-5, T1056.004); (3) hash.exe marks files for deletion (api-26, T1070.004); (4) hash.exe calls FileTimeToLocalFileTime (api-223, T1070.006). Which Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1036.005 \u2013 Match Legitimate Name or Location (fake WINLOGON.EXE/CSRSS.EXE at non-system paths)",
+          "B. T1070.004 \u2013 File Deletion (hash.exe marks files for deletion)",
+          "C. T1070.006 \u2013 Timestomp (FileTimeToLocalFileTime called)",
+          "D. T1056.004 \u2013 Credential API Hooking (IExplorer.exe hooks system and network APIs)",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst reviews the GenPack:Generic.Malware.SF report and must identify ALL Defense Evasion indicators. The report shows: (1) MPRESS packer on hash (static-77, T1027.002); (2) high-entropy .MPRESS1 section (static-6, T1027.009); (3) hash.exe writes 32 bytes to remote process microsofthelp.exe (api-0, T1055); (4) microsofthelp.exe marks C:\\hash.exe for deletion (api-26, T1070.004); (5) microsofthelp.exe drops to %WINDIR%\\microsofthelp.exe (binary-7, T1036); (6) time-based evasion via Sleep (api-47, T1497.003). The student selects only A, B, C. What is the student missing?",
+        "options": [
+          "A. T1027.002 \u2013 Software Packing (MPRESS detected)",
+          "B. T1027.009 \u2013 Embedded Payloads (high-entropy section)",
+          "C. T1055 \u2013 Process Injection (WriteProcessMemory)",
+          "D. T1070.004 \u2013 File Deletion (microsofthelp.exe marks hash.exe for deletion \u2013 performed by child process)",
+          "E. T1036 \u2013 Masquerading (dropping executable to Windows directory)",
+          "F. T1497.003 \u2013 Time Based Evasion (excessive Sleep calls)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4 report (simulated network mode) shows: (1) o.exe marks files for deletion (api-26, T1070.004); (2) o.exe opens Recovery files with deletion access rights (api-25, T1070.004); (3) T1497.003 Time Based Evasion is listed in Defense Evasion mitre_attcks. The report does NOT show netsh.exe execution, firewall modification, or proxy settings changes. Which of the following correctly identifies the Defense Evasion techniques present and absent?",
+        "options": [
+          "A. T1070.004 (File Deletion) and T1497.003 (Time Based Evasion) are present; T1562.004 (Firewall Modification) is absent",
+          "B. T1562.004 (Firewall Modification) is present because the malware contacts many hosts; T1070.004 is absent",
+          "C. T1112 (Modify Registry) is the primary Defense Evasion technique based on the DGA domain contacts",
+          "D. T1036 (Masquerading) is present because o.exe uses a short filename",
+          "E. No Defense Evasion techniques are present in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Injuke (um_unhooking family) report shows: (1) hash.exe calls NtQueueApcThread for APC injection (api-85, T1055.004); (2) hash.exe calls FileTimeToLocalFileTime via api-223 \u2013 wait, this signature is NOT present in this report; (3) T1562.001 Disable or Modify Tools is listed in Defense Evasion mitre_attcks; (4) T1027.002 Software Packing and T1027.009 Embedded Payloads are listed; (5) hash.exe sleeps for over 2 minutes (api-24, T1497.003). Which Defense Evasion techniques are directly evidenced by sandbox signatures in this report? Select ALL that apply.",
+        "options": [
+          "A. T1055.004 \u2013 Asynchronous Procedure Call (NtQueueApcThread called for injection)",
+          "B. T1027.002 \u2013 Software Packing (listed in MITRE ATT&CK Defense Evasion mappings and supported by high-entropy resource)",
+          "C. T1497.003 \u2013 Time Based Evasion (hash.exe sleeps for over 2 minutes)",
+          "D. T1562.001 \u2013 Disable or Modify Tools (listed in Defense Evasion mitre_attcks)",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall (netsh.exe not observed in this report)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Worm.Ludbaruma report and must distinguish between Defense Evasion and Discovery behaviors. The report shows: (a) hash.exe reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY (registry-1, T1082); (b) hash.exe scans for window names 'ThunderRT6FormDC' (api-70, T1010); (c) hash.exe disables Windows Registry Editor via HKCU (registry-2, T1112); (d) hash.exe creates fake WINLOGON.EXE at %APPDATA%\\WINDOWS (target-33, T1036.005). Which behaviors are Defense Evasion (not Discovery)?",
+        "options": [
+          "A. (c) and (d) only \u2013 disabling regedit (T1112/T1562.001 context) and masquerading as WINLOGON.EXE (T1036.005) are Defense Evasion",
+          "B. (a) and (b) only \u2013 reading cryptographic GUID and window scanning are Defense Evasion",
+          "C. All four are Defense Evasion techniques",
+          "D. (a), (c), and (d) \u2013 GUID reading, regedit disabling, and masquerading are Defense Evasion",
+          "E. None of these are Defense Evasion; they are all Discovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample (hash.exe) spawns netsh.exe with the command 'netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE'. Which of the following MITRE ATT&CK Defense Evasion techniques does this behaviour directly demonstrate?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall, because netsh.exe is used to add a firewall allowlist rule for the malware executable",
+          "B. T1055 \u2013 Process Injection, because netsh.exe is a child process spawned by hash.exe",
+          "C. T1027.002 \u2013 Software Packing, because the sample is detected as a .NET assembly with compression routines",
+          "D. T1036 \u2013 Masquerading, because the malware names itself 'hash.exe' to blend with legitimate processes",
+          "E. T1497.003 \u2013 Time Based Evasion, because hash.exe sleeps 525 times during execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the MSIL.Bladabindi detonation report, which of the following sandbox signatures or observed behaviours qualify as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+        "options": [
+          "A. hash.exe allocates memory with PAGE_GUARD access (anti-debugging trick) \u2013 T1562.001 Disable or Modify Tools",
+          "B. netsh.exe is spawned with 'netsh firewall add allowedprogram' to whitelist the malware \u2013 T1562.004 Disable or Modify System Firewall",
+          "C. hash.exe calls GetAsyncKeyState for keylogging \u2013 T1056.001 Keylogging",
+          "D. hash.exe uses System.IO.Compression.GZipStream and System.Reflection.Load for reflective loading \u2013 T1620 Reflective Code Loading",
+          "E. hash.exe queries HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY for the machine GUID \u2013 T1082 System Information Discovery",
+          "F. hash.exe drops files inside %APPDATA% \u2013 T1036 Masquerading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample spawns netsh.exe with the command 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes'. Which Defense Evasion technique does this represent, and what is the key evidence?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall; the sandbox signature 'Modifies firewall settings' (target-15, threat_level malicious) and 'Detects NETSH process execution' (target-186) both map to T1562.004",
+          "B. T1055 \u2013 Process Injection; svchost.exe is launched as a child of mojpivf.exe after the firewall rule is added",
+          "C. T1036.005 \u2013 Match Legitimate Name or Location; the firewall rule uses the legitimate svchost.exe path to hide malicious traffic",
+          "D. T1218 \u2013 System Binary Proxy Execution; netsh.exe is a LOLBin used to execute arbitrary commands",
+          "E. T1070.004 \u2013 File Deletion; cmd.exe opens files with deletion access rights during the same execution chain"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the GenPack:Generic.Malware.SF detonation, hash.exe drops microsofthelp.exe into %WINDIR% (the Windows root directory) and microsofthelp.exe subsequently marks C:\\hash.exe for deletion. Which Defense Evasion techniques are demonstrated by these two behaviours? Select ALL that apply.",
+        "options": [
+          "A. T1036 \u2013 Masquerading; dropping an executable named 'microsofthelp.exe' into the Windows system directory mimics legitimate Microsoft binaries",
+          "B. T1070.004 \u2013 File Deletion / Indicator Removal; microsofthelp.exe marks the original dropper (C:\\hash.exe) for deletion to remove forensic evidence",
+          "C. T1055.001 \u2013 Dynamic-link Library Injection; microsofthelp.exe injects a DLL into the Windows directory",
+          "D. T1027.002 \u2013 Software Packing; the sample is detected as MPRESS-packed with high-entropy sections",
+          "E. T1497 \u2013 Virtualization/Sandbox Evasion; microsofthelp.exe calls GetTickCount to detect virtual environments"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the CVE-2017-0147 (WannaCry-style) detonation, mssecsvc.exe calls OpenSCManager and OpenService, reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY, and modifies proxy settings via SETVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS. Which of the following correctly classifies these behaviours under MITRE ATT&CK?",
+        "options": [
+          "A. OpenSCManager and OpenService calls = T1562.001 Disable or Modify Tools (Defense Evasion)",
+          "B. OpenSCManager and OpenService calls = T1007 System Service Discovery (Discovery) / lateral movement preparation, NOT Defense Evasion",
+          "C. Reading the cryptographic machine GUID = T1082 System Information Discovery (Discovery), NOT Defense Evasion",
+          "D. Modifying proxy settings via SETVAL = T1112 Modify Registry (Defense Evasion)",
+          "E. Reading the cryptographic machine GUID = T1562.001 Disable or Modify Tools (Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt.Generic sample shows the following sandbox signatures: (1) svchost.exe disables Windows Task Manager via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM registry modification; (2) hash.exe deletes proxy settings via DELETEVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS; (3) hash.exe allocates memory with PAGE_GUARD. Which of these are correctly classified as Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; svchost.exe disabling Task Manager via registry prevents users from terminating the ransomware process",
+          "B. T1112 \u2013 Modify Registry; deleting proxy settings via DELETEVAL modifies the registry to alter network behaviour as a Defense Evasion action",
+          "C. T1562.001 \u2013 Disable or Modify Tools; PAGE_GUARD memory allocation is an anti-debugging trick that prevents memory dumping",
+          "D. T1055 \u2013 Process Injection; svchost.exe is spawned at a non-system path (%APPDATA%\\svchost.exe) indicating process injection",
+          "E. T1490 \u2013 Inhibit System Recovery; vssadmin and bcdedit commands delete shadow copies and disable recovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.GandCrab4.Generic detonation (o.exe), the sandbox reports: (1) o.exe marks files for deletion using FILE_DELETE_ON_CLOSE; (2) o.exe opens files with deletion access rights targeting recovery partition files; (3) o.exe queries HKLM\\SYSTEM\\ControlSet001 registry keys. Which of the following Defence Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion / Indicator Removal; marking files for deletion removes forensic artifacts post-encryption",
+          "B. T1497.003 \u2013 Time Based Evasion; the sandbox reports time-based evasion in the MITRE ATT&CK mapping",
+          "C. T1012 \u2013 Query Registry; querying ControlSet001 is a Discovery technique, not Defense Evasion",
+          "D. T1562.001 \u2013 Disable or Modify Tools; o.exe installs hooks/patches on the running process (hooks-8 signature)",
+          "E. T1027.002 \u2013 Software Packing; the sample is detected as packed with high-entropy sections"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma detonation shows: (1) hash.exe marks C:\\share\\XK\\New Folder.exe for deletion; (2) xk.exe opens files with deletion access rights; (3) hash.exe creates fake system processes (WINLOGON.EXE at %APPDATA%\\WINDOWS\\WINLOGON.EXE); (4) hash.exe disables Command Prompt and Registry Editor via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT registry writes. Which of the following are Defense Evasion techniques present in this report? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion; both hash.exe marking files for deletion and xk.exe opening files with deletion rights constitute indicator removal",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location; WINLOGON.EXE running from %APPDATA%\\WINDOWS\\ masquerades as a legitimate system process",
+          "C. T1562.001 \u2013 Disable or Modify Tools; disabling cmd.exe and regedit.exe via registry policy prevents analyst and user interference",
+          "D. T1055 \u2013 Process Injection; VirtualAllocEx and WriteProcessMemory are called to inject into remote processes",
+          "E. T1547.001 \u2013 Registry Run Keys / Startup Folder; hash.exe creates a registry run key for persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Trojan.Generic (hash.exe / 085cda53603755dc.exe) detonation, the child process 085cda53603755dc.exe marks C:\\hash.exe for deletion and opens it with deletion access rights. What MITRE ATT&CK Defense Evasion technique does this represent, and why does the child process context matter?",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion; the child process deletes the original dropper to remove evidence, which is Defense Evasion regardless of whether it is the parent or child performing the deletion",
+          "B. T1055 \u2013 Process Injection; the child process was spawned via process injection and therefore its file deletion is classified under T1055",
+          "C. T1036 \u2013 Masquerading; the child process uses a hex-named executable to disguise its identity",
+          "D. T1562.001 \u2013 Disable or Modify Tools; deleting the parent executable disables the original malware tool",
+          "E. T1027.005 \u2013 Indicator Removal from Tools; stripping the original executable from disk is indicator removal from tools"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The RiskWare/NetSup.gen detonation (hash.exe with Sibuia.exe/sibjs.exe chain) shows: (1) sibjs.exe deletes proxy settings via DELETEVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS; (2) hash.exe marks files for deletion and opens files with deletion access rights; (3) sibjs.exe allocates memory with PAGE_GUARD. Which of the following Defense Evasion techniques are present? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry; deleting proxy settings via DELETEVAL modifies the registry as a Defense Evasion action",
+          "B. T1070.004 \u2013 File Deletion; hash.exe marking files for deletion removes forensic indicators",
+          "C. T1562.001 \u2013 Disable or Modify Tools; PAGE_GUARD memory allocation prevents memory dumping by debuggers/analysts",
+          "D. T1055.001 \u2013 Dynamic-link Library Injection; sibjs.exe loads DLLs dynamically as part of injection",
+          "E. T1497 \u2013 Virtualization/Sandbox Evasion; the MITRE mapping for this sample explicitly includes T1497 under Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ranpax.Generic (PECompact2-packed) detonation shows: (1) hash.exe sets HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS via SETVAL (proxy mapping); (2) cmd.exe marks files for deletion; (3) the sample is detected as PECompact 2.0x with high-entropy .text section. Regarding Defense Evasion classification, which statement is CORRECT?",
+        "options": [
+          "A. The proxy settings SETVAL constitutes T1112 Modify Registry (Defense Evasion) because it alters system configuration to hide network traffic",
+          "B. cmd.exe marking files for deletion is T1070.004 File Deletion (Defense Evasion) because a child process performing indicator removal is still classified as Defense Evasion",
+          "C. The PECompact packing with high-entropy section is T1027.002 Software Packing (Defense Evasion)",
+          "D. All three of the above are correct",
+          "E. Only C is correct; A and B are Discovery and Impact respectively"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the CVE-2017-0147 (WannaCry-style) sample, the sandbox reports that mssecsvc.exe queries 'HKCU\\SOFTWARE\\MICROSOFT\\INTERNET EXPLORER\\MAIN\\FeatureControl' (internet cache settings) and 'HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS' (IE security settings), and also performs a SETVAL on proxy settings. An analyst must decide which of these are Defense Evasion vs Discovery. Which answer is correct?",
+        "options": [
+          "A. Querying internet cache settings = Defense Evasion (hiding footprints); querying IE security settings = Defense Evasion; proxy SETVAL = Defense Evasion (T1112)",
+          "B. Querying internet cache settings = Discovery (T1012 Query Registry); querying IE security settings = Discovery; proxy SETVAL = Defense Evasion (T1112 Modify Registry)",
+          "C. All three are Defense Evasion because they all relate to modifying or querying security-relevant registry keys",
+          "D. Querying internet cache settings = Defense Evasion; proxy SETVAL = Discovery; IE security settings query = Persistence",
+          "E. All three are Discovery because they only read registry values without modifying them"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun detonation (Visual Basic 6, 64 processes) shows: (1) IExplorer.exe hooks WinExec@KERNEL32.DLL and FindFirstFileW@KERNEL32.DLL; (2) hash.exe creates fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE at %APPDATA%\\WINDOWS\\); (3) hash.exe marks files for deletion. Which Defense Evasion techniques are present? Select ALL that apply.",
+        "options": [
+          "A. T1056.004 \u2013 Credential API Hooking; IExplorer.exe hooks WinExec and FindFirstFileW to intercept API calls (classified as Defense Evasion via hooking)",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location; fake WINLOGON.EXE/CSRSS.EXE/SERVICES.EXE at non-system paths masquerade as legitimate processes",
+          "C. T1070.004 \u2013 File Deletion; hash.exe marking files for deletion constitutes indicator removal",
+          "D. T1055 \u2013 Process Injection; hash.exe writes 32 bytes to a remote process and allocates virtual memory in remote processes",
+          "E. T1547.006 \u2013 Kernel Modules and Extensions; the sample loads kernel modules for persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Dinwod (UPX-packed, 64 processes) detonation shows: (1) UPX packing with zero-size UPX0 section and high-entropy UPX1 section; (2) hash.exe writes 32 bytes to a remote process; (3) child processes (620006.exe, lvhxj.exe, etc.) mark files for deletion via FILE_DELETE_ON_CLOSE. Which Defense Evasion techniques are demonstrated? Select ALL that apply.",
+        "options": [
+          "A. T1027.002 \u2013 Software Packing; UPX detection with high-entropy section and entrypoint in UPX1",
+          "B. T1027.009 \u2013 Embedded Payloads; the high-entropy UPX1 section contains embedded payload",
+          "C. T1055 \u2013 Process Injection; writing 32 bytes to a remote process via WriteProcessMemory",
+          "D. T1070.004 \u2013 File Deletion; child processes marking files for deletion removes forensic indicators",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe is used to modify firewall rules"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample (um_unhooking family) spawns netsh.exe with 'advfirewall firewall add rule' to allow svchost.exe inbound connections. The sandbox generates two signatures for this: 'Detects NETSH process execution' (target-186, T1562.004) and 'Modifies firewall settings' (target-15, T1562.004, threat_level malicious). An analyst reviewing this report should classify this behaviour as which MITRE ATT&CK technique under which tactic?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall under Defense Evasion; modifying firewall rules to allow malicious traffic evades network-based detection",
+          "B. T1021 \u2013 Remote Services under Lateral Movement; the firewall rule enables remote access to svchost.exe",
+          "C. T1543.003 \u2013 Windows Service under Persistence; the sc.exe commands create a service named tpxhoiko",
+          "D. T1055.002 \u2013 Portable Executable Injection under Defense Evasion; mojpivf.exe writes a PE header to svchost.exe",
+          "E. T1059.003 \u2013 Windows Command Shell under Execution; cmd.exe is used to run the mkdir and move commands"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt.Generic detonation, the following registry-based behaviors are observed: (1) svchost.exe sets HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM\\DisableTaskMgr (disabling Task Manager); (2) hash.exe performs DELETEVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS (proxy deletion). A student selected only option A below. What was missed?",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; disabling Task Manager via registry prevents process termination",
+          "B. T1112 \u2013 Modify Registry (Defense Evasion); the proxy DELETEVAL also constitutes registry modification for Defense Evasion purposes",
+          "C. T1497.001 \u2013 System Checks; the sample performs system checks as part of sandbox evasion",
+          "D. T1036.005 \u2013 Match Legitimate Name or Location; svchost.exe runs from %APPDATA% instead of System32",
+          "E. T1070 \u2013 Indicator Removal; deleting proxy settings removes network configuration artifacts"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma sample modifies HKCU\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\SYSTEM\\DisableCMD and HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM\\DisableRegistryTools. The sandbox classifies these as 'Disables Command Prompt (cmd)' and 'Disables Windows Registry Editor (regedit)' with threat_level malicious. Which MITRE ATT&CK technique(s) do these actions represent under Defense Evasion?",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; disabling cmd.exe and regedit.exe prevents analysts and responders from investigating or remediating the infection",
+          "B. T1112 \u2013 Modify Registry; these are registry modifications but they are classified under Persistence, not Defense Evasion",
+          "C. T1562.001 is correct for Defense Evasion because both cmd.exe and regedit.exe are security/investigation tools whose disabling impedes incident response",
+          "D. T1547.001 \u2013 Registry Run Keys; modifying policy keys is equivalent to setting run keys for persistence",
+          "E. T1222 \u2013 File and Directory Permissions Modification; policy modifications affect file access permissions"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Injuke (um_unhooking family, APC injection) detonation shows: (1) T1562.001 Disable or Modify Tools in the MITRE mapping; (2) hash.exe calls NtQueueApcThread for APC injection (T1055.004); (3) hash.exe sleeps for over 18 minutes (T1497.003). Which of the following correctly identifies ALL Defense Evasion techniques present in this sample's MITRE ATT&CK mapping?",
+        "options": [
+          "A. T1055.004 (APC Injection), T1562.001 (Disable or Modify Tools), T1497.003 (Time Based Evasion), T1027.002 (Software Packing), T1027.009 (Embedded Payloads)",
+          "B. T1055.004, T1497.003, T1027.002 only",
+          "C. T1562.001, T1497.003, T1055 (generic), T1027 only",
+          "D. T1055.004, T1562.001, T1497.003, T1027.002, T1027.009, T1070.006 (Timestomp), T1622 (Debugger Evasion)",
+          "E. T1055.004, T1562.001, T1497.003 only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Remcos detonation (498688 bytes) includes these sandbox signatures: (1) 'Tries to map intranet network resources to internet zone' (SETVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS\\ZoneMap); (2) hash.exe modifies proxy settings (SETVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS); (3) hash.exe calls FileTimeToLocalFileTime (not present in this sample \u2014 check carefully). Which Defense Evasion techniques are correctly identified from the actual report? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; the ZoneMap SETVAL maps intranet zones to internet zone, bypassing IE security zone restrictions",
+          "B. T1112 \u2013 Modify Registry; the proxy settings SETVAL modifies registry for network Defense Evasion",
+          "C. T1070.006 \u2013 Timestomp; FileTimeToLocalFileTime is called in this sample",
+          "D. T1027.002 \u2013 Software Packing; the sample has high-entropy .text section and unusual PE resources",
+          "E. T1027.007 \u2013 Dynamic API Resolution; the sample does not include dynamic API resolution in its MITRE mapping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student is analyzing the Trojan.Generic (MinGW-compiled ransomware, 085cda53603755dc.exe chain) and must select ALL Defense Evasion techniques. The student selected: T1027.002 (packing), T1070.004 (file deletion by child process), T1055 (WriteProcessMemory). The gold answer also includes T1562.009 (Safe Mode Boot) and T1497.003 (Time Based Evasion). Why should T1562.009 and T1497.003 be included?",
+        "options": [
+          "A. T1562.009 is in the sample's MITRE ATT&CK mapping under Defense Evasion; Safe Mode Boot disables security tools. T1497.003 is also mapped under Defense Evasion because time-based evasion delays execution to evade sandbox timeouts",
+          "B. T1562.009 should NOT be included because there is no bcdedit command in this sample; T1497.003 is Discovery only",
+          "C. T1562.009 is Persistence, not Defense Evasion; T1497.003 is both Discovery and Defense Evasion in the MITRE mapping",
+          "D. Both T1562.009 and T1497.003 are Discovery techniques only and should not be selected for Defense Evasion",
+          "E. T1562.009 is Impact; T1497.003 is Execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample (hash.exe) spawns netsh.exe with the command 'netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE'. Which of the following MITRE ATT&CK techniques does this behavior directly evidence under the Defense Evasion tactic?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall, because netsh.exe is used to add a firewall allowlist rule for the malware executable",
+          "B. T1055 \u2013 Process Injection, because netsh.exe is a child process of hash.exe",
+          "C. T1027.002 \u2013 Software Packing, because the binary was detected as Microsoft Visual C# compiled",
+          "D. T1059.003 \u2013 Windows Command Shell, because cmd.exe strings are present in the binary",
+          "E. T1036 \u2013 Masquerading, because the malware drops files to the appdata directory"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Trojan.BrsecmonE detonation, netsh.exe is spawned with the command 'advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes'. Which Defense Evasion technique does this represent, and what is the key indicator?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall; the sandbox signature 'Modifies firewall settings' and the netsh advfirewall add rule command targeting svchost.exe confirm firewall rule manipulation",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location; because svchost.exe is a legitimate Windows binary name",
+          "C. T1055 \u2013 Process Injection; because netsh.exe is a child of hash.exe",
+          "D. T1218 \u2013 System Binary Proxy Execution; because netsh.exe is a LOLbin",
+          "E. T1070.004 \u2013 File Deletion; because cmd.exe opens files with deletion access rights"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Analyzing the GenPack:Generic.Malware.SF sample, the child process microsofthelp.exe is dropped to %WINDIR%\\microsofthelp.exe and then marks C:\\hash.exe for deletion using NtSetInformationFile with FILE_DISPOSITION_INFORMATION. Which Defense Evasion techniques are evidenced by these two behaviors? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion (Indicator Removal); microsofthelp.exe marks hash.exe for deletion via 'Marks file for deletion' and 'Opens file with deletion access rights' sandbox signatures",
+          "B. T1036 \u2013 Masquerading; hash.exe drops microsofthelp.exe into %WINDIR% (Windows system directory), masquerading as a legitimate Windows helper binary as confirmed by the 'Drops executable files to the Windows system directory' signature",
+          "C. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe modifies firewall rules",
+          "D. T1027.002 \u2013 Software Packing; MPRESS packer is detected in the .MPRESS1 section with high entropy",
+          "E. T1497.003 \u2013 Time Based Evasion; microsofthelp.exe sleeps 525 times"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt detonation, the child process svchost.exe (dropped to %APPDATA%\\svchost.exe) modifies the registry key HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM to disable Windows Task Manager. It also deletes proxy settings via HKCU registry DELETEVAL. Which Defense Evasion techniques do these two behaviors represent? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; svchost.exe disables Windows Task Manager via registry modification at HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM, confirmed by the 'Disables Windows Task Manager (taskmgr)' sandbox signature",
+          "B. T1112 \u2013 Modify Registry; the proxy settings deletion via DELETEVAL on HKCU registry path constitutes registry modification",
+          "C. T1490 \u2013 Inhibit System Recovery; vssadmin delete shadows and bcdedit /set recoveryenabled no are executed by child processes",
+          "D. T1055 \u2013 Process Injection; hash.exe writes 32 bytes to a remote process",
+          "E. T1036.005 \u2013 Match Legitimate Name or Location; svchost.exe is placed at %APPDATA% instead of system32"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The CVE-2017-0147 (WannaCry-style) sample has mssecsvc.exe call OpenSCManager and OpenService, read HKCU\\SOFTWARE\\MICROSOFT\\INTERNET EXPLORER security settings, and perform a SETVAL on HKCU proxy settings. Which of the following correctly classifies these behaviors by MITRE tactic? Select ALL that apply.",
+        "options": [
+          "A. OpenSCManager and OpenService calls by mssecsvc.exe are Discovery behaviors (T1007 \u2013 System Service Discovery), NOT Defense Evasion",
+          "B. The SETVAL on HKCU proxy settings (registry-27: 'Modifies proxy settings') is Defense Evasion under T1112 \u2013 Modify Registry",
+          "C. Reading HKCU\\SOFTWARE\\MICROSOFT\\INTERNET EXPLORER security settings (registry-36: 'Queries sensitive IE security settings') is Discovery/reconnaissance, NOT Defense Evasion",
+          "D. Reading the cryptographic machine GUID (registry-1) is Defense Evasion via T1027 \u2013 Obfuscated Files or Information",
+          "E. Dropping mssecsvc.exe to %WINDIR% (binary-7: 'Drops executable files to the Windows system directory') is Defense Evasion under T1036 \u2013 Masquerading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt sample, the sandbox reports: (1) 'Modifies proxy settings' via DELETEVAL on HKCU\\...\\INTERNET SETTINGS\\PROXYSERVER, (2) 'Creates a fake system process' \u2013 svchost.exe at %APPDATA%, (3) 'Disables Windows Task Manager' via svchost.exe registry write. Which of these are correctly classified as Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. Proxy settings deletion (T1112 \u2013 Modify Registry) is Defense Evasion because it removes network configuration indicators",
+          "B. svchost.exe running from %APPDATA% instead of system32 is Defense Evasion under T1036.005 \u2013 Match Legitimate Name or Location",
+          "C. Disabling Task Manager via registry (T1562.001 \u2013 Disable or Modify Tools) is Defense Evasion because it prevents the user from terminating the malware process",
+          "D. vssadmin delete shadows is Defense Evasion because it removes file system artifacts",
+          "E. bcdedit /set recoveryenabled no is Defense Evasion under T1562.001"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ranpax.Generic sample (PECompact2 compressed) has the sandbox signature 'Tries to map intranet network resources to internet zone' via SETVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS, and 'Marks file for deletion' via cmd.exe on a temp file. Which Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1562.001 \u2013 Disable or Modify Tools; the SETVAL to internet zone settings modifies security tool behavior by altering IE security zone mappings",
+          "B. T1070.004 \u2013 File Deletion; cmd.exe marks the temp bat file for deletion to remove execution artifacts",
+          "C. T1027.002 \u2013 Software Packing; PECompact 2.0x packer is detected with high-entropy .text section",
+          "D. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe modifies firewall rules",
+          "E. T1055 \u2013 Process Injection; hash.exe writes 32 bytes to a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma sample disables Windows Registry Editor via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM (registry-2: 'Disables Windows Registry Editor'), disables Command Prompt via HKCU\\SOFTWARE\\POLICIES\\MICROSOFT\\WINDOWS\\SYSTEM (registry-21), and creates fake system processes (WINLOGON.EXE at %APPDATA%). Which Defense Evasion techniques apply? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry; disabling regedit and cmd via policy registry keys constitutes registry modification for defense evasion",
+          "B. T1036.005 \u2013 Match Legitimate Name or Location; WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE running from %APPDATA%\\WINDOWS\\ instead of system paths",
+          "C. T1562.001 \u2013 Disable or Modify Tools; disabling regedit and cmd.exe prevents analysts and defenders from using these tools",
+          "D. T1055 \u2013 Process Injection; VirtualAllocEx and WriteProcessMemory are used",
+          "E. T1070.004 \u2013 File Deletion; hash.exe marks files for deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The MSIL.Bladabindi sample contains the sandbox signature 'Found registry location string related to firewall policy' pointing to KEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\... and the malicious-rated signature 'Modifies firewall settings' via netsh.exe with 'netsh firewall add allowedprogram'. Additionally, the sample has 'Creates guarded memory regions' (PAGE_GUARD) and 'Uses a .NET obfuscator'. Which Defense Evasion techniques are directly supported by these signatures? Select ALL that apply.",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall; both the firewall policy registry string and the netsh.exe 'Modifies firewall settings' signature confirm this",
+          "B. T1562.001 \u2013 Disable or Modify Tools; PAGE_GUARD memory allocation is an anti-debugging trick that impairs analysis tools, confirmed by 'Creates guarded memory regions (anti-debugging trick to avoid memory dumping)'",
+          "C. T1140 \u2013 Deobfuscate/Decode Files or Information; the .NET obfuscator hint via System.IO.Compression",
+          "D. T1055.003 \u2013 Thread Execution Hijacking; hash.exe creates a thread in process -1",
+          "E. T1497.003 \u2013 Time Based Evasion; hash.exe sleeps 525 times"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample spawns netsh.exe with 'advfirewall firewall add rule' to allow svchost.exe inbound connections. The sandbox produces both 'Detects NETSH process execution' (T1562.004) and 'Modifies firewall settings' (T1562.004) signatures. A student analyst selects only T1055 (Process Injection) and T1027.002 (Software Packing) as Defense Evasion techniques. What is missing from this answer?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall is missing; the netsh advfirewall add rule command with the 'Modifies firewall settings' malicious-rated signature directly maps to this technique",
+          "B. T1036 \u2013 Masquerading is missing; cmd.exe renames files",
+          "C. T1070.004 \u2013 File Deletion is missing; cmd.exe opens files with deletion access rights",
+          "D. T1134.002 \u2013 Create Process with Token is missing; mojpivf.exe uses token manipulation",
+          "E. T1055.002 \u2013 Portable Executable Injection is missing; mojpivf.exe writes PE header bytes to a remote process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic (MinGW compiled) sample drops 085cda53603755dc.exe to %TEMP% which then marks C:\\hash.exe for deletion and modifies proxy settings via HKCU registry DELETEVAL. The sample also has 'Safe Mode Boot' (T1562.009) in its MITRE mappings. Which of the following are Defense Evasion behaviors in this report? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion; 085cda53603755dc.exe marks hash.exe for deletion ('Marks file for deletion' sandbox signature)",
+          "B. T1112 \u2013 Modify Registry; proxy settings deletion via HKCU DELETEVAL ('Modifies proxy settings' sandbox signature)",
+          "C. T1562.009 \u2013 Safe Mode Boot; listed in MITRE ATT&CK mappings for this sample",
+          "D. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe is spawned",
+          "E. T1027.009 \u2013 Embedded Payloads; high-entropy section detected"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun (Visual Basic 6) sample drops fake system processes including WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, and LSASS.EXE to %APPDATA%\\WINDOWS\\. The sandbox flags this as 'Creates a fake system process'. Which MITRE ATT&CK Defense Evasion sub-technique does this directly map to?",
+        "options": [
+          "A. T1036.005 \u2013 Match Legitimate Name or Location; the processes use names identical to legitimate Windows system processes but run from non-standard %APPDATA%\\WINDOWS\\ paths",
+          "B. T1055.001 \u2013 Dynamic-link Library Injection; LoadLibraryA is referenced",
+          "C. T1574.002 \u2013 DLL Side-Loading; DLL loading failures are observed",
+          "D. T1562.001 \u2013 Disable or Modify Tools; the processes interfere with security tooling",
+          "E. T1070.004 \u2013 File Deletion; hash.exe marks files for deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the CVE-2017-0147 (WannaCry-style) detonation, a student must identify which sandbox signatures represent Defense Evasion versus Discovery. The report contains: (1) OpenSCManager/OpenService calls by mssecsvc.exe, (2) proxy SETVAL on HKCU\\...\\INTERNET SETTINGS, (3) dropping mssecsvc.exe to %WINDIR%, (4) reading cryptographic GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY. Which of the following assignments is CORRECT?",
+        "options": [
+          "A. OpenSCManager/OpenService = Discovery (T1007 \u2013 System Service Discovery); proxy SETVAL = Defense Evasion (T1112); dropping to %WINDIR% = Defense Evasion (T1036); reading crypto GUID = Discovery (T1082)",
+          "B. OpenSCManager/OpenService = Defense Evasion (T1562.001); proxy SETVAL = Defense Evasion (T1112); reading crypto GUID = Defense Evasion (T1027); dropping to %WINDIR% = Persistence",
+          "C. All four behaviors are Defense Evasion techniques",
+          "D. OpenSCManager/OpenService = Lateral Movement; proxy SETVAL = Command and Control; dropping to %WINDIR% = Persistence; reading crypto GUID = Credential Access",
+          "E. OpenSCManager/OpenService = Discovery; proxy SETVAL = Command and Control (T1090 \u2013 Proxy); dropping to %WINDIR% = Defense Evasion (T1036); reading crypto GUID = Discovery (T1082)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma sample calls VirtualAllocEx and WriteProcessMemory (api-0: 'Writes data to a remote process', api-20: 'Allocates virtual memory in a remote process'). The gold answer for a Defense Evasion question on this sample does NOT include T1055 (Process Injection) but DOES include T1070.004 (file deletion) and T1036.005 (fake system process). Why would T1055 be excluded from a Defense Evasion-focused answer in this context?",
+        "options": [
+          "A. Because in this specific question context, the evaluator determined that process injection (VirtualAllocEx/WriteProcessMemory) is attributed to Privilege Escalation rather than Defense Evasion for this sample, and the Defense Evasion indicators are more specifically evidenced by indicator removal and masquerading behaviors",
+          "B. Because VirtualAllocEx is not a process injection API",
+          "C. Because WriteProcessMemory only applies to Credential Access techniques",
+          "D. Because T1055 requires CreateRemoteThread to be classified as Defense Evasion",
+          "E. Because the sample is a worm and worms cannot use process injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4 sample (o.exe) has the following sandbox signatures: 'Marks file for deletion' (api-26, T1070.004), 'Opens file with deletion access rights' (api-25, T1070.004), 'Installs hooks/patches the running process' (hooks-8, T1056.004), and contacts random domain names via DGA. Which of the following are Defense Evasion techniques for this sample? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 \u2013 File Deletion; o.exe marks AppData temp files for deletion to remove execution artifacts",
+          "B. T1497.003 \u2013 Time Based Evasion; listed in the MITRE ATT&CK mappings for this sample",
+          "C. T1568.002 \u2013 Domain Generation Algorithms; random domain names contacted are consistent with DGA C2",
+          "D. T1056.004 \u2013 Credential API Hooking; hooks/patches are installed in the running process",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe is spawned"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Injuke (um_unhooking family) sample calls NtQueueApcThread for APC injection (api-85) and has 'Creates guarded memory regions' (api-1, T1562.001). It also has T1070.006 (Timestomp) in its MITRE mappings. Which Defense Evasion techniques are directly evidenced by sandbox signatures in this report? Select ALL that apply.",
+        "options": [
+          "A. T1055.004 \u2013 Asynchronous Procedure Call; NtQueueApcThread call ('Queues an Asynchronous Procedure Call in a remote process') is directly observed",
+          "B. T1562.001 \u2013 Disable or Modify Tools; PAGE_GUARD memory allocation ('Creates guarded memory regions anti-debugging trick') impairs memory dumping tools",
+          "C. T1070.006 \u2013 Timestomp; listed in MITRE ATT&CK mappings for this sample",
+          "D. T1027.002 \u2013 Software Packing; Microsoft visual C++ 8 compiler signature detected with unusual entropy resources",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe firewall modification"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Dinwod (UPX compressed, Trojan.Dinwod family) sample writes 32 bytes to a remote process and spawns a chain of child processes (620006.exe \u2192 lvhxj.exe \u2192 pthnb.exe...). The sandbox flags 'Writes data to a remote process' (T1055) and 'File Deletion' (T1070.004) in the MITRE mappings. Which Defense Evasion techniques are present in this sample's report? Select ALL that apply.",
+        "options": [
+          "A. T1027.002 \u2013 Software Packing; UPX packer detected with UPX0/UPX1 sections and high entropy",
+          "B. T1055 \u2013 Process Injection; hash.exe writes 32 bytes to a remote process",
+          "C. T1070.004 \u2013 File Deletion; listed in MITRE ATT&CK Defense Evasion mappings",
+          "D. T1027.007 \u2013 Dynamic API Resolution; listed in MITRE ATT&CK Defense Evasion mappings",
+          "E. T1562.004 \u2013 Disable or Modify System Firewall; netsh.exe is spawned with firewall rules"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Remcos sample (RiskWare/NetSup.gen, NSIS installer) has sibjs.exe delete proxy settings via HKCU DELETEVAL ('Modifies proxy settings', registry-27) and hash.exe marks AppData temp files for deletion ('Marks file for deletion', api-26). Additionally, sibjs.exe allocates PAGE_GUARD memory ('Creates guarded memory regions', api-1). Which Defense Evasion techniques are evidenced? Select ALL that apply.",
+        "options": [
+          "A. T1112 \u2013 Modify Registry; proxy settings deletion via HKCU DELETEVAL is registry modification for defense evasion",
+          "B. T1070.004 \u2013 File Deletion; hash.exe marks AppData temp files for deletion to remove artifacts",
+          "C. T1562.001 \u2013 Disable or Modify Tools; PAGE_GUARD memory allocation by sibjs.exe is an anti-debugging technique",
+          "D. T1562.004 \u2013 Disable or Modify System Firewall; sibjs.exe modifies firewall rules via netsh",
+          "E. T1620 \u2013 Reflective Code Loading; System.Reflection.LoadFrom is observed in sibjs.exe dotnet code"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A student is analyzing the MSIL.Bladabindi sample and must select ALL Defense Evasion techniques. The student correctly identifies T1027.002 (Software Packing), T1620 (Reflective Code Loading), and T1055 (Process Injection), but misses one additional technique. The sandbox shows: 'Found registry location string related to firewall policy' pointing to HKLM\\SYSTEM\\CurrentControlSet firewall keys, AND 'Modifies firewall settings' (target-15, threat_level: malicious) via netsh.exe with 'netsh firewall add allowedprogram'. What is the missing technique?",
+        "options": [
+          "A. T1562.004 \u2013 Disable or Modify System Firewall; both the firewall policy registry string signature and the malicious-rated 'Modifies firewall settings' signature from netsh.exe confirm this technique",
+          "B. T1059.003 \u2013 Windows Command Shell; cmd.exe ping command is present in strings",
+          "C. T1547 \u2013 Boot or Logon Autostart Execution; registry run key strings are present",
+          "D. T1113 \u2013 Screen Capture; CopyFromScreen API is referenced",
+          "E. T1056.001 \u2013 Keylogging; GetAsyncKeyState is called"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt sample has the following Defense Evasion-relevant sandbox signatures: (1) 'Tries to map intranet network resources to internet zone' SETVAL (registry-179, T1562.001), (2) 'Creates a fake system process' \u2013 svchost.exe at %APPDATA% (target-33, T1036.005), (3) 'Disables Windows Task Manager' via svchost.exe HKCU registry write (registry-3, T1562.001), (4) 'Modifies proxy settings' DELETEVAL (registry-27, T1112). A student selects only {T1036.005, T1490, T1055}. What important Defense Evasion techniques has the student UNDER-selected?",
+        "options": [
+          "A. T1562.001 is missed twice: both the PAGE_GUARD anti-debugging trick (api-1) and the Task Manager disabling via registry (registry-3) map to T1562.001 \u2013 Disable or Modify Tools",
+          "B. T1112 \u2013 Modify Registry is missed; the proxy settings DELETEVAL (registry-27) is a Defense Evasion indicator",
+          "C. T1027.002 \u2013 Software Packing is missed; Microsoft visual C# compiler signature is detected",
+          "D. T1562.004 \u2013 Disable or Modify System Firewall is missed; netsh.exe is spawned",
+          "E. T1070.004 \u2013 File Deletion is missed; hash.exe opens files with deletion access rights"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    }
+  ]
+}

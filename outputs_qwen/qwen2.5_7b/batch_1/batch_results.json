@@ -1,0 +1,315 @@
+[
+  {
+    "teacher": "openai/gpt-5.1",
+    "student": "Qwen/Qwen2.5-7B-Instruct",
+    "best_accuracy": 0.6111111111111112,
+    "final_proficiency": "6",
+    "rounds_completed": 5,
+    "response_parsing_error_count": 0,
+    "total_questions_attempted": 86,
+    "qlora_inference": true,
+    "round_results": [
+      {
+        "round": 1,
+        "proficiency": 8,
+        "accuracy": 0.6111111111111112,
+        "avg_jaccard": 0.8518518518518519,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 100,
+        "weaknesses": [
+          "Over-selection of plausible but unsupported options",
+          "Ransomware behavior and impact mapping",
+          "MITRE ATT&CK fine-grained technique mapping",
+          "Ransomware (inhibit recovery & encryption indicators)",
+          "Answer-count calibration"
+        ]
+      },
+      {
+        "round": 2,
+        "proficiency": 8,
+        "accuracy": 0.6111111111111112,
+        "avg_jaccard": 0.8537037037037036,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 200,
+        "weaknesses": [
+          "Over-selection of plausible but unsupported ATT&CK techniques",
+          "Under-selection / missing one supported technique",
+          "Fine-grained C2 and encryption vs impact discrimination",
+          "Credential API Hooking vs generic process injection",
+          "UM unhooking / defense evasion nuance"
+        ]
+      },
+      {
+        "round": 3,
+        "proficiency": 8,
+        "accuracy": 0.4375,
+        "avg_jaccard": 0.8072916666666667,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 16,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 300,
+        "weaknesses": [
+          "Fine-grained ATT&CK mapping for encryption and C2",
+          "Fine-grained ATT&CK sub-technique selection for process injection",
+          "Answer-count calibration on hard, multi-correct questions",
+          "um_unhooking / complex multi-technique samples",
+          "Impact vs non-impact encryption (T1486) and data encoding (T1132)"
+        ]
+      },
+      {
+        "round": 4,
+        "proficiency": 6,
+        "accuracy": 0.3125,
+        "avg_jaccard": 0.7395833333333333,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 16,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 400,
+        "weaknesses": [
+          "Over-selection of options",
+          "Fine-grained process injection mapping",
+          "Evidence-grounding vs high-level MITRE mappings",
+          "UM unhooking / advanced evasion",
+          "Encrypted C2 vs generic encryption",
+          "Hard questions"
+        ]
+      },
+      {
+        "round": 5,
+        "proficiency": 6,
+        "accuracy": 0.3333333333333333,
+        "avg_jaccard": 0.7129629629629629,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 500,
+        "weaknesses": [
+          "Over-selection of plausible but unsupported options",
+          "Under-selection (missing one of several correct techniques)",
+          "Semantic confusion among T1055 sub-techniques",
+          "Evidence-grounding weakness",
+          "Process Injection and EDR/um_unhooking scenarios",
+          "Hard questions"
+        ]
+      }
+    ],
+    "experiment": "gpt5.1__qwen2.5_7b_qlora",
+    "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora",
+    "status": "completed",
+    "duration_seconds": 12750.3
+  },
+  {
+    "teacher": "google/gemini-2.5-pro",
+    "student": "Qwen/Qwen2.5-7B-Instruct",
+    "best_accuracy": 0.5,
+    "final_proficiency": "6",
+    "rounds_completed": 5,
+    "response_parsing_error_count": 0,
+    "total_questions_attempted": 90,
+    "qlora_inference": true,
+    "round_results": [
+      {
+        "round": 1,
+        "proficiency": 6,
+        "accuracy": 0.5,
+        "avg_jaccard": 0.8092592592592593,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 100,
+        "weaknesses": [
+          "av_edr_killers",
+          "ransomware",
+          "answer_count_miscalibration",
+          "Malware Family Identification",
+          "process_injection_detection"
+        ]
+      },
+      {
+        "round": 2,
+        "proficiency": 4,
+        "accuracy": 0.4444444444444444,
+        "avg_jaccard": 0.8018518518518519,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 200,
+        "weaknesses": [
+          "ransomware",
+          "set-selection_error",
+          "hard",
+          "Defense Evasion"
+        ]
+      },
+      {
+        "round": 3,
+        "proficiency": 6,
+        "accuracy": 0.5,
+        "avg_jaccard": 0.7935185185185185,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 300,
+        "weaknesses": [
+          "Answer Set Selection",
+          "Ransomware",
+          "Behavioral Analysis"
+        ]
+      },
+      {
+        "round": 4,
+        "proficiency": 7,
+        "accuracy": 0.5,
+        "avg_jaccard": 0.7814814814814813,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 400,
+        "weaknesses": [
+          "Ransomware",
+          "Under-selection Bias",
+          "Process Injection Detection"
+        ]
+      },
+      {
+        "round": 5,
+        "proficiency": 6,
+        "accuracy": 0.2777777777777778,
+        "avg_jaccard": 0.7240740740740741,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 500,
+        "weaknesses": [
+          "Over-selection",
+          "Ransomware Behaviour Analysis",
+          "ransomware",
+          "hard",
+          "Malformed JSON Output"
+        ]
+      }
+    ],
+    "experiment": "gemini2.5pro__qwen2.5_7b_qlora",
+    "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora",
+    "status": "completed",
+    "duration_seconds": 15488.8
+  },
+  {
+    "teacher": "anthropic/claude-sonnet-4-6",
+    "student": "Qwen/Qwen2.5-7B-Instruct",
+    "best_accuracy": 0.7777777777777778,
+    "final_proficiency": "7",
+    "rounds_completed": 5,
+    "response_parsing_error_count": 0,
+    "total_questions_attempted": 86,
+    "qlora_inference": true,
+    "round_results": [
+      {
+        "round": 1,
+        "proficiency": 8,
+        "accuracy": 0.7777777777777778,
+        "avg_jaccard": 0.8851851851851852,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 100,
+        "weaknesses": [
+          "ransomware",
+          "infostealers",
+          "under-selection",
+          "Anti-Recovery Techniques",
+          "Process Injection Detection",
+          "Defense Evasion"
+        ]
+      },
+      {
+        "round": 2,
+        "proficiency": 7,
+        "accuracy": 0.4117647058823529,
+        "avg_jaccard": 0.8215686274509804,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 17,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 200,
+        "weaknesses": [
+          "under-selection of injection-supporting reconnaissance APIs"
+        ]
+      },
+      {
+        "round": 3,
+        "proficiency": 7,
+        "accuracy": 0.4444444444444444,
+        "avg_jaccard": 0.8511904761904763,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 18,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 300,
+        "weaknesses": [
+          "Defense Evasion"
+        ]
+      },
+      {
+        "round": 4,
+        "proficiency": 7,
+        "accuracy": 0.5,
+        "avg_jaccard": 0.8229166666666667,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 16,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 400,
+        "weaknesses": [
+          "under-selection of firewall modification as Defense Evasion",
+          "under-selection of indicator removal behaviors",
+          "ransomware (WannaCry-style)",
+          "under-selection of Disable or Modify Tools (T1562.001) via registry",
+          "semantic confusion between Discovery and Defense Evasion for service/registry access APIs",
+          "under-selection of masquerading via system directory drops",
+          "over-selection in Worm.Ludbaruma process injection classification",
+          "medium difficulty"
+        ]
+      },
+      {
+        "round": 5,
+        "proficiency": 7,
+        "accuracy": 0.4117647058823529,
+        "avg_jaccard": 0.8235294117647057,
+        "parse_error_count": 0,
+        "parse_error_rate": 0.0,
+        "total_questions": 17,
+        "num_new_examples": 100,
+        "num_accumulated_examples": 500,
+        "weaknesses": [
+          "ransomware",
+          "over-selection of plausible distractors",
+          "remcos_rat",
+          "av_edr_killers",
+          "ATT&CK tactic boundary disambiguation",
+          "under-selection of persistence-as-evasion",
+          "hard"
+        ]
+      }
+    ],
+    "experiment": "claude_sonnet4.6__qwen2.5_7b_qlora",
+    "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora",
+    "status": "completed",
+    "duration_seconds": 16176.9
+  }
+]

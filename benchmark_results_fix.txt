@@ -1,0 +1,123 @@
+venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1" --base-model google/gemma-3-4b-it --truncate-input --qlora-inference --output-dir benchmark_results/gemma_r1
+2026-03-27 10:40:47,131 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 10:40:49,293 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:40:49,293 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:40:59,182 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/4896150842131873792 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 12:03:04,626 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 12:03:04,628 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 12:03:04,631 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.0657, jaccard=0.4337, correct=40, incorrect=569, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.0657   0.4337       40         0
+====================================================================================================
+2026-03-27 12:03:04,639 [INFO] benchmark: Summary saved: benchmark_results/gemma_r1/benchmark_summary.json
+
+venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1" --base-model google/gemma-3-4b-it --truncate-input --qlora-inference --output-dir benchmark_results/gemma_r1
+2026-03-27 10:40:29,137 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 10:40:31,252 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:40:31,252 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:40:40,442 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/5835714314392043520 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 12:03:15,471 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 12:03:15,475 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 12:03:15,481 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.0673, jaccard=0.4340, correct=41, incorrect=568, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.0673   0.4340       41         0
+====================================================================================================
+2026-03-27 12:03:15,490 [INFO] benchmark: Summary saved: benchmark_results/gemma_r1/benchmark_summary.json
+
+
+venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1" --base-model google/gemma-3-4b-it --truncate-input --qlora-inference --output-dir benchmark_results/gemma_r1
+2026-03-27 10:23:49,296 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 10:23:51,422 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:23:51,422 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-27 10:24:01,309 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1647366660937482240 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 11:49:07,394 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 11:49:07,396 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 11:49:07,400 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.0690, jaccard=0.4328, correct=42, incorrect=567, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.0690   0.4328       42         0
+====================================================================================================
+2026-03-27 11:49:07,409 [INFO] benchmark: Summary saved: benchmark_results/gemma_r1/benchmark_summary.json
+
+
+venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1" --base-model Qwen/Qwen2.5-7B-Instruct --truncate-input  --qlora-inference --output-dir benchmark_results/qwen_r1
+2026-03-27 11:43:57,712 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 11:43:59,963 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 11:43:59,963 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 11:44:08,565 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1182932949364899840 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 14:51:13,516 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 14:51:13,520 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 14:51:13,531 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.1100, jaccard=0.4599, correct=67, incorrect=542, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.1100   0.4599       67         0
+====================================================================================================
+2026-03-27 14:51:13,540 [INFO] benchmark: Summary saved: benchmark_results/qwen_r1/benchmark_summary.json
+
+ venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1" --base-model Qwen/Qwen2.5-7B-Instruct --truncate-input --qlora-inference
+  --output-dir benchmark_results/qwen_r1
+2026-03-27 10:19:27,613 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 10:19:29,771 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 10:19:29,772 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 10:19:37,383 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/131905386327310336 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 13:25:07,456 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 13:25:07,459 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 13:25:07,468 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.1626, jaccard=0.4949, correct=99, incorrect=510, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.1626   0.4949       99         0
+====================================================================================================
+2026-03-27 13:25:07,477 [INFO] benchmark: Summary saved: benchmark_results/benchmark_summary.json
+zsh: command not found: --output-dir
+
+venv/bin/python run_benchmark.py --adapter-path "gs://smala/adapters/smala-gpt5.1__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1" --base-model Qwen/Qwen2.5-7B-Instruct --truncate-input --qlora-inference
+  --output-dir benchmark_results/qwen_r1
+2026-03-27 10:19:15,260 [INFO] benchmark: Loaded 609 benchmark questions from hybrid-analysis/questions.json
+2026-03-27 10:19:17,388 [INFO] benchmark: Running benchmark: gs: — 609 questions, adapter=gs://smala/adapters/smala-gpt5.1__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 10:19:17,389 [INFO] benchmark: Running inference: 609 prompts in 1 batch (0 cached), adapter=gs://smala/adapters/smala-gpt5.1__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-27 10:19:26,230 [INFO] student_trainer: Batched Vertex AI inference: 609 prompts, adapter=gs://smala/adapters/smala-gpt5.1__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/8195600519134183424 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 13:30:03,271 [INFO] student_trainer: Batched tuned inference complete: 609/609 results
+2026-03-27 13:30:03,275 [INFO] benchmark: Progress saved: 609/609 total responses
+2026-03-27 13:30:03,286 [INFO] benchmark: Benchmark complete: gs: — accuracy=0.1593, jaccard=0.4902, correct=97, incorrect=512, parse_errors=0
+
+====================================================================================================
+BENCHMARK RESULTS (CyberSOCEval — 609 questions)
+====================================================================================================
+Label                                         Accuracy  Jaccard  Correct Parse Err  vs Base
+----------------------------------------------------------------------------------------------------
+gs:                                             0.1593   0.4902       97         0
+====================================================================================================
+2026-03-27 13:30:03,295 [INFO] benchmark: Summary saved: benchmark_results/benchmark_summary.json
+zsh: command not found: --output-dir
+
+
+
+

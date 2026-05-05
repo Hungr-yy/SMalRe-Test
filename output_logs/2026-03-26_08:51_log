@@ -1,0 +1,33 @@
+2026-03-26 08:51:19,652 [INFO] experiments: Logging to output_logs/2026-03-26_08:51_log
+2026-03-26 08:51:19,671 [INFO] experiments: SMalA Experiment Matrix
+2026-03-26 08:51:19,671 [INFO] experiments: Teachers:    ['gpt5.1', 'gemini2.5pro', 'claude_sonnet4.6']
+2026-03-26 08:51:19,672 [INFO] experiments: Students:    ['qwen2.5_7b']
+2026-03-26 08:51:19,672 [INFO] experiments: Output:      outputs_qwen/qwen2.5_7b
+2026-03-26 08:51:19,672 [INFO] experiments: Experiments: 3 (1 batches)
+2026-03-26 08:51:19,672 [INFO] experiments: Rounds:      5 per experiment
+2026-03-26 08:51:19,672 [INFO] experiments: Parallel:    3 per batch
+2026-03-26 08:51:19,672 [INFO] experiments: Retries:     2 max
+2026-03-26 08:51:19,672 [INFO] experiments: 
+2026-03-26 08:51:19,672 [INFO] experiments: ======================================================================
+2026-03-26 08:51:19,672 [INFO] experiments: BATCH 1 / 1
+2026-03-26 08:51:19,672 [INFO] experiments: ======================================================================
+2026-03-26 08:51:19,672 [INFO] experiments: batch_1: running 3 experiments (max_parallel=3)
+2026-03-26 08:51:19,672 [INFO] experiments:   • gpt5.1__qwen2.5_7b_qlora
+2026-03-26 08:51:19,672 [INFO] experiments:   • gemini2.5pro__qwen2.5_7b_qlora
+2026-03-26 08:51:19,672 [INFO] experiments:   • claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-26 08:51:19,753 [INFO] experiments: Logging to output_logs/2026-03-26_08:51_log
+2026-03-26 13:20:56,794 [INFO] experiments: Batch 1 complete. 3/3 experiments succeeded.
+2026-03-26 13:20:56,794 [INFO] experiments: ======================================================================
+2026-03-26 13:20:56,794 [INFO] experiments: VERIFYING ARTIFACTS
+2026-03-26 13:20:56,794 [INFO] experiments: ======================================================================
+2026-03-26 13:20:56,794 [INFO] experiments: Tracker: 0 completed, 0 failed, 0 verified
+2026-03-26 13:20:56,794 [INFO] experiments: All experiments succeeded. No retries needed.
+2026-03-26 13:20:56,794 [INFO] experiments: All 9 experiments completed and verified successfully.
+2026-03-26 13:20:56,795 [INFO] experiments: Summary saved to outputs_qwen/qwen2.5_7b/experiment_summary.json
+2026-03-26 13:20:56,795 [INFO] experiments: 
+2026-03-26 13:20:56,795 [INFO] experiments: ====================================================================================================
+2026-03-26 13:20:56,795 [INFO] experiments: EXPERIMENT RESULTS COMPARISON
+2026-03-26 13:20:56,795 [INFO] experiments: ====================================================================================================
+2026-03-26 13:20:56,795 [INFO] experiments: Experiment                                Status    Accuracy    Prof.   Rounds    ParseErr  
+2026-03-26 13:20:56,795 [INFO] experiments: ----------------------------------------------------------------------------------------------------
+2026-03-26 13:20:56,795 [INFO] experiments: ====================================================================================================

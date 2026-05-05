@@ -1,0 +1,12 @@
+{
+  "label": "gemini2.5pro__qwen2.5_7b_qlora_round1",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "adapter": "gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1",
+  "qlora": true,
+  "total_questions": 609,
+  "correct": 99,
+  "incorrect": 510,
+  "parse_errors": 0,
+  "accuracy": 0.1626,
+  "avg_jaccard": 0.4949
+}

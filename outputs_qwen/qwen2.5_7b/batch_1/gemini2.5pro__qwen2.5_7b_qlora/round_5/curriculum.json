@@ -1,0 +1,2184 @@
+[
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware attempts to inhibit system recovery. Based *only* on the commands executed in the report, which specific technique is used?",
+      "options": [
+        "A. Deleting Volume Shadow Copies using vssadmin.exe.",
+        "B. Disabling the Windows recovery environment with bcdedit.exe.",
+        "C. Deleting the backup catalog using wbadmin.exe.",
+        "D. Stopping database services to unlock files for encryption."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Analyze the process tree and dropped files. How does this malware display its ransom note to the user?",
+      "options": [
+        "A. It writes a text file named 'RANSOM_NOTE.txt' to the desktop.",
+        "B. It changes the desktop wallpaper to an image containing the ransom message.",
+        "C. It executes an HTML Application (HTA) file using mshta.exe.",
+        "D. It creates a pop-up window from its own process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware attempts to cover its tracks after execution. Which specific command is used to terminate its own initial process?",
+      "options": [
+        "A. The malware injects into explorer.exe and the original process exits.",
+        "B. It uses `taskkill` to forcefully terminate the parent executable.",
+        "C. It uses a `timeout` command followed by `del` to delete itself.",
+        "D. The malware modifies the AppInit_DLLs registry key to unload itself."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "b0863e430386926593575971510684e93c52e46f68b350f90119b5b22590740a",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following persistence mechanisms are directly supported by evidence in the report for this WannaCryptor sample?",
+      "options": [
+        "A. Creation of a new service named 'mssecsvc2.0'.",
+        "B. Adding a run key to 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run'.",
+        "C. Dropping an LNK file into the user's Startup folder.",
+        "D. Using a scheduled task to launch 'tasksche.exe'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "b0863e430386926593575971510684e93c52e46f68b350f90119b5b22590740a",
+      "attack": "ransomware",
+      "topic": "Network IOC Extraction",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This WannaCryptor variant is known for its 'kill-switch' domain. Based on the network traffic, what is the exact domain it attempts to contact?",
+      "options": [
+        "A. www.wannacry.com",
+        "B. www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com",
+        "C. www.msftncsi.com",
+        "D. www.kaskerskysecurity.com"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware renames encrypted files. Based on the report's file access logs, what is the file extension and contact information appended to files?",
+      "options": [
+        "A. .id-085CDA53.[vijurytos@tuta.io].V",
+        "B. .[decrypt@files.com].crysis",
+        "C. .WANNACRY",
+        "D. .id[<user_id>].locked"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following behaviors, characteristic of ransomware, are explicitly demonstrated in this report? Select ALL that apply.",
+      "options": [
+        "A. Dropping a ransom note to the user's desktop.",
+        "B. Disabling Windows Defender via registry modification.",
+        "C. Deleting Volume Shadow Copies to prevent recovery.",
+        "D. Encrypting files and appending a specific extension."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "0dc3e8b0954e1957973d74c0e64c1a704944c663b65559754f494a5200388d71",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware attempts to disable security features and hide its presence. Which of the following defense evasion techniques are observed in the process and command-line data?",
+      "options": [
+        "A. Disabling administrative shares (e.g., C$, admin$) using `net.exe`.",
+        "B. Bypassing AMSI by patching functions in memory.",
+        "C. Stopping the Windows Defender service using `sc.exe`.",
+        "D. Creating a new service named 'suchost.exe' to masquerade as a system process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "0dc3e8b0954e1957973d74c0e64c1a704944c663b65559754f494a5200388d71",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware modifies the system's network configuration to evade detection. What specific action does it take?",
+      "options": [
+        "A. It flushes the DNS cache using `ipconfig /flushdns`.",
+        "B. It modifies the system's HOSTS file to redirect security vendor domains.",
+        "C. It modifies proxy settings in the registry.",
+        "D. It disables the Windows Firewall via `netsh`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "63d12258810287a1d1e41b0728956c367b931a298818f4a13b63294332831513",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware masquerades as legitimate system processes to avoid detection. Which of the following filenames are used for dropped/executed malicious payloads?",
+      "options": [
+        "A. SVCHOST.EXE",
+        "B. WINLOGON.EXE",
+        "C. CSRSS.EXE",
+        "D. LSASS.EXE"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "63d12258810287a1d1e41b0728956c367b931a298818f4a13b63294332831513",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware uses API hooking to intercept system calls. Based on the 'Hook Detection' signatures, which categories of APIs are being hooked by WINLOGON.EXE?",
+      "options": [
+        "A. File System APIs (e.g., FindFirstFileW).",
+        "B. Networking APIs (e.g., send).",
+        "C. Registry APIs (e.g., RegCreateKeyExW).",
+        "D. Process APIs (e.g., Process32NextW)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "dd82c14083236a92440b82f80c6194205c08d3568d7162780e90897b7af9102c",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which specific actions related to inhibiting system recovery and cleaning up its own execution are evident in this report? Select ALL that apply.",
+      "options": [
+        "A. Deleting the backup catalog with `wbadmin delete catalog`.",
+        "B. Marking its own executable for deletion.",
+        "C. Deleting Volume Shadow Copies.",
+        "D. Terminating its own process using `taskkill`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "dd82c14083236a92440b82f80c6194205c08d3568d7162780e90897b7af9102c",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware drops a ransom note. What is the format of the note and how is it displayed?",
+      "options": [
+        "A. It drops 'DECRYPT_INSTRUCTIONS.txt' and opens it with notepad.exe.",
+        "B. It launches `mshta.exe` to display an HTML Application file.",
+        "C. It changes the desktop wallpaper to an image with instructions.",
+        "D. It opens a URL in the default browser that points to the ransom note."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "4731833c5e884e851cf57a775f0a0e5b7c7b8e5c8052140a3344b008e332a67e",
+      "attack": "infostealers",
+      "topic": "mitre_attack_mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This infostealer gathers credentials from multiple sources. Based on the report strings, which specific MITRE ATT&CK techniques for credential access are indicated? Select ALL correct answers.",
+      "options": [
+        "A. T1555.003: Credentials from Web Browsers (indicated by 'key3.db').",
+        "B. T1552.001: Credentials In Files (indicated by 'recentservers.xml').",
+        "C. T1003.001: LSASS Memory (indicated by attempts to open lsass.exe).",
+        "D. T1555.004: Windows Credential Manager (indicated by 'VAULT_ITEM_WIN7')."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "4731833c5e884e851cf57a775f0a0e5b7c7b8e5c8052140a3344b008e332a67e",
+      "attack": "infostealers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following defense evasion techniques are directly supported by evidence in the report?",
+      "options": [
+        "A. AMSI Bypass, indicated by the string 'AmsiScanBuffer'.",
+        "B. Timestomping, indicated by the API string 'SetLastWriteTime'.",
+        "C. Disabling security tools by killing their processes.",
+        "D. Deleting its original executable file from disk."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "c869c3a3735c345371660d195d520627582098d249f057885b56f8f55333ce54",
+      "attack": "remcos_rat",
+      "topic": "process_injection_detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This Remcos sample uses process injection. Based on the API calls and process behavior, what is the specific technique used?",
+      "options": [
+        "A. Process Hollowing: creating a legitimate process in a suspended state and replacing its memory.",
+        "B. DLL Injection: using CreateRemoteThread to load a malicious DLL into another process.",
+        "C. APC Injection: queueing an Asynchronous Procedure Call to execute in another thread.",
+        "D. Process Doppelg\u00e4nging: using transactional NTFS operations to replace a legitimate process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "c869c3a3735c345371660d195d520627582098d249f057885b56f8f55333ce54",
+      "attack": "remcos_rat",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware uses a legitimate Windows binary to execute its payload. Which 'LOLbin' (Living Off the Land Binary) is used for this purpose?",
+      "options": [
+        "A. WScript.exe",
+        "B. RegAsm.exe",
+        "C. mshta.exe",
+        "D. rundll32.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "43516581977d2a71439360566453985799a6c9cf1c2106e23766a5cf8dd8e43e",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware establishes persistence on the system. Which of the following persistence methods are confirmed by the registry modifications and file writes in the report?",
+      "options": [
+        "A. Creating a new service that points to a malicious executable.",
+        "B. Adding a value to the 'HKCU\\...\\Run' registry key.",
+        "C. Dropping a file into the user's startup folder.",
+        "D. Hijacking the 'AppInit_DLLs' registry key to load a malicious DLL."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "dd82c14083236a92440b82f80c6194205c08d3568d7162780e90897b7af9102c",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "What evidence in the report indicates that this is ransomware and not another type of malware like an infostealer or a RAT? Select all that apply.",
+      "options": [
+        "A. The presence of strings like 'The only way to decrypt your files is to receive'.",
+        "B. The modification of the desktop wallpaper through registry keys.",
+        "C. The use of `taskkill` to terminate its own process.",
+        "D. The use of HTTP requests to contact a C2 server."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware attempts to hinder system recovery. Based on the provided report, which specific command is explicitly executed to achieve this?",
+      "options": [
+        "A. bcdedit /set {default} bootstatuspolicy ignoreallfailures",
+        "B. vssadmin delete shadows /all /quiet",
+        "C. wbadmin delete catalog -quiet",
+        "D. wevtutil cl System"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The detonation report indicates the malware is a ransomware variant. Which of the following observations serve as direct evidence of its ransomware-related impact? Select all that apply.",
+      "options": [
+        "A. Dropping an HTA file named '_HELP_HELP_HELP_QNTKK6_.hta' on the desktop.",
+        "B. Executing 'taskkill /f /im \"hash.exe\"' to terminate its own process.",
+        "C. Modifying the desktop background picture by changing registry values.",
+        "D. Querying DNS for 'api.blockcypher.com'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware exhibits several defense evasion techniques. Which of the following are explicitly supported by signatures in the report? Select ALL that apply.",
+      "options": [
+        "A. Masquerading by naming a dropped file 'WINLOGON.EXE' and placing it in a non-system directory.",
+        "B. Using direct syscalls to bypass user-mode API hooks.",
+        "C. Hooking file system APIs like 'FindFirstFileW' and network APIs like 'send'.",
+        "D. Deleting Volume Shadow Copies to impede analysis and recovery."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A key behavior of ransomware is modifying files. Which file extensions or names in the report indicate that the malware has encrypted files and dropped ransom notes?",
+      "options": [
+        "A. Dropped files with names like '_HELP_HELP_HELP_QNTKK6_.hta'.",
+        "B. Modified files with the appended extension '._vijurytos@tuta.io_.V'.",
+        "C. Creation of temporary files like 'Tar450D.tmp'.",
+        "D. Accessing system files such as 'autoexec.bat'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This infostealer uses WMI for various purposes, including defense evasion. Based on the report's signatures, which specific WMI query is used for VM detection?",
+      "options": [
+        "A. 'Select * from Win32_ComputerSystem'",
+        "B. 'SELECT * FROM Win32_Processor'",
+        "C. 'SELECT Caption FROM Win32_OperatingSystem'",
+        "D. 'SELECT * FROM Win32_BIOS'"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates this ransomware may be a variant of WannaCry. Which of the following behaviors, observed in the report, are characteristic of WannaCry's kill-switch mechanism?",
+      "options": [
+        "A. Attempting to create a mutant named 'MsWinZonesCacheCounterMutexA'.",
+        "B. Dropping a file named 'tasksche.exe'.",
+        "C. Performing a DNS query for a long, nonsensical-looking domain.",
+        "D. Spawning 'rundll32.exe' to execute a malicious DLL."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware uses a legitimate Windows binary for a defense evasion technique known as a LOLBIN (Living Off the Land Binary) execution. Which binary is executed for this purpose?",
+      "options": [
+        "A. vssadmin.exe",
+        "B. taskkill.exe",
+        "C. PING.EXE",
+        "D. mshta.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware attempts to encrypt user data. While the report does not show the specific encryption algorithm, what evidence strongly suggests that cryptographic operations are a core function of this malware?",
+      "options": [
+        "A. The malware file has a high entropy of 7.44.",
+        "B. The malware drops files with a double extension like 'autoit.php.id-085CDA53._vijurytos@tuta.io_.V'.",
+        "C. The malware queries the registry for installed applications.",
+        "D. A YARA signature match for 'AES encryption' was detected."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware attempts to evade detection by disabling security features. Which of the following actions, directly observed in the report, supports this conclusion?",
+      "options": [
+        "A. Modifying registry keys related to internet proxy settings.",
+        "B. Executing 'net.exe' to delete administrative shares like C$ and admin$.",
+        "C. Spawning 'suchost.exe' from the drivers directory.",
+        "D. Querying DNS for 'www.9z9t.com'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following are direct indicators of this sample's ransomware behavior, as opposed to generic malware behavior also present in the report?",
+      "options": [
+        "A. Writing a PE file header to disc.",
+        "B. Dropping a ransom note named 'DECRYPT_INFO.txt'.",
+        "C. Creating a mutex to prevent multiple instances from running.",
+        "D. Deleting volume shadow copies via 'vssadmin.exe'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "MITRE ATT&CK Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the malware steals credentials. Based on the file strings, which MITRE ATT&CK sub-technique is most specifically indicated?",
+      "options": [
+        "A. T1555.004: Windows Credential Manager",
+        "B. T1552.001: Credentials In Files",
+        "C. T1555.003: Credentials from Web Browsers",
+        "D. T1056.001: Keylogging"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Besides encrypting files, how does this malware attempt to cause impact and display its ransom demands to the user?",
+      "options": [
+        "A. It modifies the desktop wallpaper by changing 'HKCU\\Control Panel\\Desktop\\Wallpaper'.",
+        "B. It launches an HTA file to display a formatted ransom message.",
+        "C. It deletes its own executable to cover its tracks.",
+        "D. It checks for Bitcoin-related files on the system."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "What is the primary method this ransomware uses to persist on the system after a reboot, according to the report's signatures?",
+      "options": [
+        "A. Creating a new service that points to the malicious executable.",
+        "B. Dropping a file into the Windows Startup folder.",
+        "C. Modifying a file association to execute the malware when a common file type is opened.",
+        "D. Creating a new value in a 'Run' key in the registry."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware contains several API references that are not part of its Import Address Table (IAT). This suggests which defense evasion technique?",
+      "options": [
+        "A. Process Hollowing",
+        "B. Dynamic API Resolution",
+        "C. Timestomping",
+        "D. Deleting Volume Shadow Copies"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following actions indicate that this ransomware enumerates and encrypts files across the file system? Select ALL that apply.",
+      "options": [
+        "A. The process calls 'FindFirstFileW' and subsequently writes to numerous files.",
+        "B. The process drops files with double extensions, such as '.id-085CDA53.[vijurytos@tuta.io].V'.",
+        "C. The process launches 'vssadmin.exe delete shadows'.",
+        "D. The malware drops over 600 files during its execution."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "While this sample is detected as Remcos RAT, it uses a legitimate, signed Microsoft binary to execute its payload, a technique often associated with other malware families. Which binary is abused in this way?",
+      "options": [
+        "A. mshta.exe",
+        "B. cmstp.exe",
+        "C. RegAsm.exe",
+        "D. WScript.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Network IOC Extraction",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware communicates with a Command and Control (C2) server using a legitimate, but abused, web service. Which domain, found in the report's strings, points to this service?",
+      "options": [
+        "A. github.com",
+        "B. api.telegram.org",
+        "C. twitter.com",
+        "D. ipify.org"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware uses a specific file extension to mark encrypted files, which includes an email address for contact. Based on the report, what is the full extension added to encrypted files?",
+      "options": [
+        "A. .wncry",
+        "B. .id-085CDA53.[vijurytos@tuta.io].V",
+        "C. .[help@decryptservice.info].nile",
+        "D. .locked"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "MITRE ATT&CK Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows the malware dropping multiple executables with names of legitimate system processes (e.g., 'CSRSS.EXE', 'WINLOGON.EXE') into '%APPDATA%\\WINDOWS'. Which MITRE ATT&CK technique best describes this behavior?",
+      "options": [
+        "A. T1055: Process Injection",
+        "B. T1574.002: DLL Side-Loading",
+        "C. T1036.005: Match Legitimate Name or Location",
+        "D. T1105: Ingress Tool Transfer"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows a 'taskkill' command being executed. What is the specific purpose of this command in the context of this ransomware's execution flow?",
+      "options": [
+        "A. To terminate security software processes.",
+        "B. To terminate its own original process after execution.",
+        "C. To stop database services to unlock files for encryption.",
+        "D. To kill the 'explorer.exe' process to lock the user out."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Based on the process activity in the report, which specific command-line tool was used to inhibit system recovery, and what was its immediate action?",
+      "options": [
+        "A. The malware executed 'vssadmin.exe' with parameters to delete all volume shadow copies.",
+        "B. The malware executed 'bcdedit.exe' to disable the Windows recovery environment.",
+        "C. The malware executed 'wbadmin.exe' to delete the system state backup catalog.",
+        "D. The malware executed 'taskkill.exe' to terminate backup-related services."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This report contains evidence of file encryption. Which of the following observations specifically support the conclusion that files were encrypted and renamed with a ransomware-specific pattern?",
+      "options": [
+        "A. The malware dropped a large number of new files with a complex, patterned extension that includes an email address.",
+        "B. The malware executed 'vssadmin.exe' to prevent file recovery.",
+        "C. The malware dropped an HTA file with 'HELP' in its name, which serves as the ransom note.",
+        "D. The malware made API calls to CryptEncrypt, directly indicating encryption activity."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware displays a ransom note to the user. Based on the report, how is this accomplished?",
+      "options": [
+        "A. By dropping an HTA file and executing it with mshta.exe.",
+        "B. By creating a text file named 'RANSOM_NOTE.txt' on the desktop.",
+        "C. By changing the desktop wallpaper to an image containing the ransom text.",
+        "D. By using the 'msg.exe' command to display a pop-up window."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware employs several evasion and defense-killing techniques. Which of the following are directly supported by the process activity and hooking signatures?",
+      "options": [
+        "A. Masquerading as a core system process by dropping and executing 'WINLOGON.EXE' from the %APPDATA% directory.",
+        "B. API hooking of file system and network functions to monitor or redirect calls.",
+        "C. Terminating security product processes by name using 'taskkill.exe'.",
+        "D. Writing data into the memory space of a remote process as a form of code injection."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "MITRE ATT&CK Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Review the report for actions related to the 'Impact' tactic. Which MITRE ATT&CK techniques are clearly demonstrated?",
+      "options": [
+        "A. T1490: Inhibit System Recovery, evidenced by the deletion of volume shadow copies.",
+        "B. T1486: Data Encrypted for Impact, evidenced by widespread file renaming with a ransom extension and a high-entropy analysis.",
+        "C. T1529: System Shutdown/Reboot, evidenced by a call to 'shutdown.exe'.",
+        "D. T1491: Defacement, evidenced by changing the desktop background and dropping a ransom note."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The YARA signatures suggest multiple possible malware families (Agent Tesla, AsyncRAT, njRAT, WorldWind). However, the behavioral evidence points most strongly to an infostealer. Which observed behaviors specifically indicate information stealing as the primary goal?",
+      "options": [
+        "A. The presence of strings referencing credential files for FTP clients ('recentservers.xml') and Firefox ('key3.db').",
+        "B. The use of WMI queries to gather system information like 'Win32_ComputerSystem'.",
+        "C. The use of a Github URL in the binary, potentially for C2 or downloading payloads.",
+        "D. The malware's ability to take screenshots and log keystrokes."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Ransomware often modifies the system to ensure its ransom note is visible. Which specific actions in this report indicate an attempt at 'Internal Defacement' (T1491.001)?",
+      "options": [
+        "A. Dropping an HTA file to be displayed to the user.",
+        "B. Changing the desktop wallpaper by modifying a registry value.",
+        "C. Deleting Volume Shadow Copies to prevent recovery.",
+        "D. Encrypting user documents and appending a custom extension."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware attempts to evade detection by disabling security features. Which of the following evasion techniques are directly observed in the report?",
+      "options": [
+        "A. Deleting administrative network shares like C$ and admin$.",
+        "B. Patching AmsiScanBuffer in memory to bypass AMSI.",
+        "C. Modifying registry keys related to proxy settings and internet zone mapping.",
+        "D. Clearing the Windows Event Logs to erase traces of execution."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the malware is WannaCry ransomware. Which specific network behavior is a key indicator of this family's worm-like propagation attempts?",
+      "options": [
+        "A. A large number of ARP broadcast requests to discover other hosts on the local network.",
+        "B. A DNS query to a 'killswitch' domain ('iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com').",
+        "C. Use of the daytime protocol on port 13 for evasive sleeping.",
+        "D. Communication with a C2 server over a non-standard port like 62082."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "MITRE ATT&CK Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This infostealer performs a wide range of credential harvesting. Which of the following 'Credential Access' techniques (T1555) are directly supported by strings found in the binary?",
+      "options": [
+        "A. T1555.003: Credentials from Web Browsers, evidenced by the string 'key3.db'.",
+        "B. T1555.004: Windows Credential Manager, evidenced by strings like 'VAULT_ITEM_WIN7'.",
+        "C. T1552.001: Credentials In Files, evidenced by the string 'recentservers.xml'.",
+        "D. T1552.002: Credentials in Registry, evidenced by querying Winlogon registry keys."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample is identified as Dharma/Crysis ransomware. Which of the following behaviors, typical of this family, are confirmed in the detonation report?",
+      "options": [
+        "A. Deleting volume shadow copies using vssadmin.exe.",
+        "B. Appending a file extension that includes an ID and an attacker's email address.",
+        "C. Dropping a ransom note as an HTA file.",
+        "D. Attempting to spread via the EternalBlue exploit."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample exhibits behavior consistent with an AV/EDR Killer. Which specific API calls or actions indicate attempts to interfere with security tools or analysis?",
+      "options": [
+        "A. The process enumerates active windows, potentially looking for security product UIs or analysis tools.",
+        "B. The process hooks file system and internet-related APIs, allowing it to intercept and hide its own activity.",
+        "C. The malware modifies internet proxy settings in the registry.",
+        "D. The malware creates a fake 'WINLOGON.EXE' process in a non-standard directory to hide its execution."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware renames encrypted files. From the dropped file signatures, what is the structure of the new file extension?",
+      "options": [
+        "A. It appends '.id-[HEX_STRING].[EMAIL_ADDRESS].V'",
+        "B. It simply appends '.encrypted'",
+        "C. It prepends 'locked_' to the original filename.",
+        "D. It changes the extension to '.WCRY'"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following persistence mechanisms does this ransomware attempt to use, based on the registry and file system modifications observed?",
+      "options": [
+        "A. It creates a new value in a 'Run' key in the registry to execute on startup.",
+        "B. It creates a new Windows service to ensure it runs with system privileges.",
+        "C. It drops a copy of itself into the user's Startup folder.",
+        "D. It registers itself as a Winlogon helper DLL."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the malware creates a service named 'MsSecSvc 2.0'. Which MITRE ATT&CK technique does this behavior map to?",
+      "options": [
+        "A. T1543.003: Create or Modify System Process: Windows Service",
+        "B. T1036.005: Match Legitimate Name or Location",
+        "C. T1562.001: Disable or Modify Tools",
+        "D. T1055: Process Injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows the execution of 'vssadmin delete shadows /all /quiet'. What is the primary purpose of this command in the context of a ransomware attack?",
+      "options": [
+        "A. To prevent the user from restoring encrypted files from Volume Shadow Copies.",
+        "B. To delete the original malware executable to hide its tracks.",
+        "C. To clear system logs of any activity related to the attack.",
+        "D. To disable Windows Defender's real-time protection."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "How does this ransomware ensure its persistence across system reboots?",
+      "options": [
+        "A. By creating a registry value under 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run'.",
+        "B. By creating a scheduled task that runs at logon.",
+        "C. By dropping a file in the user's Startup folder.",
+        "D. By installing itself as a new Windows service."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Besides encrypting files, which of the following file system artifacts, indicative of a ransomware infection, were created by the malware?",
+      "options": [
+        "A. A ransom note with the filename pattern '_HELP_HELP_HELP_*.hta'.",
+        "B. An executable named 'tasksche.exe' dropped to disk.",
+        "C. A text file named 'DECRYPTION_GUIDE.txt'.",
+        "D. Files with the extension '.WNCRY' added to them."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware performs self-deletion after its main payload executes. How is this cleanup procedure initiated according to the process tree?",
+      "options": [
+        "A. The malware spawns 'cmd.exe', which then uses 'taskkill.exe' and 'ping.exe' to terminate and delete the original executable.",
+        "B. The malware modifies the 'BootExecute' registry key to delete itself on the next reboot.",
+        "C. The malware injects code into 'explorer.exe' which then deletes the original file.",
+        "D. The malware creates a '.bat' file that contains a 'del' command and executes it."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware sample is related to the WannaCry ransomware. Which dropped file is responsible for the encryption and service-related activities?",
+      "options": [
+        "A. mssecsvc.exe",
+        "B. tasksche.exe",
+        "C. rundll32.exe",
+        "D. C:\\hash.dll"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Based on the process tree and commands executed, which of the following anti-recovery techniques were utilized by this ransomware sample?",
+      "options": [
+        "A. Deletion of Volume Shadow Copies using vssadmin.exe",
+        "B. Disabling Windows recovery mode using bcdedit.exe",
+        "C. Terminating the malware's own parent process using taskkill.exe",
+        "D. Deleting the backup catalog using wbadmin.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware drops a ransom note. Which of the following artifacts created by the malware are related to displaying this note or coercing the user?",
+      "options": [
+        "A. A .hta file dropped to the user's Desktop",
+        "B. Execution of mshta.exe to render the ransom note",
+        "C. A registry modification to change the desktop background",
+        "D. A text file named 'DECRYPT_INSTRUCTIONS.txt' created in the root of C:\\"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Analysis of this Dharma ransomware sample reveals a specific command-line utility used to inhibit system recovery. Which command and MITRE ATT&CK technique correspond to this activity?",
+      "options": [
+        "A. The malware uses 'bcdedit.exe /set recoveryenabled no' corresponding to T1490.",
+        "B. The malware uses 'vssadmin.exe delete shadows /all /quiet' corresponding to T1490.",
+        "C. The malware uses 'wbadmin.exe delete catalog -quiet' corresponding to T1490.",
+        "D. The malware uses 'taskkill.exe /f /im explorer.exe' corresponding to T1489."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following file system activities, characteristic of ransomware, are directly supported by evidence in this report?",
+      "options": [
+        "A. Encrypting files and appending a new extension including an email address.",
+        "B. Creating a ransom note text file on the Desktop.",
+        "C. Deleting the original files after encryption is complete.",
+        "D. Modifying file permissions to prevent user access."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample, identified as a Sdbot variant, employs multiple techniques to evade analysis and detection. Based on the static analysis signatures, which evasion techniques are present?",
+      "options": [
+        "A. The PE header has an invalid, very old timestamp.",
+        "B. The PE entrypoint is located in an uncommon, packed section named 'UPX0'.",
+        "C. The sample contains strings related to AMSI bypass.",
+        "D. The sample reads registry keys for VMWare-specific artifacts to detect a virtualized environment."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This Hupigon backdoor variant uses several advanced methods to hide its presence and interfere with security tools. Which of the following EDR evasion techniques are confirmed by the report's hook detection and process monitoring?",
+      "options": [
+        "A. Creation of a fake system process (WINLOGON.EXE) in a non-standard directory (%APPDATA%).",
+        "B. Patching of ntdll.dll in memory to implement direct syscalls.",
+        "C. Installation of API hooks on file system (e.g., FindFirstFileW) and network (e.g., send) functions.",
+        "D. Deletion of Volume Shadow Copies to erase forensic evidence."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This report details a WannaCry sample. Based on the Suricata alerts and network traffic, what is the primary purpose of the DNS query to 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'?",
+      "options": [
+        "A. To download a second-stage payload.",
+        "B. To exfiltrate encryption keys to a C2 server.",
+        "C. To act as a 'kill switch' to halt the malware's execution if the domain resolves.",
+        "D. To determine the external IP address of the victim machine."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample drops and executes a file named 'mssecsvc.exe'. What is the role of this component in the WannaCry infection chain, according to the report?",
+      "options": [
+        "A. It is the primary encryption module.",
+        "B. It is a worm component responsible for lateral movement by scanning the network.",
+        "C. It is a keylogger that captures user credentials.",
+        "D. It is a service that establishes persistence for the ransomware."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The detonation report contains several indicators related to credential theft. Which of the following signatures strongly suggest this malware is an Infostealer?",
+      "options": [
+        "A. The malware contains a string 'key3.db', a file used by Firefox to store credentials.",
+        "B. The malware executes WMI queries like 'Select * from Win32_ComputerSystem'.",
+        "C. The malware contains strings related to screen capture, such as the API 'CopyFromScreen'.",
+        "D. The malware executes 'vssadmin.exe delete shadows' to prevent recovery."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This infostealer attempts to evade endpoint security products. Which specific evasion techniques are indicated by strings found in the binary?",
+      "options": [
+        "A. A string 'AmsiScanBuffer' suggests an attempt to bypass the Anti-Malware Scan Interface (AMSI).",
+        "B. A string 'NtQuerySystemInformation' is used to perform system checks for a sandbox environment.",
+        "C. A reference to the API 'SetLastWriteTime' suggests timestomping to modify file metadata.",
+        "D. The malware loads a fresh copy of ntdll.dll from disk to bypass API hooks."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "process_injection_detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows a 'Webfrequency.exe' process creating a 'RegAsm.exe' process in a suspended state. Which API calls and signatures indicate that Process Hollowing (T1055.012) is occurring?",
+      "options": [
+        "A. The signature 'api-134: Creates a system process in suspended mode'.",
+        "B. The signature 'api-83: Writes PE header to memory'.",
+        "C. The use of 'CreateRemoteThread' to execute code in the target process.",
+        "D. The signature 'api-0: Writes data to a remote process'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "process_injection_detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware uses multiple techniques to execute code and evade detection. Which of the following injection or hooking techniques are evident in the report?",
+      "options": [
+        "A. Asynchronous Procedure Call (APC) Injection, evidenced by calls to 'NtQueueApcThread'.",
+        "B. API hooking of file system and internet-related functions.",
+        "C. Direct syscalls to kernel functions, bypassing hooked user-mode APIs.",
+        "D. Process Hollowing by creating a legitimate process in a suspended state."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware sample exhibits several behaviors to ensure its impact. Which of the following actions are observed in the report?",
+      "options": [
+        "A. Deleting volume shadow copies to prevent file recovery.",
+        "B. Dropping a ransom note with a '.hta' extension.",
+        "C. Changing the desktop wallpaper to display a ransom message.",
+        "D. Spreading to other machines on the network via the EternalBlue exploit."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The process 'vssadmin.exe' is often used by ransomware. What specific command was executed by this sample, and what was its purpose?",
+      "options": [
+        "A. 'vssadmin list shadows' to enumerate existing backups before encrypting them.",
+        "B. 'vssadmin delete shadows /all /quiet' to inhibit system recovery.",
+        "C. 'vssadmin create shadow /for=C:' to create a decoy backup.",
+        "D. 'vssadmin resize shadowstorage' to reduce the space available for future backups."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following persistence mechanisms is used by this ransomware?",
+      "options": [
+        "A. Creating a new service that points to the malicious executable.",
+        "B. Dropping a malicious DLL and hijacking the load order for a legitimate application.",
+        "C. Creating a new value in the 'HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' registry key.",
+        "D. Installing a malicious browser extension for Chrome."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware is known for EDR evasion. Which signatures in the report suggest the use of API unhooking or related in-memory evasion techniques?",
+      "options": [
+        "A. The presence of XOR operation loops in the disassembly, often used for deobfuscating code or data.",
+        "B. The execution of 'vssadmin.exe' to delete shadow copies.",
+        "C. The queuing of an Asynchronous Procedure Call (APC) via 'NtQueueApcThread'.",
+        "D. The presence of a string reference to 'UnhookWindowsHookEx' in the binary."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample uses a legitimate Windows binary, `RegAsm.exe`, as part of its execution chain. What is the primary purpose of this technique?",
+      "options": [
+        "A. To execute code under the context of a trusted, signed Microsoft binary, bypassing application whitelisting (System Binary Proxy Execution, T1218).",
+        "B. To register the malware as a legitimate COM object for persistence.",
+        "C. To directly query the .NET Global Assembly Cache (GAC).",
+        "D. To disable Windows Defender by modifying its registry keys."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the malware modifies the system to display its ransom message. Which of the following actions are taken to achieve this?",
+      "options": [
+        "A. The malware writes an HTA file to disk and executes it using 'mshta.exe'.",
+        "B. The malware modifies the 'HKCU\\Control Panel\\Desktop\\Wallpaper' registry key to change the desktop background.",
+        "C. The malware terminates the 'explorer.exe' process to replace the shell.",
+        "D. The malware drops hundreds of files across the filesystem, one of which is the ransom note."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In this Crysis/Dharma ransomware sample, how does the malware attempt to persist on the system after a reboot?",
+      "options": [
+        "A. It creates a scheduled task to run at logon.",
+        "B. It adds an entry to the HKLM 'Run' key, pointing to its executable in the Startup folder.",
+        "C. It installs itself as a new Windows service.",
+        "D. It infects the Master Boot Record (MBR)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This WannaCry sample spawns 'mssecsvc.exe'. Based on the report, which actions does this process perform to establish persistence and prepare the system?",
+      "options": [
+        "A. It calls 'OpenSCManager' and 'OpenService' to interact with the Windows Service Control Manager.",
+        "B. It encrypts user files found on the C:\\ drive.",
+        "C. It queries Internet Explorer security settings and modifies proxy settings.",
+        "D. It attempts to spread to other machines by scanning for open SMB ports."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware attempts to inhibit system recovery. Based on the process execution data, which specific command is used to achieve this?",
+      "options": [
+        "A. `vssadmin.exe delete shadows /all /quiet`",
+        "B. `bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures`",
+        "C. `wbadmin.exe delete catalog -quiet`",
+        "D. `wevtutil.exe cl System`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This report indicates the malware is ransomware. Which of the following observed behaviors are classic indicators of a ransomware infection, as opposed to other malware types?",
+      "options": [
+        "A. Deleting Volume Shadow Copies via `vssadmin.exe`.",
+        "B. Establishing persistence via a registry run key.",
+        "C. Spawning a `cmd.exe` process.",
+        "D. Renaming user files with a new extension that includes an attacker's email address."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Analyze the post-encryption actions of this ransomware. Which methods does it use to display the ransom note to the user?",
+      "options": [
+        "A. It drops and executes an HTML Application (`.hta`) file.",
+        "B. It modifies the registry to change the desktop wallpaper.",
+        "C. It creates a `.txt` file in every encrypted directory.",
+        "D. It launches Internet Explorer to a remote ransom webpage."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates this sample is from the WannaCry family. Which of the following behaviors, specifically detailed in this report, are characteristic of this malware?",
+      "options": [
+        "A. It attempts to connect to an unusual, hardcoded domain, acting as a killswitch.",
+        "B. It encrypts files using the `CryptEncrypt` API.",
+        "C. It drops and starts a service named `mssecsvc.exe`.",
+        "D. It enumerates and attempts to spread to other hosts on the local network via ARP scans."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware encrypts user files. What evidence in the report directly supports the file encryption activity and its impact?",
+      "options": [
+        "A. The malware calls the `CryptEncrypt` API to perform encryption.",
+        "B. Files on disk are renamed with a new extension (`.V`).",
+        "C. The `binary-60` signature indicates a dropped file has high entropy, suggesting it contains encrypted data or is compressed.",
+        "D. The malware drops and executes a `vssadmin.exe` process to delete shadow copies."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Based on the report, which methods does this Spora ransomware variant use for execution and presenting its ransom demand?",
+      "options": [
+        "A. It executes `vssadmin.exe` to delete volume shadow copies.",
+        "B. It launches `mshta.exe` to display a `.hta` ransom note file.",
+        "C. It terminates its own process using `taskkill.exe` after initial execution.",
+        "D. It performs a `ping` command, likely to check for internet connectivity."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following actions, observed in the report, are direct attempts by the ransomware to prevent system and file recovery?",
+      "options": [
+        "A. Spawning `vssadmin.exe` with command line arguments to delete all shadow copies.",
+        "B. Establishing persistence by creating a new service.",
+        "C. Checking for the presence of backup-related processes.",
+        "D. Encrypting user documents, databases, and archives."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows network activity associated with this ransomware. Which of the following are explicitly observed network-based indicators?",
+      "options": [
+        "A. DNS queries for multiple domains related to cryptocurrency block explorers.",
+        "B. Communication with a C2 server over a non-standard TCP port.",
+        "C. An HTTP GET request to `api.blockcypher.com`.",
+        "D. An HTTP POST request containing exfiltrated user data."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware uses a legitimate Windows utility to hinder recovery. Which utility is it and what is the specific command line observed in the report?",
+      "options": [
+        "A. `bcdedit.exe /set recoveryenabled no`",
+        "B. `vssadmin delete shadows /all /quiet`",
+        "C. `wbadmin delete catalog -quiet`",
+        "D. `mode con cp select=1251`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the presence of a ransom note. Which of the following details about the ransom note are directly supported by the provided data?",
+      "options": [
+        "A. The ransom note is a text file named 'DECRYPT_FILES.txt'.",
+        "B. The ransom note is an HTML Application file (`.hta`).",
+        "C. The ransom note's filename contains a unique ID (`_QNTKK6_`).",
+        "D. The ransom note instructs the user to pay in Bitcoin."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware uses masquerading as a defense evasion technique. Which of the following actions from the report specifically support this conclusion?",
+      "options": [
+        "A. The malware drops and executes a file named `WINLOGON.EXE` in the `%APPDATA%\\WINDOWS` directory.",
+        "B. The malware hooks the `send` function in `WS2_32.DLL`.",
+        "C. The malware process spawns a large number of child processes.",
+        "D. The malware drops executables named `CSRSS.EXE` and `SERVICES.EXE` in a non-system path."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows several API hooking activities. Based on the `hooks-2` and `hooks-5` signatures, which functions are being intercepted?",
+      "options": [
+        "A. The `send` function from `WS2_32.DLL`, likely to monitor or tamper with network traffic.",
+        "B. The `FindFirstFileW` function from `KERNEL32.DLL`, potentially to hide files from enumeration.",
+        "C. The `AmsiScanBuffer` function from `amsi.dll` to bypass anti-malware scans.",
+        "D. The `LdrLoadDll` function from `ntdll.dll` to monitor module loading."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware attempts to disrupt system security and administrative access. According to the report, which specific `net.exe` commands are executed?",
+      "options": [
+        "A. It attempts to delete the default administrative shares `C$` and `admin$`.",
+        "B. It attempts to add a new user to the local administrators group.",
+        "C. It attempts to stop the Windows Defender service (`net stop WinDefend`).",
+        "D. It attempts to delete a non-standard network share named `Z$`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The process `remcos.exe` is a key payload. Which of the following statements about how it is executed and persists are true based on this report?",
+      "options": [
+        "A. It is dropped into the `%APPDATA%\\remcos` directory.",
+        "B. It is executed via a Visual Basic script (`install.vbs`) run by `WScript.exe`.",
+        "C. It establishes persistence by creating a Windows service.",
+        "D. It is launched directly by the initial sample, `hash.exe`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware employs process injection. What specific evidence from the report indicates the use of Process Hollowing (T1055.012)?",
+      "options": [
+        "A. The malware creates a legitimate process (`RegAsm.exe`) in a suspended state.",
+        "B. The malware allocates and writes new code into the memory of the suspended process.",
+        "C. The malware modifies the thread context of the suspended process to point to the new code before resuming it.",
+        "D. The malware uses `CreateRemoteThread` to execute code in a target process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates the use of `vssadmin.exe`. Which specific actions does this utility perform, and what is the ultimate goal of this behavior?",
+      "options": [
+        "A. It lists all available shadow copies to identify backup targets.",
+        "B. It creates a new shadow copy before encryption to ensure file access.",
+        "C. It deletes all existing shadow copies to inhibit system recovery.",
+        "D. It resizes the shadow copy storage area to zero."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware is an infostealer. Based on the strings and signatures, which specific types of information does it target for exfiltration?",
+      "options": [
+        "A. Credentials from the Windows Vault, identified by the \"VAULT_ITEM_WIN7\" string.",
+        "B. FTP client credentials from \"recentservers.xml\".",
+        "C. Screenshots of the user's desktop, indicated by the `CopyFromScreen` API reference.",
+        "D. System information gathered via WMI queries like `Select * from Win32_ComputerSystem`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware uses several anti-analysis and evasion techniques. Which of the following are explicitly mentioned in the report?",
+      "options": [
+        "A. It attempts to detect a debugger by querying kernel debugger information.",
+        "B. It sleeps for an unusually long time to evade automated sandbox analysis.",
+        "C. It allocates memory with `PAGE_GUARD` access rights to interfere with memory dumping.",
+        "D. It patches `AmsiScanBuffer` in memory to bypass AMSI."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware sample drops multiple executables. What evidence suggests that these dropped files are packed or obfuscated?",
+      "options": [
+        "A. The dropped file `muniw.exe` is identified as being packed with UPX.",
+        "B. The initial sample `hash.exe` has a section named `.Jk)` with an unusually high entropy of 7.96.",
+        "C. The dropped file `muniw.exe` has a high entropy of 7.9.",
+        "D. The report includes a signature for AES encryption."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This infostealer contains code to perform anti-analysis and defense evasion. Which of the following techniques are supported by evidence in the report's string signatures?",
+      "options": [
+        "A. AMSI bypass, indicated by the string \"AmsiScanBuffer\".",
+        "B. Timestomping, indicated by the API reference \"SetLastWriteTime\".",
+        "C. Sandbox evasion, indicated by the API reference \"NtQuerySystemInformation\".",
+        "D. Direct syscalls to evade EDR hooking."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Based on the provided detonation report for a Crysis/Dharma variant, which techniques did the ransomware employ to inhibit system recovery and notify the victim? Select ALL correct options.",
+      "options": [
+        "A. It deleted Volume Shadow Copies using vssadmin.exe to prevent file restoration from backups.",
+        "B. It dropped and executed an HTML Application (.hta) file, a common method for displaying a ransom note.",
+        "C. It disabled the Windows recovery environment using bcdedit.exe.",
+        "D. It encrypted files and appended a new file extension that includes an ID and an attacker's email address.",
+        "E. It cleared the system's event logs using wevtutil.exe to erase evidence of its execution."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  }
+]

@@ -1,0 +1,140 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel question type asking students to discriminate by threat_level field. Verified against report: threat_level 2 signatures are api-0 (writes to remote process), api-42 (hides download tracks/Zone.Identifier), string-11 (FTP credentials), string-56 (external IP lookup), avtest-8 (CrowdStrike), yara-0 (njrat YARA). Answer key A (api-0), C (api-42), D (string-11) are all correctly identified as threat_level 2. Options B (kernel debugger = threat_level 1), E (sleep = threat_level 1), F (PAGE_GUARD = threat_level 1) are correctly excluded. Factually valid, clear distractors, CyberSOCEval-compliant format."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: threat_level 2 signatures are target-14 (spawns lot of processes), api-0 (writes to remote process), api-20 (allocates virtual memory in remote process), avtest-8 (CrowdStrike). Answer key B (api-0), C (api-20), D (avtest-8), F (target-14) are all correctly threat_level 2. Option A (UPX packing = threat_level 1) and E (drops executable = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: threat_level 2 signatures are stream-22 (native function calls/NtResumeThread, T1106) and avtest-8 (CrowdStrike). Answer key A (stream-22) and B (avtest-8) are correct. Options C (WriteProcessMemory = threat_level 1), D (UPX = threat_level 1), E (RtlCreateUserThread = threat_level 1), F (CRC mismatch = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: only one threat_level 2 signature exists in this report \u2014 avtest-8 (CrowdStrike). Answer key B is correct. All other options (A=unusual entropy resources, C=high entropy, D=unusual section name, E=IAT references) are threat_level 1. Factually valid. The single-answer scenario is a legitimate hard question testing careful reading."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: threat_level 2 signatures are registry-56 (reads VMware registry artifacts, T1012) and avtest-8 (CrowdStrike). Answer key A (registry-56) and C (avtest-8) are correct. Options B (PE entrypoint in uncommon section = threat_level 1), D (GetProcAddress = informative), E (writes registry keys = threat_level 1), F (high entropy = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: threat_level 2 signatures are api-120 (WinExec call), target-115 (Rundll32 execution), static-97 (PE executable resources in .rsrc), avtest-8 (CrowdStrike). Answer key A (api-120), C (target-115), D (static-97), F (avtest-8) are all correct. Option B (drops DLL = threat_level 1) and E (marks file for deletion = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on ransomware sample. Verified: threat_level 2 signatures include binary-11 (extracted malicious file, 18/22 AV), yara-0 (dharma_ransomware YARA), binary-27 (drops to ProgramData), hooks-2 (file system API hooks), hooks-5 (internet API hooks), target-4 (deletes volume snapshots), avtest-8. Answer key A (yara-0), C (target-4), D (hooks-2+hooks-5), F (binary-11) are all correct. B (kernel debugger = informative) and E (marks files for deletion = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on WannaCry sample. Verified: threat_level 2 signatures are yara-0 (WannaDecryptor YARA match) and avtest-8 (CrowdStrike). Answer key A (yara-0) and B (avtest-8) are correct. Options C (RSA YARA = threat_level 1), D (AES YARA = informative), E (suspicious APIs = threat_level 1), F (high entropy = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on Spora ransomware. Verified: threat_level 2 signatures include api-117 (ShellExecuteW), target-14 (spawns lot), api-0 (writes to remote), api-20 (allocates virtual memory), target-9 (taskkill), target-113 (mshta execution), api-46 (bitcoin files), network-17 (contacts many hosts), network-88 (malicious domain), avtest-8. Answer key A (api-0), B (target-113/mshta), D (target-9/taskkill), F (api-20) are all threat_level 2. C (GetKeyState = threat_level 1), E (UDP traffic = threat_level 1), G (desktop background = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel question asking about threat_level 1 (suspicious) signatures specifically. Verified: threat_level 1 signatures are static-60 (unusual section name), string-64 (IAT references), static-6 (high entropy), api-40 (GetKeyState/keylogging). Answer key A (static-60), B (string-64), C (api-40), D (static-6) are all correctly threat_level 1. Options E (static-18 = informative), F (api-37 = informative), G (api-70 = informative) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on .NET infostealer. Verified: threat_level 2 signatures are api-0 (writes to remote process), string-32 (scheduled task trigger indicator), registry-30 (modifies file/console tracing settings), avtest-8 (CrowdStrike). Answer key A (api-0), C (string-32), D (registry-30), E (avtest-8) are all correct. B (kernel debugger = threat_level 1), F (sleep = threat_level 1), G (PAGE_GUARD = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on Visual Basic sample. Verified: only one threat_level 2 signature \u2014 avtest-8 (CrowdStrike). Answer key B is correct. All other options (A=unusual entropy, C=high entropy, D=unusual section, E=IAT references, F=static compiler match) are threat_level 1 or informative. Single-answer scenario is valid and tests careful reading."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question. Verified: threat_level 2 signatures are binary-8 (CPUID anti-VM trick) and avtest-8 (CrowdStrike). Answer key A (binary-8) and B (avtest-8) are correct. Options C (opens many files = threat_level 1), D (traffic without HTTP header = threat_level 1), E (Suricata alert = threat_level 1), F (high entropy = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on Brontok worm. Verified: threat_level 2 signatures include api-31 (unusual drive letters), target-14 (spawns lot), api-0 (writes to remote), api-20 (allocates virtual memory), target-33 (fake system process), hooks-2 (file system APIs), hooks-5 (internet APIs), avtest-8. Answer key A (api-0), B (hooks-2), D (target-33) are all threat_level 2. C (marks file for deletion = threat_level 1) and E (FileTimeToLocalFileTime = threat_level 1) are correctly excluded. Note: hooks-5 (internet APIs) is also threat_level 2 but not offered as a separate option \u2014 the question is still valid as it asks which of the given options are supported. Factually valid."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on Regrun/Brontok variant. Verified: threat_level 2 signatures include target-14, api-31, api-20, api-0, registry-15 (file extension change), target-33 (fake system process), hooks-2 (file system APIs), hooks-5 (internet APIs), registry-21 (disables cmd), registry-3 (disables task manager), registry-2 (disables regedit), registry-23 (disables system restore), avtest-8. Answer key A (api-20), C (target-33), D (hooks-2), E (registry-3), G (hooks-5) are all threat_level 2. B (reads .ini = threat_level 1), F (reads computer name = informative), H (drops executable = threat_level 1) are correctly excluded. Factually valid."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Novel threat_level discrimination question on Zusy infostealer. Verified: threat_level 2 signatures are api-117 (ShellExecuteW), target-14 (spawns lot), api-0 (writes to remote), api-20 (allocates virtual memory), network-7 (unusual ports 11110/11170), avtest-8. Answer key A (api-0), B (api-20), C (network-7), E (api-117) are all threat_level 2. D (loads RPC module = informative) is correctly excluded. Note: target-14 (spawns lot) is also threat_level 2 but not offered as an option \u2014 the question remains valid. Factually valid."
+      }
+    ],
+    "summary": {
+      "total": 16,
+      "passed": 16,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

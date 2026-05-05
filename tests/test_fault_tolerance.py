@@ -65,6 +65,12 @@ class _InlineExecutor:
 # Helpers
 # ---------------------------------------------------------------------------
 
+def _create_mock_adapter(exp_dir: str, round_num: int = 1) -> None:
+    """Create a mock adapter directory with a dummy weight file."""
+    adapter_dir = Path(exp_dir) / f"round_{round_num}" / "adapter"
+    adapter_dir.mkdir(parents=True, exist_ok=True)
+    (adapter_dir / "adapter_model.safetensors").write_bytes(b"mock")
+
 def _ok_result(label: str, output_dir: str = "/tmp/test") -> dict[str, Any]:
     """A mock successful experiment result."""
     return {
@@ -76,6 +82,8 @@ def _ok_result(label: str, output_dir: str = "/tmp/test") -> dict[str, Any]:
         "best_accuracy": 0.75,
         "final_proficiency": "7",
         "rounds_completed": 3,
+        "response_parsing_error_count": 0,
+        "total_questions_attempted": 15,
         "round_results": [],
         "duration_seconds": 10.0,
     }
@@ -231,7 +239,7 @@ class TestCrossBatchIsolation:
                 else:
                     # Create fake adapter so verification passes
                     (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                    (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                    _create_mock_adapter(exp_dir)
                     results.append(_ok_result(label, exp_dir))
             return results
 
@@ -267,7 +275,7 @@ class TestCrossBatchIsolation:
                     results.append(_fail_result(label, "timeout", exp_dir))
                 else:
                     (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                    (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                    _create_mock_adapter(exp_dir)
                     results.append(_ok_result(label, exp_dir))
             return results
 
@@ -352,7 +360,7 @@ class TestProgressPreservation:
             if round_count["n"] > 1:
                 raise ConnectionError("API cost cap reached")
             return [{"question": {"question": "test?", "options": ["A. yes"]},
-                      "answer": {"correct_options": ["A"]}}]
+                      "answer": {"correct_answers": ["A"]}}]
 
         def mock_evaluate(*args, **kwargs):
             return {
@@ -360,7 +368,7 @@ class TestProgressPreservation:
                 "metrics": {"exact_match_accuracy": 0.5, "avg_jaccard": 0.5},
                 "strengths": [], "weaknesses": [], "breakdowns": {},
                 "dataset": [{"question": {"question": "q", "options": ["A. a"]},
-                             "answer": {"correct_options": ["A"]}}],
+                             "answer": {"correct_answers": ["A"]}}],
             }
 
         config = _make_base_config()
@@ -372,10 +380,19 @@ class TestProgressPreservation:
         mock_teacher = mock.MagicMock()
         mock_teacher.generate_exam = mock.MagicMock(side_effect=mock_generate_exam)
         mock_teacher.evaluate_and_generate_curriculum = mock.MagicMock(side_effect=mock_evaluate)
+        mock_teacher.repair_empty_reports = mock.MagicMock(
+            side_effect=lambda exam, reports: exam
+        )
+
+        mock_reviewer = mock.MagicMock()
+        mock_reviewer.model = "mock"
+        mock_reviewer.review.return_value = {"reviews": [], "summary": {"total": 0, "passed": 0, "flagged": 0, "rejected": 0}}
+        mock_reviewer.filter_exam.side_effect = lambda exam, _: exam
 
         with mock.patch("teacher_engine.TeacherEngine", return_value=mock_teacher), \
-             mock.patch("teacher_engine.load_template", return_value="TASK: %s"), \
-             mock.patch("student_trainer.StudentTrainer.generate", return_value='{"correct_options": ["A"]}'), \
+             mock.patch("teacher_engine.load_template", return_value="Report: {REPORT}\nQuestion: {QUESTION}\nOptions: {OPTIONS}"), \
+             mock.patch("main.ExamReviewer", return_value=mock_reviewer), \
+             mock.patch("student_trainer.StudentTrainer.generate", return_value='{"correct_answers": ["A"]}'), \
              mock.patch("student_trainer.StudentTrainer.train"), \
              mock.patch("student_trainer.StudentTrainer.save"), \
              mock.patch("student_trainer.StudentTrainer._load_model_and_tokenizer"):
@@ -513,6 +530,228 @@ class TestSpecificFailures:
 
 
 # ---------------------------------------------------------------------------
+# Test Group 4b: Malformed LLM responses don't crash the pipeline
+# ---------------------------------------------------------------------------
+
+def _setup_distillation_test(tmp_path, teacher_eval_return, teacher_exam_return=None):
+    """Helper to run a distillation loop with mocked teacher responses."""
+    if teacher_exam_return is None:
+        teacher_exam_return = [
+            {"question": {"question": "test?", "options": ["A. yes", "B. no"],
+                          "detonation_report": {"sha256": "abc"}},
+             "answer": {"correct_answers": ["A"]}}
+        ]
+
+    config = _make_base_config()
+    config["data_source"]["hybrid_analysis_dir"] = str(tmp_path / "fake_ha")
+    ha_dir = tmp_path / "fake_ha" / "family1"
+    ha_dir.mkdir(parents=True)
+    (ha_dir / "sample1").write_text(json.dumps({"sha256": "abc", "verdict": "malicious"}))
+
+    mock_teacher = mock.MagicMock()
+    mock_teacher.generate_exam = mock.MagicMock(return_value=teacher_exam_return)
+    mock_teacher.evaluate_and_generate_curriculum = mock.MagicMock(
+        return_value=teacher_eval_return
+    )
+    mock_teacher.repair_empty_reports = mock.MagicMock(
+        side_effect=lambda exam, reports: exam  # pass-through
+    )
+
+    # Mock the exam reviewer to auto-pass all questions
+    mock_reviewer = mock.MagicMock()
+    mock_reviewer.model = "mock"
+    mock_reviewer.review.return_value = {"reviews": [], "summary": {"total": 0, "passed": 0, "flagged": 0, "rejected": 0}}
+    mock_reviewer.filter_exam.side_effect = lambda exam, _: exam  # pass-through
+
+    with mock.patch("teacher_engine.TeacherEngine", return_value=mock_teacher), \
+         mock.patch("teacher_engine.load_template",
+                    return_value="Report: {REPORT}\nQuestion: {QUESTION}\nOptions: {OPTIONS}"), \
+         mock.patch("main.ExamReviewer", return_value=mock_reviewer), \
+         mock.patch("student_trainer.StudentTrainer.generate",
+                    return_value='{"correct_answers": ["A"]}'), \
+         mock.patch("student_trainer.StudentTrainer.train"), \
+         mock.patch("student_trainer.StudentTrainer.save"), \
+         mock.patch("student_trainer.StudentTrainer._load_model_and_tokenizer"):
+
+        from main import run_distillation_loop
+        return run_distillation_loop(
+            config=config,
+            rounds=1,
+            target_accuracy=0.99,
+            output_dir=str(tmp_path / "out"),
+            truncate_input=False,
+        )
+
+
+class TestMalformedLLMResponses:
+    """The pipeline must survive any malformed teacher/student LLM response
+    without crashing — degraded results are acceptable, crashes are not."""
+
+    def test_evaluation_returns_list_instead_of_dict(self, tmp_path):
+        """Teacher returns a JSON array instead of object for evaluation."""
+        result = _setup_distillation_test(tmp_path, teacher_eval_return=[
+            {"some": "array item"}
+        ])
+        assert result["rounds_completed"] == 1
+        assert result["best_accuracy"] == 0.0
+
+    def test_evaluation_returns_empty_dict(self, tmp_path):
+        """Teacher returns {} for evaluation."""
+        result = _setup_distillation_test(tmp_path, teacher_eval_return={})
+        assert result["rounds_completed"] == 1
+
+    def test_evaluation_returns_string(self, tmp_path):
+        """Teacher returns a raw string instead of JSON."""
+        result = _setup_distillation_test(
+            tmp_path, teacher_eval_return="I cannot evaluate this"
+        )
+        assert result["rounds_completed"] == 1
+
+    def test_evaluation_returns_none(self, tmp_path):
+        """Teacher returns None."""
+        result = _setup_distillation_test(tmp_path, teacher_eval_return=None)
+        assert result["rounds_completed"] == 1
+
+    def test_evaluation_metrics_is_list(self, tmp_path):
+        """metrics field is a list instead of dict."""
+        result = _setup_distillation_test(tmp_path, teacher_eval_return={
+            "feedback": "ok", "proficiency": 3,
+            "metrics": ["accuracy", 0.5],  # wrong type
+            "strengths": [], "weaknesses": [], "breakdowns": {},
+            "dataset": [],
+        })
+        assert result["rounds_completed"] == 1
+
+    def test_evaluation_dataset_is_string(self, tmp_path):
+        """dataset field is a string instead of list — must abort experiment."""
+        with pytest.raises(RuntimeError, match="MALFORMED DATASET"):
+            _setup_distillation_test(tmp_path, teacher_eval_return={
+                "feedback": "ok", "proficiency": 3,
+                "metrics": {"exact_match_accuracy": 0.5},
+                "strengths": [], "weaknesses": [], "breakdowns": {},
+                "dataset": "not a list",
+            })
+
+    def test_evaluation_weaknesses_is_string(self, tmp_path):
+        """weaknesses field is a string instead of list — must abort experiment."""
+        with pytest.raises(RuntimeError, match="MALFORMED WEAKNESSES"):
+            _setup_distillation_test(tmp_path, teacher_eval_return={
+                "feedback": "ok", "proficiency": 3,
+                "metrics": {"exact_match_accuracy": 0.5},
+                "strengths": [], "weaknesses": "weak at everything",
+                "breakdowns": {}, "dataset": [],
+            })
+
+    def test_evaluation_weaknesses_contains_strings_not_dicts(self, tmp_path):
+        """weaknesses list contains strings instead of dicts."""
+        result = _setup_distillation_test(tmp_path, teacher_eval_return={
+            "feedback": "ok", "proficiency": 3,
+            "metrics": {"exact_match_accuracy": 0.5},
+            "strengths": [], "weaknesses": ["MITRE mapping", "process injection"],
+            "breakdowns": {}, "dataset": [],
+        })
+        assert result["rounds_completed"] == 1
+
+    def test_exam_items_are_strings_not_dicts(self, tmp_path):
+        """Exam contains string items instead of question dicts — they are
+        normalised into proper question structures and still attempted."""
+        result = _setup_distillation_test(
+            tmp_path,
+            teacher_eval_return={
+                "feedback": "", "proficiency": 1, "metrics": {},
+                "strengths": [], "weaknesses": [], "breakdowns": {},
+                "dataset": [],
+            },
+            teacher_exam_return=["question 1", "question 2"],
+        )
+        assert result["rounds_completed"] == 1
+        # Both string items should have been attempted (not skipped)
+        round_results_path = Path(tmp_path / "out" / "round_1" / "exam_results.json")
+        assert round_results_path.exists()
+        exam_results = json.loads(round_results_path.read_text())
+        assert len(exam_results) == 2
+
+    def test_exam_question_missing_options(self, tmp_path):
+        """Exam question dict has no options field."""
+        result = _setup_distillation_test(
+            tmp_path,
+            teacher_eval_return={
+                "feedback": "", "proficiency": 1, "metrics": {},
+                "strengths": [], "weaknesses": [], "breakdowns": {},
+                "dataset": [],
+            },
+            teacher_exam_return=[
+                {"question": {"question": "test?", "detonation_report": {}},
+                 "answer": {"correct_answers": ["A"]}}
+            ],
+        )
+        assert result["rounds_completed"] == 1
+
+    def test_exam_answer_is_list_not_dict(self, tmp_path):
+        """Exam item answer is a list instead of dict."""
+        result = _setup_distillation_test(
+            tmp_path,
+            teacher_eval_return={
+                "feedback": "", "proficiency": 1, "metrics": {},
+                "strengths": [], "weaknesses": [], "breakdowns": {},
+                "dataset": [],
+            },
+            teacher_exam_return=[
+                {"question": {"question": "test?", "options": ["A. yes"],
+                              "detonation_report": {}},
+                 "answer": ["A"]}
+            ],
+        )
+        assert result["rounds_completed"] == 1
+
+    def test_student_returns_garbage(self, tmp_path):
+        """Student model returns completely unparseable garbage."""
+        config = _make_base_config()
+        config["data_source"]["hybrid_analysis_dir"] = str(tmp_path / "fake_ha")
+        ha_dir = tmp_path / "fake_ha" / "family1"
+        ha_dir.mkdir(parents=True)
+        (ha_dir / "sample1").write_text(json.dumps({"sha256": "abc"}))
+
+        mock_teacher = mock.MagicMock()
+        mock_teacher.repair_empty_reports = mock.MagicMock(
+            side_effect=lambda exam, reports: exam
+        )
+        mock_teacher.generate_exam.return_value = [
+            {"question": {"question": "test?", "options": ["A. yes"],
+                          "detonation_report": {}},
+             "answer": {"correct_answers": ["A"]}}
+        ]
+        mock_teacher.evaluate_and_generate_curriculum.return_value = {
+            "feedback": "", "proficiency": 1, "metrics": {},
+            "strengths": [], "weaknesses": [], "breakdowns": {},
+            "dataset": [],
+        }
+
+        mock_reviewer = mock.MagicMock()
+        mock_reviewer.model = "mock"
+        mock_reviewer.review.return_value = {"reviews": [], "summary": {"total": 0, "passed": 0, "flagged": 0, "rejected": 0}}
+        mock_reviewer.filter_exam.side_effect = lambda exam, _: exam
+
+        with mock.patch("teacher_engine.TeacherEngine", return_value=mock_teacher), \
+             mock.patch("teacher_engine.load_template",
+                        return_value="Report: {REPORT}\nQuestion: {QUESTION}\nOptions: {OPTIONS}"), \
+             mock.patch("main.ExamReviewer", return_value=mock_reviewer), \
+             mock.patch("student_trainer.StudentTrainer.generate",
+                        return_value="🤖💥 I don't know!!!"), \
+             mock.patch("student_trainer.StudentTrainer.train"), \
+             mock.patch("student_trainer.StudentTrainer.save"), \
+             mock.patch("student_trainer.StudentTrainer._load_model_and_tokenizer"):
+
+            from main import run_distillation_loop
+            result = run_distillation_loop(
+                config=config, rounds=1, target_accuracy=0.99,
+                output_dir=str(tmp_path / "out"), truncate_input=False,
+            )
+
+        assert result["rounds_completed"] == 1
+
+
+# ---------------------------------------------------------------------------
 # Test Group 5: End-to-end summary integrity
 # ---------------------------------------------------------------------------
 
@@ -594,7 +833,7 @@ class TestTrackerPersistence:
                 else:
                     # Create fake artifacts so verification passes
                     (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                    (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                    _create_mock_adapter(exp_dir)
                     tracker.record(label, (ti, si), _ok_result(label, exp_dir))
 
         assert tracker.num_completed == 7
@@ -613,7 +852,7 @@ class TestTrackerPersistence:
                 exp_dir = str(batch_dir / label)
                 Path(exp_dir).mkdir(parents=True, exist_ok=True)
                 (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                _create_mock_adapter(exp_dir)
                 results.append(_ok_result(label, exp_dir))
             return results
 
@@ -659,11 +898,11 @@ class TestRetryLogic:
                 exp_dir = str(batch_dir / label)
                 Path(exp_dir).mkdir(parents=True, exist_ok=True)
                 # Make one experiment fail in initial batches, succeed in retries
-                if label == "gpt4o__llama3.1_8b" and "retry" not in batch_label:
+                if label == "gpt5.1__llama3.1_8b" and "retry" not in batch_label:
                     results.append(_fail_result(label, "transient error", exp_dir))
                 else:
                     (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                    (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                    _create_mock_adapter(exp_dir)
                     results.append(_ok_result(label, exp_dir))
             return results
 
@@ -687,7 +926,7 @@ class TestRetryLogic:
         # After retry, the experiment should be completed
         tracker_path = tmp_path / "tracker.json"
         tracker_data = json.loads(tracker_path.read_text())
-        assert tracker_data["experiments"]["gpt4o__llama3.1_8b"]["status"] == "completed"
+        assert tracker_data["experiments"]["gpt5.1__llama3.1_8b"]["status"] == "completed"
 
     def test_retry_capped_at_max_retries(self, tmp_path):
         """Retries stop after max_retries even if experiments still fail."""
@@ -705,11 +944,11 @@ class TestRetryLogic:
                 exp_dir = str(batch_dir / label)
                 Path(exp_dir).mkdir(parents=True, exist_ok=True)
                 # This experiment always fails
-                if label == "gpt4o__llama3.1_8b":
+                if label == "gpt5.1__llama3.1_8b":
                     results.append(_fail_result(label, "permanent error", exp_dir))
                 else:
                     (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                    (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                    _create_mock_adapter(exp_dir)
                     results.append(_ok_result(label, exp_dir))
             return results
 
@@ -733,7 +972,7 @@ class TestRetryLogic:
 
         # Summary should list the permanently failed experiment
         summary = json.loads((tmp_path / "experiment_summary.json").read_text())
-        assert "gpt4o__llama3.1_8b" in summary["permanently_failed"]
+        assert "gpt5.1__llama3.1_8b" in summary["permanently_failed"]
 
     def test_no_retry_when_all_succeed(self, tmp_path):
         """No retries happen if all experiments pass."""
@@ -751,7 +990,7 @@ class TestRetryLogic:
                 exp_dir = str(batch_dir / label)
                 Path(exp_dir).mkdir(parents=True, exist_ok=True)
                 (Path(exp_dir) / "experiment_result.json").write_text("{}")
-                (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True, exist_ok=True)
+                _create_mock_adapter(exp_dir)
                 results.append(_ok_result(label, exp_dir))
             return results
 
@@ -806,7 +1045,7 @@ class TestArtifactVerification:
         exp_dir = str(tmp_path / "no_result_exp")
         Path(exp_dir).mkdir(parents=True)
         # Create adapter but NOT experiment_result.json
-        (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True)
+        _create_mock_adapter(exp_dir)
 
         tracker.record("exp_b", (1, 1), _ok_result("exp_b", exp_dir))
 
@@ -823,7 +1062,7 @@ class TestArtifactVerification:
         exp_dir = str(tmp_path / "good_exp")
         Path(exp_dir).mkdir(parents=True)
         (Path(exp_dir) / "experiment_result.json").write_text("{}")
-        (Path(exp_dir) / "round_1" / "adapter").mkdir(parents=True)
+        _create_mock_adapter(exp_dir)
 
         tracker.record("exp_c", (2, 2), _ok_result("exp_c", exp_dir))
 

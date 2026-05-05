@@ -1,0 +1,2294 @@
+[
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The initial malware drops and executes `rundl32.exe`, `Stable_Network.exe`, and `host.exe`. Which signatures specifically indicate that the malware is injecting code into these or other processes?",
+      "options": [
+        "A. Signature `api-0`: 'Writes data to a remote process'.",
+        "B. Signature `api-20`: 'Allocates virtual memory in a remote process'.",
+        "C. Signature 'Creates a thread in a self process'.",
+        "D. Signature `binary-1`: 'Drops executable files'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Persistence Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This Remcos sample establishes persistence through multiple methods. Based on the process tree and command-line arguments, which of the following persistence techniques are used?",
+      "options": [
+        "A. Creating a Scheduled Task via `schtasks.exe /Create` to run `SystemCheck`.",
+        "B. Modifying the firewall to allow its components to communicate, using `netsh firewall add allowedprogram`.",
+        "C. Installing a new Windows Service named `GameSDK.exe`.",
+        "D. Adding a `Run` key to the registry pointing to `Stable_Network.exe`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates that the malware injects code into `svchost.exe`. Which of the following signatures provide direct evidence for the 'Process Hollowing' technique?",
+      "options": [
+        "A. Signature `api-129`, which indicates creating a process in a suspended state.",
+        "B. Signature `api-83`, which indicates writing a PE header to the memory of another process.",
+        "C. Signature `hooks-5`, which indicates the hooking of internet-related APIs.",
+        "D. The malware dropping a file named `svchost.exe` into a non-standard directory."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report shows a malicious signature `api-85` related to the API call `NtQueueApcThread`. This is a strong indicator of which specific process injection technique?",
+      "options": [
+        "A. Process Hollowing",
+        "B. Asynchronous Procedure Call (APC) Injection",
+        "C. DLL Injection via CreateRemoteThread",
+        "D. Reflective DLL Loading"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Several indicators point to this malware being the Remcos RAT. Which of the following signatures are characteristic of Remcos?",
+      "options": [
+        "A. A YARA signature match for 'njrat1'.",
+        "B. The creation of a mutex containing the string 'remcos_'.",
+        "C. Communication over a non-standard TCP port such as 1177.",
+        "D. Deletion of Volume Shadow Copies.",
+        "E. Dropping a file named `install.vbs`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This ransomware sample takes several actions to inhibit system recovery. Based on the executed commands, which of the following anti-recovery techniques are used?",
+      "options": [
+        "A. Deleting Volume Shadow Copies using 'vssadmin delete shadows'.",
+        "B. Disabling automatic repair using 'bcdedit /set {default} recoveryenabled no'.",
+        "C. Deleting the backup catalog using 'wbadmin delete catalog'.",
+        "D. Encrypting the Master Boot Record (MBR)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This malware uses multiple techniques to evade detection and analysis. Based on the report's signatures, which evasion methods are present?",
+      "options": [
+        "A. API Hooking, evidenced by the signature 'Hooks internet related APIs'.",
+        "B. Process Hollowing, evidenced by creating a suspended process and writing a PE header into its memory.",
+        "C. Direct syscalls to bypass EDR hooks in ntdll.dll.",
+        "D. Modifying the system's proxy settings in the registry."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Collection Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This Remcos variant exhibits multiple data collection capabilities. Which of the following are supported by the MITRE ATT&CK mapping and signatures in the report?",
+      "options": [
+        "A. Keylogging (T1056.001)",
+        "B. Screen Capture (T1113)",
+        "C. Data from Removable Media (T1025)",
+        "D. Email Collection (T1114)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware spawns `svchost.exe` in a suspended state. This action is a key step in which process injection technique?",
+      "options": [
+        "A. Process Hollowing",
+        "B. DLL Injection",
+        "C. APC Injection",
+        "D. Thread Local Storage (TLS) Injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Persistence Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This ransomware uses the system utility `sc.exe` to establish persistence. What specific action does it perform?",
+      "options": [
+        "A. It creates a new service named 'fbjtauwa' that starts automatically.",
+        "B. It deletes an existing security-related service.",
+        "C. It modifies the binary path of the Windows Update service.",
+        "D. It queries the status of all running services to find a target for injection."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This malware is identified as an AV/EDR Killer. Which specific actions from the report support this classification?",
+      "options": [
+        "A. Acquiring 'SeShutdownPrivilege' to enable forceful system reboots.",
+        "B. Using `DeviceIoControl` to interact with low-level drivers, which can be used to disable security products.",
+        "C. Dropping an executable file into the temporary directory.",
+        "D. Resolving an IP address via DNS."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Network Indicator of Compromise Extraction",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Based on the network analysis, what characteristics define the C2 infrastructure for this Remcos sample?",
+      "options": [
+        "A. It uses Dynamic DNS domains (e.g., '.ddns.net').",
+        "B. It communicates over a non-standard port (1177).",
+        "C. It uses a Domain Generation Algorithm (DGA) to find its C2.",
+        "D. All C2 communication is tunneled over DNS (DoH/DoT)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware creates `svchost.exe` and injects code into it. Which two API calls are classic indicators of the 'Process Hollowing' technique observed here?",
+      "options": [
+        "A. `CreateProcess` with the `CREATE_SUSPENDED` flag.",
+        "B. `WriteProcessMemory` to write a new executable into the target's address space.",
+        "C. `CreateRemoteThread` to execute a payload in another process.",
+        "D. `SetWindowsHookEx` to load a malicious DLL into all GUI processes."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Credential Access",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This infostealer targets a wide range of credentials. According to the report's signatures, which of the following specific credential stores are targeted?",
+      "options": [
+        "A. Firefox browser credentials, by looking for 'key3.db'.",
+        "B. Windows Vault credentials, indicated by the string 'VAULT_ITEM_WIN7'.",
+        "C. FTP client credentials, by looking for 'recentservers.xml'.",
+        "D. KeePass password manager databases."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates the malware is capable of unhooking user-mode functions to evade EDR. While direct unhooking is not explicitly shown, which signature points to a related API hooking capability for a different purpose (like credential theft)?",
+      "options": [
+        "A. The signature 'Hooks internet related APIs'.",
+        "B. The signature 'Tries to sleep for a long time'.",
+        "C. The signature 'Modifies proxy settings'.",
+        "D. The signature 'Allocates virtual memory in a remote process'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report shows the malware marking its initial executable for deletion. This action is an example of which MITRE ATT&CK technique?",
+      "options": [
+        "A. T1070.004: File Deletion",
+        "B. T1027: Obfuscated Files or Information",
+        "C. T1562.001: Disable or Modify Tools",
+        "D. T1497: Virtualization/Sandbox Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Impact Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report contains a signature 'Write many files with double extensions'. What is the most likely purpose of this action in the context of a ransomware attack?",
+      "options": [
+        "A. To mark files that have been successfully encrypted, often adding a new extension like '.encrypted'.",
+        "B. To create decoy files to confuse security analysts.",
+        "C. To exfiltrate copies of user data before encryption.",
+        "D. To store configuration data for the malware."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The process tree shows that `hash.exe` drops and runs a file named `host.exe`, which in turn is matched by a YARA signature for 'njrat1'. What does this likely indicate?",
+      "options": [
+        "A. The initial executable is a dropper for the njRAT/Remcos payload.",
+        "B. The malware is attempting to masquerade as the legitimate Windows 'host.exe' process.",
+        "C. The malware is exclusively a downloader with no RAT capabilities.",
+        "D. The malware is trying to disable the host firewall."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This WannaCryptor sample creates a service. What is the name of the service it attempts to create, according to the report's strings and behavior?",
+      "options": [
+        "A. The report does not show service creation, but rather file encryption.",
+        "B. It creates a service with a name matching the executable, 'hash.exe'.",
+        "C. It creates a service named after a common Windows process like 'svchost.exe' to masquerade.",
+        "D. The report includes strings for creating and starting a service, such as 'CreateServiceA' and 'StartServiceA'."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware `ctbzjelz.exe` creates `svchost.exe` in a suspended state. What is the purpose of the `CREATE_SUSPENDED` flag in the context of process injection?",
+      "options": [
+        "A. To allow the malware to modify the memory of the new process (e.g., write a new PE image) before it begins execution.",
+        "B. To delay the execution of the process to evade sandbox detection.",
+        "C. To ensure the new process runs with elevated privileges.",
+        "D. To prevent the new process from making network connections."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "An analyst suspects this sample is Remcos RAT. Based on the combination of observed behaviors in the report, which findings STRONGLY support this specific classification over other malware types?",
+      "options": [
+        "A. The malware drops an executable file into the %TEMP% directory.",
+        "B. A scheduled task is created for persistence using schtasks.exe.",
+        "C. The malware uses keylogging functions like GetAsyncKeyState.",
+        "D. A specific mutex `remcos_` is created, which is a known artifact of the Remcos family.",
+        "E. The malware modifies Windows Firewall rules using netsh.exe to allow its own communication."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Collection Techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This Remcos sample performs several data collection techniques. Based strictly on the provided signatures and API calls, which of the following collection methods are verifiably used?",
+      "options": [
+        "A. Capturing keystrokes to a log file.",
+        "B. Stealing data from the clipboard.",
+        "C. Taking screenshots of the desktop.",
+        "D. Exfiltrating saved credentials from web browsers.",
+        "E. Recording audio from the microphone."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Persistence",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The evaluation shows this Remcos malware establishing persistence. Select all methods of persistence that are directly supported by evidence in the report.",
+      "options": [
+        "A. Creating a new Windows Service pointing to a dropped executable.",
+        "B. Adding a registry value to an auto-run key (e.g., HKCU\\...\\Run).",
+        "C. Creating a scheduled task that re-executes the malware periodically.",
+        "D. Modifying a shortcut (.lnk) file in the user's Startup folder.",
+        "E. Hijacking the COM In-Process Server (InprocServer32)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware drops and executes `GameSDK.exe` and then adds a firewall exception for it using `netsh.exe`. It also creates a `remcos_` mutex. Which defense evasion and command-and-control techniques are demonstrated by this sequence?",
+      "options": [
+        "A. Masquerading (T1036) by dropping files with legitimate-sounding names.",
+        "B. Disabling or Modifying System Firewall (T1562.004) to allow C2 traffic.",
+        "C. Using a non-standard port for C2 communication.",
+        "D. Utilizing a Domain Generation Algorithm (DGA) to find its C2 server.",
+        "E. Using a known mutex to prevent multiple instances from running, which also acts as an Indicator of Compromise."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates that the malware `hash.exe` writes data into a remote process and allocates virtual memory in a remote process. Which specific process is being targeted for injection?",
+      "options": [
+        "A. A newly created, suspended process.",
+        "B. Itself (self-injection).",
+        "C. A legitimate Windows process like svchost.exe.",
+        "D. The parent process that launched it."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "MITRE ATT&CK Technique Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Based on the process activity involving `schtasks.exe /Create` and `netsh firewall add allowedprogram`, which two MITRE ATT&CK techniques are most accurately represented?",
+      "options": [
+        "A. T1053.005 - Scheduled Task/Job: Scheduled Task",
+        "B. T1543.003 - Create or Modify System Process: Windows Service",
+        "C. T1562.004 - Impair Defenses: Disable or Modify System Firewall",
+        "D. T1021.001 - Remote Services: Remote Desktop Protocol",
+        "E. T1547.001 - Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware `ctbzjelz.exe` is observed creating `svchost.exe` in a suspended mode, writing a PE header into its memory, and then resuming it. This sequence is a hallmark of what specific process injection technique?",
+      "options": [
+        "A. Asynchronous Procedure Call (APC) Injection",
+        "B. Process Hollowing",
+        "C. Thread Local Storage (TLS) Injection",
+        "D. DLL Injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report shows `hash.exe` calling `CreateProcessA` to launch `microsofthelp.exe`, writing 32 bytes to its memory, and creating a thread in the remote process. Which indicators point towards process injection being used?",
+      "options": [
+        "A. The use of the `CreateProcessA` API call to start a new executable.",
+        "B. The allocation and writing of data to a remote process's memory.",
+        "C. The use of a packer (MPRESS) to obfuscate the initial executable.",
+        "D. The creation of a thread within its own process space.",
+        "E. The creation of a registry key for persistence."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report shows a call to `NtQueueApcThread`. This API is a key indicator for which process injection technique?",
+      "options": [
+        "A. Process Hollowing (T1055.012)",
+        "B. Asynchronous Procedure Call (APC) Injection (T1055.004)",
+        "C. Thread Execution Hijacking (T1055.003)",
+        "D. Portable Executable Injection (T1055.002)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware sample spawns `rundll32.exe` with no parameters, a suspicious behavior. It then allocates virtual memory, writes data into the `rundll32.exe` process, and creates a remote thread. What type of process injection is taking place?",
+      "options": [
+        "A. Standard DLL Injection via LoadLibrary.",
+        "B. Process Hollowing, where the original code is unmapped and replaced.",
+        "C. Reflective DLL Injection, where the malware manually maps a DLL into the target process.",
+        "D. Shellcode injection, where arbitrary code is written into a target process and executed.",
+        "E. Asynchronous Procedure Call (APC) Injection."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware injects code into `svchost.exe`. According to the report, which API calls provide evidence for this injection activity?",
+      "options": [
+        "A. CreateProcessA in suspended mode",
+        "B. WriteProcessMemory to the suspended process",
+        "C. ResumeThread to start the hollowed process",
+        "D. netsh.exe to modify firewall rules",
+        "E. sc.exe to create a new service"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This ransomware sample attempts to inhibit system recovery. Based on the executed commands, which specific anti-recovery techniques are used?",
+      "options": [
+        "A. Deleting volume shadow copies using `vssadmin.exe`.",
+        "B. Disabling Windows automatic startup repair using `bcdedit.exe`.",
+        "C. Deleting the backup catalog using `wbadmin.exe`.",
+        "D. Encrypting the Master Boot Record (MBR).",
+        "E. Deleting its own executable from disk."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware drops a file named `svchost.exe` into the `%APPDATA%` directory. What is the primary defense evasion technique demonstrated by this action?",
+      "options": [
+        "A. Timestomping",
+        "B. Deleting Evidence",
+        "C. Masquerading as a legitimate system file by name",
+        "D. Obfuscating file content through encryption"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Impact Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Besides encrypting files, this ransomware exhibits other impactful behaviors. Which of the following actions, supported by the report's evidence, contribute to its overall impact?",
+      "options": [
+        "A. Creating a scheduled task for persistence.",
+        "B. Spawning multiple processes, potentially to speed up encryption or other tasks.",
+        "C. Dropping a ransom note file.",
+        "D. Clearing Windows event logs.",
+        "E. Modifying firewall rules to block legitimate traffic."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The primary executable `hash.exe` launches `085cda53603755dc.exe`, which then relaunches itself. This child process creates a registry run key for persistence. What evasion and persistence techniques are evident from this chain of events?",
+      "options": [
+        "A. The malware uses a multi-stage execution, dropping and running a secondary payload.",
+        "B. The malware injects code into `explorer.exe`.",
+        "C. The malware establishes persistence through a Registry Run Key.",
+        "D. The malware relaunches itself, possibly to detach from the initial execution context or apply different parameters."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample is classified under 'UM Unhooking'. While the report does not show the unhooking itself, what other defense evasion techniques are present?",
+      "options": [
+        "A. Sets the 'ThreadHideFromDebugger' flag to hinder debugging.",
+        "B. Uses a long sleep call to evade sandbox analysis.",
+        "C. Disables security tools by stopping their services.",
+        "D. Creates a scheduled task to maintain persistence."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This malware attempts to evade security products. Based on the report signatures, which of the following AV/EDR evasion techniques are employed?",
+      "options": [
+        "A. The malware drops and executes a secondary payload from a temp directory.",
+        "B. It queries for the presence of VMWare artifacts to detect a virtualized environment.",
+        "C. It checks for running debuggers by querying kernel debugger information.",
+        "D. It attempts to stop services, which could include security products.",
+        "E. The binary has high entropy, suggesting it is packed or encrypted to evade static analysis."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "MITRE ATT&CK Technique Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware drops a file named `gegdsimsogm.exe` into the temp directory and executes it. It also shuts down the system using `NtShutdownSystem`. Which MITRE ATT&CK techniques correspond to these observed behaviors?",
+      "options": [
+        "A. T1105 - Ingress Tool Transfer",
+        "B. T1059.003 - Command and Scripting Interpreter: Windows Command Shell",
+        "C. T1529 - System Shutdown/Reboot",
+        "D. T1490 - Inhibit System Recovery"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample is tagged as an AV/EDR killer. Analyze the report and select all actions that directly support this classification by attempting to impair or bypass defenses.",
+      "options": [
+        "A. It creates a file in the user's Startup folder for persistence.",
+        "B. It queries the registry for VMWare artifacts, suggesting sandbox evasion.",
+        "C. It uses `cmd.exe` to delete its original executable file.",
+        "D. It modifies firewall rules using `netsh.exe`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware sample drops a text file containing a ransom note. What is the name of the ransom note file created by the malware?",
+      "options": [
+        "A. DECRYPT_FILES.txt",
+        "B. HOW_TO_RECOVER_FILES.html",
+        "C. cbNhUvy60.README.txt",
+        "D. help.txt"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This report details a multi-stage infection. Based on the overall chain of events and specific indicators, which activities strongly suggest the payload is a Remote Access Trojan (RAT) like Remcos?",
+      "options": [
+        "A. The malware establishes persistence by creating a scheduled task that runs every minute.",
+        "B. A keylogger component (`GameSDK.exe`) is dropped and executed, evidenced by `GetAsyncKeyState` API calls.",
+        "C. The malware uses `netsh.exe` to add a firewall exception, allowing an executable to accept incoming connections.",
+        "D. A dropped executable masquerades as a system utility (`rundl32.exe`) in the %TEMP% folder.",
+        "E. The malware executes `vssadmin delete shadows` to prevent system recovery."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Persistence",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware establishes persistence using `schtasks.exe /Create /XML \"%TEMP%\\SystemCheck.xml\" /TN \"System\\SystemCheck\"`. What are the specific characteristics of this persistence mechanism?",
+      "options": [
+        "A. It creates a task named \"SystemCheck\" in the \"System\" folder of the Task Scheduler.",
+        "B. The task is configured via an XML file dropped in the %TEMP% directory.",
+        "C. The task executes `%APPDATA%\\Stable_Network.exe`.",
+        "D. The task is configured to run when a user logs on.",
+        "E. The task modifies a Registry Run key."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware attempts to blend in with legitimate system activity. Which of the following observed behaviors function as defense evasion or masquerading techniques?",
+      "options": [
+        "A. Spawning a process named `rundl32.exe` in the %TEMP% directory.",
+        "B. Creating a scheduled task with a generic name like \"SystemCheck\".",
+        "C. Using a Dynamic DNS domain (`duckdns.org`) for C2 communication.",
+        "D. Adding a firewall rule for a dropped executable using `netsh.exe`.",
+        "E. Dropping a file named `CL_Debug_Log.txt` that is actually a PE executable."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Collection Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates the presence of a keylogger. Which specific signature provides the most direct evidence for this capability?",
+      "options": [
+        "A. `api-40`: \"Calls an API typically used for keylogging\" (`GetAsyncKeyState`).",
+        "B. `api-105`: \"Calls an API possibly used to take screenshots\" (`CreateCompatibleBitmap`).",
+        "C. `registry-0`: \"Modifies auto-execute functionality by setting/creating a value in the registry\".",
+        "D. `yara-0`: \"YARA signature match - njrat1\"."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Command and Control",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Analyze the network indicators for this sample. Which characteristics describe its Command and Control (C2) infrastructure?",
+      "options": [
+        "A. It uses a dynamic DNS provider (`duckdns.org`).",
+        "B. It communicates over the non-standard TCP port 1177.",
+        "C. It exfiltrates data exclusively over DNS (port 53).",
+        "D. It communicates with a known malicious domain (`lazystax.ru`)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "MITRE ATT&CK Technique Mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The execution of `netsh firewall add allowedprogram \"%ALLUSERSPROFILE%\\GameSDK.exe\" \"GameSDK.exe\" ENABLE` corresponds to which MITRE ATT&CK Technique?",
+      "options": [
+        "A. T1562.004: Impair Defenses: Disable or Modify System Firewall",
+        "B. T1543.003: Create or Modify System Process: Windows Service",
+        "C. T1053.005: Scheduled Task/Job: Scheduled Task",
+        "D. T1021.001: Remote Services: Remote Desktop Protocol"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample has very limited runtime behavior. However, which combination of static and dynamic indicators suggests it is a first-stage dropper for a Remote Access Trojan?",
+      "options": [
+        "A. The file is a Visual Basic executable with high-entropy sections, suggesting a packed payload.",
+        "B. The sample reads registry keys related to Remote Desktop Protocol (RDP) services.",
+        "C. It immediately begins encrypting files with a `.wncry` extension.",
+        "D. It spawns `vssadmin.exe` to delete all volume shadow copies."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Signature `api-129` notes that `ctbzjelz.exe` created `svchost.exe` with the `CREATE_SUSPENDED` flag. This action is the first step of which process injection technique?",
+      "options": [
+        "A. Process Hollowing (T1055.012)",
+        "B. Asynchronous Procedure Call Injection (T1055.004)",
+        "C. DLL Injection via `LoadLibrary` (T1055.001)",
+        "D. Thread Local Storage Injection (T1055.005)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report indicates a Process Hollowing attempt against `svchost.exe`. Following the creation of the process in a suspended state, which API calls would be expected to unmap the original memory, allocate new memory, write the malicious payload, and begin execution?",
+      "options": [
+        "A. `NtUnmapViewOfSection`",
+        "B. `VirtualAllocEx`",
+        "C. `WriteProcessMemory`",
+        "D. `SetThreadContext` and `ResumeThread`",
+        "E. `QueueUserAPC`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The signature `api-85` notes a call to `NtQueueApcThread`. What is the primary purpose of this API call in the context of malware?",
+      "options": [
+        "A. To queue a function to be executed in the context of a specific thread, a technique known as APC injection.",
+        "B. To query the system for running processes and threads.",
+        "C. To suspend a thread before modifying its memory.",
+        "D. To delete Volume Shadow Copies to prevent system recovery."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample demonstrates multiple advanced evasion techniques. Based on the API call signatures, which of the following techniques are present?",
+      "options": [
+        "A. Asynchronous Procedure Call (APC) Injection, evidenced by the call to `NtQueueApcThread`.",
+        "B. Hiding its execution from debuggers, evidenced by setting the 'ThreadHideFromDebugger' flag.",
+        "C. Process Hollowing, evidenced by creating a process in a suspended state.",
+        "D. User-mode EDR hook evasion by loading a fresh copy of a system DLL from disk."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The initial process `hash.exe` is observed writing data to a newly created `rundll32.exe` process, which then performs network activity. Which signatures directly support the conclusion that code was injected into `rundll32.exe`?",
+      "options": [
+        "A. `api-0`: \"Writes data to a remote process\"",
+        "B. `api-20`: \"Allocates virtual memory in a remote process\"",
+        "C. `target-248`: \"Detected Rundll32 execution with no parameters provided (likely process injection)\"",
+        "D. `registry-27`: \"Modifies proxy settings\""
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware spawns `microsofthelp.exe` from `hash.exe`. The parent process then writes data into the child process. What general MITRE ATT&CK technique does this behavior map to?",
+      "options": [
+        "A. T1055: Process Injection",
+        "B. T1105: Ingress Tool Transfer",
+        "C. T1057: Process Discovery",
+        "D. T1547.001: Registry Run Keys / Startup Folder"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The report shows that `hash.exe` writes data into its own process space and allocates virtual memory in a remote process. It also contains YARA rules for Remcos/njRAT. Which process-related behaviors are characteristic of this type of malware?",
+      "options": [
+        "A. Allocating virtual memory in a remote process (`api-20`).",
+        "B. Writing data to a remote process (`api-0`).",
+        "C. Self-injection or code unpacking within its own process.",
+        "D. Deleting Volume Shadow Copies using `vssadmin.exe`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This ransomware sample attempts to inhibit system recovery. Which specific commands are executed to achieve this?",
+      "options": [
+        "A. `vssadmin delete shadows /all /quiet`",
+        "B. `wmic shadowcopy delete`",
+        "C. `bcdedit /set {default} recoveryenabled no`",
+        "D. `wbadmin delete catalog -quiet`",
+        "E. `netsh advfirewall set allprofiles state off`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "While this sample is classified as ransomware, it also exhibits behaviors typical of another malware class. Based on signatures like `api-96` (\"Tries to steal browser sensitive information\") and `api-52` (\"Reads mail related files\"), what other functionality is present?",
+      "options": [
+        "A. Information Stealing",
+        "B. Adware",
+        "C. Rootkit",
+        "D. Bootkit"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample shows multiple sandbox and analysis evasion techniques. Which of the following are supported by the report's signatures?",
+      "options": [
+        "A. Checking for a debugger by querying kernel debugger information.",
+        "B. Detecting a virtual environment by searching for VMWare artifacts in the registry.",
+        "C. Using timing-based checks by sleeping for long intervals.",
+        "D. Checking for user activity by calling `GetCursorPos`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This malware employs multiple defense evasion techniques. From the list below, select ALL techniques that are evidenced in the report.",
+      "options": [
+        "A. Dropping an executable with a `.txt` extension to bypass simple extension-based filters.",
+        "B. Modifying the Windows firewall to allow its components to communicate.",
+        "C. Using a scheduled task for persistence.",
+        "D. Injecting code into the `explorer.exe` process.",
+        "E. Checking for the presence of a debugger using `ThreadHideFromDebugger`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Collection Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This infostealer uses a wide array of collection methods. Which of the following specific data sources does it target, according to the report's signatures?",
+      "options": [
+        "A. Keystrokes, indicated by references to `GetKeyboardState` and strings like `[CTRL]`.",
+        "B. FTP client credentials from `recentservers.xml`.",
+        "C. Screen captures, indicated by `System.Drawing.CopyFromScreen`.",
+        "D. Windows Credential Manager / Vault, indicated by strings like `VAULT_ITEM_WIN7`.",
+        "E. Firefox browser credentials, indicated by references to `key3.db`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Command and Control",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates the use of `api.telegram.org` for network communications. What is the most likely purpose of abusing this legitimate service?",
+      "options": [
+        "A. To serve as a Command & Control (C2) channel, blending in with normal web traffic.",
+        "B. To exfiltrate stolen data.",
+        "C. To check for an active internet connection before executing.",
+        "D. To launch a denial-of-service attack against Telegram's servers."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample drops multiple executables, including 'Stable_Network.exe' and 'GameSDK.exe'. It establishes persistence by creating a scheduled task named \"SystemCheck\" via 'schtasks.exe'. The malware also modifies the firewall using 'netsh.exe' and communicates over TCP to a non-standard port (1177). Based on these behaviors, which of the following are indicative of the Remcos RAT?",
+      "options": [
+        "A. Establishing persistence via a scheduled task is a common RAT behavior.",
+        "B. Modifying the system firewall with 'netsh.exe' is a typical step to allow inbound/outbound C2 communication.",
+        "C. The use of TCP on a non-standard port for C2 is a characteristic feature of Remcos and other RATs.",
+        "D. Dropping an executable named 'GameSDK.exe' is a definitive signature exclusive to Remcos.",
+        "E. The primary purpose is to encrypt files and demand a ransom payment."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The initial process `ctbzjelz.exe` is observed to launch `svchost.exe` in a suspended state (signature `api-129`). It then writes a PE header into the memory of the suspended process (signature `api-83`). Which specific injection technique is being demonstrated, and what are its key components?",
+      "options": [
+        "A. Process Hollowing (T1055.012), as evidenced by creating a legitimate process in a suspended state to act as a host.",
+        "B. The writing of a new PE header into the memory of the suspended `svchost.exe` process is a critical step in replacing its original code.",
+        "C. DLL Injection via `CreateRemoteThread`, as `svchost.exe` is a common target for loading malicious DLLs.",
+        "D. Asynchronous Procedure Call (APC) Injection, as it queues malicious code to run in the target thread.",
+        "E. The technique relies on resuming the suspended process's main thread to execute the injected malicious code."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The process `hash.exe` spawns `rundll32.exe` without any command-line parameters (signature `target-248`). Subsequently, `hash.exe` is observed allocating memory in (`api-20`) and writing data to (`api-0`) the `rundll32.exe` process. What do these actions strongly suggest?",
+      "options": [
+        "A. The `rundll32.exe` process is being used as a legitimate host for a system task.",
+        "B. A process injection technique is being used, where `rundll32.exe` serves as the target process.",
+        "C. The malware is likely hollowing out or injecting shellcode into `rundll32.exe` to evade defenses.",
+        "D. This is an example of DLL side-loading, where a malicious DLL is placed in the same directory as `rundll32.exe`.",
+        "E. The `rundll32.exe` process then connects to the network, indicating its code has been replaced or augmented."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion and Discovery",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample, identified as Remcos, is observed calling `GetAsyncKeyState` (signature `api-40`) and `EnumWindows` (signature `api-152`). It also creates a scheduled task for persistence. Which capabilities do these specific indicators point to?",
+      "options": [
+        "A. The `GetAsyncKeyState` call is a strong indicator of keylogging functionality.",
+        "B. The use of `EnumWindows` suggests the malware is performing application window discovery, likely to find sensitive information or active user sessions.",
+        "C. The malware is attempting to discover security software by enumerating running processes.",
+        "D. These actions are primarily for spreading to other machines on the network.",
+        "E. Both keylogging and window discovery are common features for information stealing in Remote Access Trojans."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample spawns multiple 'cmd.exe' instances to execute a series of commands, including 'vssadmin delete shadows /all /quiet', 'wmic shadowcopy delete', 'bcdedit /set {default} recoveryenabled no', and 'wbadmin delete catalog -quiet'. Which of the following accurately describe the purpose of these commands in the context of a ransomware attack?",
+      "options": [
+        "A. They are designed to inhibit system recovery by deleting backups and disabling recovery boot options.",
+        "B. The `vssadmin` and `wmic` commands specifically target Volume Shadow Copies to prevent easy file restoration.",
+        "C. The `bcdedit` command is used to disable the Windows Automatic Repair feature.",
+        "D. The `wbadmin` command is intended to delete backup catalogs created by Windows Server Backup.",
+        "E. These commands are used to exfiltrate user credentials before encrypting files."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The initial dropper `hash.exe` writes a new executable, `host.exe`, which is identified by a YARA rule as `njrat1`. The dropper also writes and executes `GameSDK.exe`. This process is observed calling `GetAsyncKeyState`. The report shows a created mutant named `remcos_`. Given this conflicting information, what are the most accurate conclusions?",
+      "options": [
+        "A. The malware is definitively njRAT, as confirmed by the YARA signature.",
+        "B. The malware is definitively Remcos, as confirmed by the created mutant.",
+        "C. The sample is likely Remcos, and the `njrat1` YARA signature may be cross-detecting due to similarities between .NET-based RATs.",
+        "D. The `GetAsyncKeyState` call indicates a keylogging capability, common to both njRAT and Remcos.",
+        "E. The presence of two different RAT indicators suggests this is a modular downloader capable of deploying multiple payloads."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "A process `hash.exe` is observed creating a new process `085cda53603755dc.exe`. Signature `api-0` (\"Writes data to a remote process\") is triggered where `hash.exe` writes 32 bytes to the newly created process. What do these actions indicate?",
+      "options": [
+        "A. The parent process is performing a benign configuration of its child process.",
+        "B. A process injection or process hollowing technique is likely underway.",
+        "C. The 32 bytes written could be shellcode or a stub used to load a larger payload.",
+        "D. The malware is attempting to achieve persistence using a Run key.",
+        "E. The child process `085cda53603755dc.exe` subsequently marking `hash.exe` for deletion is a common self-deletion tactic after a successful injection."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "An executable drops and runs 'remcos.exe' in the '%APPDATA%\\remcos' directory. It then creates a mutant containing the string 'remcos_'. Which malware family do these indicators strongly point to?",
+      "options": [
+        "A. Remcos RAT, due to the specific file name, path, and mutant.",
+        "B. Agent Tesla, as it also uses the AppData directory for persistence.",
+        "C. njRAT, because it is also a .NET-based RAT with similar features.",
+        "D. The use of a specific, hardcoded folder name like 'remcos' is a strong signature for this family.",
+        "E. Any generic infostealer, as they all try to hide in the user's profile."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report for this sample indicates the use of `api-85`, which corresponds to a call to 'NtQueueApcThread' to execute code in a remote process. It also contains the string 'UnhookWindowsHookEx'. Which evasion and execution techniques are evidenced by these two indicators?",
+      "options": [
+        "A. The `NtQueueApcThread` call is a clear indicator of Asynchronous Procedure Call (APC) Injection (T1055.004).",
+        "B. The string 'UnhookWindowsHookEx' is related to removing keyboard hooks, often as part of a keylogger's cleanup, but is not user-mode unhooking for EDR evasion.",
+        "C. These indicators show the malware is reloading ntdll.dll from disk to bypass EDR hooks.",
+        "D. This is a form of process injection used for both defense evasion and privilege escalation.",
+        "E. The malware is performing Process Hollowing by creating a suspended process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware sample is observed writing over 100 files with a double extension, such as '.id[...].locked' (signature `api-201`). It also drops a file named 'DECRYPTION-INFO.txt'. What do these behaviors indicate?",
+      "options": [
+        "A. The malware is an information stealer staging data for exfiltration.",
+        "B. This is characteristic ransomware behavior, involving file encryption and dropping a ransom note.",
+        "C. The double extension is a tactic to mark encrypted files and associate them with a specific campaign or victim ID.",
+        "D. The file 'DECRYPTION-INFO.txt' is the ransom note containing instructions for the victim.",
+        "E. The malware is deleting system files to cause a denial of service."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A malicious process `ctbzjelz.exe` is observed creating `svchost.exe` in a suspended state (`CREATE_SUSPENDED` flag). It then allocates (`VirtualAllocEx`), writes (`WriteProcessMemory`), and modifies memory protections (`VirtualProtectEx`) in the target process before resuming its execution. Which of the following statements are true about this sequence?",
+      "options": [
+        "A. This sequence is a textbook example of Process Hollowing (T1055.012).",
+        "B. The use of `CreateProcess` with the `CREATE_SUSPENDED` flag is the initial step that allows the malware to manipulate the target process before it runs.",
+        "C. This is more likely Reflective DLL Injection, which does not involve creating a new process.",
+        "D. The calls to `VirtualAllocEx` and `WriteProcessMemory` are used to carve out memory and write the malicious payload into the target's address space.",
+        "E. This is an example of APC Injection, which relies on queuing a user-mode APC to the target thread."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Persistence",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware sample executes `schtasks.exe` with the arguments `/Create /XML \"%TEMP%\\SystemCheck.xml\" /TN \"System\\SystemCheck\"`. What are the key objectives of this action?",
+      "options": [
+        "A. To establish persistence by creating a new scheduled task.",
+        "B. To escalate privileges, as the task is set to run with SYSTEM rights.",
+        "C. To execute a payload defined in the 'SystemCheck.xml' file.",
+        "D. To masquerade the task by giving it a generic name ('SystemCheck') and placing it in a 'System' folder to blend in.",
+        "E. To check the system for vulnerabilities before deploying the main payload."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The report indicates that the initial sample `hash.exe` allocates virtual memory in a remote process (`api-20`) and writes data to it (`api-0`). The target process is `explorer.exe`. What can be inferred from this behavior?",
+      "options": [
+        "A. The malware is injecting code into `explorer.exe`.",
+        "B. This is a common technique to evade process-based detection, as the malicious code will run under a trusted process.",
+        "C. The malware is likely a keylogger, as `explorer.exe` handles user interface elements.",
+        "D. The malware is attempting to start a new instance of `explorer.exe` to confuse the user.",
+        "E. This technique is often used to gain the permissions of the logged-on user and access the user's desktop session."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Command and Control",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This Remcos sample communicates with the domain 'microsoft-365-updater.duckdns.org'. What does the use of a 'duckdns.org' domain suggest about the malware's C2 infrastructure?",
+      "options": [
+        "A. The malware is directly affiliated with Microsoft 365 services.",
+        "B. The attacker is using a dynamic DNS service to host their C2 server.",
+        "C. This makes the C2 infrastructure resilient to takedowns, as the IP address can be changed easily.",
+        "D. The domain name is chosen to look legitimate and bypass simple domain-based blocklists.",
+        "E. The C2 communication is happening over the standard DNS port 53."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Impact Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This ransomware sample contains a string 'YOUR FILES ARE ENCRYPTED' and drops a ransom note. It is also observed calling the `CryptEncrypt` API. What is the primary purpose of these actions?",
+      "options": [
+        "A. To inform the user that their files have been encrypted (Impact: T1491.001).",
+        "B. To use the Windows cryptographic API for the file encryption process (Impact: T1486).",
+        "C. To delete shadow copies to prevent system restore.",
+        "D. To provide instructions for payment in the ransom note.",
+        "E. To exfiltrate user data before encryption."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware sample `hash.exe` spawns a child process `085cda53603755dc.exe` with the command line argument `:*C:\\hash.exe *`. Subsequently, the child process is observed executing with the argument `a ZZZZZZXQTRG`. What does this behavior likely represent?",
+      "options": [
+        "A. The parent process is passing its own path to the child, possibly for the child to delete the parent file (self-deletion).",
+        "B. The child process is being relaunched with a new argument, which may act as a decryption key or a command.",
+        "C. This is a form of process injection where the child process's memory is modified between executions.",
+        "D. The malware is checking command line arguments as an anti-analysis or sandbox evasion technique.",
+        "E. The argument `:*C:\\hash.exe *` is a standard way for a child process to inherit handles from its parent."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware process `hash.exe` is observed setting the 'ThreadHideFromDebugger' flag (signature `api-84`). It also sleeps for a very long time (`1097794852` milliseconds) and contains unusual section names. Which defense evasion techniques are being employed?",
+      "options": [
+        "A. Anti-debugging, by attempting to hide its main thread from a debugger (T1622).",
+        "B. Sandbox evasion, by using a long sleep to wait out automated analysis environments (T1497.003).",
+        "C. Obfuscation, suggested by the use of unusual PE section names to hinder static analysis.",
+        "D. Process injection by manipulating threads of a remote process.",
+        "E. Timestomping to modify file timestamps."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Collection Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This Remcos sample is observed to have API hooks on `send@WS2_32.DLL` (signature `hooks-5`). It also uses the `GetAsyncKeyState` API. What data collection techniques do these indicators point to?",
+      "options": [
+        "A. The `GetAsyncKeyState` API call strongly indicates a keylogging capability to capture user keystrokes (T1056.001).",
+        "B. Hooking the `send` API allows the malware to intercept outgoing network data, potentially capturing credentials or other sensitive information before encryption (T1056.004).",
+        "C. These hooks are primarily for C2 communication, not data collection.",
+        "D. The malware is likely capturing screenshots of the user's desktop.",
+        "E. Both techniques are forms of Input Capture (T1056) used to steal information."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A malware sample, identified as WannaCryptor, is observed dropping a file named `tasksche.exe`. It also contains strings for `taskdl.exe`. These are tools related to the ransomware's worm-like spreading capabilities via the EternalBlue exploit. The sample also uses AES for encryption. Which functionalities are indicated by this evidence?",
+      "options": [
+        "A. The use of AES for encryption is a core component of its data encryption for impact (T1486).",
+        "B. The presence of tools like `tasksche.exe` indicates a capability for lateral movement, likely by exploiting SMB vulnerabilities.",
+        "C. The malware functions as a simple file encryptor with no spreading capabilities.",
+        "D. The ransomware is attempting to schedule tasks for persistence.",
+        "E. It is performing information stealing before encryption."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A malware sample creates a service named 'fbjtauwa' pointing to a dropped executable 'ctbzjelz.exe'. This executable then creates a suspended `svchost.exe` process, writes a PE header and code into its memory, and resumes it. The hollowed `svchost.exe` then connects to the C2 server. What are the key defense evasion techniques demonstrated here?",
+      "options": [
+        "A. Process Hollowing (T1055.012) is used to run malicious code under the guise of a legitimate system process.",
+        "B. The malware creates a new service for persistence and execution (T1543.003).",
+        "C. Using `svchost.exe` as the host process is a form of masquerading (T1036) to evade detection.",
+        "D. The malware modifies the system firewall to allow `svchost.exe` outbound connections.",
+        "E. This is an example of user-mode unhooking where the malware reloads system DLLs."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "An analyst suspects this sample is a Remcos RAT. Based on the provided report, which of the following observations specifically support this identification over other generic malware behavior?",
+      "options": [
+        "A. The malware drops an executable file into the %TEMP% directory.",
+        "B. A mutex named 'remcos_' is created to prevent multiple instances from running.",
+        "C. The malware establishes persistence by creating a scheduled task named 'SystemCheck'.",
+        "D. The malware modifies the Windows Firewall by adding a new rule using netsh.exe.",
+        "E. A dropped file named 'remcos.exe' is written to the %APPDATA%\\remcos\\ directory."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Collection Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This report details the activity of a Remote Access Trojan. Which specific data collection and C2 communication techniques, commonly associated with RATs like Remcos, are observed?",
+      "options": [
+        "A. Deleting volume shadow copies via `vssadmin`.",
+        "B. Capturing keystrokes, indicated by the 'GetAsyncKeyState' API call.",
+        "C. Using a non-standard port (1177) for TCP network traffic.",
+        "D. Encrypting local user files with the AES algorithm.",
+        "E. Establishing persistence via a scheduled task that executes every minute."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample in this report employs several defense evasion techniques. From the list below, select ALL techniques that are directly supported by evidence in the detonation data.",
+      "options": [
+        "A. Modifying the Windows Firewall by executing `netsh.exe` to add an allowed program.",
+        "B. Injecting code into the legitimate `explorer.exe` process to hide its activity.",
+        "C. Creating a new service that points to a malicious executable.",
+        "D. Using direct syscalls to bypass EDR hooks on standard WinAPI functions.",
+        "E. Deleting its original executable file after successfully dropping and executing its payload."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The process 'ctbzjelz.exe' creates 'svchost.exe' in a suspended state and manipulates its memory. Based on the API calls and process behavior, which specific process injection technique is being used?",
+      "options": [
+        "A. Process Hollowing (T1055.012), evidenced by creating a legitimate process in a suspended state, unmapping its memory, and replacing it with malicious code.",
+        "B. DLL Injection (T1055.001), indicated by the use of `CreateRemoteThread` to load a malicious DLL into the target process.",
+        "C. APC Injection (T1055.004), evidenced by the use of `QueueUserAPC` to execute malicious code in the context of the target process's thread.",
+        "D. Thread Local Storage (TLS) Injection (T1055.005), where malicious code is executed through TLS callbacks in the target process."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The initial executable `hash.exe` is observed interacting with a newly created `rundll32.exe` process. Which of the following API-level indicators suggest that process injection is occurring?",
+      "options": [
+        "A. The malware calls `CreateProcessA` to launch `rundll32.exe`.",
+        "B. The malware allocates virtual memory in the remote `rundll32.exe` process.",
+        "C. The malware writes data into the memory of the remote `rundll32.exe` process.",
+        "D. The malware queries the cryptographic machine GUID from the registry.",
+        "E. The malware uses `WinExec` to launch a command shell."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This report contains signatures for Asynchronous Procedure Call (APC) Injection. Which API call is the key indicator for this specific technique?",
+      "options": [
+        "A. `CreateRemoteThread`",
+        "B. `SetThreadContext`",
+        "C. `NtQueueApcThread`",
+        "D. `WriteProcessMemory`",
+        "E. `VirtualAllocEx`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware sample `hash.exe` spawns a child process, also named `hash.exe`, and then writes data to it. Based on the signatures 'Writes data to a remote process' and 'Allocates virtual memory in a remote process', which injection-related activities are taking place?",
+      "options": [
+        "A. The parent process is allocating memory in its own address space for a new thread.",
+        "B. The parent process is allocating and writing memory within the address space of the newly created child process.",
+        "C. The malware is performing a classic DLL injection using `LoadLibrary`.",
+        "D. The malware is likely preparing the child process for code injection, such as hollowing or direct memory mapping.",
+        "E. The malware is deleting volume shadow copies."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This ransomware sample attempts to inhibit system recovery. Which commands executed by the malware directly support this objective?",
+      "options": [
+        "A. `sc.exe create ...` to establish a new service for persistence.",
+        "B. `vssadmin delete shadows /all /quiet` to remove volume shadow copies.",
+        "C. `netsh advfirewall firewall add rule ...` to modify firewall settings.",
+        "D. `wbadmin delete catalog -quiet` to delete the backup catalog.",
+        "E. `bcdedit /set {default} recoveryenabled no` to disable automatic recovery."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This report shows a ransomware sample that drops and executes a payload masquerading as `svchost.exe`. Which of the following observed behaviors are characteristic of a ransomware infection?",
+      "options": [
+        "A. Writing over 100 files with a double extension (e.g., '.doc.encrypted').",
+        "B. Dropping a ransom note file containing the text 'YOUR FILES ARE ENCRYPTED'.",
+        "C. Querying the system's default language via `GetSystemDefaultLangID`.",
+        "D. Checking for the presence of VMWare registry keys.",
+        "E. Attempting to steal sensitive data from local web browsers."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware in this report exhibits behaviors consistent with EDR evasion. Which specific API calls and behaviors indicate an attempt to interfere with API monitoring or security tool functionality?",
+      "options": [
+        "A. Use of `GetProcAddress` and `LoadLibraryA` to dynamically resolve functions.",
+        "B. The presence of `send@WS2_32.DLL` in the hook detection list, indicating API hooking.",
+        "C. The malware queries its external IP address using `api.ipify.org`.",
+        "D. A call to `SetThreadContext` is observed, which can be used to hijack threads or restore hooked functions.",
+        "E. The malware makes a network connection over TOR."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample exhibits behavior consistent with a Remote Access Trojan. Which of the following indicators are the STRONGEST evidence for identifying it as a member of the Remcos family?",
+      "options": [
+        "A. The malware uses `schtasks.exe` to create a new scheduled task for persistence.",
+        "B. The malware drops an executable named `remcos.exe`.",
+        "C. The malware spawns `cmd.exe` to execute a batch script.",
+        "D. A created mutex contains the substring `remcos_`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The malware injects code into 'svchost.exe'. Based on the signatures 'Creates a process in suspended mode', 'Writes PE header to memory', and process tree analysis, what is the most likely injection technique?",
+      "options": [
+        "A. Process Hollowing (T1055.012)",
+        "B. Reflective DLL Injection",
+        "C. APC Injection (T1055.004)",
+        "D. Thread Local Storage (TLS) Injection (T1055.005)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This malware sample exhibits behavior designed to disable or evade security products. Which of the following actions support this conclusion?",
+      "options": [
+        "A. The malware drops an executable file named `gegdsimsogm.exe` into the %TEMP% directory.",
+        "B. It attempts to shutdown the system using the `NtShutdownSystem` API.",
+        "C. It queries system information such as OS version and computer name.",
+        "D. It attempts to adjust its process token privileges to enable `SeShutdownPrivilege`.",
+        "E. It enumerates running processes using `CreateToolhelp32Snapshot`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The provided report shows a malware sample that may be attempting to unhook APIs to evade EDR. Which combination of observed behaviors strongly suggests this activity?",
+      "options": [
+        "A. The malware uses `CreateToolhelp32Snapshot` to enumerate system processes.",
+        "B. The malware dynamically resolves API addresses using `GetProcAddress` and `LoadLibraryA`.",
+        "C. The malware contains a high-entropy `.text` section, indicating packing or encryption.",
+        "D. The malware reads the original `ntdll.dll` from disk and maps it into memory to bypass inline hooks placed by security software.",
+        "E. The malware sets the 'ThreadHideFromDebugger' flag using `NtSetInformationThread`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "process_injection_detection",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The malware sample is observed allocating and writing to the memory of a child process. Which of the following API calls are essential for this type of process injection?",
+      "options": [
+        "A. `VirtualAllocEx`",
+        "B. `WriteProcessMemory`",
+        "C. `GetTickCount`",
+        "D. `CreateMutexA`",
+        "E. `CreateRemoteThread` or `SetThreadContext`"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Persistence",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This Remcos RAT sample establishes persistence on the host. Which of the following methods are used, according to the report?",
+      "options": [
+        "A. Creating a new service using `sc.exe`.",
+        "B. Modifying a shortcut (.LNK file) in the Startup folder.",
+        "C. Creating a scheduled task that runs every minute using `schtasks.exe`.",
+        "D. Writing to the `HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run` registry key.",
+        "E. Installing a Winlogon Helper DLL."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Malware Family Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "While this sample is a ransomware variant, it shares some generic behaviors with other malware types. From the options below, select only the behaviors MOST characteristic of ransomware.",
+      "options": [
+        "A. Using `CreateToolhelp32Snapshot` to enumerate running processes.",
+        "B. Creating a mutex to ensure only one instance of the malware runs.",
+        "C. Writing numerous files with a new, uniform file extension.",
+        "D. Dropping a text file containing instructions for payment and file recovery.",
+        "E. Deleting the backup catalog using `wbadmin.exe`."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Malware Family Identification",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "This sample displays characteristics of an AV/EDR Killer. Which specific actions from the report justify this classification?",
+      "options": [
+        "A. Dropping an executable named `regsrv32.exe` to the Windows System32 directory.",
+        "B. Using `sc.exe` to create and start a new service named `fbjtauwa`.",
+        "C. Terminating processes associated with security tools.",
+        "D. Modifying the Windows firewall rules using `netsh.exe`.",
+        "E. Attempting to load a kernel driver."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "This sample is classified as 'um_unhooking'. Which pieces of evidence from the report specifically point to user-mode API unhooking techniques, as opposed to other forms of evasion?",
+      "options": [
+        "A. The malware reads the registry for VMWare-specific artifacts.",
+        "B. The malware sets the `ThreadHideFromDebugger` flag.",
+        "C. The malware loads a fresh copy of `ntdll.dll` into its memory space to access clean, unhooked versions of system call functions.",
+        "D. The malware uses `GetProcAddress` to dynamically resolve the addresses of API functions, which can then be used to find original function code.",
+        "E. The malware sleeps for a long duration to evade sandbox analysis."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The parent process `hash.exe` (PID 6040) spawns multiple child processes. One of these children, `host.exe`, then spawns `GameSDK.exe`, which exhibits keylogging behavior. What evidence suggests that `GameSDK.exe` is a hollowed or injected process rather than a legitimate application?",
+      "options": [
+        "A. The process `GameSDK.exe` is observed calling `GetAsyncKeyState`.",
+        "B. A YARA signature for `njrat1` matches the `host.exe` file, a known loader.",
+        "C. The parent process `host.exe` is seen writing data into the memory of a remote process.",
+        "D. The `GameSDK.exe` process is located in `%ALLUSERSPROFILE%`, an uncommon location for games.",
+        "E. The process `host.exe` sleeps for a very long time before execution."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  }
+]

@@ -1,0 +1,18 @@
+2026-03-26 07:50:44,025 [INFO] experiments: Logging to output_logs/2026-03-26_07:50_log
+2026-03-26 07:50:44,047 [INFO] experiments: SMalA Experiment Matrix
+2026-03-26 07:50:44,047 [INFO] experiments: Teachers:    ['gpt5.1', 'gemini2.5pro', 'claude_sonnet4.6']
+2026-03-26 07:50:44,047 [INFO] experiments: Students:    ['gemma3_4b']
+2026-03-26 07:50:44,047 [INFO] experiments: Output:      outputs_gemma/gemma3_4b
+2026-03-26 07:50:44,047 [INFO] experiments: Experiments: 3 (1 batches)
+2026-03-26 07:50:44,047 [INFO] experiments: Rounds:      5 per experiment
+2026-03-26 07:50:44,047 [INFO] experiments: Parallel:    3 per batch
+2026-03-26 07:50:44,048 [INFO] experiments: Retries:     2 max
+2026-03-26 07:50:44,048 [INFO] experiments: 
+2026-03-26 07:50:44,048 [INFO] experiments: ======================================================================
+2026-03-26 07:50:44,048 [INFO] experiments: BATCH 1 / 1
+2026-03-26 07:50:44,048 [INFO] experiments: ======================================================================
+2026-03-26 07:50:44,048 [INFO] experiments: batch_1: running 3 experiments (max_parallel=3)
+2026-03-26 07:50:44,048 [INFO] experiments:   • gpt5.1__gemma3_4b
+2026-03-26 07:50:44,048 [INFO] experiments:   • gemini2.5pro__gemma3_4b
+2026-03-26 07:50:44,048 [INFO] experiments:   • claude_sonnet4.6__gemma3_4b
+2026-03-26 07:50:44,125 [INFO] experiments: Logging to output_logs/2026-03-26_07:50_log

@@ -1,0 +1,111 @@
+{
+  "teacher": "openai/gpt-5.1",
+  "student": "google/gemma-3-4b-it",
+  "best_accuracy": 0.2777777777777778,
+  "final_proficiency": "6",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 90,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 6,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.7388888888888888,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "Over-selection of options",
+        "Defense evasion and UM unhooking",
+        "MITRE ATT&CK mapping",
+        "Medium-difficulty multi-label items",
+        "AV/EDR killers and UM-unhooking fine-grained distinctions"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 5,
+      "accuracy": 0.16666666666666666,
+      "avg_jaccard": 0.6703703703703704,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "Systematic over-selection of options",
+        "Fine-grained ATT&CK discrimination",
+        "Defense evasion vs generic discovery/collection",
+        "EDR/AV killers and UM unhooking",
+        "Credential API hooking vs other hooks",
+        "Medium difficulty calibration",
+        "Evidence-grounding strictness"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 4,
+      "accuracy": 0.0,
+      "avg_jaccard": 0.6499999999999999,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "Over-selection and poor answer-count calibration",
+        "Fine-grained ATT&CK and behavior discrimination",
+        "Defense evasion vs. discovery vs. impact",
+        "Process injection sub-technique identification",
+        "Evasion and unhooking families (e.g., T1562, um_unhooking)",
+        "Command and Control vs. Impact mapping"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 6,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.6944444444444444,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "Over-selection of options",
+        "Discovery vs Defense Evasion vs Impact confusion",
+        "Process injection interpretation",
+        "av_edr_killers / process injection & evasion",
+        "um_unhooking / sandbox and VM evasion",
+        "Hard questions",
+        "Fine-grained ATT&CK mapping and evidence-grounded inclusion"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 6,
+      "accuracy": 0.2222222222222222,
+      "avg_jaccard": 0.7148148148148148,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "Over-selection of options",
+        "Discovery vs. Defense Evasion vs. Impact discrimination",
+        "UM Unhooking / advanced evasion",
+        "Hard questions",
+        "MITRE ATT&CK Discovery-only classification"
+      ]
+    }
+  ],
+  "experiment": "gpt5.1__gemma3_4b_qlora",
+  "output_dir": "outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora",
+  "status": "completed",
+  "duration_seconds": 31923.8
+}

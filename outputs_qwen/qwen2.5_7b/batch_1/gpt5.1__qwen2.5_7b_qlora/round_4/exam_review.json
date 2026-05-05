@@ -1,0 +1,461 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key is partially wrong based on report evidence"
+        ],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly supported by the evidence, rather than being merely plausible.' The answer key includes A (T1486 - Data Encrypted for Impact) and F (T1480 - Execution Guardrails). T1486 is listed in the MITRE ATT&CK mappings and supported by signatures referencing cryptographic keys and encryption APIs (string-108, string-280, yara-103), so A is defensible. T1480 is supported by summary-29 ('Shows ability to use execution guardrails'). B (T1573.001) is supported by summary-31 ('Shows ability to use encryption for command and control traffic'). E (T1573) is supported by string-98 (HTTPS URLs). However, option C (T1055.011 - Extra Window Memory Injection) is listed in the MITRE mappings but the question says it is NOT in the correct answers \u2014 yet the report does list it as a mapped technique. The answer key excludes C and D but includes A, B, E, F. The question's framing ('explicitly supported by evidence rather than merely plausible') is a valid hard-difficulty distinction, but the answer key is inconsistent: T1480 (F) is supported only by a summary indicator combination, while T1055.011 (C) is listed in the MITRE mappings. The answer key of [A, B, E, F] is debatable and not clearly correct \u2014 a professional analyst would likely include B and E but question A (T1486 requires actual file encryption for impact, not just crypto strings) and F. The answer key is insufficiently justified and likely incorrect for A (T1486 is mapped but the report shows an infostealer, not ransomware \u2014 the T1486 mapping appears to be a generic sandbox mapping, not evidence of actual file encryption for impact). This makes the answer key factually questionable."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "T1486 inclusion is not supported by explicit behavioral evidence"
+        ],
+        "reasoning": "The question asks which encryption-related ATT&CK techniques are 'explicitly supported by the observed evidence.' The answer key is [A, B, C, E] \u2014 T1486, T1573.001, T1573, and T1027. T1573.001 (B) is supported by summary-31. T1573 (C) is supported by string-98 (HTTPS URLs). T1027 (E) is supported by multiple signatures. However, T1486 (A - Data Encrypted for Impact) is listed in the MITRE mappings but the report is for an infostealer (vx_family: Win/malicious_confidence_100%), not ransomware. The T1486 mapping appears to be a generic sandbox-generated mapping based on crypto strings (string-108, string-280), not actual evidence of file encryption for impact. Including T1486 as 'explicitly supported' is factually incorrect \u2014 the report shows an infostealer with crypto capabilities for C2 and obfuscation, not ransomware-style file encryption. The answer key is wrong by including A."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are 'explicitly supported by the evidence' vs. merely plausible, with a well-constructed set of options. The answer key [C, D, F] is well-justified: C (generic crypto for obfuscation \u2014 supported by MD5CryptoServiceProvider, System.Security.Cryptography, base64 strings), D (screen capture and keylogging \u2014 supported by multiple explicit signatures including api-40, stream-72, string-556, string-88), and F (non-standard TCP port \u2014 supported by network-7 showing TCP traffic on port 24206). Options A (C2 channel protection) is excluded because there's no explicit evidence of encrypted C2 (no TLS/HTTPS network traffic observed), B (bulk file encryption) is correctly excluded as this is an infostealer/njRAT, and E (HTTPS/TLS on port 443 only) is correctly excluded since the non-standard port 24206 is used. This is a well-crafted hard question with a defensible answer key."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are explicitly supported by the MITRE mappings and behavioral signatures. The answer key [A, C, D, F] corresponds to T1055.001 (DLL Injection), T1055.003 (Thread Execution Hijacking), T1055.011 (Extra Window Memory Injection), and T1055.015 (ListPlanting) \u2014 all of which are explicitly listed in the mitre_attcks section of the report. Options B (T1055.004 - APC Injection) and E (T1055.012 - Process Hollowing) are NOT in the MITRE mappings for this sample, making them correct distractors. The question is well-constructed, technically precise, and the answer key is accurate based on the report."
+      },
+      {
+        "question_index": 4,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key misses explicitly evidenced techniques"
+        ],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly supported by the observed process injection and API hooking behavior.' The answer key is [A, D] \u2014 T1055 (Process Injection) and T1056.004 (Credential API Hooking). T1055 (A) is supported by api-0 (writes data to remote process) and api-20 (allocates virtual memory in remote process). T1056.004 (D) is supported by hooks-0, hooks-2, and hooks-5 (API hooking of FindFirstFileW, send@WS2_32.DLL in IExplorer.exe). However, option E (T1055.001 - Dynamic-link Library Injection) IS listed in the MITRE mappings for this sample and is a sub-technique of process injection. The question asks about 'process injection and API hooking behavior' \u2014 T1055.001 is explicitly in the MITRE mappings. The answer key excluding E while including A (the parent T1055) is inconsistent. A professional analyst would include E since it's explicitly mapped. The answer key is incomplete/incorrect."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are 'explicitly evidenced' vs. merely plausible. The answer key [A, C] corresponds to T1055 (generic process injection via writing data to remote process \u2014 supported by api-0 'Writes data to a remote process') and T1055.003 (Thread Execution Hijacking \u2014 supported by api-264 'Creates a thread in a self process'). Options B (T1055.001 - DLL Injection) is in the MITRE mappings but the question asks for behavioral evidence, and the report only shows LoadLibrary calls without explicit DLL injection into a remote process. D (T1055.011 - Extra Window Memory Injection) is in the MITRE mappings but no specific EWM injection behavior is evidenced. E (T1055.012 - Process Hollowing) is not in the MITRE mappings. The distinction between 'explicitly evidenced by behavioral signatures' vs. 'listed in MITRE mappings' is a valid hard-difficulty framing. The answer key is defensible."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK techniques related to encryption are 'explicitly supported by observed behaviors.' The answer key [A, C, E] corresponds to T1486 (Data Encrypted for Impact \u2014 supported by YARA match 'WannaDecryptor', string-108 referencing encryption API, string-280 referencing cryptographic keys, and the vx_family 'Trojan.Ransom.WannaCryptor'), T1573.001 (Symmetric Cryptography \u2014 supported by summary-31 and YARA AES match), and T1027 (Obfuscated Files/Information \u2014 supported by multiple signatures). This is a ransomware sample (WannaCry), so T1486 is genuinely supported. T1041 (B) is not in the MITRE mappings. T1552 (D) is not evidenced. T1565.002 (F) is not in the mappings. The answer key is accurate and well-justified for a ransomware sample."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK techniques related to encryption are 'explicitly supported by evidence.' The answer key [A, B, C, D] corresponds to T1486 (Data Encrypted for Impact \u2014 supported by YARA 'dharma_ransomware' match, binary-10 dropping 694 files, target-4 deleting volume snapshots, and the vx_family 'Trojan.Ransom.Crysis'), T1573.001 (Symmetric Cryptography \u2014 supported by summary-31), T1027 (Obfuscated Files/Information \u2014 supported by multiple signatures including YARA AES match), and T1027.002 (Software Packing \u2014 supported by static-18). This is a Crysis/Dharma ransomware sample, so T1486 is genuinely supported. T1555 (E) is not evidenced. The answer key is accurate and well-justified."
+      },
+      {
+        "question_index": 8,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "T1486 is not explicitly evidenced for this sample"
+        ],
+        "reasoning": "The question asks which ATT&CK techniques related to 'cryptographic usage and impact on data' are 'explicitly supported by evidence.' The answer key [A, B, C, D] includes T1486 (Data Encrypted for Impact). However, the report is for 'Trojan.Ransom' (vx_family) and shows: string-13 ('YOUR FILES ARE ENCRYPTED' ransom note indicator), binary-10 (dropped 791 files), and api-96 (tries to steal browser sensitive information). The ransom note string (string-13) and the large number of dropped files do support T1486 for a ransomware sample. T1573.001 (B) is supported by summary-31 in the MITRE mappings. T1027 (C) is supported by multiple signatures. T1491.001 (D - Internal Defacement) is supported by string-13 (ransom note) and binary-10. However, T1573.001 (B) is listed in the MITRE mappings but there is no explicit network traffic evidence of encrypted C2 in the signatures \u2014 the summary-31 indicator is present but no actual network connections are observed. The answer key including B without network traffic evidence is questionable. More critically, T1041 (E) and T1552 (F) are correctly excluded. The answer key is mostly defensible but B is borderline without observed network traffic. This is a close call \u2014 the answer key is defensible enough to pass given summary-31 explicitly maps T1573.001."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK techniques are 'directly supported by observed evidence' for a low-confidence grayware sample. The answer key [A, C, E] corresponds to T1027 (Obfuscated Files/Information \u2014 supported by static-157 compiler signature and static-6 high entropy), T1027.009 (Embedded Payloads \u2014 supported by static-6 high entropy section), and T1071 (Application Layer Protocol \u2014 listed in MITRE mappings). The report has very few signatures (8 total) and minimal behavioral evidence. T1486 (B) is not in the MITRE mappings and not evidenced. T1573 (D) is not in the MITRE mappings. The answer key is accurate and appropriately conservative given the limited evidence in this low-confidence sample."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly evidenced as being used for encrypting C2 communications' vs. generic packing/obfuscation. The answer key [A, B, C] corresponds to T1573 (Encrypted Channel), T1573.001 (Symmetric Cryptography), and T1573.002 (Asymmetric Cryptography) \u2014 all three are explicitly listed in the MITRE mappings. The Suricata alert (suricata-2) 'ET JA3 Hash - Remcos 3.x/4.x TLS C' provides explicit network-layer evidence of encrypted C2. T1027 (D) and T1027.002 (E) are correctly identified as packing/obfuscation rather than C2 encryption. F (None of the above) is correctly excluded. The answer key is accurate and well-supported by the Suricata alert and MITRE mappings."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are 'explicitly evidenced' vs. merely plausible. The answer key [A, C] corresponds to T1055.003 (Thread Execution Hijacking \u2014 supported by api-264 'Creates a thread in a self process') and T1055.001 (DLL Injection \u2014 listed in MITRE mappings). However, looking more carefully: api-264 creates a thread in process '-1' (self process), which maps to T1055.003. T1055.001 is in the MITRE mappings. T1055.012 (C - Process Hollowing) is also in the MITRE mappings. Wait \u2014 the answer key is [A, C] which is T1055.003 and T1055.001. But option C in the question is 'T1055.012 \u2013 Process Hollowing' and option B is 'T1055.001 \u2013 Dynamic-link Library Injection.' Re-reading: A=T1055.003, B=T1055.001, C=T1055.012, D=T1486, E=T1573, F=T1055.011. The answer key [A, C] = T1055.003 and T1055.012. T1055.012 IS in the MITRE mappings for this sample. T1055.001 (B) is also in the MITRE mappings. The answer key excluding B (T1055.001) while including C (T1055.012) is questionable since both are in the MITRE mappings. However, the question asks for 'explicitly evidenced' behaviors \u2014 T1055.012 may be inferred from the dropped executable and process creation, while T1055.001 is supported by string-318 (LoadLibrary/FreeLibrary API strings). The answer key is defensible but borderline. Given the question's hard difficulty framing and the distinction between 'explicitly evidenced' vs. 'mapped,' this is acceptable."
+      },
+      {
+        "question_index": 12,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key includes T1486 which is not explicitly evidenced for this sample"
+        ],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly supported by observed behaviors' for a sample labeled 'Trojan.Injuke' (um_unhooking family). The answer key [A, C] = T1055.004 (APC Injection) and T1486 (Data Encrypted for Impact). T1055.004 (A) is explicitly supported by api-85 ('Queues an Asynchronous Procedure Call (APC) in a remote process'). However, T1486 (C - Data Encrypted for Impact) is listed in the MITRE mappings but there is NO behavioral evidence of file encryption in the signatures. The sample is classified as 'Trojan.Injuke' (an injector/loader), not ransomware. The T1486 mapping appears to be a generic sandbox mapping without supporting behavioral evidence. Including T1486 as 'explicitly evidenced' is factually incorrect. The answer key is wrong."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are 'explicitly evidenced' for a .NET infostealer sample. The answer key [A, E] corresponds to T1055.004 (APC Injection \u2014 supported by api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process') and T1055.003 (Thread Execution Hijacking \u2014 supported by api-264 'Creates a thread in a self process'). Options B (T1055.001 - DLL Injection) is in the MITRE mappings but no explicit DLL injection behavioral evidence is present. C (T1486) is in the MITRE mappings but not behaviorally evidenced for this injector sample. D (T1573.001) is in the MITRE mappings but no network traffic is observed. F (T1055.011) is in the MITRE mappings but no EWM injection behavior is evidenced. The answer key is accurate and well-supported by the behavioral signatures."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are 'explicitly evidenced' for a large .NET infostealer. The answer key [A, E] corresponds to T1055.004 (APC Injection \u2014 supported by api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process') and T1055.003 (Thread Execution Hijacking \u2014 supported by api-264 'Creates a thread in a self process'). This is the same pattern as question 13 but for a different sample. The behavioral evidence is identical (api-85 and api-264), making the answer key accurate. Options B (Process Hollowing), C (DLL Injection), D (Data Encrypted for Impact), and F (Thread Local Storage) are either not behaviorally evidenced or not in the MITRE mappings for this specific sample. The answer key is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which statements about encryption use are 'explicitly supported by evidence' for a Trojan.Ursnif sample. The answer key [A, B] corresponds to 'Data Encrypted for Impact (T1486)' and 'Symmetric Cryptography for C2 (T1573.001).' T1486 (A) is listed in the MITRE mappings. T1573.001 (B) is listed in the MITRE mappings and supported by the summary-31 indicator. However, T1486 for an Ursnif banking trojan is questionable \u2014 Ursnif is not ransomware. The T1486 mapping may be a generic sandbox mapping. But the question asks about 'explicitly supported by evidence' and T1486 IS in the MITRE mappings. The question framing is about what the report says, not what the malware family typically does. Given T1486 is in the MITRE mappings and the question asks about report evidence, A is defensible. B is well-supported by summary-31. Options C, D, E are correctly excluded. The answer key is defensible."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly evidenced as being used for encrypting C2 communications' vs. generic packing/obfuscation. The answer key [A, B, C] corresponds to T1573 (Encrypted Channel), T1573.001 (Symmetric Cryptography), and T1573.002 (Asymmetric Cryptography) \u2014 all three are explicitly listed in the MITRE mappings for this Remcos sample. The report shows network connections (network-1 to port 23101, network-54 TLS connections) and the Suricata alert would be expected for Remcos. T1027 (D) and T1027.002 (E) are correctly identified as packing/obfuscation. F (None) is correctly excluded. The answer key is accurate."
+      },
+      {
+        "question_index": 17,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Answer key includes all options A-F which is implausible for a hard question"
+        ],
+        "reasoning": "The question asks which ATT&CK techniques are 'explicitly supported by observed behaviors' for a Remcos sample. The answer key [A, B, C, D, E, F] includes ALL six options. This is a 'select all that apply' question where all options are correct. While technically possible, having all options correct in a hard-difficulty question is a significant quality issue \u2014 it provides no discriminative value and is essentially a trick question. More importantly, examining the options: A (T1055.003 - Thread Execution Hijacking) is in MITRE mappings and supported by api-264. B (T1055.001 - DLL Injection) is in MITRE mappings. C (T1055.012 - Process Hollowing) is in MITRE mappings. D (T1486 - Data Encrypted for Impact) is in MITRE mappings but this is a Remcos RAT, not ransomware \u2014 T1486 is not behaviorally evidenced. E (T1573 - Encrypted Channel) is in MITRE mappings. F (T1055.011 - Extra Window Memory Injection) is in MITRE mappings. The inclusion of D (T1486) as correct for a Remcos sample is factually questionable, and having all options correct makes this a poor exam question. The answer key is wrong (D should not be included) and the question design is flawed."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors provide 'explicit evidence of encrypted C2 communications' vs. generic/local cryptographic use. The answer key [A] corresponds to 'HTTP requests including Base64-encoded data in the Language header (network-60, T1132, T1071.001).' This is the most explicit network-layer evidence of C2 communication with data encoding. Option B (T1573.001 in MITRE mappings without network-layer encryption details) is correctly excluded as it's a mapping without observed encrypted traffic. C (high-entropy dropped PE) is correctly excluded as it's about payload packing, not C2 encryption. D (DNS/HTTP to google.com.br) is correctly excluded as it's likely a connectivity check, not C2. E (Windows service creation) is correctly excluded as it's persistence, not C2 encryption. The answer key is accurate and well-reasoned. The question is well-constructed for hard difficulty."
+      },
+      {
+        "question_index": 19,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ATT&CK behaviors are 'explicitly evidenced' for a Ransom.Screenlocker sample. The answer key [A, C, E] corresponds to T1573.001 (Symmetric Cryptography for C2 \u2014 supported by summary-31), T1027 (Obfuscated Files/Information \u2014 supported by multiple signatures including XOR loops in stream-139, high entropy, crypto strings), and T1489 (Service Stop \u2014 supported by string-316 'ExitProcess' and the Service Stop mapping). Option B (file encryption for impact) is excluded \u2014 while T1486 is NOT in the MITRE mappings for this sample (only T1489 is under Impact), making B correctly excluded. D (network communication without encryption) is excluded because T1573.001 is mapped. The answer key is accurate and well-supported by the report evidence."
+      }
+    ],
+    "summary": {
+      "total": 20,
+      "passed": 14,
+      "flagged": 0,
+      "rejected": 6
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key includes B (T1573.001), C (T1573), D (T1027), E (T1140), and F (T1071.001) but excludes A (T1486). The question asks which techniques are 'explicitly supported by observed evidence.' The detonation report includes a signature 'summary-31' explicitly mapped to T1573.001 (Symmetric Cryptography for C2), T1573 is in the MITRE ATT&CK list, T1027 is supported by multiple signatures (bcrypt module, AES YARA match, crypto strings), T1140 is supported by 'summary-32', and T1071.001 is supported by user-agent strings. However, T1486 (Data Encrypted for Impact) is listed in the MITRE ATT&CK mappings for this sample AND there is a signature 'string-108' explicitly mapped to T1486 ('Contains ability to perform encryption') and 'string-280' mapped to T1486 ('Contains reference to cryptographic keys'). The question asks what is 'explicitly supported by observed evidence' and T1486 appears in both the MITRE ATT&CK list and has direct signature mappings. Excluding A from the answer key is incorrect \u2014 T1486 is explicitly mapped in the report. The answer key should include A. This makes the answer key factually wrong."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key is [B, C, D, E] and excludes A (T1486 - Data Encrypted for Impact). The question asks which techniques are 'explicitly supported by observed evidence.' The detonation report for this second infostealer sample includes T1486 in the MITRE ATT&CK mappings list AND has signature 'string-280' explicitly mapped to T1486 ('Contains reference to cryptographic keys'). The 'summary-31' signature is mapped to T1573.001 supporting B. T1573 (C) is in the MITRE list. T1027 (D) is supported by multiple signatures. T1140 (E) is supported by 'summary-32'. However, T1486 is also explicitly present in the MITRE ATT&CK mappings and has a direct signature mapping, so excluding A from the answer key is factually incorrect. The answer key should include A."
+      },
+      {
+        "question_index": 2,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key is [A, B, C, E] \u2014 including T1055 (Process Injection), T1055.001 (DLL Injection), T1056.004 (Credential API Hooking), and T1055.011 (Extra Window Memory Injection), but excluding F (T1055.003 - Thread Execution Hijacking). The detonation report's MITRE ATT&CK list does NOT include T1055.003 for this Worm.Brontok sample \u2014 it includes T1055.001, T1055.011, T1055.015, and T1055 but not T1055.003. So excluding F is correct. However, T1055.015 (ListPlanting) is in the MITRE ATT&CK list and has a signature 'string-721' mapped to it, but it is not offered as an option. More critically, D (T1055.004 - APC Injection) is listed as an option and is NOT in the MITRE ATT&CK mappings for this sample, so it should be excluded from the answer \u2014 which it is. The answer key [A, B, C, E] appears correct on review: T1055 is supported by 'api-0' (writes data to remote process) and 'api-20' (allocates virtual memory in remote process); T1055.001 is in the MITRE list; T1056.004 is supported by 'hooks-0', 'hooks-2', 'hooks-5'; T1055.011 is in the MITRE list. However, T1055.003 (F) is NOT in the MITRE ATT&CK list for this sample and is correctly excluded. On closer inspection, the answer key appears correct. But wait \u2014 T1055.011 (E) is in the MITRE list but there is no specific behavioral signature directly evidencing Extra Window Memory Injection beyond the MITRE mapping itself. The question asks for techniques 'explicitly supported by behavioral signatures AND per-sample ATT&CK mappings.' T1055.011 is in the MITRE list but the behavioral evidence is thin. This is a borderline case. More critically, the question stem says 'including both behavioral signatures and per-sample ATT&CK mappings' which means either source counts. Given T1055.011 is in the MITRE list, including E is defensible. The answer key is acceptable. Actually re-reading: the question asks which are 'explicitly supported by the observed evidence (including both behavioral signatures and per-sample ATT&CK mappings), rather than being merely plausible from context.' T1055.003 (F) is NOT in the MITRE list for this sample, so excluding F is correct. The answer key [A, B, C, E] is correct. Verdict should be pass. Let me re-examine: T1055.004 (D) is not in the MITRE list and not in signatures \u2014 correctly excluded. T1055.003 (F) is not in the MITRE list for this sample \u2014 correctly excluded. The answer key is factually correct. Flagging for a minor issue: the question is somewhat complex and the phrasing 'including both behavioral signatures and per-sample ATT&CK mappings' could be clearer, but it is technically sound. Verdict: pass."
+      },
+      {
+        "question_index": 3,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key is [B, D] \u2014 B (Internal Defacement via ransom note, T1491.001) and D (Obfuscated/packed content, T1027/T1027.009). The question asks which behaviors are 'explicitly evidenced by the sandbox data.' Analysis: A (T1486 - Data Encrypted for Impact): The MITRE ATT&CK list includes T1486, and there is a signature 'string-13' mapped to T1491.001 with description 'YOUR FILES ARE ENCRYPTED...' and 'binary-10' showing 791 dropped files. The T1486 mapping is in the MITRE list. However, the question asks what is 'explicitly evidenced' vs 'merely plausible from the family name.' The sample is Trojan.Ransom and T1486 is in the MITRE list \u2014 this is explicit evidence, not just family-name inference. Excluding A from the answer key is incorrect. B (T1491.001): Supported by 'string-13' (ransom note text) and 'binary-10' (791 dropped files). Correctly included. C (T1573.001 for C2): The MITRE list includes T1573.001 and there is a 'summary-31' equivalent... actually looking at the signatures, there is no 'summary-31' in this report. The Bcrypt module is loaded ('module-9') mapped to T1027, not T1573. T1573.001 is in the MITRE list but there is no explicit behavioral signature supporting encrypted C2 traffic in the signatures section. The question correctly excludes C. D (T1027/T1027.009): Supported by 'binary-71' (high entropy), 'static-6' (high entropy section), 'api-84' (ThreadHideFromDebugger). Correctly included. E (T1041 - network exfiltration): Not in MITRE list, no network signatures. Correctly excluded. So the main issue is that A (T1486) should be included since it's explicitly in the MITRE ATT&CK list for this sample. The answer key [B, D] is incomplete and therefore incorrect."
+      },
+      {
+        "question_index": 4,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key is [D, E] \u2014 D (T1027 - Obfuscated Files or Information) and E (T1055.004 - APC Injection). Analysis: A (T1573.001 - Symmetric Cryptography for C2): The MITRE ATT&CK list for this sample includes T1573.001 and T1573. There is no 'summary-31' signature in this report's signatures section, but T1573.001 is explicitly in the MITRE ATT&CK mappings. The question asks for techniques 'explicitly supported by behavioral evidence.' The MITRE mapping is present but there is no specific behavioral signature in the signatures list supporting encrypted C2. However, the question says 'behavioral evidence in the report' which could include the MITRE ATT&CK list. B (T1573 - Encrypted Channel): Same as above \u2014 in MITRE list but no specific behavioral signature. C (T1486 - Data Encrypted for Impact): In the MITRE ATT&CK list for this sample. No specific behavioral signature in the signatures section explicitly supporting file encryption. D (T1027): Supported by 'static-92' (unusual entropy resources), 'static-6' (high entropy section), 'static-18' (compiler/packer signature). Correctly included. E (T1055.004 - APC Injection): Supported by 'api-85' ('Queues an Asynchronous Procedure Call (APC) in a remote process') explicitly mapped to T1055.004. Correctly included. The question asks which are 'explicitly supported by behavioral evidence' vs 'generic or potentially over-broad mappings.' T1573.001 and T1573 are in the MITRE list but lack specific behavioral signatures in the signatures section. T1486 is in the MITRE list but also lacks specific behavioral signatures. The answer key [D, E] appears defensible if we require specific behavioral signatures (not just MITRE list entries). However, T1027 is supported by both MITRE list AND specific signatures, and T1055.004 is supported by a specific API call signature. The exclusion of A, B, C is defensible on the grounds that they appear only in the MITRE ATT&CK list without corroborating behavioral signatures. This is a reasonable analytical distinction. The answer key [D, E] is defensible and factually supportable. Verdict: pass."
+      },
+      {
+        "question_index": 5,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key is [A, C, E] \u2014 A (T1573.001 for C2), C (T1055 - Process Injection), E (T1027 - Obfuscated Files or Information). Analysis: A (T1573.001): Supported by 'summary-31' ('Shows ability to use encryption for command and control traffic') explicitly mapped to T1573.001. Correctly included. B (T1486 - Data Encrypted for Impact): NOT in the MITRE ATT&CK list for this sample (Ransom.Screenlocker.Generic). Looking at the MITRE list \u2014 it does NOT include T1486. Correctly excluded. C (T1055): Supported by 'stream-34' (WriteProcessMemory), 'stream-5' (CreateRemoteThread), 'memorydump-8' (PE header in memory), 'string-92' (WriteProcessMemory API string). Correctly included. D (T1055.011 - Extra Window Memory Injection): In the MITRE ATT&CK list AND supported by 'string-4' ('shell_traywnd' taskbar window class mapped to T1055.011). The question says D is 'only plausible from context, but not explicitly evidenced' \u2014 but 'string-4' IS explicitly mapped to T1055.011 in the signatures. This means D should be included in the answer key, making the answer key [A, C, D, E] rather than [A, C, E]. The answer key incorrectly excludes D. Verdict: reject."
+      }
+    ],
+    "summary": {
+      "total": 6,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 6
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The question asks which techniques are 'explicitly supported by observed evidence' rather than 'merely plausible from context.' T1486 (Data Encrypted for Impact) is listed in the per-sample mitre_attcks and has a signature ('Contains ability to perform encryption' mapped to T1486 and 'Contains reference to cryptographic keys' mapped to T1486), so it qualifies. T1573 (Encrypted Channel) is in mitre_attcks and has a signature ('Possibly tries to communicate over SSL connection' mapped to T1573). T1573.001 (Symmetric Cryptography) is in mitre_attcks and has a summary signature mapped to T1573.001. T1027 (Obfuscated Files or Information) is extensively evidenced. T1140 (Deobfuscate/Decode Files or Information) has a summary signature. T1071.001 (Web Protocols) is in mitre_attcks and has a signature ('Found user-agent related strings' mapped to T1071.001). However, the critical issue is T1486: the signatures mapped to T1486 are string-based references ('Contains ability to perform encryption' and 'Contains reference to cryptographic keys') \u2014 these are static string matches, not behavioral evidence of actual file encryption for impact. The YARA match for AES encryption is mapped to T1027, not T1486. For a .NET infostealer (njRAT family per YARA match), T1486 is not behaviorally evidenced \u2014 it is present in the ATT&CK mapping list but the supporting signatures are weak string references. A professional analyst would not confirm T1486 as explicitly evidenced for an infostealer with no observed file encryption behavior. The answer key including A (T1486) is questionable and likely incorrect for a strict 'explicitly supported by behavioral evidence' standard. This makes the answer key factually wrong for the stated question criterion."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Near-duplicate of question_index 0"
+        ],
+        "reasoning": "This question is nearly identical in structure, topic, options, and answer key to question_index 0 \u2014 same six options (A-F), same answer key (A,B,C,D,E,F), same detonation report family (infostealer/.NET/njRAT), same question stem about 'explicitly supported by observed evidence.' The detonation report is slightly different (different size, different dropped file name) but the signatures and ATT&CK mappings are essentially the same. This constitutes a near-duplicate question within the generated exam itself. Additionally, the same factual issue applies: T1486 is not behaviorally evidenced for an infostealer with no observed file encryption. The answer key is incorrect for the stated criterion."
+      },
+      {
+        "question_index": 2,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The question asks which behaviors are 'explicitly evidenced by both concrete behavioral signatures (API calls/hooks) and/or per-sample MITRE ATT&CK mappings.' The answer key is A, C, D, E. Option B (APC-based injection T1055.004) is NOT in the mitre_attcks for this sample (Worm.Brontok/killers family) \u2014 correct to exclude. Option F (Thread Execution Hijacking T1055.003) is NOT in the mitre_attcks for this sample \u2014 correct to exclude. However, Option E (Extra Window Memory Injection T1055.011) IS in the mitre_attcks list for this sample. Option C (DLL injection T1055.001) IS in the mitre_attcks. Option A (generic process injection T1055) IS evidenced by signatures ('Writes data to a remote process' and 'Allocates virtual memory in a remote process' both mapped to T1055). Option D (Credential API Hooking T1056.004) IS evidenced by hook detection signatures. So A, C, D, E all appear correct. But the question asks for techniques evidenced by 'concrete behavioral signatures (API calls/hooks)' \u2014 T1055.011 (Extra Window Memory Injection) is in the ATT&CK mapping list but there is no specific behavioral signature in the signatures section explicitly mapped to T1055.011 for this sample. The string-4 signature in question_index 6 (Ransom.Screenlocker) references T1055.011, not this report. Reviewing this report's signatures: there is no T1055.011-mapped signature. Therefore E should not be in the answer key under the strict criterion stated. The answer key is incorrect."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which techniques are 'explicitly supported by observed evidence' for a Trojan.Ransom sample. The answer key is A, C, E. T1486 (Data Encrypted for Impact): evidenced by the suspicious-level signature 'Detected indicator that file is ransomware' (mapped to T1491.001) and 'The input sample dropped very many files' (mapped to T1491.001), plus T1486 is in the mitre_attcks. The ransom note string 'YOUR FILES ARE ENCRYPTED' is a direct behavioral indicator. T1573.001 (B) is in mitre_attcks but there is no network traffic observed and no signature explicitly mapped to T1573.001 in this report \u2014 correct to exclude. T1027 (C) is evidenced by multiple signatures including the Bcrypt module load, high entropy section, and summary signatures. T1041 (D) is not in the mitre_attcks at all \u2014 correct to exclude. T1491.001 (E) is explicitly evidenced by two signatures mapped to T1491.001. The answer key A, C, E is factually correct and well-supported by the report. The question is clear, technical, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which techniques are 'explicitly supported by behavioral evidence (API/signature details) in the signatures section' for a Trojan.Ursnif sample. The answer key is C, E. T1573.001 (A): present in mitre_attcks but no signature in the signatures section is explicitly mapped to T1573.001 \u2014 correct to exclude. T1486 (B): present in mitre_attcks but no signature in the signatures section is mapped to T1486 \u2014 correct to exclude. T1027 (C): the static-157 signature ('Matched Compiler/Packer signature') is mapped to T1027, and static-18 ('Matched Compiler/Packer signature') is mapped to T1027.002, and static-6 ('Section contains high entropy') is mapped to T1027.009 \u2014 all in the signatures section. T1055 (D): present in mitre_attcks but no signature in the signatures section is explicitly mapped to T1055 (the api-85 signature is mapped to T1055.004, not T1055 generic) \u2014 borderline, but the question specifically asks for signatures section evidence. T1055.004 (E): api-85 ('Queues an Asynchronous Procedure Call (APC) in a remote process') is explicitly mapped to T1055.004 in the signatures section. The answer key C, E is factually correct and the distinction between ATT&CK-level mappings and signature-level evidence is a legitimate hard-difficulty discriminator."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which techniques are 'explicitly supported by observed evidence' for a Ransom.Screenlocker sample. The answer key is B, C, D, E. T1486 (A): NOT in the mitre_attcks for this sample (the Impact technique listed is only T1489 Service Stop) \u2014 correct to exclude. T1573 (B): present in mitre_attcks and the summary-31 signature ('Shows ability to use encryption for command and control traffic') is mapped to T1573.001, which implies T1573 \u2014 correct to include. T1573.001 (C): summary-31 is explicitly mapped to T1573.001 \u2014 correct to include. T1027 (D): multiple signatures mapped to T1027 including static-157, string-138, string-57, binary-71, summary-28, static-5 \u2014 correct to include. T1140 (E): summary-32 ('Shows ability to deobfuscate/decode files or information') is mapped to T1140 \u2014 correct to include. T1071.001 (F): NOT in the mitre_attcks for this sample and no signature is mapped to T1071.001 \u2014 correct to exclude. The answer key B, C, D, E is factually correct and well-supported."
+      }
+    ],
+    "summary": {
+      "total": 6,
+      "passed": 3,
+      "flagged": 0,
+      "rejected": 3
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Factual validity failure"
+        ],
+        "reasoning": "The question asks which techniques are 'explicitly supported by behavioral or configuration evidence' rather than 'merely plausible from generic infostealer capabilities.' The answer key excludes B (T1486 \u2013 Data Encrypted for Impact) and includes A, C, D, E, F. However, T1486 is only supported by static string references to cryptographic keys and encryption API strings \u2014 not by behavioral evidence of actual file encryption for ransom. That exclusion is defensible. The more serious problem is with option D (T1573.001 \u2013 Symmetric Cryptography): the report's evidence is a YARA match for AES encryption and a 'summary' indicator combination ('Shows ability to use encryption for command and control traffic'), plus loading of bcrypt.dll. The summary indicator is a derived/inferred indicator, not a direct behavioral observation like a network capture. Meanwhile, option C (T1573 \u2013 Encrypted Channel) is supported by the same summary indicator and HTTPS URL strings. The answer key includes C and D but excludes B, yet the evidentiary basis for C and D is similarly indirect (static strings, YARA, summary indicators) as for B. More critically, option F (T1071.001 \u2013 Web Protocols) is supported by a user-agent string found in static analysis ('Mozilla/5.0...') \u2014 this is a static string, not a confirmed behavioral network connection. The report shows no actual network traffic in the signatures. The answer key's distinction between 'behavioral/configuration evidence' and 'generic infostealer capabilities' is not consistently applied, making the answer key unreliable. A professional analyst would likely reject D and F as not behaviorally confirmed (no live network traffic observed), and the answer key is internally inconsistent. This constitutes a factually flawed answer key."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Factual validity failure",
+          "Inconsistent evidentiary standard"
+        ],
+        "reasoning": "The question asks which encryption/C2 techniques are 'explicitly supported by behavioral or configuration evidence (such as network IOCs, API usage, or clear C2 configuration)' rather than 'only generic static crypto capabilities.' The answer key is [B, C, D] \u2014 T1573 (Encrypted Channel), T1573.001 (Symmetric Cryptography), and T1071.001 (Web Protocols). However, the report contains NO actual network traffic observations \u2014 there are no DNS queries, no TCP connections, no HTTP sessions captured in the sandbox. The evidence for T1573 and T1573.001 is: a YARA AES match, loading of bcrypt.dll, a summary indicator ('Shows ability to use encryption for command and control traffic'), and static HTTPS URL strings. The evidence for T1071.001 is a static user-agent string. None of these constitute 'behavioral or configuration evidence' of actual C2 communication \u2014 they are all static analysis artifacts. Meanwhile, T1027 (Obfuscated Files or Information) has strong behavioral evidence (YARA match, bcrypt loading, .NET compiler signature, AES/RC4 API strings, summary indicators). T1140 has a summary indicator. The answer key's exclusion of A (T1486) is defensible (no ransomware behavior observed), but including B, C, D as 'behaviorally confirmed' while excluding E (T1027) and F (T1140) is inconsistent and incorrect. A professional analyst would note that no live network traffic was captured, making B, C, D unconfirmed behaviorally. The answer key is wrong."
+      },
+      {
+        "question_index": 2,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key",
+          "Factual validity failure"
+        ],
+        "reasoning": "The question asks which process-injection techniques are 'explicitly evidenced by concrete behavioral signatures (e.g., API calls, hook detections)' rather than only listed in the generic MITRE ATT&CK mapping. The answer key is [A, D]. Option A (T1055 \u2013 generic Process Injection) is supported by two malicious-level signatures: 'Writes data to a remote process' (api-0, T1055) and 'Allocates virtual memory in a remote process' (api-20, T1055). This is correct. Option D (T1056.004 \u2013 Credential API Hooking) is supported by three hook detection signatures: 'Hooks API calls' (hooks-0), 'Hooks file system APIs' (hooks-2), and 'Hooks internet related APIs' (hooks-5), all mapped to T1056.004. This is correct. Option B (T1055.001 \u2013 DLL Injection) is listed in the MITRE mapping but has NO dedicated behavioral signature in the signatures array confirming DLL-specific injection \u2014 the WriteProcessMemory/VirtualAllocEx signatures are mapped to T1055 (generic), not T1055.001. Excluding B is correct. Option C (T1055.011 \u2013 Extra Window Memory Injection) is in the MITRE mapping but has no dedicated behavioral signature confirming it. Excluding C is correct. Option E (T1055.004 \u2013 APC Injection) is not in the MITRE mapping at all and has no evidence. Excluding E is correct. So the answer key [A, D] appears correct on its face. However, re-examining: the question asks about 'process-injection-related techniques' and D (T1056.004) is Credential API Hooking, which is under Credential Access/Collection, not Process Injection. Including D as a 'process-injection-related technique' is a category error \u2014 T1056.004 is API hooking for credential theft, not a process injection sub-technique. A professional analyst would not classify T1056.004 as a process injection technique. The question framing ('process-injection-related techniques') is ambiguous enough to potentially include hooking, but the answer key conflates two distinct technique categories. This is a factual/classification error that makes the answer key misleading. Additionally, the question stem says 'process-injection-related' but option D is about credential hooking \u2014 a professional would flag this as a category mismatch. The answer key is partially wrong due to the inclusion of D under 'process injection' framing, constituting a factual error."
+      }
+    ],
+    "summary": {
+      "total": 3,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 3
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: T1486 (Data Encrypted for Impact) is explicitly listed in the MITRE ATT&CK mappings of the report AND has two direct signature entries (string-108 and string-280) mapped to T1486. The answer key excludes it but it is clearly evidenced.",
+          "Answer key includes D (T1573 \u2013 Encrypted Channel) but the report only shows HTTPS URL strings in static analysis (string-98), not confirmed observed network traffic. The question itself asks for 'concrete evidence' vs 'merely plausible', yet T1573 is supported only by static string matching, making D questionable by the question's own standard.",
+          "Answer key excludes E (T1573.001 \u2013 Symmetric Cryptography) but the report has an explicit summary indicator (summary-31) titled 'Shows ability to use encryption for command and control traffic' mapped directly to T1573.001, which is concrete behavioral evidence from the sandbox.",
+          "The question's own framing creates internal contradictions: it asks to distinguish 'concrete evidence' from 'generic possibilities', but the answer key inconsistently applies this standard across options."
+        ],
+        "reasoning": "The answer key is factually incorrect. T1486 has two explicit signature entries in the report mapped to it (string-108: 'Contains ability to perform encryption' and string-280: 'Contains reference to cryptographic keys', both mapped to T1486), making B a valid answer that the key incorrectly excludes. Additionally, T1573.001 has a direct summary indicator (summary-31) explicitly mapped to it, which the key also incorrectly excludes. The answer key's inclusion of D (T1573) but exclusion of E (T1573.001) is inconsistent given that summary-31 directly maps to T1573.001. These are factual errors in the answer key requiring rejection."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option E (T1113 \u2013 Screen Capture) is listed as correct, but the report only contains a static string reference (string-78: 'Contains ability to capture screen (API string)') and a dynamic API call (api-105: 'Calls an API possibly used to take screenshots' via CreateCompatibleBitmap). These are behavioral API call observations, which the question's own standard ('concrete behavioral or configuration evidence') should accept. However, the question asks for evidence 'rather than being only generic possibilities', and CreateCompatibleBitmap is a legitimate screenshot API call observed at runtime \u2014 this is valid.",
+          "Incorrect answer key: Option F (T1555.003 \u2013 Credentials from Web Browsers) is listed as incorrect/excluded, but the report explicitly maps T1555.003 (Credentials from Web Browsers) in the MITRE ATT&CK table. The question says F is wrong because it is 'generic browser credential theft without specific target paths' \u2014 however, the question asks what is 'explicitly supported by concrete behavioral or configuration evidence'. The MITRE mapping table entry for T1555.003 exists in the report, making this a borderline case.",
+          "Critical error: Option B (T1486 \u2013 Data Encrypted for Impact) is listed as incorrect, but the report contains string-280 ('Contains reference to cryptographic keys') explicitly mapped to T1486 in the signatures. This is a direct report mapping, not a generic possibility. The answer key should include B or the question framing needs to explain why a direct T1486 mapping in the report is insufficient.",
+          "The answer key (A, C, E) is partially correct but misses B which has explicit T1486 mapping in signatures."
+        ],
+        "reasoning": "The answer key is factually incorrect. Option B (T1486) has an explicit signature entry (string-280) mapped to T1486 in the report, which by the question's own standard constitutes 'concrete evidence'. The answer key excludes B without justification. Additionally, the question's distinction between 'concrete evidence' and 'generic possibilities' is applied inconsistently \u2014 T1113 (E) is accepted based on a CreateCompatibleBitmap API call, but T1486 (B) is rejected despite having a direct signature mapping. This inconsistency in the answer key constitutes a factual error requiring rejection."
+      },
+      {
+        "question_index": 2,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option B (T1055.001 \u2013 Dynamic-link Library Injection) is listed as incorrect, but T1055.001 is explicitly listed in the MITRE ATT&CK mappings table of the detonation report under both Privilege Escalation and Defense Evasion tactics. The question asks for techniques 'explicitly supported by concrete behavioral evidence (e.g., API calls, hook detections) rather than only by the generic MITRE mapping table'. The report does not show a specific DLL injection API call sequence (VirtualAllocEx + WriteProcessMemory + CreateRemoteThread targeting a DLL), so excluding B may be defensible.",
+          "Incorrect answer key: Option C (T1055.011 \u2013 Extra Window Memory Injection) is listed as incorrect. Like T1055.001, it appears in the MITRE mapping table but lacks specific behavioral API evidence in the signatures. Excluding C is defensible.",
+          "The answer key includes A (T1055 \u2013 Process Injection) as correct. This is supported by two malicious-rated signatures: api-0 ('Writes data to a remote process') and api-20 ('Allocates virtual memory in a remote process'), both mapped to T1055. This is correct.",
+          "The answer key includes D (T1056.004 \u2013 Credential API Hooking) as correct. This is supported by three hook detection signatures (hooks-0, hooks-2, hooks-5) all mapped to T1056.004. This is correct.",
+          "Option E (T1055.004 \u2013 Asynchronous Procedure Call Injection) does not appear in the report's MITRE mapping table at all, making it a valid distractor. Correct to exclude.",
+          "The answer key (A, D) appears correct based on the evidence. However, the question framing 'rather than only by the generic MITRE mapping table' is somewhat ambiguous \u2014 the MITRE mapping table in the report IS derived from behavioral analysis, not purely generic. The distinction the question draws is between table entries backed by specific signature evidence vs. table entries without corresponding signatures."
+        ],
+        "reasoning": "After careful review, the answer key (A and D) is factually correct. T1055 is supported by two malicious-rated API call signatures (writes to remote process, allocates virtual memory in remote process). T1056.004 is supported by three hook detection signatures. T1055.001 and T1055.011 appear in the MITRE table but lack specific behavioral signatures in the report to distinguish them from generic T1055. T1055.004 does not appear in the report at all. However, the question's framing is problematic: it asks for techniques supported by 'concrete behavioral evidence rather than only by the generic MITRE mapping table', but the MITRE mapping table in Hybrid Analysis IS generated from behavioral evidence. This creates conceptual confusion. Additionally, the question stem references 'Worm.Brontok' but the report's _family field is 'killers', which is a minor inconsistency. The answer key is technically defensible but the question framing is misleading enough to warrant rejection on clarity grounds \u2014 a professional analyst would reasonably argue that MITRE table entries in a sandbox report ARE behavioral evidence, making the question's premise flawed."
+      }
+    ],
+    "summary": {
+      "total": 3,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 3
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Answer key includes H (T1555.003 \u2013 Credentials from Web Browsers) as correct, but no signature in the report has attck_id T1555.003. The only credential-store signature (string-475, 'Contains string like password/secret') maps to T1555 (parent), not T1555.003. The FTP credentials signature (string-11) maps to T1552.001. T1555.003 appears only in the high-level mitre_attcks table, which the question explicitly excludes as a basis for correct answers.",
+          "The question's own criterion ('explicitly supported by concrete signatures or summary indicators') is violated by including H in the answer key."
+        ],
+        "reasoning": "The answer key is factually incorrect. H (T1555.003) is not backed by any concrete signature with attck_id T1555.003 in the signatures array. The question specifically asks for techniques supported by 'concrete signatures or summary indicators,' but T1555.003 only appears in the high-level MITRE ATT&CK table. Including it as a correct answer contradicts the question's own evaluation criterion. This is a substantive answer-key error requiring rejection."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "The question stem is nearly word-for-word identical to Question 0 ('explicitly supported by concrete signatures or summaries in the report (not just inferred from generic behavior descriptions)'). While the detonation report is slightly different (different file size, different dropped file name), the question structure, topic, and evaluation criterion are essentially the same as Q0.",
+          "All seven answer options are correct, meaning there are no wrong distractors. While 'select all that apply' with all-correct answers is technically valid, it reduces discriminative power and may not adequately test analytical skill.",
+          "The question is redundant with Q0 in a training pipeline context."
+        ],
+        "reasoning": "The answer key appears factually correct \u2014 all seven techniques (T1486, T1555, T1573, T1573.001, T1113, T1056.001, T1071) are supported by concrete signatures in the report. However, the question is nearly identical in wording and structure to Q0, and having all options be correct reduces its value as a discriminative assessment item. These are style and redundancy issues rather than factual errors, warranting a flag rather than rejection."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question is novel, technically precise, and well-constructed. It tests a sophisticated analytical skill: distinguishing ATT&CK techniques that appear only in the high-level MITRE table from those backed by concrete behavioral evidence (API call or hook-detection signatures). The answer key (A: T1055, D: T1056.004) is correct \u2014 both are supported by malicious-rated signatures (api-0, api-20 for T1055; hooks-0, hooks-2, hooks-5 for T1056.004). The distractors (T1055.001, T1055.011, T1573.001) are plausible because they appear in the MITRE ATT&CK table but are correctly excluded since no concrete signatures map to those specific sub-technique IDs. The question aligns with CyberSOCEval standards and would be agreed upon by a professional malware analyst."
+      }
+    ],
+    "summary": {
+      "total": 3,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 2
+    }
+  }
+]

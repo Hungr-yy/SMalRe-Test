@@ -1,0 +1,104 @@
+{
+  "teacher": "google/gemini-2.5-pro",
+  "student": "google/gemma-3-4b-it",
+  "best_accuracy": 0.3333333333333333,
+  "final_proficiency": "5",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 90,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 4,
+      "accuracy": 0.2222222222222222,
+      "avg_jaccard": 0.6657407407407407,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "Set Selection Failure",
+        "Remcos RAT",
+        "Process Injection Detection",
+        "Semantic Confusion"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 6,
+      "accuracy": 0.3333333333333333,
+      "avg_jaccard": 0.7759259259259258,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "Over-selection and Poor Precision",
+        "Defense Evasion",
+        "Process Injection Detection",
+        "Answer Count Miscalibration"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 4,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.7268518518518517,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "Over-selection",
+        "Ransomware and RATs",
+        "Defense Evasion",
+        "Semantic Confusion",
+        "Evidence-Grounding Failure"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 5,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.7194444444444444,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "Over-selection",
+        "Defense Evasion",
+        "um_unhooking",
+        "Hard",
+        "Answer-count Miscalibration"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 5,
+      "accuracy": 0.2777777777777778,
+      "avg_jaccard": 0.7416666666666667,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "Over-selection",
+        "infostealers",
+        "av_edr_killers",
+        "um_unhooking",
+        "Semantic Confusion"
+      ]
+    }
+  ],
+  "experiment": "gemini2.5pro__gemma3_4b_qlora",
+  "output_dir": "outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora",
+  "status": "completed",
+  "duration_seconds": 33996.0
+}

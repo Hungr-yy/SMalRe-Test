@@ -1,0 +1,164 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about information-stealing activities (credential theft from browsers, keylogging, screenshots) which are all directly evidenced in the report via YARA signatures, static strings, and MITRE ATT&CK mappings (T1555.003, T1056.001, T1113). Options A (file encryption) and D (VSS deletion) are not evidenced. Option F (process hollowing) is not evidenced. The answer key [B, C, E] is correct and well-supported. The question is original and not plagiarised from the benchmark."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques observed in the second report. A (MPRESS packing) is supported by static-77/static-18 signatures. B (deleting original executable) is supported by api-26 (marks file for deletion) and api-25 (opens with deletion rights). C (writing data to remote process) is supported by api-0 (malicious, writes data to remote process). D (VSS deletion) is not evidenced. E (firewall rules) is not evidenced. Answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations most strongly suggest process injection into rundll32.exe. A (rundll32 making network connections) is supported by target-269 'Windows system process connects to a network'. C (rundll32 executed with no command-line parameters) is supported by target-248 'Detected Rundll32 execution with no parameters provided (likely process injection)'. B is about WinExec launching a command shell, not directly injection evidence. D (CreateToolhelp32Snapshot) is process enumeration, not injection evidence. E (reading AV registry keys) is discovery, not injection. Answer key [A, C] is correct and well-reasoned."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about virtualization/analysis evasion techniques. A (VirtualBox artifacts) is supported by string-660 'vboxguestadditions'. C (timing-based checks) is supported by string-205 (GetTickCount), stream-87 (detect virtual environment via API), and string-661 (user activity checks). E (mouse cursor position) is supported by static-132 'Contains ability to detect sandbox (imports API) - GetCursorPos'. D (VMware registry) is not evidenced in this report (that was in a different report). F (enumerating security tools) is not directly evidenced. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations support the conclusion that the malware is packed. A (high entropy section) is supported by static-6 'Section contains high entropy' for UPX0. C (entrypoint in UPX0 section) is supported by static-4 'Entrypoint in PE header is within an uncommon section - UPX0'. D (old timestamp) is supported by static-3 'Timestamp in PE header is very old or in the future'. B (writing to remote process memory) is process injection, not packing evidence. E (executing batch file) is behavior, not packing evidence. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about environmental checks/evasion techniques. A (language/locale checks) is supported by string-201 (GetUserDefaultLCID), string-143 (GetKeyboardLayoutList). B (execution delay) is supported by string-226 (WaitForSingleObject) mapped to T1497.003. C (embedded payload) is supported by yara-140, yara-26, and binary-64 (embedded PE). D (VSS deletion) is not evidenced. E (AMSI patching) is not evidenced. Answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about T1490 (Inhibit System Recovery) techniques. A (vssadmin deleting VSS) is directly evidenced by process vssadmin.exe with command 'vssadmin delete shadows /all /quiet' and target-4 signature. B (bcdedit disabling startup repair) is evidenced by bcdedit.exe processes with 'bootstatuspolicy ignoreallfailures' and 'recoveryenabled no', and target-6 signature. D (wbadmin deleting backup catalog) is evidenced by wbadmin.exe process and target-80 signature. C (wevtutil) is not present. E (sc.exe config) is not present. Answer key [A, B, D] is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware capabilities. A (encrypting user files) is supported by api-201 'Write many files with double extensions', T1486 in MITRE ATT&CK, and string-12 'DECRYPTE' ransomware indicator. C (evading analysis) is supported by api-1 (guarded memory regions), api-24 (long sleep), T1622 (debugger evasion). E (stealing browser info) is supported by api-96 'Tries to steal browser sensitive information' and handle-0. B (VSS deletion) is not evidenced. D (scheduled tasks) is not evidenced. F (IRC) is not evidenced. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about WannaCry-like impact techniques. A (encrypting user data) is supported by T1486, YARA 'WannaDecryptor', AES/RSA crypto strings, and CryptDecrypt API. C (terminating services) is supported by T1489 (Service Stop), string-242 (CloseServiceHandle), string-316 (TerminateProcess). B (exfiltrating before encryption) is not evidenced - no exfiltration signatures present. D (spreading via email) is not evidenced. E (MBR bootkit) is not evidenced. Answer key [A, C] is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about ransomware capabilities. A (encrypting files) is supported by T1486, string-13 'YOUR FILES ARE ENCRYPTED', binary-10 (dropped 791 files), and Bcrypt module. C (evading debuggers/sandboxes) is supported by api-84 'ThreadHideFromDebugger', api-9 (queries process info), T1622. E (stealing browser info) is supported by api-96 'Tries to steal browser sensitive information'. B (VSS deletion) is not evidenced. D (scheduled tasks) is not evidenced. F (IRC/C2) - the report shows no IRC, only RPC. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which activities support RAT classification. A (GameSDK.exe calling GetAsyncKeyState) is directly evidenced by api-40 'Calls an API typically used for keylogging'. E (Stable_Network.exe calling CreateCompatibleBitmap) is evidenced by api-105 'Calls an API possibly used to take screenshots'. B (schtasks creating scheduled task) is persistence, not RAT monitoring capability. C (Dynamic DNS) is C2 infrastructure, not system monitoring. D (netsh firewall exception) is defense evasion. Answer key [A, E] is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion indicators from static analysis. A (high entropy section) is supported by static-6 'Section contains high entropy'. D (obfuscated files/information as MITRE technique) is supported by T1027 in mitre_attcks and T1027.009 from static-6. B (compiled with Visual Basic) is a compiler characteristic, not an evasion technique per se. C (32-bit PE) is not an evasion technique. E (Debug data directory) is actually the opposite of evasion. Answer key [A, D] is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators suggest Remcos RAT family. A (remcos.exe from %APPDATA%\\remcos\\) is directly evidenced by the process list showing 'remcos.exe' at '%APPDATA%\\remcos\\remcos.exe'. B (mutant containing 'remcos_') is directly evidenced by mutant-1 'Creates a mutant that is known to appear in malware - remcos_ in Remcos'. C (schtasks persistence) is a generic persistence technique, not Remcos-specific. D (VSS deletion) is not evidenced. Answer key [A, B] is correct."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are identified by both MITRE ATT&CK ID and a supporting behavioral signature. A (APC Injection T1055.004) is supported by both the MITRE mapping and api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process'. B (Thread Execution Hijacking T1055.003) is supported by both the MITRE mapping and api-264 'Creates a thread in a self process'. C (Process Hollowing T1055.012) is in MITRE but no specific behavioral signature supports it in the signatures list. D (DLL Side-Loading T1574.002) is in MITRE but evidenced only by api-22 (fails to load modules), which is indirect. E (Direct Syscall) is not present. Answer key [A, B] is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are indicated by the malware's behavior. A (T1076 RDP) is supported by registry-61 'Reads terminal service related keys'. B (T1215 Kernel Modules) is supported by api-37 'Opens the Kernel Security Device Driver'. D (T1027 Obfuscated Files) is supported by static-18 (packer signature) and stream-36 (hides procedure lookup). F (T1002 Data Compressed) is supported by static-18 (packer signature mapped to T1002). C (T1055 Process Injection) is NOT in the mitre_attcks list for this report. E (T1112 Modify Registry) is NOT in the mitre_attcks list. Answer key [A, B, D, F] is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about discovery and evasion techniques. A (checking for vmtoolsd.exe) is supported by string-666 'vmtoolsd.exe'. B (timing checks via GetTickCount) is supported by stream-87 'Contains ability to detect virtual environment (API) - GetTickCount'. C (querying api.ipify.org) is supported by network-24 'Tries to identify its external IP address' and string-56. D (terminating security products) is not evidenced. E (overwriting MBR) - while api-59 shows interaction with DR0, this is for bootkit persistence (T1542.003), not terminating security products. Answer key [A, B, C] is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about persistence mechanisms. A (creating Windows Service 'fbjtauwa') is directly evidenced by sc.exe process with 'create fbjtauwa'. C (placing ctbzjelz.exe in system32 subdirectory) is evidenced by cmd.exe 'mkdir %WINDIR%\\system32\\fbjtauwa\\' and 'move /Y ctbzjelz.exe'. E (service configured for auto-start) is evidenced by sc.exe command 'start= auto'. B (firewall rule) is defense evasion, not persistence. D (Run key) is not evidenced - registry-0 is not present in this report's signatures. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about collection techniques. A (keylogging) is supported by api-40 'Calls an API typically used for keylogging - GetKeyState' and T1056.001. C (screenshots) is supported by api-105 'Calls an API possibly used to take screenshots - CreateCompatibleBitmap' and T1113. E (clipboard data) is supported by T1115 in MITRE ATT&CK mapping. B (network shares) is not evidenced. D (Man-in-the-Browser) is not evidenced. F (clearing event logs) is not evidenced in this report. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about persistence methods. A (modifying auto-execute registry keys) is supported by registry-0 'Modifies auto-execute functionality by setting/creating a value in the registry' mapped to T1547.001. B (creating Windows Service) is supported by T1543.003 in MITRE ATT&CK and the persistence technique list. C (scheduled task) is not evidenced in the signatures or process list. D (BITS Jobs) is not evidenced. E (file association hijacking) is not evidenced. Answer key [A, B] is correct."
+      }
+    ],
+    "summary": {
+      "total": 19,
+      "passed": 19,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

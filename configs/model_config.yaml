@@ -86,7 +86,7 @@ lora:
 # ------------------------------------------------------------------
 exam:
   # Questions generated per distillation round
-  num_questions: 5
+  num_questions: 18
 
 # ------------------------------------------------------------------
 # Curriculum generation
@@ -101,5 +101,5 @@ curriculum:
 # ------------------------------------------------------------------
 loop:
   max_rounds: 5
-  target_accuracy: 0.80
+  target_accuracy: 2.0
   truncate_input: true

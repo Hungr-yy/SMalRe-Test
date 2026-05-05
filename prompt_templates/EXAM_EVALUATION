@@ -28,10 +28,10 @@ Each element of [EXAM_RESULTS] is a JSON object with this structure:
     "options": ["A. ...", "B. ...", "C. ..."]
   },
   "answer": {
-    "correct_options": ["A", "C"]
+    "correct_answers": ["A", "C"]
   },
   "model_answer": {
-    "correct_options": ["A", "B"]
+    "correct_answers": ["A", "B"]
   }
 }
 
@@ -104,28 +104,7 @@ You must do ALL of the following:
    - explicitly mention whether the model tends to under-select or over-select
    - explicitly mention which topics, difficulties, and attack families need work
 
-5. Generate a remediation dataset of %s new training examples.
-   The new examples must be tailored to the model's weaknesses.
-   Use [DATA_SOURCE] whenever possible.
-   If [DATA_SOURCE] is empty or insufficient, create new benchmark-style examples yourself.
-
-   Requirements for the new dataset:
-   - Each example must match the malware-analysis task format exactly.
-   - Each example must be grounded in a specific detonation report.
-   - Questions must be answerable from the included detonation report.
-   - Questions must be multiple-choice with plausible distractors.
-   - Multiple correct answers are allowed.
-   - The dataset should focus on the model's weakest areas first.
-   - Include a mix of difficulties, but overweight the weakest difficulty bands.
-   - Include a mix of attack families, but overweight the weakest attack families.
-   - Include a mix of topics, but overweight the weakest topics.
-   - Include some items specifically designed to correct answer-count miscalibration.
-   - Prefer examples that teach evidence-grounded reasoning rather than generic malware trivia.
-   - Do NOT copy any exam question verbatim.
-   - Avoid near-duplicates of the exam items.
-   - If possible, avoid using the same sha256 values from [EXAM_RESULTS]; if you must use the same report, make the question materially different and target a different weakness.
-
-6. Output VALID JSON only.
+5. Output VALID JSON only.
    Do not output markdown.
    Do not output explanations outside the JSON.
    Do not wrap the JSON in code fences.
@@ -219,22 +198,6 @@ The JSON output format must be exactly:
         "parse_error_rate": 0.0
       }
     }
-  },
-  "dataset": [
-    {
-      "question": {
-        "sha256": "string",
-        "attack": "infostealers | remcos_rat | ransomware | av_edr_killers | um_unhooking",
-        "topic": "string",
-        "difficulty": "easy | medium | hard",
-        "detonation_report": {},
-        "question": "string",
-        "options": ["A. ...", "B. ..."]
-      },
-      "answer": {
-        "correct_options": ["A"]
-      }
-    }
-  ]
+  }
 }
 """

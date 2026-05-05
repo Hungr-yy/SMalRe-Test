@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about HTTP(S)-based C2 indicators from a specific detonation report. It is not copied from any benchmark question. The correct answers B and D are well-supported by the report: InternetOpenA usage mapped to T1071.001/Web Protocols, and the Symmetric Cryptography (T1573.001) indicator showing encryption for C2 traffic. Option A (user-agent string) is a plausible distractor \u2014 it suggests C2 but alone is weaker evidence than the API call + ATT&CK mapping combination. Option C (GetAdaptersInfo) is network discovery, not C2. Option E (mutants) is unrelated to network C2. The question is technically sound, specific, and follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The malware family identification question is not plagiarised from any benchmark item. The correct answer C (Infostealer) is well-supported by the report: HTTP C2 with base64-encoded data, DNS queries to suspicious domains, credential collection (T1555, T1552.001), banking URL artifacts, email collection (T1114), data from local system (T1005), and absence of ransomware-specific indicators (no T1486, no shadow copy deletion). The distractors are plausible but clearly distinguishable. The question follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about C2 network behaviors for an infostealer. Correct answers A, C, D are well-supported: HTTP GET without standard headers (suspicious network-23 signature), browser-like User-Agent without browser process (network-22 signature, threat_level suspicious), and Base64 in Language header (network-60 signature). Option B (DNS to google.com.br) is a plausible distractor \u2014 it's benign traffic used as a connectivity check, not the primary C2 channel. Option E (exclusive HTTPS) is incorrect per the report. The question is original, technically accurate, and follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about C2 network behaviors for a backdoor (Backdoor.Hupigon). Correct answers A, B, C are well-supported: DNS query to www.9z9t.com (network-51), InternetOpenA API call (api-199), and RpcServerRegisterIf2 (api-219 mapped to T1021/Remote Services). Options D and E (SMTP spam, FTP) are not evidenced in the report. The question is original, technically sound, and follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence. Correct answers B and C are well-supported: 'Writes data to a remote process' (api-0, threat_level malicious, T1055) and MITRE ATT&CK mappings to T1055, T1055.001, T1055.003. Option A (self-thread creation) is a distractor \u2014 creating a thread in handle -1 is self-injection, not remote process injection. Option D (UPX packing) is evasion, not injection. Option E (registry queries) is unrelated. The distinction between self-injection and remote process injection is technically correct and appropriate for a medium-difficulty question."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about EDR/AV killer or credential/traffic interceptor behaviors. Correct answers A, C, D are well-supported: hooks-0 (API hooking including WinExec in IExplorer.exe), hooks-5 (internet API hooking send@WS2_32.DLL in IExplorer.exe), and api-37 (KsecDD access). Option B (screen capture) is present but is a generic infostealer capability, not specific to EDR killing. Option E (services.exe drop) is persistence, not EDR killing. The question is original, technically accurate, and well-calibrated for medium difficulty."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The ransomware inhibit-system-recovery question is original and well-supported. Correct answers A, C, F are clearly evidenced: WMIC shadowcopy delete commands (target-4, T1490), file renaming with double extensions >100 files (api-200, T1486), and dropping executable with image/text extension (binary-28, T1036.008). Option B (service creation) is persistence, not ransomware-specific impact. Option D (RPC interface) is lateral movement infrastructure. Option E (desktop.ini reading) is benign discovery. The question is technically sound and follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The WannaCry identification question is original and well-supported. Correct answers A, B, C, E are evidenced: DNS/HTTP to the hardcoded kill-switch domain (network-0, network-2, network-3), mssecsvc.exe creation (api-5, binary-7), ARP broadcast scanning and many hosts contacted (network-31, network-32, network-17), and IE proxy/security registry modifications (registry-27, registry-36). Option D (vssadmin shadow copy deletion) is NOT present in this report \u2014 the WannaCry sample here uses WMIC for shadow copy deletion, not vssadmin, and actually the report doesn't show shadow copy deletion at all. Option F (FTP) is not evidenced. The answer key correctly excludes D and F."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The ransomware system recovery inhibition question is original and well-supported. Correct answers A, C, D, F are clearly evidenced: vssadmin delete shadows (target-4, T1490), wbadmin delete catalog (target-80, T1490), read_it.txt ransom note (binary-9, T1491.001), and fake svchost.exe from %APPDATA% (target-33, T1036.005). Option B (cryptographic GUID reading) is environment awareness, not recovery inhibition. Option E (AdjustTokenPrivileges) is privilege escalation, not recovery inhibition. The question is technically accurate and follows CyberSOCEval conventions."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The MITRE ATT&CK technique mapping question for the HTML/PowerShell dropper is original and well-supported. Correct answers A, C, E are evidenced: T1059.001 PowerShell execution (target-110, string-510), T1105 Ingress Tool Transfer (binary-0, binary-1 dropping bbotlxd5.dll), and T1543.003 Windows Service creation (registry-67). Option B (T1041 exfiltration over C2) is not directly evidenced in the report. Option D (T1110 brute force) is not present. Option F (T1489 service stop) is not evidenced. The question is technically sound."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The defense evasion technique mapping question for the NSIS installer is original and well-supported. Correct answers A, C, D are evidenced: Masquerading via file renaming (api-162, T1036), Code Signing with valid certificate (certificate-2, T1553.002), and Virtualization/Sandbox Evasion via environment checks (binary-8 anti-VM, api-1 guarded memory, T1497). Option B (Timestomping) is mapped in MITRE ATT&CK list but the specific evidence (FileTimeToLocalFileTime, api-223) is present \u2014 however, this is a time query, not necessarily timestomping. Option E (shadow copy deletion) is not evidenced. Option F (disabling security tools via services) is not directly evidenced. The answer key is defensible."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The Remcos RAT identification question is original and well-supported. Correct answers A, C, E are evidenced: non-standard port 30204 TCP + DNS to computador12.ddns-ip.net (network-7, network-51, T1571), collection capabilities including keylogging (T1056.001), screen capture (T1113), clipboard (T1115), local data staging (T1074.001), and Windows service creation for persistence (registry-67, T1543.003). Option B (file encryption/CryptEncrypt) is not evidenced \u2014 the report shows no ransomware behavior. Option D (shadow copy deletion) is not evidenced. The question is technically accurate."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The MITRE ATT&CK technique mapping question for the um_unhooking sample is original and well-supported. Correct answers A, C, D, F are evidenced: T1027.002 Software Packing (static-18, VC8 packer), T1497.003 Time Based Evasion (stream-103, Sleep-based evasion), T1480 Execution Guardrails (summary-29), and T1124 System Time Discovery (string-247, GetSystemTimeAsFileTime). Option B (T1059.003 Windows Command Shell) is in the MITRE list but the evidence is only a string reference to GetCommandLineW, not actual shell execution. Option E (T1562 Impair Defenses) is not in the MITRE ATT&CK list for this sample. The answer key is defensible."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The evasion technique identification question for the um_unhooking sample is original and well-supported. Correct answers A, C, D, E are evidenced: KsecDD access + Harddisk0/DR0 interaction (api-37, api-59, T1542.003 Bootkit), extensive VM/sandbox checks (string-659 NtQuerySystemInformation, string-666 vmtoolsd.exe, stream-87 GetTickCount, T1497), Windows service creation (registry-67, T1543.003), and process injection APIs (string-79 RtlCreateUserThread, string-439 VirtualAllocEx, string-91 CallNextHookEx, T1055). Option B (ransomware encryption) is not evidenced \u2014 no ransom note, no mass file encryption. The question is technically sound and well-calibrated for hard difficulty."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The defense evasion question for the Safengine-packed um_unhooking sample is original and well-supported. Correct answers A, C, E are evidenced: Masquerading via file renaming (api-162, T1036), Virtualization/Sandbox Evasion (binary-8 VMware trick, api-24 long sleep, T1497), and Zone.Identifier manipulation (api-42 'Tries to hide tracks of having downloaded a file', T1070.004). Option B (shadow copy deletion) is not evidenced. Option D (user-mode unhooking via direct syscalls) is not directly evidenced in the signatures \u2014 the sample reads ntdll.dll but there's no explicit unhooking signature. Option F (kernel-mode rootkit) is not evidenced. The answer key is defensible."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The process injection detection question for the UPX-packed infostealer is original and well-supported. Correct answers A and C are evidenced: 'Writes data to a remote process' (api-0, threat_level malicious, T1055) and MITRE ATT&CK mappings to T1055, T1055.001, T1055.003. Option B (dropping PE files) is file operations, not injection evidence. Option D (UPX packing) is evasion, not injection. Option E (registry queries) is unrelated to injection. The question correctly distinguishes between injection evidence and other behaviors."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The EDR/AV killer identification question for the Worm.Brontok sample is original and well-supported. Correct answers A, B, C, E, F are evidenced: fake system processes in non-system paths (target-33, T1036.005), file system and internet API hooking in IExplorer.exe (hooks-2, hooks-5, T1056.004), process injection and remote memory allocation (api-0, api-20, T1055), KsecDD access (api-37), and dropping malicious services.exe (binary-1, binary-11). Option D (shadow copy deletion via vssadmin) is NOT evidenced in this report. The question is technically accurate and well-calibrated."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The infostealer behavioral analysis question for the VMProtect-packed Zusy sample is original and well-supported. Correct answers A, B, D are evidenced: screen capture via CreateCompatibleBitmap (api-105, T1113), keylogging (T1056.001) and credential API hooking (T1056.004) and password store access (T1555), and clipboard data collection (T1115) with local data staging (T1074.001). Option C (only destructive, no data collection) is clearly wrong given the extensive collection capabilities. Option E (only proxy modification and timestomping) is clearly wrong. The question is technically sound."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

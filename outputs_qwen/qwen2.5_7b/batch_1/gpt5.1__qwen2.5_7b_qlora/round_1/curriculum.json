@@ -1,0 +1,2243 @@
+[
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery vs. Generic Encryption Capabilities",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For this HydraCrypt-family sample, which options specifically indicate that the malware is actively inhibiting system recovery, rather than just having generic cryptographic capabilities?",
+      "options": [
+        "A. Execution of 'vssadmin delete shadows /all /quiet' via cmd.exe",
+        "B. Loading of bcrypt.dll and presence of AES/RSA-related .NET crypto classes",
+        "C. Execution of 'wbadmin delete catalog -quiet' via wbadmin.exe",
+        "D. Presence of the ATT&CK mapping 'Data Encrypted for Impact (T1486)' based on cryptographic strings alone",
+        "E. Execution of 'bcdedit /set {default} recoveryenabled no' via bcdedit.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Differentiating Encryption Impact from Crypto Library Use",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Diavolo ransomware detonation, which evidence most strongly supports that files are being encrypted for impact (T1486), as opposed to the malware merely using cryptographic libraries?",
+      "options": [
+        "A. Loading of bcrypt.dll and presence of high-entropy dropped files",
+        "B. YARA match for AES encryption and ATT&CK mapping to 'Obfuscated Files or Information (T1027)'",
+        "C. API-based renaming of more than 100 files with double extensions, as recorded by 'api-200'",
+        "D. Multiple WMIC.exe invocations deleting specific shadowcopy IDs via 'shadowcopy where \"ID=...\" delete'",
+        "E. Registry access to cryptographic machine GUID under HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware vs. Pure Infostealer Behavior",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Given the StormKitty/WorldWind stealer sample, which option correctly characterizes its impact behavior with respect to encryption and recovery?",
+      "options": [
+        "A. It deletes volume shadow copies and backup catalogs to prevent recovery.",
+        "B. It loads bcrypt.dll and various .NET crypto namespaces, but no evidence shows file encryption for impact.",
+        "C. It renames user documents with a new ransomware-specific extension.",
+        "D. It uses bcdedit.exe to disable Windows recovery options.",
+        "E. It drops a ransom note file such as 'read_it.txt' to each directory."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Core Ransomware vs. Screenlocker Behavior",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "For the 'Ransom.Screenlocker.Generic' sample, which statement best fits the observed behavior regarding data encryption and impact?",
+      "options": [
+        "A. It encrypts user files and renames them with a new extension, clearly indicating T1486.",
+        "B. It primarily manipulates the user interface (screen lock) and shows obfuscation/packing, but no direct evidence of file encryption for impact is present.",
+        "C. It uses vssadmin.exe and wbadmin.exe to remove backups, proving full disk encryption.",
+        "D. It only runs a benign Borland Delphi GUI with no malicious impact.",
+        "E. It uses WMIC.exe shadowcopy delete commands to target specific snapshot IDs."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery (T1490) vs. Other Admin Actions",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the HydraCrypt ransomware run, which activities are direct evidence of 'Inhibit System Recovery (T1490)' and should be mapped as such, excluding generic admin or crypto behavior?",
+      "options": [
+        "A. 'vssadmin delete shadows /all /quiet' executed from cmd.exe",
+        "B. 'wbadmin delete catalog -quiet' executed from wbadmin.exe",
+        "C. 'bcdedit /set {default} bootstatuspolicy ignoreallfailures' and 'bcdedit /set {default} recoveryenabled no'",
+        "D. Reading HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY\\MachineGuid",
+        "E. Loading System.Security.Cryptography namespaces in the .NET runtime"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Safe Mode / Boot Configuration vs. Generic Service Control",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Which of the following best distinguishes boot configuration manipulation used to aid ransomware from more generic service or system control activity in the provided ransomware samples?",
+      "options": [
+        "A. Use of 'sc.exe create' to install a new service pointing at a dropped EXE",
+        "B. Use of 'netsh advfirewall firewall add rule' to allow svchost.exe inbound",
+        "C. Use of 'bcdedit /set {default} recoveryenabled no' and 'bootstatuspolicy ignoreallfailures' to change boot recovery behavior",
+        "D. Use of 'GetVersionExA' and 'RtlGetVersion' to query OS version",
+        "E. Use of 'NtShutdownSystem' to reboot after installation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "ATT&CK Mapping: Packing vs. Embedded Payloads",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the UPX-packed Graftor sample, which ATT&CK techniques are explicitly supported by the observed static and YARA indicators, and should be mapped without over-claiming unrelated packing behaviors?",
+      "options": [
+        "A. T1027.002 (Software Packing), based on UPX packer signatures and entrypoint in UPX sections",
+        "B. T1027.009 (Embedded Payloads), based on YARA hits for embedded PE executables in .rsrc",
+        "C. T1027.005 (Indicator Removal from Tools), based solely on generic XOR loops",
+        "D. T1218.011 (Rundll32), based on execution of rundll32.exe with a DLL from %TEMP%",
+        "E. T1560.002 (Archive via Library), based on System.IO.Compression.ZipFile usage"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Fine-grained ATT&CK: Direct Volume Access vs. Bootkit",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the large 'Win/malicious_confidence_100%' sample that interacts with '\\\\Device\\\\Harddisk0\\\\DR0', which ATT&CK technique is most precisely supported by this behavior, without over-extending to full bootkit functionality?",
+      "options": [
+        "A. T1542.003 (Bootkit), because any access to DR0 implies boot sector modification",
+        "B. T1006 (Direct Volume Access), due to direct interaction with the primary disk partition device",
+        "C. T1070.004 (File Deletion), since DR0 access often precedes wiping files",
+        "D. T1565 (Data Manipulation), because it could alter disk data",
+        "E. T1490 (Inhibit System Recovery), as DR0 access always targets backups"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Execution Guardrails vs. Simple Mutex Use",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Several samples (e.g., StormKitty stealer, Trojan.NetMail) create or open named mutexes. Which description best fits the ATT&CK mapping for this behavior, avoiding over-selection of unrelated techniques?",
+      "options": [
+        "A. It clearly implements T1480 (Execution Guardrails), as any mutex means geo-fencing.",
+        "B. Mutexes are primarily for single-instance control and environment checks, which can support T1480 when combined with other indicators.",
+        "C. Mutex use alone proves T1564 (Hide Artifacts), since it hides processes.",
+        "D. Mutex use alone should be mapped to T1055 (Process Injection).",
+        "E. Mutex use alone is not enough for any ATT&CK mapping and should be ignored."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "EDR Killer vs. Generic Service Creation",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 'Trojan.BrsecmonE' sample, which evidence most strongly indicates EDR/AV killer or stealthy persistence behavior, beyond generic service creation?",
+      "options": [
+        "A. Creation of service 'qmuelfhl' pointing to '%WINDIR%\\system32\\qmuelfhl\\\\jwifylqa.exe' with a benign-sounding display name 'wifi support'",
+        "B. Use of 'netsh advfirewall firewall add rule' to allow inbound traffic to svchost.exe",
+        "C. Use of 'sc.exe start qmuelfhl' to start the new service",
+        "D. Use of WMIC.exe to delete shadow copies",
+        "E. Reading of HKLM\\SYSTEM\\ControlSet001\\Control\\TimeZoneInformation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Masquerading and Fake System Processes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Trojan.Regrun sample, which behaviors clearly demonstrate masquerading and fake system processes used for AV/EDR evasion, as opposed to normal Windows activity?",
+      "options": [
+        "A. Multiple processes named WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, and LSASS.EXE executing from '%APPDATA%\\\\WINDOWS\\\\'",
+        "B. A single instance of 'lsass.exe' running from '%WINDIR%\\\\system32\\\\'",
+        "C. D3_08.exe and IExplorer.exe executing from '%WINDIR%' and '%WINDIR%\\\\system32\\\\' respectively",
+        "D. Hooks installed on 'FindFirstFileA' and 'send@WS2_32.DLL' inside CSRSS.EXE",
+        "E. Use of 'CreateDirectoryW' to create a configuration folder under AppData"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 Protocol Mapping: Non-Standard Port vs. Generic HTTP",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Remcos RAT sample that contacts '<IPv4>:8109', which ATT&CK C2 technique is most precisely supported by the observed network behavior, without over-claiming other protocols?",
+      "options": [
+        "A. T1071.001 (Web Protocols), because any TCP port implies HTTP",
+        "B. T1095 (Non-Application Layer Protocol), since no HTTP headers are observed on port 8109",
+        "C. T1571 (Non-Standard Port), because it uses TCP port 8109 instead of typical ports",
+        "D. T1071.003 (Mail Protocols), as 8109 is commonly used for SMTP",
+        "E. T1071.004 (DNS), because DNS queries are present in the report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Mail Protocols vs. Generic HTTP C2",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The 'Trojan.BrsecmonE' sample sends traffic on port 25 to '<IPv4>' and queries 'microsoft-com.mail.protection.outlook.com'. Which ATT&CK C2 technique(s) are directly evidenced by this behavior, and which plausible but unsupported techniques should NOT be selected?",
+      "options": [
+        "A. T1071.003 (Mail Protocols), due to SMTP traffic on port 25",
+        "B. T1071.001 (Web Protocols), because all outbound traffic is web-based",
+        "C. T1571 (Non-Standard Port), since port 25 is a non-standard port",
+        "D. T1095 (Non-Application Layer Protocol), because SMTP is not an application layer protocol",
+        "E. T1071.004 (DNS), due to MX-related DNS lookups"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 via Encrypted Channel vs. Plain HTTP",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Looking at the Remcos sample with Suricata JA3 alert 'Remcos 3.x/4.x TLS Client Hello' and HTTPS connections to '<IPv4>:443', which ATT&CK C2 techniques are justified by the evidence?",
+      "options": [
+        "A. T1573 (Encrypted Channel), based on TLS usage and JA3 fingerprint",
+        "B. T1071.001 (Web Protocols), since HTTPS is an HTTP-based protocol over TLS",
+        "C. T1095 (Non-Application Layer Protocol), because TLS is not an application layer protocol",
+        "D. T1573.001 (Symmetric Cryptography), as TLS uses symmetric ciphers for bulk data",
+        "E. T1071.003 (Mail Protocols), due to SMTP over TLS"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Ransomware vs. Stealer: Ransom Note and Shadow Copy Deletion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Compare the HydraCrypt ransomware sample with the StormKitty/WorldWind stealer. Which behaviors are unique to HydraCrypt's ransomware impact and should NOT be attributed to the stealer?",
+      "options": [
+        "A. Dropping a known ransomware ransom note file 'read_it.txt'",
+        "B. Executing 'vssadmin delete shadows /all /quiet'",
+        "C. Executing 'wbadmin delete catalog -quiet'",
+        "D. Loading System.Security.Cryptography namespaces in a .NET assembly",
+        "E. Capturing screenshots via CopyFromScreen API"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Credential Access vs. Data Encrypted for Impact",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The StormKitty/WorldWind stealer loads multiple crypto APIs (BCryptDecrypt, RSA, AES) and has ATT&CK mapping to both T1027 and T1140. Based on the telemetry, how should these capabilities be interpreted?",
+      "options": [
+        "A. As definitive evidence of T1486 (Data Encrypted for Impact), since any crypto means ransomware.",
+        "B. As support for obfuscation and decryption of configuration/data (T1027/T1140), not for file-encryption impact.",
+        "C. As evidence of T1555 (Credentials from Password Stores), because crypto is used in all password theft.",
+        "D. As a sign of TLS-based C2 only, with no relation to local impact.",
+        "E. As proof of boot sector encryption, implying a bootkit."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Safe Mode Boot vs. Auto-Start Registry Keys",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the 'Win/malicious_confidence_100%' sample, several behaviors relate to persistence and evasion. Which of the following is evidence of registry-based autostart persistence (T1547.001) rather than 'Safe Mode Boot (T1562.009)'?",
+      "options": [
+        "A. Creating or setting values under HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run to point to the malware binary",
+        "B. Modifying BCD store entries via bcdedit to alter boot behavior",
+        "C. Interacting with '\\\\Device\\\\Harddisk0\\\\DR0' directly",
+        "D. Modifying firewall rules via netsh advfirewall",
+        "E. Writing an executable into %TEMP% and starting it via CreateProcessW"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Packing vs. Indicator Removal from Tools",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dump:Generic.Dacic sample shows high-entropy sections, XOR loops (stream-139), and 'Indicator Removal from Tools (T1027.005)' in its ATT&CK list. Which evidence justifies T1027.005 specifically, and which should be treated as generic packing/obfuscation (T1027/T1027.002) without over-claiming?",
+      "options": [
+        "A. XOR operation loops in disassembly that operate on in-memory tool output or logs",
+        "B. High-entropy .text section detected by static analysis",
+        "C. CRC mismatch between claimed and actual PE header values",
+        "D. Generic UPX or MFC packer signatures",
+        "E. Use of FromBase64String to decode configuration strings"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Answer-count Calibration: Minimal Supported Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Remcos RAT sample that contacts '<IPv4>:8109' without HTTP headers and has a Suricata JA3 alert pointing to TLS-based Remcos C2 on port 443, which is the MINIMAL set of C2 techniques that are clearly supported and should be selected (no more, no less)?",
+      "options": [
+        "A. T1095 (Non-Application Layer Protocol)",
+        "B. T1571 (Non-Standard Port)",
+        "C. T1071.001 (Web Protocols)",
+        "D. T1573 (Encrypted Channel)",
+        "E. T1071.003 (Mail Protocols)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "MITRE ATT&CK fine-grained mapping (C2 & crypto vs impact)",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the MSIL.Krypt.Generic infostealer sample, which ATT&CK techniques are explicitly supported by the observed use of HTTPS to GitHub/Telegram and cryptographic APIs (BCrypt*, RSA, AES)? Focus on command-and-control encryption and data protection, not impact encryption.",
+      "options": [
+        "A. T1573 \u2013 Encrypted Channel",
+        "B. T1573.001 \u2013 Symmetric Cryptography",
+        "C. T1573.002 \u2013 Asymmetric Cryptography",
+        "D. T1486 \u2013 Data Encrypted for Impact",
+        "E. T1027 \u2013 Obfuscated Files or Information"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "MITRE ATT&CK mapping \u2013 HTTP vs DNS vs mail vs non-standard port",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Dump:Generic.Dacic.9C483F5C.A infostealer, network traffic shows HTTP GET requests to www.zigui.org over TCP/80 with browser-like User-Agent, DNS lookups for the same domain, and mail-related domain pop3.163.com. Which ATT&CK C2 techniques are directly evidenced?",
+      "options": [
+        "A. T1071.001 \u2013 Web Protocols",
+        "B. T1071.003 \u2013 Mail Protocols",
+        "C. T1071.004 \u2013 DNS",
+        "D. T1571 \u2013 Non-Standard Port",
+        "E. T1095 \u2013 Non-Application Layer Protocol"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Answer-count calibration \u2013 C2 vs exfil vs generic HTTP",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.NetMail infostealer sample, the malware contacts www.google.com.br over HTTP/80 with standard GET / and a browser-like User-Agent. There is no evidence of data upload or custom C2 paths. Which statement best matches the ATT&CK mapping supported by this traffic alone?",
+      "options": [
+        "A. It clearly demonstrates T1071.001 \u2013 Web Protocols for C2.",
+        "B. It is generic web browsing-like traffic and is insufficient by itself to assert a C2 technique.",
+        "C. It clearly demonstrates T1041 \u2013 Exfiltration Over C2 Channel."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "EDR killer vs generic malware \u2013 fake system processes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Regrun Trojan sample, multiple processes named WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, and LSASS.EXE execute from %APPDATA%\\WINDOWS rather than their legitimate system directories. Hooks are placed in CSRSS.EXE for filesystem and network APIs. Which behaviors justify classifying this as an EDR/AV killer / user-mode tampering component rather than just a generic infostealer?",
+      "options": [
+        "A. Creation of fake core system processes under %APPDATA% with system-like names",
+        "B. Hooking file system and network APIs inside CSRSS.EXE",
+        "C. Spawning many child processes with the same names to confuse process listings",
+        "D. Reading the Windows installation language from the registry",
+        "E. Touching MSVBVM60.DLL in the Windows directory"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "MITRE mapping \u2013 process injection sub-techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Graftor.Generic killer sample (UPX-packed), analysis shows: CreateProcessA of cmd.exe which launches rundll32.exe with a DLL from %TEMP%; NtCreateNamedPipeFile and CreateNamedPipeA in rundll32; PE headers found in remote process memory; CreateProcessA in suspended mode is NOT observed. Which process injection-related ATT&CK techniques are explicitly supported?",
+      "options": [
+        "A. T1055 \u2013 Process Injection (generic)",
+        "B. T1055.001 \u2013 Dynamic-link Library Injection",
+        "C. T1055.002 \u2013 Portable Executable Injection",
+        "D. T1055.012 \u2013 Process Hollowing",
+        "E. None of the above, only DLL search order hijacking is evidenced"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "UM unhooking vs generic packing \u2013 dbghelp & high-entropy sections",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Win/malicious_confidence_100% sample (last object) loads dbghelp.dll, has high-entropy .text and sample.bin, uses XOR loops, and imports low-level APIs like NtQuerySystemInformation and VirtualAllocEx. However, there is no evidence of restoring original system DLLs or rewriting IAT hooks. Which conclusion is best supported?",
+      "options": [
+        "A. It clearly performs full user-mode unhooking of security products.",
+        "B. It is packed/obfuscated and uses low-level APIs, which are consistent with but not conclusive for UM unhooking.",
+        "C. It only performs benign compression and should not be considered evasive."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "MITRE mapping \u2013 environment checks vs virtualization evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Win/malicious_confidence_100% sample, the malware uses GetTickCount, NtQuerySystemInformation, checks for vmtoolsd.exe, and queries time-a.nist.gov and api.ipify.org. Which ATT&CK techniques are directly evidenced by these behaviors?",
+      "options": [
+        "A. T1497 \u2013 Virtualization/Sandbox Evasion",
+        "B. T1497.001 \u2013 System Checks",
+        "C. T1497.002 \u2013 User Activity Based Checks",
+        "D. T1497.003 \u2013 Time Based Evasion",
+        "E. T1016 \u2013 System Network Configuration Discovery"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit system recovery vs generic admin commands",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "For the Ransom.HydraCrypt.Generic sample, cmd.exe executes: 'vssadmin delete shadows /all /quiet', 'wmic shadowcopy delete', 'bcdedit /set {default} bootstatuspolicy ignoreallfailures', 'bcdedit /set {default} recoveryenabled no', and 'wbadmin delete catalog -quiet'. Which ATT&CK impact technique do these commands most directly support?",
+      "options": [
+        "A. T1486 \u2013 Data Encrypted for Impact",
+        "B. T1490 \u2013 Inhibit System Recovery",
+        "C. T1529 \u2013 System Shutdown/Reboot"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Answer-count calibration \u2013 encryption impact vs generic crypto usage",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Screenlocker.Generic sample, the analysis shows high-entropy resources, packing indicators, and no explicit evidence of file renaming or CryptEncrypt/BCryptEncrypt on user data. The family label suggests ransomware/screenlocker. Based solely on the behavioral telemetry, which statement is best supported?",
+      "options": [
+        "A. The sample conclusively performs T1486 \u2013 Data Encrypted for Impact.",
+        "B. The sample is packed/obfuscated (T1027/T1027.002) but there is insufficient explicit evidence of impact encryption.",
+        "C. The sample clearly implements keylogging (T1056.001)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware vs dropper \u2013 core encryptor vs installer",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE sample drops jwifylqa.exe into %WINDIR%\\system32\\qmuelfhl\\, creates a service 'qmuelfhl' pointing to jwifylqa.exe, and then that service-launched process injects into svchost.exe, sending SMTP traffic to lazystax.ru and Outlook protection domains. There is no direct evidence of file renaming or encryption APIs in this sample. How should this sample be primarily classified based on behavior?",
+      "options": [
+        "A. As the core ransomware encryptor implementing T1486 \u2013 Data Encrypted for Impact",
+        "B. As a persistence and delivery component (dropper/loader) that sets up a malicious service and C2, but not the encryptor itself",
+        "C. As a benign mail relay utility"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "MITRE mapping \u2013 Data Encrypted for Impact vs obfuscation",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Diavolo.Generic sample, indicators include renaming more than 100 files with double extensions (api-200), high-entropy dropped files, and a known ransomware suffix. Which ATT&CK techniques are directly supported by this behavior?",
+      "options": [
+        "A. T1486 \u2013 Data Encrypted for Impact",
+        "B. T1027 \u2013 Obfuscated Files or Information",
+        "C. T1490 \u2013 Inhibit System Recovery",
+        "D. T1560.002 \u2013 Archive via Library"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Safe mode vs inhibit recovery \u2013 fine-grained mapping",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Win/malicious_confidence_100% sample, there is an API reference to Wow64RevertWow64FsRedirection and direct disk access to \\Device\\Harddisk0\\DR0, but no bcdedit or vssadmin usage. Which ATT&CK defense-evasion/impact techniques are supported, and which are NOT justified by the evidence?",
+      "options": [
+        "A. T1542.003 \u2013 Bootkit (direct volume access)",
+        "B. T1562.009 \u2013 Safe Mode Boot",
+        "C. T1070.004 \u2013 File Deletion",
+        "D. T1490 \u2013 Inhibit System Recovery via shadow copy deletion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 protocols \u2013 non-standard port vs mail vs HTTPS",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.Remcos sample, the RAT connects to <IPv4>:8109 using TCP with no HTTP headers, and Suricata JA3 fingerprint identifies Remcos TLS. It does not use SMTP or POP3 in this sample. Which C2 techniques are directly evidenced?",
+      "options": [
+        "A. T1571 \u2013 Non-Standard Port",
+        "B. T1071.001 \u2013 Web Protocols",
+        "C. T1095 \u2013 Non-Application Layer Protocol",
+        "D. T1071.003 \u2013 Mail Protocols"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Answer-count calibration \u2013 multiple C2 channels",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the same Trojan.Remcos sample, HTTPS connections are also observed to <IPv4>:443 with JA3 fingerprint matching Remcos, and Suricata alerts for Tor/consensus are present. Which ATT&CK techniques related to encrypted C2 are explicitly supported (choose all that apply, but only if clearly evidenced)?",
+      "options": [
+        "A. T1573 \u2013 Encrypted Channel",
+        "B. T1573.001 \u2013 Symmetric Cryptography",
+        "C. T1573.002 \u2013 Asymmetric Cryptography",
+        "D. T1090.003 \u2013 Multi-hop Proxy (Tor)",
+        "E. T1071.001 \u2013 Web Protocols"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Safe-mode / IFEO vs generic registry modification",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the 085cda53603755dc.exe dropper (last ransomware-like object), the malware sets HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run values to achieve autostart and marks C:\\hash.exe for deletion. There are no modifications to boot configuration or safeboot keys. Which statement is accurate about safe-mode related ATT&CK mapping?",
+      "options": [
+        "A. It implements T1562.009 \u2013 Safe Mode Boot by modifying safeboot registry keys.",
+        "B. It only demonstrates T1547.001 \u2013 Registry Run Keys / Startup Folder for persistence, not safe-mode boot.",
+        "C. It implements both safe-mode boot and IFEO persistence."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "UM unhooking vs process injection \u2013 fine-grained discrimination",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dump:Generic.Dacic.A9349469.A sample opens \\Device\\KsecDD, writes PE headers to disk, allocates memory and writes data into a remote process, and hooks filesystem and network APIs via a dropped app.exe. There is no explicit restoration of original system DLL code. Which classification is best supported?",
+      "options": [
+        "A. Classic process injection (T1055) with API hooking for credential/C2 interception; UM unhooking is not clearly demonstrated.",
+        "B. Full user-mode unhooking of EDR hooks in ntdll.dll.",
+        "C. Purely benign application using hooks for accessibility features."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Answer-count calibration \u2013 when NOT to claim UM unhooking",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "The Trojan.Ursnif sample shows high-entropy .text, imports FlsAlloc and other low-level APIs, and uses long sleep calls for evasion. There is no evidence of loading clean copies of system DLLs or patching hooked functions. Which statement about UM unhooking is appropriate?",
+      "options": [
+        "A. The sample clearly performs user-mode unhooking.",
+        "B. The sample is packed and evasive, but UM unhooking should not be asserted without explicit evidence of unpatching hooks.",
+        "C. The sample is neither packed nor evasive."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit recovery vs shutdown/reboot \u2013 distinct impact techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Dropper.Generic.Dacic.3035 sample, the malware imports NtShutdownSystem, uses 'shutdown' strings, and drops an encrypted payload, but does not execute vssadmin, wbadmin, or bcdedit commands. Which ATT&CK impact techniques are directly supported?",
+      "options": [
+        "A. T1529 \u2013 System Shutdown/Reboot",
+        "B. T1490 \u2013 Inhibit System Recovery",
+        "C. T1486 \u2013 Data Encrypted for Impact"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "EDR evasion vs generic persistence \u2013 services and firewall rules",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.BrsecmonE sample, the malware creates a Windows service 'qmuelfhl' pointing to a disguised binary in %WINDIR%\\system32\\qmuelfhl\\jwifylqa.exe with display name 'wifi support' and description 'wifi internet conection', and then uses netsh advfirewall to allow inbound traffic to svchost.exe. Which ATT&CK techniques are directly evidenced?",
+      "options": [
+        "A. T1543.003 \u2013 Windows Service",
+        "B. T1036 \u2013 Masquerading (service name/description)",
+        "C. T1562.004 \u2013 Disable or Modify System Firewall",
+        "D. T1562.001 \u2013 Disable or Modify Tools",
+        "E. T1547.001 \u2013 Registry Run Keys / Startup Folder"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process injection detection \u2013 hollowing vs generic injection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Remcos sample, app.exe calls CreateProcessW with CREATE_SUSPENDED for a target process, writes PE headers into the remote process (api-83), and then resumes the thread. This matches which specific injection sub-technique?",
+      "options": [
+        "A. T1055 \u2013 Process Injection (generic)",
+        "B. T1055.012 \u2013 Process Hollowing",
+        "C. T1055.001 \u2013 Dynamic-link Library Injection",
+        "D. T1055.002 \u2013 Portable Executable Injection (without hollowing)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "MITRE ATT&CK fine-grained technique mapping (C2 & crypto vs impact)",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the MSIL.Krypt.Generic sample, which options correctly map the observed cryptographic and network behaviour to MITRE ATT&CK techniques, without over-attributing encryption as impact?",
+      "options": [
+        "A. T1573 / T1573.001 \u2013 Encrypted Channel / Symmetric Cryptography for C2 traffic",
+        "B. T1486 \u2013 Data Encrypted for Impact, indicating ransomware-style file encryption",
+        "C. T1140 \u2013 Deobfuscate/Decode Files or Information, used for unpacking/decoding payloads",
+        "D. T1560.002 \u2013 Archive via Library, used to compress data for exfiltration",
+        "E. T1027 \u2013 Obfuscated Files or Information, indicating packed/obfuscated code"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Answer-count calibration: distinguishing generic crypto from ransomware impact",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "Does the MSIL.Krypt.Generic infostealer sample provide sufficient evidence to classify it as performing 'Data Encrypted for Impact' (T1486) against victim files?",
+      "options": [
+        "A. Yes, because it imports multiple AES/RSA APIs and Bcrypt functions",
+        "B. Yes, because it drops many files and uses high-entropy packed sections",
+        "C. No, because the report only shows crypto use for obfuscation and C2, not for encrypting victim data for impact"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware inhibit recovery vs generic service/registry changes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the HydraCrypt ransomware sample, which behaviours specifically correspond to 'Inhibit System Recovery' (T1490), as opposed to generic registry or service modification?",
+      "options": [
+        "A. Executing 'vssadmin delete shadows /all /quiet' and 'wmic shadowcopy delete'",
+        "B. Executing 'bcdedit /set {default} recoveryenabled no' and 'bcdedit /set {default} bootstatuspolicy ignoreallfailures'",
+        "C. Disabling Windows Task Manager via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM",
+        "D. Deleting backup catalog with 'wbadmin delete catalog -quiet'",
+        "E. Reading machine GUID and OS version from the registry"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Answer-count calibration: narrow focus on anti-recovery vs other suspicious changes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the HydraCrypt ransomware, which option is NOT sufficient evidence of 'Inhibit System Recovery' (T1490) and should therefore NOT be selected when the question is narrowly about anti-recovery?",
+      "options": [
+        "A. vssadmin deleting all shadow copies",
+        "B. wbadmin deleting the backup catalog",
+        "C. bcdedit disabling recovery and ignoring boot failures",
+        "D. Disabling Task Manager via registry policies"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware behaviour vs generic crypto loading (Diavolo)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Diavolo ransomware sample, which options correctly describe evidence of 'Data Encrypted for Impact' (T1486), without over-interpreting generic crypto or packing indicators?",
+      "options": [
+        "A. Multiple 'wmic shadowcopy where \"ID=...\" delete' invocations removing specific shadow copies",
+        "B. Renaming more than 100 files with double extensions using an API labelled 'Renames many files with double extensions'",
+        "C. Loading Bcrypt.dll and having high-entropy sections with packing signatures",
+        "D. Dropping files with known ransomware suffixes like 'dictionary.alcatel-lucent.<suffix>'",
+        "E. Generic indicators of 'Obfuscated Files or Information' (T1027) from packer signatures"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "MITRE mapping: distinguishing T1486 vs T1027 in Diavolo",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Diavolo sample, which ATT&CK techniques are best supported by the evidence of packed sections and XOR loops, and should NOT be confused with encryption-for-impact?",
+      "options": [
+        "A. T1027 \u2013 Obfuscated Files or Information",
+        "B. T1027.005 \u2013 Indicator Removal from Tools (XOR-based obfuscation of payloads)",
+        "C. T1486 \u2013 Data Encrypted for Impact on victim documents",
+        "D. T1027.002 \u2013 Software Packing",
+        "E. T1490 \u2013 Inhibit System Recovery"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "EDR killer vs generic persistence/service creation",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Regrun sample that drops fake WINLOGON.EXE/CSRSS.EXE/SERVICES.EXE/LSASS.EXE into %APPDATA%\\WINDOWS and hooks APIs inside these processes, which options correctly capture its defence-evasion behaviour, without over-claiming ransomware impact?",
+      "options": [
+        "A. T1036.005 \u2013 Match Legitimate Name or Location (fake core processes in user profile paths)",
+        "B. T1056.004 \u2013 Credential API Hooking (hooks file system and internet APIs in CSRSS.EXE)",
+        "C. T1543.003 \u2013 Windows Service (creating or modifying services for persistence)",
+        "D. T1486 \u2013 Data Encrypted for Impact (mass file encryption)",
+        "E. T1055 \u2013 Process Injection (hooking and running code inside CSRSS.EXE and others)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Answer-count calibration: avoiding spurious impact techniques",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "Does the Regrun sample show explicit evidence of encrypting user files for impact (T1486)?",
+      "options": [
+        "A. Yes, because it drops many executables and hooks APIs in CSRSS and SERVICES",
+        "B. Yes, because it touches K: and L: drives and deletes files with delete access",
+        "C. No, the behaviours are primarily masquerading, injection, and hooking, not file encryption for impact"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "MITRE mapping: C2 protocols vs mail protocols vs non-standard port (Dump:Generic.Dacic.9C483F5C)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Dump:Generic.Dacic.9C483F5C sample (Remcos-like RAT), which command-and-control techniques are explicitly supported by the network and string evidence?",
+      "options": [
+        "A. T1071.001 \u2013 Web Protocols over HTTP, including GET /article.php?id=103822 with browser-like User-Agent",
+        "B. T1071.003 \u2013 Mail Protocols, due to presence of 'pop3.163.com' and email-address strings",
+        "C. T1571 \u2013 Non-Standard Port, because C2 uses port 80 but sends raw TCP without HTTP headers",
+        "D. T1071.004 \u2013 DNS, because it only resolves 'www.zigui.org' via DNS without using it for C2",
+        "E. T1095 \u2013 Non-Application Layer Protocol, for raw TCP on port 80 without HTTP headers"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Answer-count calibration: non-standard port vs suspicious but standard ports",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Dump:Generic.Dacic.9C483F5C sample, should 'Non-Standard Port' (T1571) be selected based purely on the network evidence provided?",
+      "options": [
+        "A. Yes, because any malicious HTTP traffic on port 80 counts as non-standard",
+        "B. Yes, because there is raw TCP on port 80 without HTTP headers, which is non-application-layer but still a standard port",
+        "C. No, because T1571 is about using non-standard ports (unusual port numbers), and here the traffic uses common ports like 80",
+        "D. No, because there is no network activity in this sample"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 vs exfil vs environment awareness (Trojan.Remcos)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Trojan.Remcos sample that contacts <IPv4>:8109 and uses HTTPS with a known Remcos JA3 fingerprint, which options correctly classify its C2 behaviour, without over-claiming exfiltration techniques not evidenced?",
+      "options": [
+        "A. T1071 \u2013 Application Layer Protocol (C2 over HTTP/HTTPS-like protocols)",
+        "B. T1573 \u2013 Encrypted Channel, due to TLSv1.2 communications and Remcos JA3",
+        "C. T1041 \u2013 Exfiltration Over C2 Channel, because any encrypted C2 implies data exfiltration",
+        "D. T1571 \u2013 Non-Standard Port, since it uses TCP port 8109",
+        "E. T1095 \u2013 Non-Application Layer Protocol, because all traffic is raw TCP without HTTP"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "UM unhooking vs generic debugger/analysis module loading (dbghelp)",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 102912-byte suspicious console sample that loads dbghelp.dll and has high-entropy sections, which options best describe its likely purpose relative to user-mode unhooking/packing, without over-claiming injection impact?",
+      "options": [
+        "A. T1027.002 \u2013 Software Packing, as indicated by compiler/packer signatures and high-entropy .text section",
+        "B. T1518.001 \u2013 Security Software Discovery, because dbghelp.dll is always used for AV enumeration",
+        "C. T1622 \u2013 Debugger Evasion, as it uses anti-debug tricks and environment-aware behaviour",
+        "D. T1055 \u2013 Process Injection, explicitly shown by writes to remote process memory and remote threads",
+        "E. T1140 \u2013 Deobfuscate/Decode Files or Information, likely using dbghelp and custom unpacking"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Answer-count calibration: when NOT to select process injection",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "For the 102912-byte suspicious console sample, there is no explicit evidence of remote memory allocation or remote thread creation. Should 'Process Injection' (T1055) be selected?",
+      "options": [
+        "A. Yes, because any packed or obfuscated sample implies injection",
+        "B. No, because the report only shows dbghelp loading and packing/anti-debug indicators, not concrete injection primitives",
+        "C. Yes, because high-entropy sections alone prove injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Safe-mode / boot manipulation vs generic registry writes (Win/malicious_confidence_100%)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Win/malicious_confidence_100% sample that interacts with \\Device\\Harddisk0\\DR0 and uses Tor, which options are most strongly supported regarding impact/evasion, without over-claiming 'Safe Mode Boot' if not explicit?",
+      "options": [
+        "A. T1542.003 \u2013 Bootkit / Direct Volume Access, due to DeviceIoControl on \\Device\\Harddisk0\\DR0",
+        "B. T1562.009 \u2013 Safe Mode Boot, because it can modify the boot configuration and shutdown system",
+        "C. T1529 \u2013 System Shutdown/Reboot, based on 'shutdown' strings and privilege adjustments",
+        "D. T1568.002 \u2013 Domain Generation Algorithms, due to high-entropy domains flagged by Suricata",
+        "E. T1016 \u2013 System Network Configuration Discovery, based on external IP lookup to api.ipify.org"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Answer-count calibration: Safe Mode Boot vs generic boot/shutdown behaviour",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Win/malicious_confidence_100% sample, should 'Safe Mode Boot' (T1562.009) be mapped based on the provided telemetry?",
+      "options": [
+        "A. Yes, because any use of 'shutdown' and direct disk access implies forcing Safe Mode",
+        "B. No, because while it can shut down the system and access the disk, there is no explicit evidence of configuring Safe Mode boot options",
+        "C. Yes, because interacting with \\Device\\Harddisk0\\DR0 always means modifying the boot loader"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Distinguishing droppers/loaders vs core ransomware (085cda5360... dropper)",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 085cda53603755dc.exe dropper that overwrites C:\\hash.exe and sets a Run key, which options best classify its role without over-assigning ransomware impact techniques?",
+      "options": [
+        "A. T1547.001 \u2013 Registry Run Keys / Startup Folder, due to creating a Run key for 085cda53603755dc.exe",
+        "B. T1055 \u2013 Process Injection, explicitly shown by remote memory writes into other processes",
+        "C. T1105 \u2013 Ingress Tool Transfer, since it drops another executable and replaces the original sample",
+        "D. T1486 \u2013 Data Encrypted for Impact, because it marks hash.exe for deletion",
+        "E. T1070.004 \u2013 File Deletion, by opening hash.exe with delete access and marking it for deletion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Service-based persistence vs ransomware in Dropper.Generic.Dacic.3035",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Dropper.Generic.Dacic.3035 sample that drops 'gegdsimsogm.exe', modifies services, and touches system directories, which options correctly reflect its persistence/defence evasion techniques, avoiding misclassification as ransomware?",
+      "options": [
+        "A. T1543.003 \u2013 Windows Service, based on creating/modifying service-related registry keys",
+        "B. T1547.001 \u2013 Registry Run Keys / Startup Folder, due to Run key modifications",
+        "C. T1027.002 \u2013 Software Packing, given high-entropy sections and packer signatures",
+        "D. T1486 \u2013 Data Encrypted for Impact, because it has high-entropy dropped binaries",
+        "E. T1497 \u2013 Virtualization/Sandbox Evasion, due to checks for VBox/VM-related artifacts"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Remcos RAT C2 vs email/SMTP exfil (BrsecmonE)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the BrsecmonE sample that sends SMTP traffic to <IPv4>:25 and queries 'lazystax.ru' and 'microsoft-com.mail.protection.outlook.com', which options best describe its network TTPs without over-selecting unrelated techniques?",
+      "options": [
+        "A. T1071.003 \u2013 Mail Protocols, due to SMTP traffic on port 25 to mail-related domains",
+        "B. T1105 \u2013 Ingress Tool Transfer, because it drops and launches 'jwifylqa.exe' as a service",
+        "C. T1071.001 \u2013 Web Protocols, for HTTPS traffic to <IPv4>:443",
+        "D. T1566 \u2013 Phishing, because 'lazystax.ru' is flagged as malicious in network indicators",
+        "E. T1090 \u2013 Proxy, as it uses 'microsoft-com.mail.protection.outlook.com' as a relay"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery vs Generic Encryption APIs",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For this HydraCrypt ransomware sample, which options specifically indicate INHIBIT SYSTEM RECOVERY behavior rather than just generic use of cryptography?",
+      "options": [
+        "A. Use of System.Security.Cryptography namespaces and BCrypt* APIs in the .NET code",
+        "B. Execution of 'vssadmin delete shadows /all /quiet' via cmd.exe",
+        "C. Execution of 'wbadmin delete catalog -quiet' via cmd.exe and wbadmin.exe",
+        "D. Loading of Bcrypt.dll by svchost.exe from %WINDIR%\\System32",
+        "E. Execution of 'bcdedit /set {default} recoveryenabled no' via cmd.exe and bcdedit.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Data Encrypted for Impact vs Crypto Capability",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Diavolo filecoder sample, which evidence most directly supports that files were ENCRYPTED FOR IMPACT (T1486), rather than merely that the malware can perform cryptography?",
+      "options": [
+        "A. Presence of Bcrypt module DLL in loaded modules",
+        "B. High-entropy dropped file \"%PROGRAMFILES%\\HNC\\Common80\\HncATLExt80.enu\"",
+        "C. API calls to CryptStringToBinaryA and other crypto-related functions",
+        "D. API indicator 'Renames more than 100 files with extensions having double extensions' in api-200",
+        "E. YARA match for AES encryption in memory"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery vs Generic Service Activity",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Diavolo ransomware sample, which behavior is a clear example of INHIBIT SYSTEM RECOVERY (T1490) and should be mapped as such, rather than treated as generic service or process activity?",
+      "options": [
+        "A. Multiple WMIC.exe executions deleting specific shadowcopy IDs via 'wmic shadowcopy where \"ID='{...}'\" delete'",
+        "B. Creation or modification of Windows services via registry key HKLM\\SYSTEM\\CurrentControlSet\\Services",
+        "C. Opening of \\Device\\KsecDD by hash.exe",
+        "D. Writing of PE headers to disk for dropped binaries",
+        "E. Reading of installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Screenlocker vs Encryption Impact",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "The 'Ransom.Screenlocker.Generic' sample shows a packed Delphi GUI executable that loads RPC and user32, but the report does NOT contain any clear evidence of file encryption or shadow copy deletion. Based on the provided telemetry, which ATT&CK IMPACT technique is best supported?",
+      "options": [
+        "A. Data Encrypted for Impact (T1486)",
+        "B. Service Stop (T1489)",
+        "C. None of the above are clearly supported by the given data",
+        "D. Inhibit System Recovery (T1490)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Safe Mode / Boot Configuration vs Generic Service",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the HydraCrypt sample, which behavior relates to boot configuration and recovery settings (and thus Inhibit System Recovery / boot manipulation) rather than generic service creation?",
+      "options": [
+        "A. Creation of Windows services via HKLM\\SYSTEM\\CurrentControlSet\\Services",
+        "B. 'bcdedit /set {default} recoveryenabled no' executed via bcdedit.exe",
+        "C. 'sc.exe create' commands for new services",
+        "D. Loading of the .NET CLR runtime by hash.exe",
+        "E. Use of TLS/SSL for C2 traffic"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransom Note and Internal Defacement vs Encryption",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For HydraCrypt, which evidence best supports mapping to 'Internal Defacement (T1491.001)' rather than 'Data Encrypted for Impact (T1486)'?",
+      "options": [
+        "A. Dropped file 'read_it.txt' identified as a known ransomware note",
+        "B. Use of BCryptDecrypt and AES-related APIs",
+        "C. High number of dropped files (1979) in the filesystem",
+        "D. Reading of desktop.ini and user profile paths",
+        "E. Use of Asymmetric Cryptography via RSA-related strings"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Core Ransomware vs Generic Dropper",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Among the ransomware-related samples, which one behaves primarily as a DROPPER/INSTALLER for another binary rather than clearly performing encryption or backup destruction itself based on the observed telemetry?",
+      "options": [
+        "A. HydraCrypt (.NET) sample that runs vssadmin, bcdedit and wbadmin via cmd.exe",
+        "B. Diavolo filecoder that repeatedly deletes shadow copies via WMIC and renames files with double extensions",
+        "C. 'Trojan.Generic' sample that drops and executes %TEMP%\\085cda53603755dc.exe and then marks C:\\hash.exe for deletion",
+        "D. 'Ransom.Imps.Generic' that drops explorer.exe and RCXCD0E.tmp and hooks keylogging APIs",
+        "E. 'Ransom.Screenlocker.Generic' Delphi GUI that loads user32 and rpcrt4 but shows no file or volume operations"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 Protocol vs Mail Protocol vs Non-standard Port",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Remcos sample with C2 on port 8109, which ATT&CK command-and-control techniques are BEST supported by the network evidence provided?",
+      "options": [
+        "A. T1071.001 Web Protocols over TCP port 8109",
+        "B. T1571 Non-Standard Port due to C2 on 8109 instead of typical HTTP/HTTPS",
+        "C. T1071.003 Mail Protocols because of SMTP-like traffic on port 25",
+        "D. T1095 Non-Application Layer Protocol because the traffic lacks HTTP headers",
+        "E. T1071.004 DNS because of DNS queries to api.ipify.org"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Mail Protocols vs Generic C2",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Considering the Remcos sample that contacts <IPv4>:25 and lazystax.ru, which option most specifically justifies mapping to 'Mail Protocols (T1071.003)' in addition to generic C2?",
+      "options": [
+        "A. Presence of HTTPS traffic to <IPv4>:443",
+        "B. DNS queries to 'microsoft-com.mail.protection.outlook.com' and TCP traffic on port 25",
+        "C. Use of WinExec to launch external applications",
+        "D. Use of TLS JA3 fingerprint associated with Remcos",
+        "E. Presence of '.onion' strings in the binary"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Standard vs Non-standard Ports",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "For the Remcos sample that connects to <IPv4>:8109, which statement about ports is best supported by the network telemetry?",
+      "options": [
+        "A. It uses only standard HTTP ports (80/443) and should not be mapped to Non-Standard Port (T1571).",
+        "B. It uses a non-standard TCP port (8109) for C2 and can be mapped to Non-Standard Port (T1571).",
+        "C. It uses only DNS over port 53, so Non-Standard Port does not apply.",
+        "D. It uses SMTP on port 25 exclusively, so Non-Standard Port does not apply."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Masquerading vs Legitimate System Processes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 'Trojan.Regrun' sample, which behavior BEST supports mapping to 'Masquerading: Match Legitimate Name or Location (T1036.005)' rather than treating the processes as benign?",
+      "options": [
+        "A. Loading msvbvm60.dll, indicating Visual Basic code",
+        "B. Creation of processes named WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, and LSASS.EXE from %APPDATA%\\WINDOWS\\",
+        "C. Touching C:\\Windows\\AppPatch\\sysmain.sdb",
+        "D. Reading desktop.ini from the user profile",
+        "E. Creating a directory under %LOCALAPPDATA%\\"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Credential API Hooking vs Generic Imports",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the 'Trojan.Regrun' sample, which evidence most strongly indicates CREDENTIAL API HOOKING (T1056.004) in a system process, rather than just importing common APIs?",
+      "options": [
+        "A. Presence of GetWindowTextA and GetForegroundWindow imports",
+        "B. Hooks on 'FindResourceA@KERNEL32.DLL' in CSRSS.EXE",
+        "C. Hooks on file system APIs (FindNextFileA/FindFirstFileA) and 'send@WS2_32.DLL' in CSRSS.EXE",
+        "D. Opening of \\Device\\KsecDD by hash.exe",
+        "E. Creation of many fake system processes under %APPDATA%\\WINDOWS\\"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Service/Firewall Modification vs Inhibit Recovery",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 'Trojan.BrsecmonE' sample, which option describes behavior that should be mapped to 'Disable or Modify System Firewall (T1562.004)' rather than to Inhibit System Recovery?",
+      "options": [
+        "A. netsh.exe command adding a firewall rule to allow %WINDIR%\\system32\\svchost.exe (\"Host-process for services of Windows\")",
+        "B. WMIC.exe shadowcopy delete operations",
+        "C. Use of bcdedit to change boot status policy",
+        "D. vssadmin.exe delete shadows /all /quiet",
+        "E. wbadmin delete catalog -quiet"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Obfuscation/Packing vs Process Injection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the large 'Trojan.BrsecmonE' sample, which evidence most clearly indicates PROCESS INJECTION (T1055) as opposed to only software packing/obfuscation?",
+      "options": [
+        "A. Section .text has high entropy and large raw size",
+        "B. API 'CreateProcessA' used to create jwifylqa.exe in suspended mode (api-129) and writing PE header bytes to remote memory (api-83)",
+        "C. Presence of UPX/VC8 packer signatures in static analysis",
+        "D. Creation of the qmuelfhl Windows service via sc.exe",
+        "E. Loading of dbghelp.dll by the main process"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Direct Volume Access vs Encryption Impact",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the 'Win/malicious_confidence_100%' sample that interacts with \\Device\\Harddisk0\\DR0, which ATT&CK technique is BEST supported by this behavior?",
+      "options": [
+        "A. Data Encrypted for Impact (T1486)",
+        "B. Direct Volume Access (T1006)",
+        "C. Boot or Logon Autostart Execution (T1547)",
+        "D. Inhibit System Recovery (T1490)",
+        "E. Service Stop (T1489)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Obfuscation vs Execution Guardrails",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the 'Win/malicious_confidence_100%' sample, which combination of indicators BEST supports 'Execution Guardrails (T1480)' rather than merely generic obfuscation?",
+      "options": [
+        "A. High-entropy .text section and AES YARA match",
+        "B. Use of GetTickCount and NtQuerySystemInformation immediately before branching decisions, plus DBWinMutex creation",
+        "C. Use of CryptStringToBinaryA and base64 strings in HTTP headers",
+        "D. Loading of dbghelp.dll and apphelp.dll",
+        "E. Import of SHFileOperationW and GetWindowsDirectoryA"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Distinguishing C2 Channels and Exfil Over C2",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the first MSIL.Krypt.Generic infostealer sample, which evidence BEST supports 'Exfiltration Over C2 Channel (T1041)' rather than just generic C2 capability?",
+      "options": [
+        "A. Presence of System.Net.WebClient and System.Net.Sockets namespaces",
+        "B. Hardcoded URL 'https://github.com/limerboy/stormkitty' and Telegram API strings",
+        "C. 'Contains ability to upload data with network (Dotnet)' and WebClient.Upload* methods",
+        "D. Loading of Bcrypt.dll by 577.exe",
+        "E. Use of RSA and AES-related namespaces"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Application Layer Protocol vs DNS C2",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "For the Dump:Generic.Dacic.9C483F5C.A infostealer sample, which statement about its C2 communication is most accurate based on the report?",
+      "options": [
+        "A. It uses DNS as the primary C2 channel (T1071.004) with encoded commands in TXT records.",
+        "B. It uses HTTP over TCP port 80 to 'www.zigui.org' with GET requests, matching Application Layer Protocol: Web Protocols (T1071.001).",
+        "C. It uses only raw TCP with no application-layer protocol, mapping to Non-Application Layer Protocol (T1095) exclusively.",
+        "D. It uses SMTP-based mail protocols to exfiltrate data (T1071.003)."
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Answer-count Calibration: Selecting Only Supported Techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the 'Trojan.Chydo' dropper (Chydo-like killer) sample, which of the following techniques are explicitly supported by the telemetry and should be selected, avoiding plausible but UNCONFIRMED ones?",
+      "options": [
+        "A. Process Injection (T1055) based on writes to a remote process and remote virtual memory allocation",
+        "B. Service Stop (T1489) based on ExitProcess calls",
+        "C. Boot or Logon Autostart Execution (T1547.001) based on registry modifications under Run keys and startup folder strings",
+        "D. Indicator Removal (T1070) based on DeleteFileA usage and opening files with delete access",
+        "E. Safe Mode Boot (T1562.009) based on any bcdedit or boot configuration changes"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery & Encryption Indicators",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the .NET sample classified as Ransom.HydraCrypt.Generic, which behaviors in the detonation report specifically correspond to the MITRE technique Inhibit System Recovery (T1490), as opposed to generic encryption capability?",
+      "options": [
+        "A. Loading bcrypt.dll and using System.Security.Cryptography namespaces",
+        "B. Executing vssadmin.exe to delete all shadow copies",
+        "C. Using wbadmin.exe to delete the backup catalog",
+        "D. Modifying BCD settings via bcdedit to disable automatic recovery",
+        "E. Dropping a ransom note file read_it.txt to user directories"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery vs. Generic Impact",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.Filecoder sample (Ransom.Diavolo.Generic), which observed behaviors justify mapping to Inhibit System Recovery (T1490) rather than only Data Encrypted for Impact (T1486)? Select only behaviors that directly affect recovery mechanisms.",
+      "options": [
+        "A. Multiple WMIC.exe invocations deleting specific shadowcopy IDs",
+        "B. Renaming over 100 files with double extensions according to API-200",
+        "C. Dropping nyjZw30AWbZ.txt which is a PE executable masquerading as text",
+        "D. Writing readme.txt ransom instructions into a network share",
+        "E. Deleting dotnet.au3 after renaming it via MoveFileA"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Data Encrypted for Impact vs. Masquerading",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Ransom.Diavolo.Generic sample, which evidence most directly supports mapping to Data Encrypted for Impact (T1486) rather than just masquerading (T1036.008)?",
+      "options": [
+        "A. Dropped files such as nyjZw30AWbZ.txt being DOS executables with text extensions",
+        "B. API-200 indicating the sample renames more than 100 files with double extensions",
+        "C. Use of high-entropy sections and packed code per static-6",
+        "D. Creation of a Windows service via registry key HKLM\\SYSTEM\\CurrentControlSet\\Services",
+        "E. Use of TLS-encrypted C2 traffic to a remote host"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Core Behaviors vs. Context",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "In the Ransom.Imps.Generic sample, which behavior is core to its classification as ransomware, as opposed to just being a packed or obfuscated binary?",
+      "options": [
+        "A. High-entropy .text section and zero-size sections indicating packing",
+        "B. Dropping explorer.exe into %APPDATA%\\WINDOWS and marking RCXCD0E.tmp for deletion",
+        "C. Creating a new process WINLOGON.EXE from %APPDATA%\\WINDOWS",
+        "D. Renaming PE files with .tmp extensions and using CreateFileA",
+        "E. Using keylogging APIs like GetKeyState and writing clipboard data"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Safe-Mode / Boot Configuration vs. Generic Service Changes",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Which of the following observed behaviors in the Ransom.HydraCrypt.Generic sample should be mapped to boot configuration manipulation related to system recovery inhibition, rather than generic service or registry modification?",
+      "options": [
+        "A. bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures",
+        "B. bcdedit.exe /set {default} recoveryenabled no",
+        "C. Creating a Windows service via HKLM\\SYSTEM\\CurrentControlSet\\Services",
+        "D. Disabling Windows Task Manager via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES",
+        "E. Modifying proxy settings under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware vs. Generic Stealer/Infostealer",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Considering the Ransom.HydraCrypt.Generic sample, which of the following best distinguishes it from a pure infostealer that also uses cryptography and staging?",
+      "options": [
+        "A. Use of System.Security.Cryptography namespaces and Bcrypt APIs for encryption",
+        "B. Dropping svchost.exe into %APPDATA% and creating a fake system process (target-33)",
+        "C. Coordinated use of vssadmin, wbadmin, and bcdedit to remove backups and disable recovery",
+        "D. Reading system information and installed applications via GetVersionExA and registry-55",
+        "E. Using HTTPS C2 with base64-encoded parameters in headers"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 Protocols vs. Non-Standard Ports",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Remcos Trojan sample that connects to <IPv4>:8109, which statements about its C2 communication are supported by the detonation report and appropriate for MITRE ATT&CK mapping?",
+      "options": [
+        "A. It uses HTTP over port 8109 with well-formed HTTP/1.1 headers",
+        "B. It uses a non-standard TCP port for C2 without HTTP headers, aligning with Non-Standard Port (T1571)",
+        "C. It tunnels C2 traffic over DNS TXT records, aligning with DNS (T1071.004)",
+        "D. It uses TLS-encrypted HTTPS to api.ipify.org for C2, aligning with Encrypted Channel (T1573)",
+        "E. It uses raw TCP sockets on port 8109, aligning with Non-Application Layer Protocol (T1095)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Mail Protocols vs. Generic C2",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Remcos-based sample under _family \"remcos\", which evidence justifies mapping to Mail Protocols (T1071.003) in addition to generic C2 over TCP?",
+      "options": [
+        "A. HTTPS traffic to <IPv4>:443 with JA3 fingerprint matching Remcos",
+        "B. DNS queries and SMTP traffic to mail-related domains on port 25",
+        "C. References to pop3.163.com in strings and HTTP POST requests to /article.php",
+        "D. Use of send@WS2_32.DLL hooks in app.exe",
+        "E. A Suricata alert indicating \"External IP Address Lookup\""
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Non-Standard Port vs. Encrypted Channel",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Remcos sample that contacts <IPv4>:8109, which ATT&CK techniques are clearly evidenced by the network telemetry, and which are not?",
+      "options": [
+        "A. Non-Standard Port (T1571)",
+        "B. Web Protocols (T1071.001) over HTTP",
+        "C. Encrypted Channel (T1573) via TLS",
+        "D. Non-Application Layer Protocol (T1095)",
+        "E. DNS (T1071.004)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "EDR/AV Killer vs. Generic Masquerading",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Regrun sample, which combination of behaviors most strongly supports an \"AV/EDR killer\" classification rather than only generic masquerading or persistence?",
+      "options": [
+        "A. Creating many fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, SMSS.EXE) from %APPDATA%\\WINDOWS",
+        "B. Hooking core APIs (FindResourceA, CreateFileW, FindNextFileA, send@WS2_32.DLL) inside CSRSS.EXE and SERVICES.EXE",
+        "C. Copying itself to %LOCALAPPDATA% and setting a Run key for persistence",
+        "D. Using GetLocaleInfoW and RtlGetVersion to detect OS locale and version",
+        "E. Spawning D3_08.exe and IExplorer.exe from %WINDIR% and %WINDIR%\\system32"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Service / Firewall Modification vs. Recovery Inhibition",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Trojan.BrsecmonE sample (_family \"um_unhooking\" with service and firewall changes), which actions should be mapped to Disable or Modify System Firewall (T1562.004) rather than to Inhibit System Recovery (T1490)?",
+      "options": [
+        "A. netsh.exe advfirewall firewall add rule allowing %WINDIR%\\system32\\svchost.exe inbound",
+        "B. Creating Windows service qmuelfhl via sc.exe with auto start",
+        "C. Moving jwifylqa.exe into %WINDIR%\\system32\\qmuelfhl\\",
+        "D. Deleting dotnet.au3 after renaming it",
+        "E. Deleting volume shadow copies using vssadmin.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Safe Mode / Boot Manipulation vs. Packing",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the packed Trojan.Generic sample (_family \"ransomware\" but primarily a dropper), which behavior would justify mapping to Safe Mode Boot / Safe Boot configuration manipulation (T1562.009) if it were present, and is it actually observed?",
+      "options": [
+        "A. Modifying HKLM\\SYSTEM\\CurrentControlSet\\Control\\SafeBoot registry keys (not observed)",
+        "B. Writing 085cda53603755dc.exe into %TEMP% and running it with custom arguments",
+        "C. Using high-entropy .text and unusual .eh_fram section names",
+        "D. Marking C:\\hash.exe for deletion via MoveFileEx with FILE_FLAG_DELETE_ON_CLOSE",
+        "E. Creating a Windows service for 085cda53603755dc.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "UM Unhooking vs. Generic Packing",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Considering the suspicious sample classified under _family \"um_unhooking\" that loads dbghelp.dll and has high-entropy .text, which evidence most strongly suggests user-mode unhooking or low-level tampering rather than just a packed binary?",
+      "options": [
+        "A. Loading dbghelp.dll and touching C:\\dbghelp.dll in a console-only PE",
+        "B. High-entropy .text section and zero-size .bss section",
+        "C. Imports of NtQuerySystemInformation and direct use of KsecDD device",
+        "D. Presence of Borland Delphi compiler artifacts and unusual section names",
+        "E. Writing no additional PE files to disk during detonation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Execution Guardrails vs. Environment Discovery",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the large Trojan.BrsecmonE sample (_family \"um_unhooking\"), which observations most directly support mapping to Execution Guardrails (T1480) as opposed to simple environment discovery?",
+      "options": [
+        "A. Creation of a Global mutex named giojheiowrght...",
+        "B. Checking GetTimeZoneInformation and GetAdaptersInfo before starting C2",
+        "C. Hard-coded Russian language resource and GetSystemDefaultLangID checks",
+        "D. Using netsh advfirewall to allow svchost.exe inbound",
+        "E. Spawning svchost.exe as a child of jwifylqa.exe for C2"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Credential Access vs. Generic Hooks",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Trojan.Regrun sample (with extensive API hooking in CSRSS.EXE), which hooked APIs are most indicative of Credential API Hooking (T1056.004) rather than generic file-system monitoring?",
+      "options": [
+        "A. FindFirstFileA and FindNextFileA in CSRSS.EXE",
+        "B. send@WS2_32.DLL in CSRSS.EXE",
+        "C. CreateFileW, DeleteFileW, and ReadFile in CSRSS.EXE",
+        "D. GetWindowTextA and FindWindowA in WINLOGON.EXE",
+        "E. Clipboard APIs like GetClipboardData in WINLOGON.EXE"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "ATT&CK Technique Discrimination (Packing vs. Guardrails vs. Safe Mode)",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Remcos sample that uses VC8 packing and dynamic API resolution, which of the following ATT&CK techniques are clearly evidenced, and which are NOT supported by the telemetry?",
+      "options": [
+        "A. Software Packing (T1027.002) due to high-entropy .text and packer signatures",
+        "B. Execution Guardrails (T1480) based on mutex Rmc-H6V4FW and locale checks",
+        "C. Safe Mode Boot (T1562.009) due to modification of SafeBoot registry keys",
+        "D. Dynamic API Resolution (T1027.007) from GetProcAddress/LoadLibrary patterns",
+        "E. Boot or Logon Autostart Execution (T1547) via Run key or service creation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransom Note vs. Internal Defacement",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Ransom.HydraCrypt.Generic sample, which artifacts are appropriate to map to Internal Defacement (T1491.001) rather than Data Encrypted for Impact (T1486)?",
+      "options": [
+        "A. Dropping read_it.txt ransom note files across user directories",
+        "B. Renaming many files with new encrypted extensions",
+        "C. Deleting shadow copies via vssadmin.exe",
+        "D. Disabling recovery via bcdedit.exe",
+        "E. Deleting backup catalog via wbadmin.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Service Creation vs. Inhibit Recovery",
+      "difficulty": "easy",
+      "detonation_report": {},
+      "question": "In the Trojan.BrsecmonE sample, the malware creates a Windows service named qmuelfhl using sc.exe. Which MITRE technique does this primarily map to?",
+      "options": [
+        "A. Create or Modify System Process (T1543)",
+        "B. Inhibit System Recovery (T1490)",
+        "C. Safe Mode Boot (T1562.009)",
+        "D. Service Stop (T1489)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Answer-Count Calibration for C2 Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Remcos sample under _family \"remcos\" that contacts <IPv4>:8109 and also api.ipify.org, which of the following C2-related techniques are supported by the report? Select all that apply, but do not include techniques without explicit evidence.",
+      "options": [
+        "A. Application Layer Protocol: Web Protocols (T1071.001) for HTTP-based C2",
+        "B. Non-Application Layer Protocol (T1095) for raw TCP C2 on port 8109",
+        "C. Encrypted Channel (T1573) based on HTTPS traffic to api.ipify.org",
+        "D. DNS (T1071.004) for primary C2 tunneling",
+        "E. Mail Protocols (T1071.003) for exfiltration via SMTP"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Inhibit System Recovery vs. Generic Encryption Capabilities",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the .NET ransomware sample (HydraCrypt.Generic) that drops %APPDATA%\\svchost.exe and spawns vssadmin, bcdedit, and wbadmin via cmd.exe, which of the following behaviours are DIRECT evidence of inhibiting system recovery, as opposed to merely indicating generic cryptographic capability?",
+      "options": [
+        "A. Loading %WINDIR%\\System32\\bcrypt.dll and using BCryptDecrypt / BCryptGetProperty APIs",
+        "B. Executing \"vssadmin delete shadows /all /quiet\" via cmd.exe",
+        "C. Executing \"bcdedit /set {default} recoveryenabled no\" via cmd.exe",
+        "D. Executing \"wbadmin delete catalog -quiet\" via cmd.exe",
+        "E. Presence of System.Security.Cryptography.* namespaces and CryptoStream operations in the .NET assembly"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Data Encrypted for Impact vs. Supporting Context",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.Diavolo ransomware sample that uses WMIC.exe to delete specific shadow copies and drops files with a known ransomware suffix (e.g., dictionary.alcatel-lucent.*), which observations from the report support \"Data Encrypted for Impact (T1486)\" specifically, rather than just generic obfuscation or packing?",
+      "options": [
+        "A. High-entropy sections and multiple T1027/T1027.002 packing indicators in the main PE",
+        "B. YARA match for AES encryption and presence of AES-related code in the binary",
+        "C. API indicator \"Renames more than 100 files with double extensions\" associated with the ransomware suffix",
+        "D. WMIC.exe commands that delete individual shadow copies by GUID",
+        "E. Use of Bcrypt module and generic symmetric cryptography namespaces without file rename evidence"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "MITRE ATT&CK Mapping \u2013 Inhibit System Recovery vs. Other Impact",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the .NET ransomware sample (HydraCrypt.Generic) that launches vssadmin, bcdedit, and wbadmin, which ATT&CK techniques from the report correspond specifically to inhibiting system recovery, and which would be over-mapping if claimed on the basis of this detonation alone?",
+      "options": [
+        "A. T1490 Inhibit System Recovery \u2013 supported by vssadmin delete shadows and wbadmin delete catalog usage",
+        "B. T1486 Data Encrypted for Impact \u2013 directly supported by the presence of Bcrypt and generic crypto APIs alone",
+        "C. T1490 Inhibit System Recovery \u2013 supported by bcdedit commands that disable recovery and ignore boot failures",
+        "D. T1489 Service Stop \u2013 supported by this report's evidence of stopping critical backup or AV services",
+        "E. T1491.001 Internal Defacement \u2013 supported by ransom note read_it.txt and numerous dropped files"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "C2 Channels and Protocols \u2013 Avoiding Over-Selection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Remcos RAT sample that drops %APPDATA%\\firefox tsms\\app.exe and communicates with <IPv4>:8109, which C2 communication techniques are explicitly evidenced by the network and static indicators in the report, and which would be unsupported over-selection?",
+      "options": [
+        "A. Application Layer Protocol: Web Protocols (T1071.001) \u2013 HTTP-based C2 on non-standard port 8109",
+        "B. Non-Standard Port (T1571) \u2013 use of TCP port 8109 for C2 traffic",
+        "C. Mail Protocols (T1071.003) \u2013 SMTP-based C2 using pop3.163.com",
+        "D. Encrypted Channel (T1573) \u2013 TLS-encrypted C2 traffic identified by JA3 \"Remcos 3.x/4.x TLS\" fingerprint",
+        "E. DNS (T1071.004) \u2013 DNS tunneling used as the primary C2 channel"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "UM Unhooking vs. Generic Packing/Obfuscation",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Considering the large um-unhooking / bootkit-related sample that directly accesses \\Device\\Harddisk0\\DR0 and contains numerous encryption and packing indicators, which of the following behaviours are solid evidence of user-mode unhooking or low-level evasion, and which are only generic obfuscation or unrelated impact?",
+      "options": [
+        "A. High-entropy .text section, Borland Delphi packer signatures, and AES-related YARA hits",
+        "B. Loading dbghelp.dll and using NtQuerySystemInformation along with GetTickCount-based timing checks",
+        "C. Direct volume access to \\Device\\Harddisk0\\DR0 via DeviceIoControl",
+        "D. Presence of NtQuerySystemInformation and sandbox/VM process name checks (e.g., vmtoolsd.exe)",
+        "E. Use of CryptStringToBinaryA and Base64 encoding for C2 traffic without any API hook manipulation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D"
+      ]
+    }
+  }
+]

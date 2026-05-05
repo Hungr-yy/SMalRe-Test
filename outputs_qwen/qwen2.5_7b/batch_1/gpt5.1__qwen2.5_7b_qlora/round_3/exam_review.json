@@ -1,0 +1,320 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This is a hard, novel question asking students to discriminate between specific process injection sub-techniques based on explicit telemetry evidence. The detonation report shows: (A) VirtualAlloc in remote process + WriteProcessMemory = T1055 generic injection (malicious-rated signatures api-20 and api-0); (C) CreateThread in self-process (api-264, attck_id T1055.003). Process Hollowing (B), DLL Injection (D), and APC Injection (E) are not evidenced by specific telemetry in this report. The answer key [A, C] is correct and well-supported. Options are plausible distractors. No plagiarism detected."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard ATT&CK mapping question requiring fine-grained discrimination between process injection sub-techniques. The report explicitly maps: T1055 (api-0 writes to remote process, api-20 allocates virtual memory, memorydump-8 PE header in memory); T1055.001 (string-318 LoadLibraryA for DLL injection); T1055.003 (api-264 creates thread in self-process); T1055.011 (listed in mitre_attcks). T1055.004 (APC) and T1055.012 (Process Hollowing) are in the MITRE list but have no specific telemetry signatures supporting them in the signatures array. Answer [A, B, C, E] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard C2/encryption mapping question. The report supports: (A) T1071.001 via string-127 user-agent strings and static-110/158 network protocol indicators; (B) T1573.001 via summary-31 'Shows ability to use encryption for command and control traffic'; (D) T1132 via string-338 Base64 encoding. T1486 (C) is in the MITRE list but the cryptographic indicators (AES YARA, BCrypt module) are for obfuscation/C2 encryption, not file encryption for impact - no ransomware-specific behavior is evidenced. T1041 (E) is not explicitly evidenced. Answer [A, B, D] is correct and well-reasoned. No plagiarism detected."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on discriminating between generic process injection and credential API hooking in a Worm.Brontok sample. The report explicitly shows: (A) api-0 'Writes data to a remote process' and api-20 'Allocates virtual memory in a remote process' = T1055 generic injection; (C) hooks-0 'Hooks API calls', hooks-2 'Hooks file system APIs' (FindFirstFileW in IExplorer.exe), hooks-5 'Hooks internet related APIs' (send@WS2_32.DLL in IExplorer.exe) = T1056.004 credential API hooking; (F) api-20 allocates virtual memory = part of injection chain. T1486 (D) and T1573.001 (E) are not evidenced. Answer [A, C, F] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question discriminating process injection vs credential API hooking in a UPX-packed sample. The report explicitly shows: (A) api-0 writes data to remote process + api-20 allocates virtual memory = T1055 generic injection; (D) api-106 CreateRemoteThread = T1055 injection chain; hooks-2 'Hooks file system APIs' (FindFirstFileW in ntbootdd.exe) and hooks-5 'Hooks internet related APIs' (send@WS2_32.DLL in ntbootdd.exe) = T1056.004. Option A correctly describes generic injection, option D correctly describes the full injection chain including CreateRemoteThread. Both A and D are correct and complementary. Answer [A, D] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard ATT&CK mapping question for a Worm.Ludbaruma sample. The report explicitly shows: T1055 (api-0 writes to remote process, api-20 allocates virtual memory); T1055.001 (string-318 LoadLibraryA for DLL injection); T1055.003 (api-264 creates thread in self-process); T1055.011 (listed in mitre_attcks with no specific signature but present in MITRE list). T1055.004 (APC) and T1055.012 (Process Hollowing) are not evidenced by any specific signatures. Answer [A, B, C, E] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a small ransomware-family PE. The report explicitly supports: T1055 (listed in mitre_attcks, and T1055.011 Extra Window Memory Injection also listed); T1055.011 (listed in mitre_attcks); T1113 (api-105 CreateCompatibleBitmap for screenshots); T1056.001 (api-40 GetKeyState for keylogging, suspicious-rated). T1486 (B) is in the MITRE list but no ransomware-specific file encryption behavior is evidenced in signatures - only generic encryption API strings. T1041 (E) is not evidenced. Answer [A, C, D, F] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on GandCrab ransomware sample. The report explicitly shows: (A) T1056.004 via hooks-8 'Installs hooks/patches the running process' (suspicious-rated, attck_id T1056.004); (C) T1114.001 via api-52 'Reads mail related files' (malicious-rated); (D) T1070.004 via api-26 'Marks file for deletion' and api-25 'Opens file with deletion access rights'. T1055 generic process injection (B) is NOT evidenced - hooks-8 is about patching/hooking, not classic VirtualAlloc/WriteProcessMemory injection. T1055.001 (E) is not evidenced. Answer [A, C, D] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 8,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key - T1027.009 (D) is not explicitly supported by the telemetry in the same way as the others"
+        ],
+        "reasoning": "The answer key [A, B, C, E, F] needs scrutiny. T1486 (A) is supported by the YARA 'WannaDecryptor' match and the MITRE mapping, plus string-280 'Contains reference to cryptographic keys' mapped to T1486 and string-108 mapped to T1486. T1573.001 (B) is supported by summary-31. T1027 (C) is supported by multiple signatures. T1027.009 (D) is supported by static-6 'Section contains high entropy' mapped to T1027.009. T1027.002 (E) is supported by static-18. T1140 (F) is supported by summary-32 and string-212 CryptDecrypt. However, the answer key excludes D (T1027.009) which IS explicitly evidenced by static-6. The answer key [A, B, C, E, F] is missing D which should be included. This makes the answer key factually incorrect - it should be [A, B, C, D, E, F]. Reject due to incorrect answer key."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a BScope.Backdoor sample requiring discrimination between process injection and credential/spyware behavior. The report explicitly shows: T1055 (api-0 writes to remote process, malicious-rated); T1055.001 (string-318 LoadLibraryA for DLL injection, informative); T1056.001 (api-40 GetKeyState, suspicious-rated); T1113 (api-105 CreateCompatibleBitmap, informative). T1041 (D) is not evidenced. T1555 (F) is not evidenced - only generic password strings. Answer [A, B, C, E] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a Nullsoft installer/remcos sample. The report explicitly shows: T1055 (api-0 writes data to remote process, malicious-rated); T1055.001 (string-318 LoadLibraryA for DLL injection); T1055.003 (api-264 creates thread in self-process); T1055.011 (listed in mitre_attcks); T1620 (module-7 CLR Loader DLL, static-115 Reflective Code Loading). T1055.004 (D) and T1055.012 (F) are not evidenced by specific signatures. Answer [A, B, C, E, G] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 11,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Answer key is incomplete - T1027.009 is explicitly evidenced but excluded from the answer"
+        ],
+        "reasoning": "The answer key [A, B, C, E, F] excludes T1027.009 (D). However, static-6 'Section contains high entropy' is explicitly mapped to T1027.009 in the signatures. The YARA AES match (yara-103) is mapped to T1027. T1027.002 (E) is supported by static-18. T1027 (C) is supported by multiple signatures. T1573.001 (B) is supported by summary-31. T1486 (A) is supported by string-280 and string-108 mapped to T1486. T1140 (F) is supported by summary-32. Since T1027.009 IS explicitly evidenced by static-6 (suspicious-rated, attck_id T1027.009), the answer key should include D. The omission makes the answer key factually incorrect. Reject."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a um_unhooking sample with service creation and PE injection. The report explicitly shows: T1055.002 (api-83 'Writes PE header to memory', malicious-rated, attck_id T1055.002); T1071.003 (network-10 'Sends network traffic on typical mail related ports', malicious-rated, attck_id T1071.003); T1071.001 (network-23 'Sends traffic on typical HTTP outbound port', suspicious-rated, attck_id T1071.001). T1055.001 (B) is in MITRE list but no specific DLL injection signature. T1055.012 (C) is in MITRE list but no specific hollowing signature. T1486 (F) is not evidenced. Answer [A, D, E] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a Trojan.Ursnif sample. The report explicitly shows: (A) T1573.001 via summary-31 'Shows ability to use encryption for command and control traffic'; (B) T1486 via the MITRE mapping and the fact that this is classified as ransomware family - however, looking more carefully, the only T1486 evidence is the MITRE mapping itself, with no specific signature. But api-284 'Opens a handle to the specified local process' is mapped to T1489 (Service Stop), and T1489 is in the MITRE list. (C) T1489 via api-284 and the MITRE mapping. (E) T1055.004 via api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process' and T1055.003 via api-264. The answer [A, B, C, E] - B (T1486) is in the MITRE list and the family is 'um_unhooking' but the question says ransomware-style encryption. The api-85 NtQueueApcThread explicitly supports T1055.004, and api-264 supports T1055.003. Answer [A, B, C, E] is defensible. No plagiarism detected."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Medium difficulty question on an older um_unhooking sample with limited telemetry. The report explicitly maps T1215 (api-37 KsecDD, attck_id T1215), T1076 (registry-61 terminal service keys, attck_id T1076), and T1002 (static-18 packer signature, attck_id T1002). T1486 (D), T1055 (E), and T1041 (F) are not evidenced in this report. Answer [A, B, C] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on a .NET infostealer (Quasar RAT variant). The report explicitly shows: T1555 (string-475 password strings, mapped to T1555); T1552.001 (string-11 'Found FTP credentials location strings' - FileZilla recentservers.xml, malicious-rated, attck_id T1552.001); T1056.001 (string-556 keylogger strings, stream-79 keyboard hook); T1113 (api-105 CreateCompatibleBitmap, stream-72 CopyFromScreen, malicious-rated). T1486 (D) is in MITRE list but no specific file encryption behavior is evidenced beyond generic crypto strings. T1485 (F) is not in the MITRE list at all. Answer [A, B, C, E] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Easy question on a very small remcos sample with minimal telemetry. The report only has 6 signatures, all static. The MITRE mappings are T1027.009 (Embedded Payloads) and T1027 (Obfuscated Files or Information). static-6 maps to T1027.009 and static-157 maps to T1027. T1486 (B), T1055 (D), and T1059 (E) are not evidenced. Answer [A, C] is correct. No plagiarism detected."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "Hard question on an njRAT/Bladabindi sample. The report explicitly shows: (A) api-0 'Writes data to a remote process' (malicious-rated, T1055) - this is the primary process injection evidence; (C) api-264 'Creates a thread in a self process' (T1055.003) - thread execution hijacking in self-process. The question asks specifically about process injection evidence (writing into another process or thread hijacking), not generic memory manipulation. CreateToolhelp32Snapshot (B) is process enumeration, not injection. GetAsyncKeyState (D) is keylogging. YARA njRAT (E) indicates RAT behavior but doesn't specifically evidence injection mechanism. KsecDD (F) is driver access. Answer [A, C] is correct. No plagiarism detected."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 16,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key includes all six options (A\u2013F) as correct, but the detonation report does not support T1486 (Data Encrypted for Impact) through explicit telemetry in the signatures or MITRE ATT&CK mappings that are tied to behavioral evidence. While T1486 appears in the mitre_attcks list, the question specifically asks which techniques are 'explicitly supported by the telemetry' \u2014 the signatures section contains YARA matches for AES encryption (T1027), RSA keys (T1027), CryptDecrypt (T1140), symmetric cryptography for C2 (T1573.001), software packing (T1027.002), and high entropy sections (T1027.009). T1486 is listed in the MITRE ATT&CK mapping but there is no signature or behavioral telemetry entry explicitly supporting data encryption for impact (e.g., no file encryption behavior observed, no ransom note dropped, no file rename to encrypted extension). The question's framing \u2014 'explicitly supported by the telemetry' \u2014 makes T1486 a debatable inclusion. More critically, T1027.009 (Embedded Payloads) is listed in the MITRE ATT&CK section and has a corresponding signature ('Section contains high entropy' mapped to T1027.009), so it is supported. However, T1486 lacks a corresponding behavioral signature entry. The answer key is therefore incorrect in including A (T1486) as a correct answer given the question's specific framing about telemetry support. A professional malware analyst would not consider a MITRE ATT&CK tag alone \u2014 without a supporting behavioral signature \u2014 as 'explicit telemetry' for T1486 in a static-only report with no dynamic execution evidence of file encryption. This makes the answer key factually wrong for the stated question."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key is [C, D, E, F] \u2014 T1027, T1027.009, T1027.002, and T1140. However, the detonation report for this sample (remcos family) does NOT contain a signature entry for T1027.009 (Embedded Payloads) in the signatures section. The MITRE ATT&CK mapping list includes T1027.009, but the question asks which techniques are 'EXPLICITLY supported by telemetry related to encryption functionality or obfuscation/packing.' The signatures section contains: T1027 (YARA AES match, Matched Compiler/Packer signature, zero-size sections), T1027.002 (Matched Compiler/Packer signature \u2014 Borland Delphi 4.0, unusual entropy resources, unusual section names), T1027.009 (Section contains high entropy \u2014 mapped to T1027.009 in the static-6 signature), and T1140 is NOT present in the signatures section at all for this report. There is no CryptDecrypt or deobfuscation API call signature in this report's signatures. T1140 appears in the MITRE ATT&CK list but has no supporting signature entry. Additionally, T1573.001 (Symmetric Cryptography) appears in the MITRE ATT&CK list and there is a YARA AES match (yara-103) mapped to T1027, but T1573.001 itself is not explicitly tied to a signature. The answer key omitting B (T1573.001) while including F (T1140) is questionable, and including D (T1027.009) while the high entropy signature is present but T1140 has no signature support makes the answer key inconsistent and partially incorrect. A professional analyst would reject T1140 as explicitly telemetry-supported in this report. The answer key is factually wrong."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 T1573.001 (Symmetric Cryptography) is explicitly supported by a signature in the report (summary-31: 'Shows ability to use encryption for command and control traffic', attck_id T1573.001), but C is excluded from the answer key.",
+          "T1486 (Data Encrypted for Impact) is listed in the MITRE ATT&CK mapping but has no direct signature-level telemetry in the signatures array; however the question correctly excludes it. The real error is the omission of C (T1573.001) from the correct answers.",
+          "Answer key lists B, D, E, F but misses C (T1573.001), which is directly evidenced by signature summary-31 with attck_id T1573.001."
+        ],
+        "reasoning": "The answer key is factually incorrect. T1573.001 (Symmetric Cryptography) is explicitly supported by signature 'summary-31' (attck_id T1573.001: 'Shows ability to use encryption for command and control traffic'), yet option C is excluded from the correct answers. A professional malware analyst reviewing the signatures section would identify this as a clear omission. The question concept is sound and novel, but the wrong answer key mandates rejection."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 T1027.002 (Software Packing) is supported by two signatures: static-18 ('Matched Compiler/Packer signature', attck_id T1027.002) and static-92 ('PE file has unusual entropy resources', attck_id T1027.002). Both are in the signatures section, so D should be correct.",
+          "T1027.009 (Embedded Payloads) is supported by static-6 ('Section contains high entropy', attck_id T1027.009), so E is correctly included.",
+          "T1027 (Obfuscated Files or Information) is supported by multiple signatures including module-9 (Bcrypt module load, attck_id T1027), yara-103 (AES encryption YARA match, attck_id T1027), static-157 (Compiler/Packer signature, attck_id T1027), and static-5 (zero-size sections, attck_id T1027). So C is correctly included.",
+          "The answer key lists C, D, E \u2014 but D (T1027.002) IS supported by signatures (static-18, static-92), so D should be included. The answer key already includes D, so that part is correct.",
+          "Re-examining: answer key is C, D, E. T1573.001 (option B) \u2014 no signature in this report has attck_id T1573.001. T1486 (option A) \u2014 no signature has this attck_id. T1140 (option F) \u2014 no signature has attck_id T1140 in this report's signatures section. So C, D, E appears correct.",
+          "However, static-18 maps to T1027.002 and static-92 also maps to T1027.002, confirming D is correct. The answer key C, D, E appears defensible.",
+          "On closer inspection the answer key C, D, E is actually correct for this report. No critical factual error found.",
+          "Minor issue: the question topic field says 'mitre_attack_mapping' which is not a standard malware family label \u2014 the detonation report shows _family: remcos. The attack field should be 'remcos' not 'mitre_attack_mapping'.",
+          "The question is structurally sound and answerable from the report, but the metadata inconsistency (attack field) is a flag-level issue."
+        ],
+        "reasoning": "After careful re-examination, the answer key (C, D, E) is factually defensible: T1027 is supported by multiple signatures (module-9, yara-103, static-157, static-5), T1027.002 by static-18 and static-92, and T1027.009 by static-6. T1573.001, T1486, and T1140 have no direct signature-level telemetry in this report's signatures array. However, the 'attack' metadata field is set to 'mitre_attack_mapping' rather than the correct family 'remcos', which is a metadata inconsistency. This is a flag-level cosmetic issue rather than a factual error, but given the question is otherwise sound, this warrants a flag rather than rejection."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 B (T1486) is missing from correct answers"
+        ],
+        "reasoning": "The question asks which encryption/obfuscation techniques are 'explicitly supported by the telemetry.' T1486 (Data Encrypted for Impact) IS explicitly present in the MITRE ATT&CK mappings of the detonation report, yet the answer key omits it. The report's mitre_attcks array includes T1486 under Impact, and the YARA signature match for 'WannaDecryptor' plus the AES encryption YARA hit further corroborate it. The answer key lists A, C, D, E, F but excludes B (T1486), which is a factual error. Additionally, T1027.009 (Embedded Payloads / F) is listed in the MITRE mappings, but the primary evidence for it is the high-entropy section signature (static-6), which maps to T1027.009 in the report \u2014 that is defensible. However, the omission of T1486 from the answer key when it is explicitly in the MITRE mappings makes this question factually incorrect and it must be rejected."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 D (T1573.001) is included but not directly evidenced; E (T1486) is included but not present in this report's MITRE mappings; F (T1140) is present in MITRE mappings but excluded from answer key"
+        ],
+        "reasoning": "The question asks which techniques are 'explicitly supported by the signatures and MITRE mappings.' Reviewing the second report's mitre_attcks array: T1027 (A) \u2713 present; T1027.002 (B) \u2713 present; T1027.009 (C) \u2713 present (high entropy section maps to this); T1573.001 (D) \u2014 NOT present in this report's mitre_attcks list (unlike the first report, this remcos report does not include T1573.001); T1486 (E) \u2014 NOT present in this report's mitre_attcks (this is a remcos/infostealer sample, not ransomware); T1140 (F) \u2014 NOT present in this report's mitre_attcks. The answer key (A, B, C, D, E) includes D and E which are not in the report's MITRE mappings, and excludes F which is also not in the mappings. The inclusion of T1486 (ransomware data encryption) for a remcos sample is a significant factual error. T1573.001 is also not in this report's MITRE list. The answer key is materially incorrect and the question must be rejected."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key claims all six options (A through F) are correct, but the detonation report does not support T1486 (Data Encrypted for Impact) as a technique explicitly evidenced by cryptographic/signature telemetry in the context the question asks. More critically, the question asks which techniques are 'explicitly supported by the telemetry' for encryption/obfuscation, yet T1486 is an Impact-tactic technique (ransomware payload encryption of victim files), not an obfuscation or packing technique. While T1486 appears in the MITRE ATT&CK list in the report, the question specifically scopes to 'cryptographic/signature evidence' for encryption and obfuscation techniques. Including T1486 conflates file encryption-for-ransom with the obfuscation/packing/C2-encryption cluster the question is clearly targeting. Additionally, T1573.001 (Symmetric Cryptography) appears in the MITRE ATT&CK list and is supported by the AES YARA signature and the summary-31 indicator ('Shows ability to use encryption for command and control traffic'), yet it is omitted from the answer key. The answer key is therefore both over-inclusive (T1486 in an obfuscation-focused question) and under-inclusive (missing T1573.001 which is directly evidenced). This constitutes a factually incorrect answer key."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key lists A (T1027), B (T1486), C (T1027.002), and E (T1027.009) as correct, but omits F (T1140 \u2013 Deobfuscate/Decode Files or Information). The detonation report's MITRE ATT&CK list explicitly includes T1140 under Defense Evasion. However, the question asks which techniques 'related to encryption, packing, or obfuscation are explicitly supported by the telemetry.' T1140 is directly in scope (it is an obfuscation-related technique) and appears in the MITRE ATT&CK mappings in the report, so it should be in the answer key. Conversely, T1486 (Data Encrypted for Impact) is an Impact-tactic technique about encrypting victim files for ransom \u2014 it is not a technique 'related to encryption, packing, or obfuscation' in the defensive-evasion sense the question implies, and the report for this sample (a Remcos-family RAT, not ransomware) does list T1486 in the MITRE ATT&CK section, but there is no signature or behavioral evidence in the signatures list supporting ransomware-style file encryption. Including T1486 while excluding T1140 makes the answer key incorrect. Furthermore, T1573.001 (Symmetric Cryptography) appears in the MITRE ATT&CK list and the AES YARA signature fires, yet it is excluded from the answer key without justification. The answer key is materially wrong."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key excludes T1486 (Data Encrypted for Impact), which IS explicitly present in the MITRE ATT&CK mappings of the detonation report under the 'Impact' tactic. The report clearly lists T1486 as a mapped technique, and the YARA signature match for 'WannaDecryptor' plus the 'Data Encrypted for Impact' entry in mitre_attcks confirms it. The correct answer should include A, C, D, E, and F (T1486). Additionally, T1027.009 (Embedded Payloads) is listed in the MITRE ATT&CK mappings AND has a supporting signature ('Section contains high entropy' mapped to T1027.009), so E is correctly included. However, excluding T1486 from the answer key when it is explicitly present in the report's MITRE mappings is a factual error that makes the answer key wrong. This requires rejection."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key"
+        ],
+        "reasoning": "The answer key excludes T1560 (Archive Collected Data) as a distractor \u2014 that is fine since T1560 is not supported by cryptographic/obfuscation evidence. However, the answer key also excludes T1027.009 (Embedded Payloads / option E), yet the detonation report explicitly maps T1027.009 in the MITRE ATT&CK section AND has a supporting signature ('Section contains high entropy' mapped to T1027.009 via static-6). The question stem specifically asks about techniques 'explicitly supported by the telemetry,' and T1027.009 is directly evidenced. The answer key should include E (T1027.009) but does not. This factual error in the answer key requires rejection. Additionally, T1573.001 (Symmetric Cryptography) is listed in the MITRE ATT&CK mappings for this Remcos sample under Command and Control, and the AES YARA match supports it, so D is correctly included. The omission of E makes the answer key incorrect."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  }
+]

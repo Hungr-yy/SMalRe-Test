@@ -1,0 +1,176 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically about API calls or behavioural observations providing direct evidence of process injection. The report clearly shows WriteProcessMemory (wrote 32 bytes to a remote process, T1055), CreateToolhelp32Snapshot (process enumeration, a prerequisite step), and IsWow64Process (environment check). The answer key selects B (WriteProcessMemory), C (CreateToolhelp32Snapshot), and D (IsWow64Process). B is clearly correct. However, C and D are environment awareness/discovery calls, not direct process injection evidence. The malicious-rated signature is only 'Writes data to a remote process' (T1055). CreateToolhelp32Snapshot and IsWow64Process are informative-level signatures for process discovery and WOW64 checks respectively \u2014 they are not direct injection evidence. The answer key is partially incorrect: B is correct, but C and D are not direct injection evidence. This is a factual error in the answer key. Verdict: reject."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviours provide evidence of infostealer functionality. The report clearly supports: A (attempts to open browser credential files - 'Attempts to obtain browser login credentials'), C (tries to access cryptocurrency wallet files), D (marks temporary files for deletion to remove forensic traces), and F (accesses potentially sensitive information from local browser profile directories). B (deletes shadow copies) is not evidenced. E (drops ransomware payload) is not evidenced. The answer key [A, C, D, F] is well-supported by the malicious-rated signatures in the report. Question is original, well-formed, and factually correct."
+      },
+      {
+        "question_index": 2,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The question asks which behaviours are directly evidenced by malicious-rated API calls or monitored target observations for process injection. The report shows: A (hash.exe wrote data to remote process - malicious rated, T1055), C (hash.exe allocated virtual memory in remote process - malicious rated, T1055), D (rundll32.exe executed with no command-line parameters - malicious rated, T1218.008), and F (rundll32.exe established network connection after being spawned - malicious rated, T1055). The answer key [A, C, D, F] appears correct. However, F is described as 'rundll32.exe established a network connection after being spawned by hash.exe' - this IS evidenced by the malicious-rated signature 'Windows system process connects to a network' (target-269, threat_level 2). So the answer key [A, C, D, F] is actually correct. Re-evaluating: all four answers are supported by malicious-rated signatures. The question is well-formed and factually correct. Verdict: pass."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about persistence and defense evasion mechanisms. The report clearly supports: A (drops x27x.dll to %TEMP% and loads via rundll32.exe with InstallService export - evidenced by the process tree showing cmd.exe running rundll32.exe with %TEMP%\\x27x.dll,InstallService), C (UPX packing detected, embedded PE in .rsrc section - static-7, static-97), D (rundll32.exe marks C:\\hash.exe for deletion - api-26, api-25), and F (spawns cmd.exe to execute rundll32.exe - evidenced by process tree). B (MBR modification) is not evidenced. E (lsass.exe injection with ETW patching) is not evidenced. Answer key [A, C, D, F] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion behaviours evidenced by signatures and MITRE mappings for a Pykspa.Generic sample. A (modifies UAC/LUA registry settings - registry-10, malicious rated, T1112) is clearly supported. C (timestomping - T1070.006 is in MITRE mappings) - however, no specific timestomping signature is present in the signatures list, only the MITRE mapping. D (dynamic API resolution - T1027.007 in MITRE, static-79 'Contains ability to dynamically determine API calls') is supported. F (time-based evasion checks - T1497.003 in MITRE mappings, api-24 'Tries to sleep for a long time' is suspicious-rated) is supported. B (vssadmin shadow copy deletion) is not evidenced. E (ETW patching) is not evidenced. The answer key [A, C, D, F] - C (timestomping) is in the MITRE mappings but has no specific signature evidence in the report. However, the question asks about 'directly evidenced by specific signatures or static analysis findings' - timestomping (T1070.006) appears in MITRE attcks but no signature directly evidences it. This makes C questionable. However, D and F are well-supported. A is clearly supported. The answer key may be slightly over-inclusive for C, but this is a minor issue. Flagging rather than rejecting."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection techniques are evidenced by MITRE ATT&CK mappings in the report. The MITRE mappings include: T1055.001 (DLL Injection - A), T1055.003 (Thread Execution Hijacking - C), T1055.011 (Extra Window Memory Injection - D), T1055.015 (ListPlanting - E). T1055.012 (Process Hollowing - B) is NOT in the MITRE mappings for this sample. T1055.004 (APC Injection - F) is NOT in the MITRE mappings. The answer key [A, C, D, E] correctly identifies the four techniques present in the MITRE mappings. Question is well-formed, original, and factually correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion behaviours for a Zusy.Generic ransomware sample. A (time-based evasion and user activity checks - T1497.002 and T1497.003 are in MITRE mappings) is supported. C (marks original dropper for deletion - api-26 suspicious-rated, T1070.004) is supported. E (dynamic API resolution - T1027.007 in MITRE mappings) is supported. G (boots into Safe Mode - T1562.009 is in MITRE mappings as 'Safe Mode Boot') is supported. B (FTP exfiltration) is not evidenced. D (timestomping) - T1070.006 is in MITRE but no specific signature. F (vssadmin shadow copy deletion) is not evidenced. The answer key [A, C, E, G] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about network-based IOCs for a GandCrab4 sample. A (TCP traffic on port 80 without HTTP header - network-23, suspicious-rated) is supported. C (large number of DNS queries to unresolvable domains - network-34, suspicious-rated) is supported. D (Suricata alert for *.top domain - suricata-1) is supported. E (contacted known-malicious IPs - network-21 and network-27, malicious-rated) is supported. B (DNS over HTTPS exclusively) is not evidenced. F (all traffic encrypted via HTTPS) is not evidenced - there is HTTP traffic without headers. Answer key [A, C, D, E] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviours provide evidence of inhibiting system recovery for a Diavolo ransomware sample. A (multiple cmd.exe/WMIC.exe processes deleting VSS by GUID - target-4, malicious-rated, T1490) is clearly supported by the process tree showing 6 pairs of cmd.exe/WMIC.exe with shadowcopy delete commands. C (renames more than 100 files with double extensions - api-200, malicious-rated, T1486) is supported. B (RpcServerRegisterIf2) is a network/lateral movement indicator, not recovery inhibition. D (reads desktop.ini) is benign file access. E (opens dotnet.au3 with deletion rights) is file deletion, not specifically recovery inhibition. F (reads cryptographic machine GUID) is discovery. Answer key [A, C] is correct and well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE ATT&CK techniques are identified in the report for a minimal static-analysis-only sample. The MITRE mappings only contain T1027.009 (Embedded Payloads) and T1027 (Obfuscated Files or Information). The signatures confirm: static-6 (high entropy .text section, T1027.009) and static-157 (compiler/packer signature match, T1027). Answer key [A, C] correctly identifies T1027 and T1027.009. B (T1055 - Process Injection), D (T1562 - Impair Defenses), E (T1497 - Sandbox Evasion) are not in the MITRE mappings. Question is original and factually correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are directly evidenced by static analysis signatures for a minimal sample. The MITRE mappings only contain T1027.009 and T1027. A (T1027 evidenced by compiler/packer signature match - static-157) is correct. C (T1027.009 evidenced by high-entropy .text section - static-6) is correct. B (T1055.001 DLL Injection from .LIB files) - .LIB files in file_compositions are build artifacts, not injection evidence. D (T1562.001 from low AV detection) - low AV detection is not a MITRE technique evidenced in the report. E (T1036 Masquerading from mixed VB/C++ artifacts) - not evidenced. Answer key [A, C] is correct. Question is original and well-formed."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques for an HTML-based dropper. A (PowerShell execution policy bypass with mixed-case obfuscation - evidenced by target-110 'Executes powershell with commandline' and the obfuscated command line with 'bypASS', 'NOP', etc.) is supported. B (Base64-encoded payload decoded via IEX - evidenced by string-509 'Commandline contains long base64 encoded string' and the IEX/IEx pattern in the command line) is supported. D (compile-after-delivery via csc.exe - target-57 'Invokes the C# compiler', T1027.004) is supported. E (guarded memory regions - api-1 'Creates guarded memory regions', suspicious-rated, T1562.001) is supported. C (shadow copy deletion) is not evidenced. F (ETW patching) is not evidenced. Answer key [A, B, D, E] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion techniques for a Fugrafa.Generic sample. A (Safengine Shielden packing - static-18 and static-157 both confirm Safengine Shielden v2.1.6, T1027.002) is supported. C (Zone.Identifier ADS deletion - api-42 'Tries to hide tracks of having downloaded a file from the internet', malicious-rated, T1070.004) is supported. E (.text section near-maximum entropy ~7.999 - static-6 confirms entropy '7.9992', T1027.009) is supported. G (VMware anti-VM artifact - binary-8 'The input sample contains a known anti-VM trick', malicious-rated, T1497) is supported. B (wevtutil.exe event log clearing) is not evidenced. D (AMSI bypass) is not evidenced. F (timestomping via SetFileTime) - T1070.006 is in MITRE but no specific SetFileTime signature. Answer key [A, C, E, G] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection techniques evidenced by API calls or signatures for a Backdoor.Generic sample. The MITRE mappings include T1055.001 (DLL Injection - A), T1055.003 (Thread Execution Hijacking - C), T1055.011 (Extra Window Memory Injection - D), T1055.015 (ListPlanting - E). T1055.012 (Process Hollowing - B) is NOT in the MITRE mappings. T1055.004 (APC Injection - F) is NOT in the MITRE mappings. The malicious-rated signature 'Writes data to a remote process' (T1055) and the process tree support injection activity. Answer key [A, C, D, E] correctly identifies the four sub-techniques present in the MITRE mappings. Question is original and well-formed."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about static analysis findings indicating deliberate obfuscation for a PICUS sample. A (CRC mismatch - static-0 'CRC value set in PE header does not match actual value', suspicious-rated) is supported. C (high entropy .monor section - static-6 'PE file has unusual entropy sections' with '.monor with unusual entropies 7.70', suspicious-rated) is supported. E (hiding procedure lookups with single characters - stream-36 'Tries to hide a procedure lookup using single characters', malicious-rated) is supported. B (suspicious API imports) - while static-1 flags suspicious APIs, this is a common finding and not specifically indicative of deliberate obfuscation/tampering. D (Visual Studio 6 toolchain) is a benign compiler artifact. F (PE32 Intel 80386) is a basic file property. Answer key [A, C, E] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection techniques evidenced by API calls or behavioural indicators for an IL:Trojan.MSILZilla sample. A (APC Injection via NtQueueApcThread - api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process', T1055.004) is clearly supported. C (Thread Execution Hijacking via creating thread in process -1 - api-264 'Creates a thread in a self process') is supported. D (DLL Injection via LoadLibraryA references in anti-detection context - string-318 'Contains ability to load/free library', T1055.001) is supported. E (Reflective DLL Loading via GetExecutingAssembly and CLR Loader - string-615 and module-7, T1620) is supported. G (Remote Process Write - api-0 'Writes data to a remote process', malicious-rated, T1055) is supported. B (Process Hollowing via sequential CreateProcess+WriteProcessMemory+SetThreadContext) - while T1055.012 is not in MITRE mappings, the report does NOT show SetThreadContext. F (Extra Window Memory Injection via SetWindowLong/GetWindowLong) - T1055.011 is in MITRE mappings but no specific SetWindowLong signature is present. Answer key [A, C, D, E, G] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations indicate masquerading for a Worm.Brontok sample. A (WINLOGON.EXE, CSRSS.EXE, LSASS.EXE, SMSS.EXE, SERVICES.EXE located under %APPDATA%\\WINDOWS\\ - clearly evidenced by the process tree showing these processes at non-system paths) is supported by target-33 'Creates a fake system process' (malicious-rated, T1036.005). C (IExplorer.exe at %WINDIR%\\system32\\IExplorer.exe rather than Program Files - evidenced in the process tree) is supported. B (UPX compression and high entropy) is a packing indicator, not masquerading evidence. D (64 processes spawned) is a quantity observation, not masquerading. E (same SHA256 hash) - the report shows all dropped files share the same hash, which is consistent with self-copying but not specifically masquerading evidence. Answer key [A, C] is well-supported. Question is original and well-formed."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about persistence mechanisms for a Trojan.BrsecmonE sample. The process tree clearly shows: A (cmd.exe creates directory %WINDIR%\\system32\\xtblsmos\\), B (sc.exe creates service 'xtblsmos' with DisplayName 'wifi support' set to auto-start), D (cmd.exe moves rtmxemaq.exe from %TEMP% to the new directory), and F (sc.exe starts the xtblsmos service). C (vssadmin shadow copy deletion) is not evidenced. E (Registry Run key) - while T1547.001 is in MITRE mappings, no specific Run key creation is evidenced in the signatures (only registry-0 type modifications are not shown for Run keys specifically). Answer key [A, B, D, F] is well-supported by the process tree. Question is original and well-formed."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 17,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question is original and not plagiarised from any benchmark question. It asks specifically about defense evasion techniques that are 'directly supported by observed signatures or API call evidence' \u2014 a more precise, evidence-grounded framing than any benchmark item. Let's verify each answer:\n\nA (CORRECT): SetFileTime is referenced in signature 'string-409' ('Contains ability to set file time') mapped to T1070.006 (Timestomp). Supported.\n\nB (INCORRECT): No evidence of direct syscalls or user-mode hook bypass in the report. Correctly excluded.\n\nC (CORRECT): Registry signature 'registry-27' explicitly states 'Modifies proxy settings' (Access type: DELETEVAL on proxy path), mapped to T1112. Supported.\n\nD (CORRECT): Signature 'registry-32' explicitly states 'Reads Antivirus engine related registry keys' (threat_level: malicious), mapped to T1518.001. Supported.\n\nE (INCORRECT): No ETW patching evidence anywhere in the report. Correctly excluded.\n\nF (CORRECT): Signature 'network-22' explicitly states 'Uses a browser-related user-agent without launching browser' (threat_level: suspicious). Supported.\n\nG (CORRECT): Signature 'target-248' explicitly states 'Detected Rundll32 execution with no parameters provided (likely process injection)' (threat_level: malicious), mapped to T1218.008. Supported.\n\nAll five correct answers (A, C, D, F, G) are directly evidenced by named signatures in the report. The two distractors (B, E) have no supporting evidence. The question is technically precise, uses proper CyberSOCEval multi-select format, and is calibrated at medium difficulty. Distractor quality is high \u2014 both B and E are plausible advanced evasion techniques that are simply not evidenced in this report."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

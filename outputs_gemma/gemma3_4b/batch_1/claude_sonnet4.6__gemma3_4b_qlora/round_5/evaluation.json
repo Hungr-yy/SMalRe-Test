@@ -1,0 +1,2994 @@
+{
+  "feedback": "The model achieves 0 exact matches out of 18 questions, demonstrating a critical and systematic failure mode: consistent over-selection. On every single question, the model selects more options than the gold answer set. The gold answers typically contain 2-5 options, but the model almost always selects all or nearly all available options (often 6-8 out of 8). This is not a knowledge gap per se\u2014the model appears to correctly identify the true positives\u2014but it fails to discriminate between malicious-tier (threat_level 2) and suspicious/informative-tier signatures. The core task in all 18 questions is 'Threat Level Discrimination': identify behaviors confirmed ONLY at threat_level 2 (malicious). The model consistently includes behaviors flagged at threat_level 1 (suspicious) or threat_level 0 (informative), treating all observed behaviors as equally malicious. This is a fundamental evidence-grounding failure specific to threat-level filtering. The avg_jaccard of ~0.56 reflects partial overlap (correct answers are included in predictions) but the precision is severely degraded by false positives. Recall is near-perfect since the model rarely misses a gold answer\u2014it just adds many extras. All 18 questions are 'hard' difficulty and all cover 'Threat Level Discrimination', so there is no diversity in topic or difficulty to analyze. Attack family breakdown shows the same pattern across infostealers, killers, ransomware, remcos, and um_unhooking. For training, the model urgently needs: (1) examples that explicitly require filtering by threat_level field values, (2) examples where the correct answer excludes behaviors present in the report but at lower threat levels, (3) contrastive examples showing threat_level 1 vs threat_level 2 signatures for the same behavior type, (4) precision-focused training that penalizes over-selection. The model should NOT receive questions where the task is simply 'which behaviors are present'\u2014it needs questions that require strict tier-based filtering. The systematic over-selection bias (avg predicted: ~6.9 vs avg gold: ~3.3) suggests the model is defaulting to a 'select all plausible malicious behaviors' heuristic rather than reading the threat_level field in the report data.",
+  "proficiency": 2,
+  "metrics": {
+    "num_questions": 18,
+    "num_exact_matches": 0,
+    "exact_match_accuracy": 0.0,
+    "avg_jaccard": 0.5607,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.4896,
+    "macro_option_recall": 0.9889,
+    "avg_predicted_answer_count": 6.889,
+    "avg_gold_answer_count": 3.278,
+    "answer_count_bias": "over-selecting"
+  },
+  "strengths": [
+    "Near-perfect recall: the model almost always includes all gold-correct answers in its prediction set, indicating it can identify genuinely malicious behaviors",
+    "Zero parse errors: all 18 responses were well-formed and parseable with valid option letter lists",
+    "Consistent format: model reliably produces structured answer sets across all question types and attack families"
+  ],
+  "weaknesses": [
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Threat-level field discrimination failure",
+      "description": "The model cannot filter signatures by their threat_level field. It includes threat_level 0 (informative) and threat_level 1 (suspicious) behaviors in answers that should only contain threat_level 2 (malicious) signatures. This is the root cause of all 18 incorrect answers.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Systematic over-selection",
+      "description": "The model selects an average of 6.9 options per question versus a gold average of 3.3. It defaults to selecting nearly all plausible malicious behaviors rather than strictly filtering to those confirmed at the requested threat tier.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Threat Level Discrimination",
+      "description": "All 18 questions test this topic and the model scores 0 exact matches. The model lacks the ability to apply tier-based evidence filtering when analyzing sandbox detonation reports.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "hard",
+      "description": "All questions are hard difficulty and the model scores 0/18. While difficulty cannot be isolated from the topic confound, the model clearly cannot handle hard-tier threat-level discrimination.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Evidence-grounding failure on structured report fields",
+      "description": "The model does not appear to read and apply the numeric threat_level field from the detonation report JSON. It reasons about behavioral plausibility rather than report-grounded evidence tiers.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "um_unhooking",
+      "description": "Questions 12-15 on um_unhooking show the most extreme over-selection, with the model selecting all 6 options when gold answers are 1-2 options. The model cannot distinguish CrowdStrike ML detection (threat_level 2) from static PE analysis findings (threat_level 1 or 0).",
+      "severity": "high",
+      "evidence_question_indices": [
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "remcos",
+      "description": "Remcos questions show consistent over-selection. The model includes API-not-in-IAT findings, high entropy sections, and dynamic GetProcAddress calls (all threat_level 1) alongside the correct threat_level 2 answers (network-7, avtest-8).",
+      "severity": "high",
+      "evidence_question_indices": [
+        9,
+        10,
+        11,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5667,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 6,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.4583,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5278,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5556,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.1944,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 18,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5607,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Threat Level Discrimination": {
+        "num_questions": 18,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5607,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The following detonation report contains signatures at threat_level 0 (informative), threat_level 1 (suspicious), and threat_level 2 (malicious). Which signatures are classified ONLY at threat_level 2 (malicious) in this report for the Zusy.Generic infostealer sample?\n\nA. api-117: Calls an API typically used to execute an application (ShellExecuteW)\nB. api-6: Reads configuration files (.ini files)\nC. target-14: Spawns a lot of processes\nD. api-0: Writes data to a remote process\nE. target-413: Spawned processes likely due to injection\nF. network-7: Uses network protocols on unusual ports\nG. avtest-8: Sample detected by CrowdStrike Static Analysis and ML\nH. static-6: Section contains high entropy",
+        "options": [
+          "A. api-117: Calls an API typically used to execute an application (ShellExecuteW)",
+          "B. api-6: Reads configuration files (.ini files)",
+          "C. target-14: Spawns a lot of processes",
+          "D. api-0: Writes data to a remote process",
+          "E. target-413: Spawned processes likely due to injection",
+          "F. network-7: Uses network protocols on unusual ports",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "H. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the detonation report for the Zusy.Generic infostealer (vx_family: Zusy.Generic, threat_score: 100), which of the following signatures are confirmed at threat_level 2 (malicious) ONLY? Do NOT include signatures flagged at threat_level 0 (informative) or threat_level 1 (suspicious).",
+        "options": [
+          "A. Calls an API typically used to execute an application (ShellExecuteW) [api-117, threat_level 2]",
+          "B. Spawns a lot of processes [target-14, threat_level 2]",
+          "C. Writes data to a remote process [api-0, threat_level 2]",
+          "D. Allocates virtual memory in a remote process [api-20, threat_level 2]",
+          "E. Uses network protocols on unusual ports (port 11110) [network-7, threat_level 2]",
+          "F. Spawned processes likely due to injection [target-413, threat_level 1]",
+          "G. Writes a PE file header to disc [api-43, threat_level 1]",
+          "H. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Malware.SF.Generic detonation report (av_detect: 93), which signatures are flagged at threat_level 1 (suspicious) and therefore should NOT be included in a threat_level 2 (malicious) answer set? Select all that apply.",
+        "options": [
+          "A. CRC value set in PE header does not match actual value [static-0, threat_level 1]",
+          "B. Modifies auto-execute functionality by setting/creating a value in the registry [registry-0, threat_level 1]",
+          "C. Hooks API calls [hooks-0, threat_level 1]",
+          "D. Writes data to a remote process [api-0, threat_level 2]",
+          "E. Hooks file system APIs [hooks-2, threat_level 2]",
+          "F. Marks file for deletion [api-26, threat_level 1]",
+          "G. Possibly tries to evade analysis by sleeping many times [api-47, threat_level 1]",
+          "H. Drops executable files to the Windows system directory [binary-7, threat_level 2]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Malware.SF.Generic sample, which signatures are confirmed at threat_level 2 (malicious)? Select ONLY those with explicit threat_level 2 in the report. Do not select informative or suspicious entries.",
+        "options": [
+          "A. Writes data to a remote process [api-0, threat_level 2]",
+          "B. Drops executable files to the Windows system directory [binary-7, threat_level 2]",
+          "C. Hooks file system APIs [hooks-2, threat_level 2]",
+          "D. Hooks internet related APIs [hooks-5, threat_level 2]",
+          "E. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "F. Entrypoint in PE header is within an uncommon section [static-4, threat_level 1]",
+          "G. Imports suspicious APIs [static-1, threat_level 1]",
+          "H. Reads configuration files (.ini files) [api-6, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Packer.Malware.NSAnti detonation report contains signatures across multiple threat levels. Which of the following are at threat_level 2 (malicious) ONLY? Exclude any signatures at threat_level 0 or 1.",
+        "options": [
+          "A. Calls an API typically used to run the specified application (WinExec) [api-120, threat_level 2]",
+          "B. Allocates virtual memory in a remote process [api-20, threat_level 2]",
+          "C. Drops executable files to the Windows system directory [binary-7, threat_level 2]",
+          "D. PE file contains executable resources [static-97, threat_level 2]",
+          "E. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "F. Writes a PE file header to disc [api-43, threat_level 1]",
+          "G. Entrypoint in PE header is within an uncommon section [static-4, threat_level 1]",
+          "H. Dropped file has high entropy [binary-60, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Worm.Ludbaruma detonation report (threat_score: 85) contains signatures at multiple threat levels. Which of the following are EXCLUSIVELY at threat_level 2 (malicious)? Do not include threat_level 0 or 1 entries.",
+        "options": [
+          "A. Spawns a lot of processes [target-14, threat_level 2]",
+          "B. Tries to access unusual system drive letters [api-31, threat_level 2]",
+          "C. Writes data to a remote process [api-0, threat_level 2]",
+          "D. Allocates virtual memory in a remote process [api-20, threat_level 2]",
+          "E. Changes file extension appearance of the explorer [registry-15, threat_level 2]",
+          "F. Creates a fake system process [target-33, threat_level 2]",
+          "G. Disables Command Prompt (cmd) [registry-21, threat_level 2]",
+          "H. Disables Windows Registry Editor (regedit) [registry-2, threat_level 2]",
+          "I. Disables system restore [registry-23, threat_level 2]",
+          "J. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "K. Modifies auto-execute functionality [registry-0, threat_level 1]",
+          "L. Reads configuration files (.ini files) [api-6, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Backdoor.Generic detonation report (av_detect: 93, threat_score: 72), a student must identify only threat_level 2 (malicious) signatures. Which options below are correctly classified as threat_level 2?",
+        "options": [
+          "A. Writes data to a remote process [api-0, threat_level 2]",
+          "B. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "C. Drops executable files [binary-1, threat_level 1]",
+          "D. PE file has unusual entropy resources [static-92, threat_level 1]",
+          "E. Queries process information [api-9, threat_level 1]",
+          "F. Section contains high entropy [static-6, threat_level 1]",
+          "G. Dropped file has high entropy [binary-60, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Backdoor.Hupigon detonation report (threat_score: 100, av_detect: 87), which signatures are at threat_level 2 (malicious)? Select ALL and ONLY threat_level 2 entries.",
+        "options": [
+          "A. Calls an API typically used to run the specified application (WinExec) [api-120, threat_level 2]",
+          "B. Tries to access unusual system drive letters [api-31, threat_level 2]",
+          "C. Spawns a lot of processes [target-14, threat_level 2]",
+          "D. Writes data to a remote process [api-0, threat_level 2]",
+          "E. Allocates virtual memory in a remote process [api-20, threat_level 2]",
+          "F. Changes file extension appearance of the explorer [registry-15, threat_level 2]",
+          "G. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "H. Modifies auto-execute functionality [registry-0, threat_level 1]",
+          "I. Modifies proxy settings [registry-27, threat_level 1]",
+          "J. Section contains high entropy [static-6, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom detonation report (av_detect: 93, threat_score: 100), which signatures are at threat_level 2 (malicious)? Select only those with threat_level 2 as recorded in the report.",
+        "options": [
+          "A. Tries to steal browser sensitive information (file access) [api-96, threat_level 2]",
+          "B. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "C. Detected indicator that file is ransomware [string-13, threat_level 1]",
+          "D. The input sample dropped very many files [binary-10, threat_level 1]",
+          "E. Sets the ThreadHideFromDebugger thread data structure [api-84, threat_level 1]",
+          "F. Queries process information [api-9, threat_level 1]",
+          "G. Calls an API typically used to determine the valid logical drives [api-109, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.GandCrab4.Generic detonation report contains signatures at threat_level 1 (suspicious) and threat_level 2 (malicious). Which of the following are at threat_level 2 ONLY?",
+        "options": [
+          "A. Tries to access unusual system drive letters [api-31, threat_level 2]",
+          "B. Reads mail related files [api-52, threat_level 2]",
+          "C. Malicious artifacts seen in the context of a contacted host [network-21, threat_level 2]",
+          "D. Multiple malicious artifacts seen in the context of different hosts [network-27, threat_level 2]",
+          "E. Sample was identified as malicious by a large number of Antivirus engines [avtest-3, threat_level 2]",
+          "F. Sample was identified as malicious by a trusted Antivirus engine [avtest-5, threat_level 2]",
+          "G. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "H. Sends traffic on typical HTTP outbound port, but without HTTP header [network-23, threat_level 1]",
+          "I. Detected very many DNS queries for domains that cannot be resolved [network-34, threat_level 1]",
+          "J. Contacts Random Domain Names [network-6, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ransom.WannaCryptor detonation report (av_detect: 96, threat_score: 100), which signatures are at threat_level 2 (malicious)? Do not include threat_level 0 or 1 entries.",
+        "options": [
+          "A. YARA signature match - WannaDecryptor [yara-0, threat_level 2]",
+          "B. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "C. YARA signature match - RSA algorithm (keys) [yara-62, threat_level 1]",
+          "D. Imports suspicious APIs [static-1, threat_level 1]",
+          "E. Section contains high entropy [static-6, threat_level 1]",
+          "F. YARA signature match - AES encryption [yara-103, threat_level 0]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Remcos.Generic detonation report (av_detect: 88, threat_score: 100), which signatures are at threat_level 2 (malicious)? Select ALL and ONLY those with threat_level 2.",
+        "options": [
+          "A. Uses network protocols on unusual ports (port 4090) [network-7, threat_level 2]",
+          "B. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "C. PE file contains unusual section name [static-60, threat_level 1]",
+          "D. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "E. Looks up many procedures within the same disassembly stream [stream-40, threat_level 1]",
+          "F. Section contains high entropy [static-6, threat_level 1]",
+          "G. Spawned process connects to a network [target-412, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla detonation report (av_detect: 67, threat_score: 100) contains many signatures. Which are at threat_level 2 (malicious)? Select ONLY threat_level 2 entries.",
+        "options": [
+          "A. Writes data to a remote process [api-0, threat_level 2]",
+          "B. Found an indicator for a scheduled task trigger [string-32, threat_level 2]",
+          "C. Modifies file/console tracing settings [registry-30, threat_level 2]",
+          "D. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "E. Writes a PE file header to disc [api-43, threat_level 1]",
+          "F. Drops executable files [binary-1, threat_level 1]",
+          "G. Queries kernel debugger information [api-10, threat_level 1]",
+          "H. Creates guarded memory regions [api-1, threat_level 1]",
+          "I. Tries to sleep for a long time [api-24, threat_level 1]",
+          "J. Timestamp in PE header is very old or in the future [static-3, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Remcos detonation report (av_detect: 88, threat_score: 100, submit_name: hash), which signatures are at threat_level 2 (malicious)? Exclude all threat_level 0 and threat_level 1 entries.",
+        "options": [
+          "A. Uses network protocols on unusual ports (port 30204) [network-7, threat_level 2]",
+          "B. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "C. PE file has unusual entropy resources [static-92, threat_level 1]",
+          "D. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "E. Section contains high entropy [static-6, threat_level 1]",
+          "F. Spawned process connects to a network [target-412, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The HTML/VBS dropper detonation report (vx_family: VBS.Asthma.2.4CC6382F, threat_score: 80) has signatures at threat_level 1 and threat_level 2. Which signature is at threat_level 2 (malicious)?",
+        "options": [
+          "A. Writes data to a remote process (powershell.exe wrote 32 bytes to a remote process) [api-0, threat_level 2]",
+          "B. Executes powershell with commandline [target-110, threat_level 1]",
+          "C. GETs files from a webserver [network-61, threat_level 1]",
+          "D. Invokes the C# compiler [target-57, threat_level 1]",
+          "E. Commandline contains long base64 encoded string [string-509, threat_level 1]",
+          "F. Possible heap spraying attempt detected [api-88, threat_level 1]",
+          "G. Drops cabinet archive files [binary-5, threat_level 1]",
+          "H. Creates guarded memory regions [api-1, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the BScope.Backdoor detonation report (threat_level: 1, verdict: suspicious, av_detect: 4), the overall verdict is suspicious rather than malicious. Which of the following signatures in this report are at threat_level 1 (suspicious)? Select all that apply.",
+        "options": [
+          "A. PE file contains unusual section name [static-60, threat_level 1]",
+          "B. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "C. Section contains high entropy [static-6, threat_level 1]",
+          "D. Calls an API typically used for keylogging [api-40, threat_level 1]",
+          "E. Writes data to a remote process [api-0, threat_level 2]",
+          "F. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "G. Loads modules at runtime [api-7, threat_level 0]",
+          "H. PE file entrypoint instructions [static-96, threat_level 0]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (av_detect: 2, threat_score: 37, verdict: suspicious) has very few signatures. Which signatures in this report are at threat_level 1 (suspicious)? Do not include informative (threat_level 0) entries.",
+        "options": [
+          "A. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "B. Section contains high entropy [static-6, threat_level 1]",
+          "C. Uses 32 bit executable PE [static-153, threat_level 0]",
+          "D. PE file entrypoint instructions [static-96, threat_level 0]",
+          "E. Matched Compiler/Packer signature (DIE) [static-157, threat_level 0]",
+          "F. Matched Compiler/Packer signature [static-18, threat_level 0]",
+          "G. Loads the debugger/analysis tool module [module-16, threat_level 0]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Fragtor.Generic detonation report (av_detect: 81, threat_score: 100, verdict: malicious), which signature is at threat_level 2 (malicious)? Select ONLY the threat_level 2 entry.",
+        "options": [
+          "A. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "B. PE file has unusual entropy resources [static-92, threat_level 1]",
+          "C. PE file contains unusual section name [static-60, threat_level 1]",
+          "D. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "E. PE files contains large number of export functions [static-98, threat_level 1]",
+          "F. Section contains high entropy [static-6, threat_level 1]",
+          "G. Loads modules at runtime [api-7, threat_level 0]",
+          "H. Loads the debugger/analysis tool module [module-16, threat_level 0]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Ursnif um_unhooking sample (av_detect: 77, threat_score: 100) has one threat_level 2 signature. Which of the following is it? Select ONLY the threat_level 2 entry.",
+        "options": [
+          "A. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "B. PE file has unusual entropy resources [static-92, threat_level 1]",
+          "C. Input file contains API references not part of its IAT [string-64, threat_level 1]",
+          "D. PE files contains large number of export functions [static-98, threat_level 1]",
+          "E. Section contains high entropy [static-6, threat_level 1]",
+          "F. Tries to sleep for a long time [api-24, threat_level 1]",
+          "G. Opens a handle to the specified local process [api-284, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A key skill in threat-level discrimination is knowing how many answers to select. For the Trojan.Generic infostealer detonation report (av_detect: 89, threat_score: 100), how many signatures are at threat_level 2 (malicious), and which are they?",
+        "options": [
+          "A. Modifies file/console tracing settings [registry-30, threat_level 2]",
+          "B. Tries to steal Crypto currency wallets information [api-101, threat_level 2]",
+          "C. Tries to steal browser sensitive information [api-96, threat_level 2]",
+          "D. Attempts to obtain browser login credentials [api-281, threat_level 2]",
+          "E. Tries to steal desktop applications information [api-97, threat_level 2]",
+          "F. Checks for files associated with bitcoin mining software [api-46, threat_level 2]",
+          "G. Sample detected by CrowdStrike Static Analysis and ML [avtest-8, threat_level 2]",
+          "H. Accesses potentially sensitive information from local browsers [handle-0, threat_level 1]",
+          "I. Queries process information [api-9, threat_level 1]",
+          "J. Queries kernel debugger information [api-10, threat_level 1]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A common over-selection error is including threat_level 1 (suspicious) entries when only threat_level 2 (malicious) entries are requested. For the Worm.Ludbaruma detonation report, which of the following are threat_level 1 (suspicious) and should NOT be selected when answering a threat_level 2 question?",
+        "options": [
+          "A. Reads configuration files (.ini files) [api-6, threat_level 1]",
+          "B. Modifies auto-execute functionality by setting/creating a value in the registry [registry-0, threat_level 1]",
+          "C. Drops executable files [binary-1, threat_level 1]",
+          "D. Calls an API typically used to query local/system time as file time [api-223, threat_level 1]",
+          "E. Calls an API typically used to enumerate process encountered in a system snapshot [api-104, threat_level 1]",
+          "F. Marks file for deletion [api-26, threat_level 1]",
+          "G. Opens file with deletion access rights [api-25, threat_level 1]",
+          "H. Spawns a lot of processes [target-14, threat_level 2]",
+          "I. Creates a fake system process [target-33, threat_level 2]",
+          "J. Disables system restore [registry-23, threat_level 2]"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the detonation report for the Zusy.Generic infostealer sample, which signatures are classified at threat_level 2 (malicious) ONLY? Select all that apply and exclude any signatures flagged at threat_level 0 (informative) or threat_level 1 (suspicious).",
+        "options": [
+          "A. api-117: Calls an API typically used to execute an application (ShellExecuteW)",
+          "B. target-14: Spawns a lot of processes",
+          "C. api-0: Writes data to a remote process",
+          "D. api-20: Allocates virtual memory in a remote process",
+          "E. network-7: Uses network protocols on unusual ports",
+          "F. target-413: Spawned processes likely due to injection (threat_level 1)",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML with relatively high confidence",
+          "H. binary-60: Dropped file has high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Malware.SF.Generic infostealer sample, the sandbox report contains signatures across multiple threat levels. Which of the following signatures are confirmed at threat_level 2 (malicious) ONLY? Do NOT include threat_level 1 (suspicious) signatures such as hooks-0 or registry-27.",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. binary-7: Drops executable files to the Windows system directory",
+          "C. hooks-2: Hooks file system APIs",
+          "D. hooks-5: Hooks internet related APIs",
+          "E. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "F. hooks-0: Hooks API calls (threat_level 1)",
+          "G. registry-27: Modifies proxy settings (threat_level 1)",
+          "H. static-4: Entrypoint in PE header is within an uncommon section (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Packer.Malware.NSAnti infostealer report contains signatures at threat_level 0, 1, and 2. Which signatures are exclusively at threat_level 2 (malicious)? Select only those confirmed malicious by the report's threat_level field.",
+        "options": [
+          "A. api-120: Calls an API typically used to run the specified application (WinExec)",
+          "B. api-20: Allocates virtual memory in a remote process",
+          "C. binary-7: Drops executable files to the Windows system directory",
+          "D. static-97: PE file contains executable resources",
+          "E. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "F. api-43: Writes a PE file header to disc (threat_level 1)",
+          "G. binary-1: Drops executable files (threat_level 1)",
+          "H. static-6: Section contains high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Worm.Ludbaruma killer sample, examine the signatures field. Which of the following are confirmed at threat_level 2 (malicious)? Do not select signatures at threat_level 0 or 1.",
+        "options": [
+          "A. target-14: Spawns a lot of processes",
+          "B. api-31: Tries to access unusual system drive letters",
+          "C. api-0: Writes data to a remote process",
+          "D. api-20: Allocates virtual memory in a remote process",
+          "E. registry-15: Changes file extension appearance of the explorer",
+          "F. target-33: Creates a fake system process",
+          "G. registry-21: Disables Command Prompt (cmd)",
+          "H. registry-2: Disables Windows Registry Editor (regedit)",
+          "I. registry-23: Disables system restore",
+          "J. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "K. registry-0: Modifies auto-execute functionality (threat_level 1)",
+          "L. api-43: Writes a PE file header to disc (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Backdoor.Generic killer sample (614400 bytes), the report lists very few threat_level 2 signatures compared to many threat_level 0 and 1 entries. Which signatures are at threat_level 2 (malicious) ONLY?",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "C. binary-1: Drops executable files (threat_level 1)",
+          "D. static-92: PE file has unusual entropy resources (threat_level 1)",
+          "E. api-9: Queries process information (threat_level 1)",
+          "F. static-6: Section contains high entropy (threat_level 1)",
+          "G. binary-60: Dropped file has high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Backdoor.Hupigon killer sample, the report includes signatures from multiple threat tiers. Which signatures are confirmed at threat_level 2 (malicious) ONLY? Carefully check the threat_level field for each option.",
+        "options": [
+          "A. api-120: Calls WinExec to run the specified application",
+          "B. api-31: Tries to access unusual system drive letters",
+          "C. target-14: Spawns a lot of processes",
+          "D. api-0: Writes data to a remote process",
+          "E. api-20: Allocates virtual memory in a remote process",
+          "F. registry-15: Changes file extension appearance of the explorer",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "H. registry-0: Modifies auto-execute functionality (threat_level 1)",
+          "I. api-43: Writes a PE file header to disc (threat_level 1)",
+          "J. registry-27: Modifies proxy settings (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Ransom sample (150528 bytes) has a small number of threat_level 2 signatures. Which signatures are confirmed at threat_level 2 (malicious)? Do not include threat_level 1 (suspicious) entries such as string-13 or binary-10.",
+        "options": [
+          "A. api-96: Tries to steal browser sensitive information (file access)",
+          "B. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "C. string-13: Detected indicator that file is ransomware (threat_level 1)",
+          "D. binary-10: The input sample dropped very many files (threat_level 1)",
+          "E. api-9: Queries process information (threat_level 1)",
+          "F. api-84: Sets the ThreadHideFromDebugger thread data structure (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Ransom.GandCrab4.Generic sample, the report contains signatures at threat_level 1 and threat_level 2. Which signatures are at threat_level 2 (malicious) ONLY? Exclude all threat_level 1 (suspicious) entries.",
+        "options": [
+          "A. api-31: Tries to access unusual system drive letters",
+          "B. api-52: Reads mail related files",
+          "C. network-21: Malicious artifacts seen in the context of a contacted host",
+          "D. network-27: Multiple malicious artifacts seen in the context of different hosts",
+          "E. avtest-3: Sample identified as malicious by a large number of Antivirus engines",
+          "F. avtest-5: Sample identified as malicious by a trusted Antivirus engine",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "H. hooks-8: Installs hooks/patches the running process (threat_level 1)",
+          "I. network-34: Detected very many DNS queries for domains that cannot be resolved (threat_level 1)",
+          "J. network-6: Contacts Random Domain Names (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Ransom.WannaCryptor sample report lists signatures across threat levels. Which signatures are confirmed at threat_level 2 (malicious) ONLY? Do not include threat_level 1 entries such as yara-62 or static-1.",
+        "options": [
+          "A. yara-0: YARA signature match for WannaDecryptor",
+          "B. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "C. yara-62: YARA signature match for RSA algorithm (threat_level 1)",
+          "D. static-1: Imports suspicious APIs (threat_level 1)",
+          "E. static-6: Section contains high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample (494080 bytes), the report contains many informative and suspicious signatures alongside a small set of malicious ones. Which signatures are confirmed at threat_level 2 (malicious) ONLY? Do not select threat_level 0 or 1 entries.",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 4090)",
+          "B. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "C. target-412: Spawned process connects to a network (threat_level 1)",
+          "D. static-60: PE file contains unusual section name (threat_level 1)",
+          "E. string-64: Input file contains API references not part of IAT (threat_level 1)",
+          "F. stream-40: Looks up many procedures within the same disassembly stream (threat_level 1)",
+          "G. static-6: Section contains high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the IL:Trojan.MSILZilla Remcos sample (10202112 bytes), which signatures are confirmed at threat_level 2 (malicious) ONLY? Carefully read the threat_level field and exclude all threat_level 0 and threat_level 1 entries.",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. string-32: Found an indicator for a scheduled task trigger",
+          "C. registry-30: Modifies file/console tracing settings",
+          "D. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "E. api-43: Writes a PE file header to disc (threat_level 1)",
+          "F. static-3: Timestamp in PE header is very old or in the future (threat_level 1)",
+          "G. api-1: Creates guarded memory regions (threat_level 1)",
+          "H. api-238: Tries to detect debugger using ProcessDebugPort (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Remcos sample (498176 bytes) has a very sparse set of threat_level 2 signatures. Which signatures are at threat_level 2 (malicious) ONLY? Do not include threat_level 1 entries.",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 30204)",
+          "B. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "C. string-64: Input file contains API references not part of IAT (threat_level 1)",
+          "D. static-92: PE file has unusual entropy resources (threat_level 1)",
+          "E. target-412: Spawned process connects to a network (threat_level 1)",
+          "F. static-6: Section contains high entropy (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The VBS.Asthma Remcos-family sample (HTML dropper) has one threat_level 2 signature. Which signature is confirmed at threat_level 2 (malicious) ONLY? Exclude all threat_level 1 entries such as target-110, binary-1, and api-88.",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. target-110: Executes powershell with commandline (threat_level 1)",
+          "C. binary-1: Drops executable files (threat_level 1)",
+          "D. api-88: Possible heap spraying attempt detected (threat_level 1)",
+          "E. api-1: Creates guarded memory regions (threat_level 1)",
+          "F. network-61: GETs files from a webserver (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The BScope.Backdoor Remcos-family sample (1448960 bytes) has a threat_level of 1 at the report level (verdict: suspicious) and no threat_level 2 signatures in its signatures array. Given this, which of the following statements correctly describes the threat_level 2 signature set for this sample?",
+        "options": [
+          "A. There are zero signatures at threat_level 2 in this report",
+          "B. api-40 (keylogging) is at threat_level 2",
+          "C. string-64 (API not in IAT) is at threat_level 2",
+          "D. static-60 (unusual section name) is at threat_level 2",
+          "E. api-24 (long sleep) is at threat_level 2"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (102912 bytes, verdict: suspicious, threat_level: 1) contains signatures only at threat_level 0 and threat_level 1. Which of the following correctly identifies ALL threat_level 2 (malicious) signatures in this report?",
+        "options": [
+          "A. There are zero threat_level 2 signatures in this report",
+          "B. string-64: Input file contains API references not part of IAT",
+          "C. static-6: Section contains high entropy",
+          "D. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "E. static-18: Matched Compiler/Packer signature"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Fragtor.Generic um_unhooking sample (368128 bytes), which signature is confirmed at threat_level 2 (malicious) ONLY? Carefully check the threat_level field and do not select threat_level 1 entries such as static-60, string-64, static-92, or static-6.",
+        "options": [
+          "A. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "B. static-60: PE file contains unusual section name (threat_level 1)",
+          "C. string-64: Input file contains API references not part of IAT (threat_level 1)",
+          "D. static-92: PE file has unusual entropy resources (threat_level 1)",
+          "E. static-6: Section contains high entropy (threat_level 1)",
+          "F. static-98: PE files contains large number of export functions (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ursnif um_unhooking sample (369152 bytes), which signature is confirmed at threat_level 2 (malicious) ONLY? Do not select threat_level 1 entries including static-92, string-64, static-98, static-6, api-24, or api-284.",
+        "options": [
+          "A. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "B. static-92: PE file has unusual entropy resources (threat_level 1)",
+          "C. string-64: Input file contains API references not part of IAT (threat_level 1)",
+          "D. static-98: PE files contains large number of export functions (threat_level 1)",
+          "E. api-24: Tries to sleep for a long time (threat_level 1)",
+          "F. api-284: Opens a handle to the specified local process (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic infostealer sample (310784 bytes) has several threat_level 2 signatures. Which of the following are confirmed at threat_level 2 (malicious) ONLY? Do not include threat_level 1 entries such as static-3, api-9, api-10, string-6, api-1, or handle-0.",
+        "options": [
+          "A. registry-30: Modifies file/console tracing settings",
+          "B. api-101: Tries to steal Crypto currency wallets information",
+          "C. api-96: Tries to steal browser sensitive information",
+          "D. api-281: Attempts to obtain browser login credentials",
+          "E. api-97: Tries to steal desktop applications information",
+          "F. api-46: Checks for files associated with bitcoin mining software",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "H. api-9: Queries process information (threat_level 1)",
+          "I. api-1: Creates guarded memory regions (threat_level 1)",
+          "J. handle-0: Accesses potentially sensitive information from local browsers (threat_level 1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Worm.Ludbaruma killer sample. A colleague claims that 'registry-0: Modifies auto-execute functionality' and 'api-43: Writes a PE file header to disc' should be included in the malicious findings because they indicate persistence and payload staging. Is this correct, and which threat_level do these signatures actually carry in the report?",
+        "options": [
+          "A. No \u2014 registry-0 and api-43 are both at threat_level 1 (suspicious), not threat_level 2 (malicious)",
+          "B. Yes \u2014 both are at threat_level 2 because persistence is always malicious",
+          "C. Yes \u2014 api-43 is at threat_level 2 because writing PE headers is a definitive malicious indicator",
+          "D. No \u2014 registry-0 is informative (threat_level 0) and api-43 is malicious (threat_level 2)",
+          "E. No \u2014 both are at threat_level 0 (informative) in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst reviewing the Remcos.Generic sample (494080 bytes) selected 7 options including 'target-412: Spawned process connects to a network', 'static-60: PE file contains unusual section name', and 'stream-40: Looks up many procedures within the same disassembly stream' as malicious findings. Why is this selection incorrect, and what is the correct set of threat_level 2 signatures?",
+        "options": [
+          "A. target-412, static-60, and stream-40 are all threat_level 1 (suspicious); the only threat_level 2 signatures are network-7 and avtest-8",
+          "B. target-412 is threat_level 2 because network connections from injected processes are always malicious",
+          "C. stream-40 is threat_level 2 because dynamic API resolution via GetProcAddress is a confirmed malicious indicator",
+          "D. All seven options the student selected are correct at threat_level 2",
+          "E. static-60 is threat_level 2 because unusual PE section names are a definitive packer indicator"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the detonation report for the Zusy.Generic infostealer (vx_family: Zusy.Generic, 6775507 bytes), which of the following signatures are confirmed at threat_level 2 (malicious) ONLY? Select all that apply and exclude any signatures flagged at threat_level 0 or 1.",
+        "options": [
+          "A. api-117: Calls an API typically used to execute an application (ShellExecuteW)",
+          "B. api-43: Writes a PE file header to disc",
+          "C. target-14: Spawns a lot of processes",
+          "D. api-0: Writes data to a remote process",
+          "E. target-413: Spawned processes likely due to injection",
+          "F. network-7: Uses network protocols on unusual ports",
+          "G. avtest-8: Sample detected by CrowdStrike Static Analysis and ML",
+          "H. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Malware.SF.Generic sample (72544 bytes, vx_family: Malware.SF.Generic), which signatures are exclusively at threat_level 2 (malicious)? Do NOT include signatures at threat_level 1 (suspicious) or threat_level 0 (informative).",
+        "options": [
+          "A. hooks-0: Hooks API calls (FindNextFileW) \u2014 threat_level 1",
+          "B. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "C. binary-7: Drops executable files to the Windows system directory \u2014 threat_level 2",
+          "D. hooks-2: Hooks file system APIs \u2014 threat_level 2",
+          "E. hooks-5: Hooks internet related APIs \u2014 threat_level 2",
+          "F. registry-0: Modifies auto-execute functionality \u2014 threat_level 1",
+          "G. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "H. api-26: Marks file for deletion \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Packer.Malware.NSAnti sample (137264 bytes), the report contains signatures at multiple threat levels. Which of the following are ONLY threat_level 2 (malicious) signatures? Select all correct answers.",
+        "options": [
+          "A. api-120: Calls WinExec with cmd /c parameter",
+          "B. api-43: Writes a PE file header to disc",
+          "C. api-20: Allocates virtual memory in a remote process",
+          "D. binary-7: Drops executable files to the Windows system directory",
+          "E. static-97: PE file contains executable resources (embedded PE)",
+          "F. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "G. binary-1: Drops executable files",
+          "H. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Generic infostealer (.NET assembly, 310784 bytes) report contains many signatures. Which of the following are confirmed at threat_level 2 (malicious) and should be selected? Exclude all threat_level 0 and threat_level 1 findings.",
+        "options": [
+          "A. registry-30: Modifies file/console tracing settings",
+          "B. api-101: Tries to steal Crypto currency wallets information",
+          "C. api-96: Tries to steal browser sensitive information",
+          "D. api-281: Attempts to obtain browser login credentials",
+          "E. api-97: Tries to steal desktop applications information",
+          "F. api-46: Checks for files associated with bitcoin mining software",
+          "G. avtest-8: CrowdStrike ML detection",
+          "H. api-9: Queries process information",
+          "I. api-1: Creates guarded memory regions"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos.Generic sample (494080 bytes), which signatures are confirmed at threat_level 2 (malicious) ONLY? Do not include signatures at threat_level 1 (suspicious) or informative.",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 4090)",
+          "B. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "C. stream-40: Looks up many procedures within the same disassembly stream",
+          "D. target-412: Spawned process connects to a network",
+          "E. static-60: PE file contains unusual section name",
+          "F. string-64: Input file contains API references not part of IAT",
+          "G. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Remcos sample (498176 bytes), which of the following signatures carry threat_level 2 (malicious) and should be included in a malicious-tier analysis? Select only those confirmed at threat_level 2.",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 30204)",
+          "B. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "C. static-92: PE file has unusual entropy resources",
+          "D. string-64: API references not part of IAT",
+          "E. target-412: Spawned process connects to a network",
+          "F. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla sample (10202112 bytes, .NET assembly) has signatures at multiple threat levels. Which of the following are EXCLUSIVELY at threat_level 2 (malicious)?",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. string-32: Found an indicator for a scheduled task trigger",
+          "C. registry-30: Modifies file/console tracing settings",
+          "D. avtest-8: CrowdStrike ML detection",
+          "E. api-43: Writes a PE file header to disc",
+          "F. api-6: Reads configuration files",
+          "G. api-24: Tries to sleep for a long time",
+          "H. static-1: Imports suspicious APIs"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the VBS.Asthma sample (15140 bytes, HTML document) detonation, which signatures are at threat_level 2 (malicious)? Select only those confirmed at that tier.",
+        "options": [
+          "A. api-0: Writes data to a remote process (powershell.exe wrote to remote process)",
+          "B. target-110: Executes powershell with commandline",
+          "C. network-61: GETs files from a webserver",
+          "D. api-88: Possible heap spraying attempt detected",
+          "E. binary-1: Drops executable files",
+          "F. api-1: Creates guarded memory regions",
+          "G. registry-9: Checks warning level of secure to non-secure traffic redirection",
+          "H. binary-5: Drops cabinet archive files"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom sample (150528 bytes), which signatures are confirmed at threat_level 2 (malicious)? Select all that apply, excluding threat_level 0 and threat_level 1 findings.",
+        "options": [
+          "A. api-96: Tries to steal browser sensitive information (file access)",
+          "B. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "C. string-13: Detected indicator that file is ransomware",
+          "D. binary-10: The input sample dropped very many files",
+          "E. api-84: Sets the ThreadHideFromDebugger thread data structure",
+          "F. api-9: Queries process information",
+          "G. api-109: Calls GetLogicalDriveStringsW",
+          "H. api-170: Queries current status of the specified service"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Ransom.GandCrab4.Generic sample (187392 bytes, simulated network mode), which of the following signatures are at threat_level 2 (malicious)? Do not include threat_level 1 (suspicious) signatures.",
+        "options": [
+          "A. api-31: Tries to access unusual system drive letters",
+          "B. api-52: Reads mail related files",
+          "C. network-21: Malicious artifacts seen in the context of a contacted host",
+          "D. network-27: Multiple malicious artifacts seen in the context of different hosts",
+          "E. avtest-3: Sample identified as malicious by a large number of AV engines",
+          "F. avtest-5: Sample identified as malicious by a trusted AV engine",
+          "G. avtest-8: CrowdStrike ML detection",
+          "H. network-34: Detected very many DNS queries for unresolvable domains",
+          "I. hooks-8: Installs hooks/patches the running process",
+          "J. api-53: Writes a file to the start menu"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The WannaCryptor sample (3514368 bytes) has a minimal set of threat_level 2 (malicious) signatures. Which of the following are confirmed at that tier? Select only those at threat_level 2.",
+        "options": [
+          "A. yara-0: YARA signature match for WannaDecryptor",
+          "B. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "C. yara-62: YARA signature match for RSA algorithm keys",
+          "D. static-1: Imports suspicious APIs",
+          "E. static-6: Section contains high entropy",
+          "F. yara-103: YARA signature match for AES encryption"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Worm.Ludbaruma sample (167965 bytes, Visual Basic), which signatures are confirmed at threat_level 2 (malicious)? Select ONLY those at threat_level 2 and exclude all threat_level 0 and threat_level 1 findings.",
+        "options": [
+          "A. target-14: Spawns a lot of processes",
+          "B. api-31: Tries to access unusual system drive letters",
+          "C. api-0: Writes data to a remote process",
+          "D. api-20: Allocates virtual memory in a remote process",
+          "E. registry-15: Changes file extension appearance of the explorer",
+          "F. target-33: Creates a fake system process",
+          "G. registry-21: Disables Command Prompt (cmd)",
+          "H. registry-2: Disables Windows Registry Editor (regedit)",
+          "I. registry-23: Disables system restore",
+          "J. avtest-8: CrowdStrike ML detection",
+          "K. api-43: Writes a PE file header to disc",
+          "L. registry-0: Modifies auto-execute functionality"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Backdoor.Generic sample (614400 bytes, Visual C++ 2003), which signatures are at threat_level 2 (malicious) ONLY? Exclude informative and suspicious tier signatures.",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. avtest-8: CrowdStrike ML detection",
+          "C. binary-60: Dropped file has high entropy",
+          "D. static-92: PE file has unusual entropy resources",
+          "E. api-9: Queries process information",
+          "F. binary-1: Drops executable files",
+          "G. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Backdoor.Hupigon sample (188423 bytes, Delphi), which of the following signatures are at threat_level 2 (malicious)? Select all that apply.",
+        "options": [
+          "A. api-120: Calls WinExec to run application",
+          "B. api-31: Tries to access unusual system drive letters",
+          "C. target-14: Spawns a lot of processes",
+          "D. api-0: Writes data to a remote process",
+          "E. api-20: Allocates virtual memory in a remote process",
+          "F. registry-15: Changes file extension appearance of the explorer",
+          "G. avtest-8: CrowdStrike ML detection",
+          "H. registry-0: Modifies auto-execute functionality",
+          "I. api-43: Writes a PE file header to disc",
+          "J. registry-27: Modifies proxy settings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The first um_unhooking sample (102912 bytes, threat_level 1 verdict: suspicious) has a very small number of signatures. Which signatures in this report are at threat_level 1 (suspicious)? Select all that apply.",
+        "options": [
+          "A. string-64: Input file contains API references not part of its IAT",
+          "B. static-6: Section contains high entropy",
+          "C. static-18: Matched Compiler/Packer signature",
+          "D. static-153: Uses 32 bit executable PE",
+          "E. module-16: Loads the debugger/analysis tool module",
+          "F. static-157: Matched Compiler/Packer signature (DIE)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Fragtor.Generic um_unhooking sample (368128 bytes), which single signature is confirmed at threat_level 2 (malicious)? Select only the correct answer.",
+        "options": [
+          "A. static-92: PE file has unusual entropy resources",
+          "B. static-60: PE file contains unusual section name",
+          "C. string-64: Input file contains API references not part of IAT",
+          "D. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "E. static-98: PE files contains large number of export functions",
+          "F. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Trojan.Ursnif um_unhooking sample (369152 bytes), which signature is confirmed at threat_level 2 (malicious)? Select only the threat_level 2 finding.",
+        "options": [
+          "A. static-92: PE file has unusual entropy resources",
+          "B. string-64: Input file contains API references not part of IAT",
+          "C. static-98: PE files contains large number of export functions",
+          "D. avtest-8: CrowdStrike Static Analysis and ML detection",
+          "E. api-24: Tries to sleep for a long time",
+          "F. api-284: Opens a handle to the specified local process",
+          "G. static-6: Section contains high entropy"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The BScope.Backdoor sample (1448960 bytes, threat_level 1 verdict: suspicious) contains NO threat_level 2 signatures. Given this, which of the following statements correctly describes the threat_level 2 signature count for this sample?",
+        "options": [
+          "A. There are zero threat_level 2 signatures; the highest tier present is threat_level 1",
+          "B. avtest-8 is present at threat_level 2",
+          "C. api-40 (keylogging) is at threat_level 2",
+          "D. static-60 is at threat_level 2",
+          "E. string-64 is at threat_level 2"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A critical analyst skill is knowing when NOT to over-select. For the Zusy.Generic sample (6775507 bytes), the following options include a mix of threat_level 0, 1, and 2 signatures. Which options should be EXCLUDED from a threat_level 2 only answer set?",
+        "options": [
+          "A. target-413: Spawned processes likely due to injection (threat_level 1)",
+          "B. api-20: Allocates virtual memory in a remote process (threat_level 2)",
+          "C. binary-60: Dropped file has high entropy (threat_level 1)",
+          "D. registry-27: Modifies proxy settings (threat_level 1)",
+          "E. static-6: Section contains high entropy (threat_level 1)",
+          "F. api-117: ShellExecuteW call (threat_level 2)",
+          "G. api-43: Writes a PE file header to disc (threat_level 1)",
+          "H. network-1: Contacts server (threat_level 0)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "When analyzing the Backdoor.Hupigon sample (188423 bytes), an analyst must distinguish between threat_level 1 and threat_level 2 signatures related to persistence and process injection. Which of the following are threat_level 1 (suspicious) and should NOT be included in a malicious-tier answer?",
+        "options": [
+          "A. registry-0: Modifies auto-execute functionality by setting a registry value",
+          "B. api-43: Writes a PE file header to disc",
+          "C. binary-1: Drops executable files",
+          "D. api-0: Writes data to a remote process",
+          "E. registry-27: Modifies proxy settings",
+          "F. registry-9: Checks warning level of secure to non-secure traffic",
+          "G. api-25: Opens file with deletion access rights",
+          "H. api-26: Marks file for deletion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The following detonation report contains signatures at threat_level 0 (informative), threat_level 1 (suspicious), and threat_level 2 (malicious). Which of the following signatures are classified EXCLUSIVELY at threat_level 2 (malicious) in the report for the Zusy.Generic infostealer sample?",
+        "options": [
+          "A. api-117: Calls an API typically used to execute an application (ShellExecuteW)",
+          "B. target-14: Spawns a lot of processes",
+          "C. api-0: Writes data to a remote process",
+          "D. api-20: Allocates virtual memory in a remote process",
+          "E. network-7: Uses network protocols on unusual ports",
+          "F. target-413: Spawned processes likely due to injection",
+          "G. binary-60: Dropped file has high entropy",
+          "H. api-43: Writes a PE file header to disc"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Malware.SF.Generic infostealer detonation report, several hook-related signatures are present. Which of the following hook-based signatures are assigned threat_level 2 (malicious) \u2014 and NOT threat_level 1 (suspicious)?",
+        "options": [
+          "A. hooks-0: Hooks API calls (FindNextFileW in microsofthelp.exe) \u2014 threat_level 1",
+          "B. hooks-2: Hooks file system APIs (FindNextFileW in microsofthelp.exe) \u2014 threat_level 2",
+          "C. hooks-5: Hooks internet related APIs (send@WS2_32.DLL in microsofthelp.exe) \u2014 threat_level 2",
+          "D. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "E. binary-7: Drops executable files to the Windows system directory \u2014 threat_level 2",
+          "F. registry-0: Modifies auto-execute functionality \u2014 threat_level 1",
+          "G. api-43: Writes a PE file header to disc \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Packer.Malware.NSAnti infostealer report, the analyst must identify only the threat_level 2 (malicious) signatures. The report contains signatures at all three levels. Which of the following are correctly identified as threat_level 2 ONLY?",
+        "options": [
+          "A. api-120: Calls WinExec \u2014 threat_level 2",
+          "B. api-20: Allocates virtual memory in a remote process \u2014 threat_level 2",
+          "C. binary-7: Drops executable files to the Windows system directory \u2014 threat_level 2",
+          "D. static-97: PE file contains executable resources \u2014 threat_level 2",
+          "E. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "F. static-4: Entrypoint in PE header is within an uncommon section \u2014 threat_level 1",
+          "G. binary-60: Dropped file has high entropy \u2014 threat_level 1",
+          "H. static-1: Imports suspicious APIs \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Worm.Ludbaruma (killers family) detonation report, which of the following signatures are assigned threat_level 2 (malicious)? Select ALL that apply and exclude any threat_level 0 or threat_level 1 entries.",
+        "options": [
+          "A. target-14: Spawns a lot of processes \u2014 threat_level 2",
+          "B. api-31: Tries to access unusual system drive letters \u2014 threat_level 2",
+          "C. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "D. api-20: Allocates virtual memory in a remote process \u2014 threat_level 2",
+          "E. registry-15: Changes file extension appearance of the explorer \u2014 threat_level 2",
+          "F. target-33: Creates a fake system process \u2014 threat_level 2",
+          "G. registry-21: Disables Command Prompt \u2014 threat_level 2",
+          "H. registry-2: Disables Windows Registry Editor \u2014 threat_level 2",
+          "I. registry-23: Disables system restore \u2014 threat_level 2",
+          "J. api-6: Reads configuration files \u2014 threat_level 1",
+          "K. registry-0: Modifies auto-execute functionality \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Backdoor.Generic (killers family) detonation report has a very small set of threat_level 2 (malicious) signatures compared to the many threat_level 0 and threat_level 1 entries. Which signatures in this report are EXACTLY at threat_level 2?",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. avtest-8: CrowdStrike ML detection",
+          "C. static-92: PE file has unusual entropy resources \u2014 threat_level 1",
+          "D. binary-1: Drops executable files \u2014 threat_level 1",
+          "E. api-9: Queries process information \u2014 threat_level 1",
+          "F. static-6: Section contains high entropy \u2014 threat_level 1",
+          "G. binary-60: Dropped file has high entropy \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Backdoor.Hupigon (killers family) report, which of the following signatures are threat_level 2 (malicious)? Be precise \u2014 do NOT include threat_level 1 entries even if they describe similar behaviors.",
+        "options": [
+          "A. api-120: Calls WinExec \u2014 threat_level 2",
+          "B. api-31: Tries to access unusual system drive letters \u2014 threat_level 2",
+          "C. target-14: Spawns a lot of processes \u2014 threat_level 2",
+          "D. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "E. api-20: Allocates virtual memory in a remote process \u2014 threat_level 2",
+          "F. registry-15: Changes file extension appearance of the explorer \u2014 threat_level 2",
+          "G. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "H. registry-0: Modifies auto-execute functionality \u2014 threat_level 1",
+          "I. api-43: Writes a PE file header to disc \u2014 threat_level 1",
+          "J. registry-9: Checks warning level of secure to non-secure traffic \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom detonation report, the signatures are distributed across threat_level 0, 1, and 2. Which of the following are the ONLY threat_level 2 (malicious) signatures present in this report?",
+        "options": [
+          "A. api-96: Tries to steal browser sensitive information (file access) \u2014 threat_level 2",
+          "B. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "C. api-9: Queries process information \u2014 threat_level 1",
+          "D. api-84: Sets ThreadHideFromDebugger \u2014 threat_level 1",
+          "E. string-13: Detected indicator that file is ransomware \u2014 threat_level 1",
+          "F. binary-10: The input sample dropped very many files \u2014 threat_level 1",
+          "G. api-170: Queries service status \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.GandCrab4.Generic report, which signatures are classified at threat_level 2 (malicious)? Note that this report has a relatively small total signature count with only a few reaching threat_level 2.",
+        "options": [
+          "A. api-31: Tries to access unusual system drive letters \u2014 threat_level 2",
+          "B. api-52: Reads mail related files \u2014 threat_level 2",
+          "C. network-21: Malicious artifacts seen in the context of a contacted host \u2014 threat_level 2",
+          "D. network-27: Multiple malicious artifacts seen in the context of different hosts \u2014 threat_level 2",
+          "E. avtest-3: Sample identified as malicious by large number of AV engines \u2014 threat_level 2",
+          "F. avtest-5: Sample identified as malicious by a trusted AV engine \u2014 threat_level 2",
+          "G. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "H. hooks-8: Installs hooks/patches the running process \u2014 threat_level 1",
+          "I. network-23: Sends traffic on typical HTTP port without HTTP header \u2014 threat_level 1",
+          "J. network-34: Detected very many DNS queries for unresolvable domains \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the WannaCryptor (Trojan.Ransom.WannaCryptor) detonation report, which signatures are at threat_level 2 (malicious)? The report is notable for having very few threat_level 2 entries despite a large number of informative signatures.",
+        "options": [
+          "A. yara-0: YARA signature match for WannaDecryptor \u2014 threat_level 2",
+          "B. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "C. yara-62: YARA signature match for RSA algorithm \u2014 threat_level 1",
+          "D. static-1: Imports suspicious APIs \u2014 threat_level 1",
+          "E. static-6: Section contains high entropy \u2014 threat_level 1",
+          "F. yara-103: YARA signature match for AES encryption \u2014 threat_level 0",
+          "G. binary-26: RDTSCP instruction found \u2014 threat_level 0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Remcos.Generic (494080 bytes) detonation report, which signatures are at threat_level 2 (malicious)? The report has many threat_level 1 entries that describe suspicious but not confirmed-malicious behaviors.",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 4090) \u2014 threat_level 2",
+          "B. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "C. static-60: PE file contains unusual section name \u2014 threat_level 1",
+          "D. string-64: API references not in IAT \u2014 threat_level 1",
+          "E. static-6: Section contains high entropy \u2014 threat_level 1",
+          "F. stream-40: Looks up many procedures within same disassembly stream \u2014 threat_level 1",
+          "G. target-412: Spawned process connects to a network \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla (remcos family) report contains many signatures across all three threat levels. Which of the following are the ONLY threat_level 2 (malicious) signatures in this report?",
+        "options": [
+          "A. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "B. string-32: Found indicator for a scheduled task trigger \u2014 threat_level 2",
+          "C. registry-30: Modifies file/console tracing settings \u2014 threat_level 2",
+          "D. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "E. api-43: Writes a PE file header to disc \u2014 threat_level 1",
+          "F. binary-1: Drops executable files \u2014 threat_level 1",
+          "G. api-10: Queries kernel debugger information \u2014 threat_level 1",
+          "H. static-6: Section contains high entropy \u2014 threat_level 1",
+          "I. api-1: Creates guarded memory regions \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Remcos (498176 bytes) report, the network-related signatures span multiple threat levels. Which network-related or external-system signatures are at threat_level 2 (malicious) ONLY?",
+        "options": [
+          "A. network-7: Uses network protocols on unusual ports (port 30204) \u2014 threat_level 2",
+          "B. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "C. target-412: Spawned process connects to a network \u2014 threat_level 1",
+          "D. static-92: PE file has unusual entropy resources \u2014 threat_level 1",
+          "E. string-64: API references not in IAT \u2014 threat_level 1",
+          "F. static-6: Section contains high entropy \u2014 threat_level 1",
+          "G. network-81: High entropy domain detected \u2014 threat_level 0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The VBS.Asthma (remcos family) HTML-based detonation report contains a single threat_level 2 (malicious) signature. Which one is it, and which of the following are incorrectly labeled as threat_level 2?",
+        "options": [
+          "A. api-0: Writes data to a remote process \u2014 threat_level 2 (CORRECT)",
+          "B. target-110: Executes PowerShell with commandline \u2014 threat_level 1 (NOT threat_level 2)",
+          "C. network-61: GETs files from a webserver \u2014 threat_level 1 (NOT threat_level 2)",
+          "D. target-57: Invokes the C# compiler \u2014 threat_level 1 (NOT threat_level 2)",
+          "E. api-88: Possible heap spraying attempt \u2014 threat_level 1 (NOT threat_level 2)",
+          "F. api-1: Creates guarded memory regions \u2014 threat_level 1 (NOT threat_level 2)",
+          "G. registry-27: Modifies proxy settings \u2014 threat_level 1 (NOT threat_level 2)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The BScope.Backdoor (remcos family, threat_level 1 verdict) sample has NO threat_level 2 signatures. An analyst reviewing this report must determine which signatures are at threat_level 1 (suspicious) versus threat_level 0 (informative). Which of the following are at threat_level 1?",
+        "options": [
+          "A. static-60: PE file contains unusual section name \u2014 threat_level 1",
+          "B. string-64: API references not in IAT \u2014 threat_level 1",
+          "C. static-6: Section contains high entropy \u2014 threat_level 1",
+          "D. api-40: Calls an API used for keylogging \u2014 threat_level 1",
+          "E. static-18: Matched Compiler/Packer signature \u2014 threat_level 0",
+          "F. api-125: Calls RtlGetVersion \u2014 threat_level 0",
+          "G. api-152: Enumerates active windows \u2014 threat_level 0",
+          "H. api-105: Calls API used to take screenshots \u2014 threat_level 0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (102912 bytes, threat_level 1 verdict) has NO threat_level 2 signatures. An analyst must correctly identify which signatures are threat_level 1 (suspicious) versus threat_level 0 (informative). Which are at threat_level 1?",
+        "options": [
+          "A. string-64: API references not in IAT (FlsAlloc) \u2014 threat_level 1",
+          "B. static-6: Section contains high entropy \u2014 threat_level 1",
+          "C. static-153: Uses 32-bit PE \u2014 threat_level 0",
+          "D. static-18: Matched Compiler/Packer signature \u2014 threat_level 0",
+          "E. api-126: Tries to access non-existent files \u2014 threat_level 0",
+          "F. module-16: Loads debugger/analysis tool module \u2014 threat_level 0",
+          "G. static-157: Matched Compiler/Packer signature (DIE) \u2014 threat_level 0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Fragtor.Generic (um_unhooking, 368128 bytes) detonation report, which signature is the ONLY one at threat_level 2 (malicious)? All other suspicious behaviors in this report are at threat_level 1 or lower.",
+        "options": [
+          "A. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "B. static-92: PE file has unusual entropy resources \u2014 threat_level 1",
+          "C. static-60: PE file contains unusual section name \u2014 threat_level 1",
+          "D. string-64: API references not in IAT \u2014 threat_level 1",
+          "E. static-98: PE file contains large number of export functions \u2014 threat_level 1",
+          "F. static-6: Section contains high entropy \u2014 threat_level 1",
+          "G. api-85: Queues APC in a remote process \u2014 threat_level 0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ursnif (um_unhooking, 369152 bytes) report, which signatures are at threat_level 2 (malicious)? This report is notable for having only ONE threat_level 2 signature despite many threat_level 1 entries.",
+        "options": [
+          "A. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "B. static-92: PE file has unusual entropy resources \u2014 threat_level 1",
+          "C. string-64: API references not in IAT \u2014 threat_level 1",
+          "D. static-98: PE file contains large number of export functions \u2014 threat_level 1",
+          "E. static-6: Section contains high entropy \u2014 threat_level 1",
+          "F. api-24: Tries to sleep for a long time \u2014 threat_level 1",
+          "G. api-284: Opens a handle to the specified local process \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A critical analyst skill is distinguishing threat_level 1 (suspicious) from threat_level 2 (malicious) for process injection indicators. In the Zusy.Generic infostealer report, which process-injection-related signatures are at threat_level 2 (malicious) versus threat_level 1 (suspicious)?",
+        "options": [
+          "A. api-0: Writes data to a remote process \u2014 threat_level 2",
+          "B. api-20: Allocates virtual memory in a remote process \u2014 threat_level 2",
+          "C. target-413: Spawned processes likely due to injection \u2014 threat_level 1",
+          "D. api-264: Creates a thread in a self process \u2014 threat_level 0",
+          "E. api-43: Writes a PE file header to disc \u2014 threat_level 1",
+          "F. binary-1: Drops executable files \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Generic infostealer (.NET, 310784 bytes) report, the threat_level 2 signatures are concentrated in spyware/information-retrieval and anti-detection categories. Which of the following are at threat_level 2 (malicious)?",
+        "options": [
+          "A. registry-30: Modifies file/console tracing settings \u2014 threat_level 2",
+          "B. api-101: Tries to steal crypto currency wallets information \u2014 threat_level 2",
+          "C. api-96: Tries to steal browser sensitive information \u2014 threat_level 2",
+          "D. api-281: Attempts to obtain browser login credentials \u2014 threat_level 2",
+          "E. api-97: Tries to steal desktop applications information \u2014 threat_level 2",
+          "F. api-46: Checks for files associated with bitcoin mining software \u2014 threat_level 2",
+          "G. avtest-8: CrowdStrike ML detection \u2014 threat_level 2",
+          "H. handle-0: Accesses potentially sensitive information from local browsers \u2014 threat_level 1",
+          "I. api-9: Queries process information \u2014 threat_level 1",
+          "J. api-10: Queries kernel debugger information \u2014 threat_level 1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst is reviewing the Worm.Ludbaruma (killers family) report and must count the exact number of threat_level 2 (malicious) signatures to avoid over-selection. The report contains signatures labeled avtest-8, target-14, api-31, api-0, api-20, registry-15, target-33, registry-21, registry-2, and registry-23 at threat_level 2, plus several threat_level 1 entries. Which of the following threat_level 1 entries are commonly mistaken for threat_level 2?",
+        "options": [
+          "A. api-6: Reads configuration files \u2014 threat_level 1 (NOT malicious)",
+          "B. registry-0: Modifies auto-execute functionality \u2014 threat_level 1 (NOT malicious)",
+          "C. binary-1: Drops executable files \u2014 threat_level 1 (NOT malicious)",
+          "D. api-43: Writes a PE file header to disc \u2014 threat_level 1 (NOT malicious)",
+          "E. api-223: Queries local/system time as file time \u2014 threat_level 1 (NOT malicious)",
+          "F. api-104: Enumerates process snapshot \u2014 threat_level 1 (NOT malicious)",
+          "G. target-14: Spawns a lot of processes \u2014 threat_level 2 (IS malicious)",
+          "H. registry-23: Disables system restore \u2014 threat_level 2 (IS malicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A sandbox report for a sample classified as 'infostealers' (vx_family: Zusy.Generic) contains signatures at multiple threat levels. Reviewing ONLY the signatures with threat_level=2 (malicious), which of the following signatures are present in this report?",
+        "options": [
+          "A. Calls an API typically used to execute an application (ShellExecuteW) \u2014 identifier: api-117",
+          "B. Spawns a lot of processes \u2014 identifier: target-14",
+          "C. Writes data to a remote process \u2014 identifier: api-0",
+          "D. Uses network protocols on unusual ports (port 11110/11170) \u2014 identifier: network-7",
+          "E. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "F. Spawned processes likely due to injection \u2014 identifier: target-413",
+          "G. Dropped file has high entropy \u2014 identifier: binary-60",
+          "H. Writes a PE file header to disc \u2014 identifier: api-43"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the infostealer sample (vx_family: Malware.SF.Generic) that drops 'microsofthelp.exe', which signatures are classified at threat_level=2 (malicious) in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. Writes data to a remote process \u2014 identifier: api-0",
+          "B. Drops executable files to the Windows system directory \u2014 identifier: binary-7",
+          "C. Hooks file system APIs (FindNextFileW) \u2014 identifier: hooks-2",
+          "D. Hooks internet related APIs (send@WS2_32.DLL) \u2014 identifier: hooks-5",
+          "E. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "F. Modifies auto-execute functionality in registry \u2014 identifier: registry-0",
+          "G. Marks file for deletion \u2014 identifier: api-26",
+          "H. Hooks API calls (FindNextFileW) \u2014 identifier: hooks-0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the infostealer sample (vx_family: Packer.Malware.NSAnti) that drops 'xmloder.exe' and uses regedit.exe, which signatures are at threat_level=2 (malicious)? Select ONLY those confirmed malicious.",
+        "options": [
+          "A. Calls an API typically used to run the specified application (WinExec) \u2014 identifier: api-120",
+          "B. Allocates virtual memory in a remote process \u2014 identifier: api-20",
+          "C. Drops executable files to the Windows system directory \u2014 identifier: binary-7",
+          "D. PE file contains executable resources \u2014 identifier: static-97",
+          "E. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "F. Writes a PE file header to disc \u2014 identifier: api-43",
+          "G. Drops executable files \u2014 identifier: binary-1",
+          "H. Uses REGEDIT.EXE to add Windows registry data file \u2014 identifier: target-118"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the infostealer sample (vx_family: Trojan.Generic, .NET assembly) that attempts to steal browser credentials and crypto wallets, which signatures appear at threat_level=2 (malicious)? Select ALL correct answers.",
+        "options": [
+          "A. Modifies file/console tracing settings \u2014 identifier: registry-30",
+          "B. Tries to steal Crypto currency wallets information \u2014 identifier: api-101",
+          "C. Tries to steal browser sensitive information \u2014 identifier: api-96",
+          "D. Attempts to obtain browser login credentials \u2014 identifier: api-281",
+          "E. Tries to steal desktop applications information \u2014 identifier: api-97",
+          "F. Checks for files associated with bitcoin mining software \u2014 identifier: api-46",
+          "G. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "H. Creates guarded memory regions \u2014 identifier: api-1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the AV/EDR killer sample (vx_family: Worm.Ludbaruma) that spawns fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE), which signatures are at threat_level=2 (malicious)? Select ALL that apply.",
+        "options": [
+          "A. Spawns a lot of processes \u2014 identifier: target-14",
+          "B. Tries to access unusual system drive letters \u2014 identifier: api-31",
+          "C. Writes data to a remote process \u2014 identifier: api-0",
+          "D. Allocates virtual memory in a remote process \u2014 identifier: api-20",
+          "E. Changes file extension appearance of the explorer \u2014 identifier: registry-15",
+          "F. Creates a fake system process \u2014 identifier: target-33",
+          "G. Disables Command Prompt (cmd) \u2014 identifier: registry-21",
+          "H. Disables Windows Registry Editor (regedit) \u2014 identifier: registry-2",
+          "I. Disables system restore \u2014 identifier: registry-23",
+          "J. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "K. Modifies auto-execute functionality in registry \u2014 identifier: registry-0",
+          "L. Drops executable files \u2014 identifier: binary-1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the AV/EDR killer sample (vx_family: Backdoor.Generic, single process, drops 'gegdsimsogm.exe'), which signatures are classified at threat_level=2 (malicious)? Do NOT include threat_level=1 (suspicious) findings.",
+        "options": [
+          "A. Writes data to a remote process \u2014 identifier: api-0",
+          "B. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "C. Drops executable files \u2014 identifier: binary-1",
+          "D. PE file has unusual entropy resources \u2014 identifier: static-92",
+          "E. Queries process information \u2014 identifier: api-9",
+          "F. Dropped file has high entropy \u2014 identifier: binary-60",
+          "G. Section contains high entropy \u2014 identifier: static-6"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the AV/EDR killer sample (vx_family: Backdoor.Hupigon) that installs 'suchost.exe' as a service and deletes network shares, which signatures are at threat_level=2 (malicious)? Select ONLY those with threat_level field equal to 2.",
+        "options": [
+          "A. Calls an API typically used to run the specified application (WinExec) \u2014 identifier: api-120",
+          "B. Tries to access unusual system drive letters \u2014 identifier: api-31",
+          "C. Spawns a lot of processes \u2014 identifier: target-14",
+          "D. Writes data to a remote process \u2014 identifier: api-0",
+          "E. Allocates virtual memory in a remote process \u2014 identifier: api-20",
+          "F. Changes file extension appearance of the explorer \u2014 identifier: registry-15",
+          "G. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "H. Modifies proxy settings \u2014 identifier: registry-27",
+          "I. Modifies auto-execute functionality in registry \u2014 identifier: registry-0",
+          "J. Drops executable files \u2014 identifier: binary-1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the ransomware sample (vx_family: Trojan.Ransom) that encrypts files and drops ransom notes, which signatures appear at threat_level=2 (malicious)? Select ALL that are confirmed malicious in the report.",
+        "options": [
+          "A. Tries to steal browser sensitive information (file access) \u2014 identifier: api-96",
+          "B. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "C. Sets the ThreadHideFromDebugger thread data structure \u2014 identifier: api-84",
+          "D. Queries process information \u2014 identifier: api-9",
+          "E. Detected indicator that file is ransomware \u2014 identifier: string-13",
+          "F. The input sample dropped very many files \u2014 identifier: binary-10",
+          "G. Calls an API to determine valid logical drives \u2014 identifier: api-109"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the GandCrab4 ransomware sample (vx_family: Ransom.GandCrab4.Generic) with simulated network mode, which signatures are at threat_level=2 (malicious)? Select ONLY those confirmed at threat_level 2.",
+        "options": [
+          "A. Tries to access unusual system drive letters \u2014 identifier: api-31",
+          "B. Reads mail related files \u2014 identifier: api-52",
+          "C. Malicious artifacts seen in the context of a contacted host \u2014 identifier: network-21",
+          "D. Multiple malicious artifacts seen in the context of different hosts \u2014 identifier: network-27",
+          "E. Sample was identified as malicious by a large number of AV engines \u2014 identifier: avtest-3",
+          "F. Sample was identified as malicious by a trusted AV engine \u2014 identifier: avtest-5",
+          "G. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "H. Installs hooks/patches the running process \u2014 identifier: hooks-8",
+          "I. Sends traffic on typical HTTP outbound port without HTTP header \u2014 identifier: network-23",
+          "J. Contacts Random Domain Names \u2014 identifier: network-6"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the WannaCry ransomware sample (vx_family: Trojan.Ransom.WannaCryptor), which signatures are at threat_level=2 (malicious)? Select ONLY those with threat_level field equal to 2.",
+        "options": [
+          "A. YARA signature match for WannaDecryptor \u2014 identifier: yara-0",
+          "B. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "C. YARA signature match for RSA algorithm (keys) \u2014 identifier: yara-62",
+          "D. Imports suspicious APIs \u2014 identifier: static-1",
+          "E. Section contains high entropy \u2014 identifier: static-6",
+          "F. YARA signature match for AES encryption \u2014 identifier: yara-103"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (vx_family: Remcos.Generic, single process, port 4090), which signatures are at threat_level=2 (malicious)? Do NOT select signatures at threat_level=1 (suspicious).",
+        "options": [
+          "A. Uses network protocols on unusual ports (port 4090) \u2014 identifier: network-7",
+          "B. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "C. Input file contains API references not part of its IAT \u2014 identifier: string-64",
+          "D. Section contains high entropy \u2014 identifier: static-6",
+          "E. Looks up many procedures within the same disassembly stream \u2014 identifier: stream-40",
+          "F. Spawned process connects to a network \u2014 identifier: target-412"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (vx_family: Trojan.Remcos, port 30204, contacts 'computador12.ddns-ip.net'), which signatures are at threat_level=2 (malicious)? Select ALL correct answers.",
+        "options": [
+          "A. Uses network protocols on unusual ports (port 30204) \u2014 identifier: network-7",
+          "B. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "C. Input file contains API references not part of its IAT \u2014 identifier: string-64",
+          "D. PE file has unusual entropy resources \u2014 identifier: static-92",
+          "E. Section contains high entropy \u2014 identifier: static-6",
+          "F. Spawned process connects to a network \u2014 identifier: target-412"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (vx_family: IL:Trojan.MSILZilla, .NET, drops 'Deepseed Checker.exe'), which signatures are at threat_level=2 (malicious)? Select ONLY those with threat_level=2.",
+        "options": [
+          "A. Writes data to a remote process \u2014 identifier: api-0",
+          "B. Found an indicator for a scheduled task trigger \u2014 identifier: string-32",
+          "C. Modifies file/console tracing settings \u2014 identifier: registry-30",
+          "D. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "E. Writes a PE file header to disc \u2014 identifier: api-43",
+          "F. Drops executable files \u2014 identifier: binary-1",
+          "G. Creates guarded memory regions \u2014 identifier: api-1",
+          "H. Tries to sleep for a long time \u2014 identifier: api-24"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (vx_family: BScope.Backdoor, threat_level=1, verdict=suspicious, no network-7 signature), which signatures are at threat_level=1 (suspicious)? This sample has NO threat_level=2 signatures. Select ALL threat_level=1 signatures.",
+        "options": [
+          "A. PE file contains unusual section name \u2014 identifier: static-60",
+          "B. Input file contains API references not part of its IAT \u2014 identifier: string-64",
+          "C. Section contains high entropy \u2014 identifier: static-6",
+          "D. Calls an API typically used for keylogging \u2014 identifier: api-40",
+          "E. Uses network protocols on unusual ports \u2014 identifier: network-7",
+          "F. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "G. Writes data to a remote process \u2014 identifier: api-0"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample delivered via HTML (vx_family: VBS.Asthma.2.4CC6382F, drive-by compromise via iexplore.exe and powershell.exe), which signature is at threat_level=2 (malicious)? Select ONLY those confirmed at threat_level 2.",
+        "options": [
+          "A. Writes data to a remote process (powershell.exe) \u2014 identifier: api-0",
+          "B. Executes powershell with commandline \u2014 identifier: target-110",
+          "C. GETs files from a webserver \u2014 identifier: network-61",
+          "D. Invokes the C# compiler \u2014 identifier: target-57",
+          "E. Commandline contains long base64 encoded string \u2014 identifier: string-509",
+          "F. High entropy HTML file \u2014 identifier: binary-78",
+          "G. Drops cabinet archive files \u2014 identifier: binary-5",
+          "H. Creates guarded memory regions \u2014 identifier: api-1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the UM unhooking sample (verdict=suspicious, threat_level=1, av_detect=2, no malicious verdict) with only 51 total signatures, which signatures appear at threat_level=1 (suspicious)? Note: this sample has NO threat_level=2 signatures. Select ALL threat_level=1 signatures.",
+        "options": [
+          "A. Input file contains API references not part of its IAT (FlsAlloc) \u2014 identifier: string-64",
+          "B. Section contains high entropy \u2014 identifier: static-6",
+          "C. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "D. Writes data to a remote process \u2014 identifier: api-0",
+          "E. Uses network protocols on unusual ports \u2014 identifier: network-7",
+          "F. Matched Compiler/Packer signature (DIE) \u2014 identifier: static-157"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the UM unhooking sample (vx_family: Fragtor.Generic, 116 total signatures, exports >100 functions), which signature is at threat_level=2 (malicious)? Select ONLY the confirmed threat_level=2 finding.",
+        "options": [
+          "A. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "B. PE file has unusual entropy resources \u2014 identifier: static-92",
+          "C. PE file contains unusual section name \u2014 identifier: static-60",
+          "D. Input file contains API references not part of its IAT \u2014 identifier: string-64",
+          "E. PE files contains large number of export functions \u2014 identifier: static-98",
+          "F. Section contains high entropy \u2014 identifier: static-6"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the UM unhooking sample (vx_family: Trojan.Ursnif, 110 total signatures, loads dbghelp.dll, exports >100 functions), which signature is at threat_level=2 (malicious)? Select ONLY the confirmed threat_level=2 finding.",
+        "options": [
+          "A. Sample detected by CrowdStrike Static Analysis and ML \u2014 identifier: avtest-8",
+          "B. PE file has unusual entropy resources \u2014 identifier: static-92",
+          "C. Input file contains API references not part of its IAT (FlsAlloc) \u2014 identifier: string-64",
+          "D. PE files contains large number of export functions \u2014 identifier: static-98",
+          "E. Section contains high entropy \u2014 identifier: static-6",
+          "F. Tries to sleep for a long time \u2014 identifier: api-24",
+          "G. Opens a handle to the specified local process \u2014 identifier: api-284"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Threat Level Discrimination",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst is reviewing a sandbox report and must determine the correct number of threat_level=2 (malicious) signatures for the Remcos RAT sample (vx_family: Remcos.Generic, port 4090). The report contains 223 total signatures. How many signatures have threat_level=2, and which are they?",
+        "options": [
+          "A. Exactly 2 signatures: network-7 (unusual ports) and avtest-8 (CrowdStrike ML)",
+          "B. Exactly 4 signatures: network-7, avtest-8, string-64, static-6",
+          "C. Exactly 6 signatures: network-7, avtest-8, string-64, static-6, stream-40, target-412",
+          "D. Exactly 1 signature: avtest-8 (CrowdStrike ML) only",
+          "E. Exactly 3 signatures: network-7, avtest-8, target-412"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    }
+  ]
+}

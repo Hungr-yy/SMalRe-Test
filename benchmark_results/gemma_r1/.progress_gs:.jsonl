@@ -1,0 +1,1827 @@
+{"index": 0, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 1, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 2, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 3, "response": "```json\n{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n```"}
+{"index": 4, "response": "{\"correct_answers\": [\"B\", \"E\"]}\n"}
+{"index": 5, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 6, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 7, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"I\", \"J\"]}\n"}
+{"index": 8, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 9, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 10, "response": "{\"correct_answers\": [\"B\", \"D\"]}"}
+{"index": 11, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 12, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 13, "response": "{\"correct_answers\": [\"A\", \"F\"]}\n"}
+{"index": 14, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 15, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 16, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 17, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 18, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 19, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 20, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"G\", \"I\", \"J\"]}\n"}
+{"index": 21, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 22, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 23, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 24, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 25, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 26, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 27, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"H\"]}\n"}
+{"index": 28, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n```"}
+{"index": 29, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 30, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 31, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 32, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 33, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 34, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 35, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\", \"H\"]}"}
+{"index": 36, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 37, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 38, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 39, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 40, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 41, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 42, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 43, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 44, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 45, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 46, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"H\"]}\n"}
+{"index": 47, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 48, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 49, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 50, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 51, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 52, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 53, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 54, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 55, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 56, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 57, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 58, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 59, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 60, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 61, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 62, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 63, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 64, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 65, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 66, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 67, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 68, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 69, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 70, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 71, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 72, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 73, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 74, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 75, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 76, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 77, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 78, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 79, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 80, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 81, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 82, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 83, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 84, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 85, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 86, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\"]}\n"}
+{"index": 87, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 88, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 89, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 90, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 91, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 92, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\", \"E\", \"B\"]}"}
+{"index": 93, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 94, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 95, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 96, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 97, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 98, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\", \"E\"]}\n"}
+{"index": 99, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 100, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 101, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 102, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 103, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 104, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\"]}"}
+{"index": 105, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 106, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 107, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 108, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 109, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 110, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 111, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 112, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 113, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 114, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 115, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 116, "response": "{\"correct_answers\": [\"A\", \"C\", \"G\", \"F\", \"E\", \"B\", \"D\", \"H\"]}\n"}
+{"index": 117, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 118, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 119, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 120, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 121, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\", \"G\"]}\n"}
+{"index": 122, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 123, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 124, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 125, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 126, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 127, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 128, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 129, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\"]}"}
+{"index": 130, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 131, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 132, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 133, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 134, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 135, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 136, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 137, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\"]}\n"}
+{"index": 138, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 139, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"I\", \"J\"]}\n```"}
+{"index": 140, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 141, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 142, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 143, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 144, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 145, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 146, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 147, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 148, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 149, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 150, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}"}
+{"index": 151, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 152, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 153, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 154, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 155, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 156, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 157, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 158, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 159, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 160, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 161, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 162, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 163, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 164, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 165, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 166, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 167, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 168, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 169, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 170, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\"]}\n"}
+{"index": 171, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 172, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 173, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 174, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 175, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 176, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 177, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n```"}
+{"index": 178, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 179, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}"}
+{"index": 180, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 181, "response": "{\"correct_answers\": [\"B\", \"D\", \"F\"]}"}
+{"index": 182, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 183, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 184, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 185, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 186, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 187, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 188, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 189, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 190, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\"]}\n"}
+{"index": 191, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 192, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 193, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 194, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 195, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 196, "response": "{\"correct_answers\": [\"B\", \"D\", \"F\"]}\n"}
+{"index": 197, "response": "{\"correct_answers\": [\"C\", \"D\"]}\n"}
+{"index": 198, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 199, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 200, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 201, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"B\"]}\n"}
+{"index": 202, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 203, "response": "{\"correct_answers\": [\"A\", \"C\"]}"}
+{"index": 204, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 205, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 206, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 207, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 208, "response": "{\"correct_answers\": [\"A\", \"B\"]}"}
+{"index": 209, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 210, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 211, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 212, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 213, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 214, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 215, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 216, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 217, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 218, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\", \"G\"]}\n"}
+{"index": 219, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 220, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 221, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 222, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 223, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 224, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 225, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 226, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 227, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 228, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 229, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 230, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 231, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\", \"G\"]}"}
+{"index": 232, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 233, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"H\"]}\n"}
+{"index": 234, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 235, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 236, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 237, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 238, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 239, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 240, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 241, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 242, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 243, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}"}
+{"index": 244, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 245, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 246, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 247, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 248, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 249, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 250, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 251, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 252, "response": "{\"correct_answers\": [\"A\", \"D\", \"B\", \"C\"]}\n"}
+{"index": 253, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 254, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 255, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 256, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 257, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 258, "response": "{\"correct_answers\": [\"A\", \"B\", \"B\"]}\n"}
+{"index": 259, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 260, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 261, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 262, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 263, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 264, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 265, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 266, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 267, "response": "{\"correct_answers\": [\"A\", \"D\"]}\n"}
+{"index": 268, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 269, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 270, "response": "{\"correct_answers\": [\"A\", \"D\"]}\n"}
+{"index": 271, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 272, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 273, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 274, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 275, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 276, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 277, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 278, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 279, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 280, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 281, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 282, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 283, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 284, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 285, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 286, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n```"}
+{"index": 287, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 288, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 289, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 290, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 291, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 292, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 293, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 294, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}"}
+{"index": 295, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 296, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 297, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 298, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 299, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 300, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 301, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 302, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 303, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 304, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 305, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 306, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 307, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 308, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 309, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 310, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}"}
+{"index": 311, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 312, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 313, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 314, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 315, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 316, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 317, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 318, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 319, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 320, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 321, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 322, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 323, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 324, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 325, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 326, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 327, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 328, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\"]}"}
+{"index": 329, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 330, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 331, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 332, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 333, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 334, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 335, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 336, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 337, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 338, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 339, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 340, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 341, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}"}
+{"index": 342, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 343, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 344, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 345, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 346, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 347, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 348, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 349, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 350, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 351, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 352, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 353, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 354, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 355, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 356, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 357, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 358, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 359, "response": "{\"correct_answers\": [\"B\", \"E\", \"F\"]}\n"}
+{"index": 360, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}"}
+{"index": 361, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 362, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 363, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 364, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 365, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 366, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 367, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 368, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 369, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\", \"G\"]}"}
+{"index": 370, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 371, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 372, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 373, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 374, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 375, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 376, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}"}
+{"index": 377, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 378, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 379, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 380, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 381, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 382, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 383, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 384, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 385, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 386, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 387, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 388, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 389, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 390, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 391, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 392, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 393, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 394, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 395, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 396, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 397, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 398, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 399, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 400, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 401, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"G\", \"H\"]}\n"}
+{"index": 402, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 403, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 404, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 405, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 406, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 407, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 408, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 409, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 410, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 411, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 412, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 413, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 414, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 415, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 416, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 417, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 418, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 419, "response": "{\"correct_answers\": [\"A\", \"B\", \"G\", \"H\"]}"}
+{"index": 420, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 421, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 422, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 423, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 424, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 425, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 426, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 427, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 428, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 429, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 430, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 431, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 432, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 433, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\"]}\n```"}
+{"index": 434, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 435, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 436, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 437, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 438, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 439, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 440, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 441, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 442, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 443, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 444, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 445, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 446, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 447, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 448, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 449, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\", \"G\"]}\n"}
+{"index": 450, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 451, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 452, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 453, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 454, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}"}
+{"index": 455, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 456, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}"}
+{"index": 457, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 458, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 459, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 460, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 461, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 462, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 463, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 464, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 465, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 466, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 467, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 468, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n```"}
+{"index": 469, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 470, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 471, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 472, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 473, "response": "{\"correct_answers\": [\"B\"]}\n"}
+{"index": 474, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 475, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 476, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 477, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 478, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 479, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 480, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 481, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 482, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 483, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 484, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 485, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 486, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 487, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 488, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}\n"}
+{"index": 489, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 490, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"G\", \"H\"]}\n"}
+{"index": 491, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 492, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 493, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 494, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 495, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 496, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 497, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 498, "response": "{\"correct_answers\": [\"B\", \"D\", \"F\", \"G\"]}\n"}
+{"index": 499, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 500, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 501, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 502, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 503, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 504, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 505, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 506, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 507, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 508, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 509, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 510, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 511, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 512, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 513, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 514, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 515, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 516, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 517, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 518, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 519, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 520, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}"}
+{"index": 521, "response": "{\"correct_answers\": [\"B\", \"D\"]}"}
+{"index": 522, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 523, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 524, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 525, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 526, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 527, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}\n"}
+{"index": 528, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 529, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 530, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 531, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 532, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 533, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 534, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 535, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 536, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 537, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 538, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 539, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 540, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 541, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 542, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 543, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 544, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 545, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 546, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 547, "response": "```json\n{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\", \"E\", \"G\", \"H\"]}\n```"}
+{"index": 548, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 549, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 550, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 551, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 552, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 553, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 554, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 555, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 556, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 557, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\"]}\n"}
+{"index": 558, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 559, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 560, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 561, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 562, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 563, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 564, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 565, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 566, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 567, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 568, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 569, "response": "{\"correct_answers\": [\"A\", \"F\"]}\n"}
+{"index": 570, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 571, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 572, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 573, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 574, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 575, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 576, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 577, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 578, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 579, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 580, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 581, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 582, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 583, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 584, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 585, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 586, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 587, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 588, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 589, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 590, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 591, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 592, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 593, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 594, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 595, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 596, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 597, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 598, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 599, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 600, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 601, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 602, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 603, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 604, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 605, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 606, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 607, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 608, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}"}
+{"index": 0, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 1, "response": "{\"correct_answers\": [\"A\", \"D\"]}\n"}
+{"index": 2, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\", \"H\", \"I\"]}"}
+{"index": 3, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 4, "response": "{\"correct_answers\": [\"B\", \"E\"]}\n"}
+{"index": 5, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 6, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 7, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"I\"]}\n"}
+{"index": 8, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 9, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 10, "response": "{\"correct_answers\": [\"B\", \"C\"]}"}
+{"index": 11, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 12, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 13, "response": "{\"correct_answers\": [\"A\", \"F\"]}\n"}
+{"index": 14, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 15, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 16, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 17, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 18, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 19, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 20, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\", \"I\"]}\n"}
+{"index": 21, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 22, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 23, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 24, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 25, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 26, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 27, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 28, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 29, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 30, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 31, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 32, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 33, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 34, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 35, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 36, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 37, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 38, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 39, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 40, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}"}
+{"index": 41, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 42, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 43, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 44, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 45, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 46, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"H\", \"I\"]}"}
+{"index": 47, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 48, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 49, "response": "{\"correct_answers\": [\"B\", \"D\", \"H\"]}"}
+{"index": 50, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 51, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}"}
+{"index": 52, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 53, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 54, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 55, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 56, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"H\", \"I\", \"J\"]}"}
+{"index": 57, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 58, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 59, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}"}
+{"index": 60, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 61, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 62, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 63, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 64, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 65, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 66, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 67, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 68, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 69, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}"}
+{"index": 70, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 71, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 72, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 73, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 74, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\"]}"}
+{"index": 75, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 76, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 77, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 78, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 79, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"G\", \"F\"]}"}
+{"index": 80, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\", \"G\"]}"}
+{"index": 81, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 82, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 83, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 84, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 85, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 86, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 87, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 88, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 89, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 90, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 91, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 92, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\", \"G\", \"E\"]}"}
+{"index": 93, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 94, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 95, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}"}
+{"index": 96, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 97, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 98, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 99, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 100, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 101, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 102, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 103, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 104, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 105, "response": "{\"correct_answers\": [\"D\"]}\n"}
+{"index": 106, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 107, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 108, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 109, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 110, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 111, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 112, "response": "{\"correct_answers\": [\"A\", \"C\"]}"}
+{"index": 113, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 114, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 115, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 116, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 117, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 118, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 119, "response": "{\"correct_answers\": [\"A\", \"E\"]}"}
+{"index": 120, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 121, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 122, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 123, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 124, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 125, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 126, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 127, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 128, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 129, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 130, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 131, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 132, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 133, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 134, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 135, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 136, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 137, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\"]}"}
+{"index": 138, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 139, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"I\"]}"}
+{"index": 140, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 141, "response": "{\"correct_answers\": [\"A\", \"B\"]}"}
+{"index": 142, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 143, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 144, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 145, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 146, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 147, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 148, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 149, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 150, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 151, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 152, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 153, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 154, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 155, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 156, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 157, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 158, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 159, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 160, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 161, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 162, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 163, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 164, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 165, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 166, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 167, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 168, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 169, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 170, "response": "{\"correct_answers\": [\"B\", \"D\"]}\n"}
+{"index": 171, "response": "{\n    \"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]\n}\n"}
+{"index": 172, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 173, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 174, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 175, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 176, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 177, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 178, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 179, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 180, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 181, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}\n"}
+{"index": 182, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 183, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 184, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 185, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 186, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 187, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 188, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 189, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"G\", \"H\"]}"}
+{"index": 190, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"G\"]}"}
+{"index": 191, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 192, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 193, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 194, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}"}
+{"index": 195, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 196, "response": "{\"correct_answers\": [\"B\", \"D\", \"F\"]}"}
+{"index": 197, "response": "{\"correct_answers\": [\"C\", \"D\"]}"}
+{"index": 198, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 199, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 200, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}"}
+{"index": 201, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 202, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 203, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 204, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 205, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 206, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 207, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 208, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 209, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 210, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 211, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 212, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 213, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 214, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 215, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 216, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 217, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 218, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 219, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\"]}"}
+{"index": 220, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 221, "response": "{\"correct_answers\": [\"B\", \"C\"]}"}
+{"index": 222, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}"}
+{"index": 223, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 224, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 225, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 226, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}"}
+{"index": 227, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 228, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 229, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 230, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 231, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"G\"]}"}
+{"index": 232, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 233, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 234, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\"]}"}
+{"index": 235, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 236, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 237, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 238, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 239, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 240, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 241, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 242, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 243, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 244, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 245, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 246, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 247, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 248, "response": "{\"correct_answers\": [\"B\", \"D\", \"C\"]}"}
+{"index": 249, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 250, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 251, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 252, "response": "{\"correct_answers\": [\"A\", \"D\", \"B\", \"E\"]}"}
+{"index": 253, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 254, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 255, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 256, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 257, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 258, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 259, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 260, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 261, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 262, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 263, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 264, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 265, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 266, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 267, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 268, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 269, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 270, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 271, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 272, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 273, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 274, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 275, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 276, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 277, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 278, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 279, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 280, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 281, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 282, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 283, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 284, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 285, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 286, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 287, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 288, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}"}
+{"index": 289, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 290, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 291, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 292, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 293, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 294, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 295, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 296, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 297, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 298, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 299, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 300, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 301, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 302, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 303, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 304, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 305, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 306, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 307, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 308, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 309, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 310, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 311, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 312, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}"}
+{"index": 313, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 314, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 315, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 316, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 317, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 318, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 319, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 320, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 321, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 322, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 323, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 324, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 325, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 326, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 327, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\", \"G\"]}"}
+{"index": 328, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}"}
+{"index": 329, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 330, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 331, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 332, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 333, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 334, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 335, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 336, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 337, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 338, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 339, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 340, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 341, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}"}
+{"index": 342, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 343, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 344, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 345, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 346, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 347, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 348, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 349, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 350, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 351, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\", \"H\"]}"}
+{"index": 352, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 353, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 354, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 355, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 356, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}"}
+{"index": 357, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 358, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 359, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 360, "response": "{\"correct_answers\": [\"C\", \"E\", \"F\"]}\n"}
+{"index": 361, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 362, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 363, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 364, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 365, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 366, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 367, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 368, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 369, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}"}
+{"index": 370, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 371, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 372, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 373, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 374, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 375, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 376, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}"}
+{"index": 377, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 378, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 379, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 380, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 381, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 382, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 383, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 384, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 385, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 386, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 387, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 388, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 389, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 390, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 391, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 392, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}"}
+{"index": 393, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 394, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 395, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 396, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 397, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}"}
+{"index": 398, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 399, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 400, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\", \"G\", \"H\", \"I\"]}"}
+{"index": 401, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 402, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 403, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 404, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 405, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 406, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 407, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 408, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 409, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 410, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 411, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 412, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 413, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 414, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 415, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 416, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 417, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 418, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 419, "response": "{\"correct_answers\": [\"A\", \"B\", \"G\", \"H\"]}"}
+{"index": 420, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 421, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 422, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 423, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 424, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 425, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 426, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 427, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 428, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 429, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 430, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 431, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 432, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 433, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 434, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 435, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 436, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 437, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 438, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 439, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 440, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 441, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 442, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 443, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 444, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 445, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 446, "response": "{\"correct_answers\": [\"C\"]}\n"}
+{"index": 447, "response": "{\"correct_answers\": [\"B\", \"D\", \"A\"]}"}
+{"index": 448, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 449, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"F\", \"G\"]}"}
+{"index": 450, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 451, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 452, "response": "{\"correct_answers\": [\"C\", \"E\"]}"}
+{"index": 453, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 454, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 455, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 456, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}"}
+{"index": 457, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 458, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 459, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 460, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 461, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 462, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 463, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 464, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 465, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 466, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 467, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 468, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 469, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 470, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 471, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 472, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 473, "response": "{\"correct_answers\": [\"B\"]}\n"}
+{"index": 474, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 475, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 476, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 477, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 478, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 479, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}"}
+{"index": 480, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 481, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 482, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 483, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 484, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 485, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 486, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 487, "response": "{\"correct_answers\": [\"B\", \"C\"]}"}
+{"index": 488, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}\n"}
+{"index": 489, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 490, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 491, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 492, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 493, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 494, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 495, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 496, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 497, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 498, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 499, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 500, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 501, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 502, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 503, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 504, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 505, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 506, "response": "{\"correct_answers\": [\"A\", \"C\"]}"}
+{"index": 507, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 508, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 509, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 510, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 511, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 512, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 513, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 514, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 515, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 516, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 517, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 518, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 519, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 520, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\"]}"}
+{"index": 521, "response": "{\"correct_answers\": [\"B\", \"D\"]}"}
+{"index": 522, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 523, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 524, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 525, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 526, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 527, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 528, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 529, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 530, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 531, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 532, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 533, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 534, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 535, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}"}
+{"index": 536, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 537, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 538, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 539, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 540, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 541, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}"}
+{"index": 542, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 543, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 544, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 545, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}"}
+{"index": 546, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}"}
+{"index": 547, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}"}
+{"index": 548, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 549, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 550, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}"}
+{"index": 551, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 552, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 553, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 554, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 555, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 556, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 557, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 558, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 559, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 560, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 561, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 562, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}"}
+{"index": 563, "response": "{\"correct_answers\": [\"C\", \"D\"]}"}
+{"index": 564, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 565, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 566, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 567, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 568, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 569, "response": "{\"correct_answers\": [\"A\", \"F\"]}"}
+{"index": 570, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 571, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 572, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}"}
+{"index": 573, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 574, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 575, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}"}
+{"index": 576, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 577, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 578, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 579, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 580, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 581, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 582, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 583, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 584, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}"}
+{"index": 585, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 586, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}"}
+{"index": 587, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}"}
+{"index": 588, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}"}
+{"index": 589, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}"}
+{"index": 590, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 591, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 592, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 593, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 594, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}"}
+{"index": 595, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 596, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 597, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 598, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}"}
+{"index": 599, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 600, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 601, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 602, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}"}
+{"index": 603, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 604, "response": "{\"correct_answers\": [\"C\", \"D\", \"F\"]}"}
+{"index": 605, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 606, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 607, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 608, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 0, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 1, "response": "{\"correct_answers\": [\"A\", \"D\"]}\n"}
+{"index": 2, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 3, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 4, "response": "{\"correct_answers\": [\"B\", \"E\"]}\n"}
+{"index": 5, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 6, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 7, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"I\"]}\n"}
+{"index": 8, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 9, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 10, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 11, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 12, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 13, "response": "{\"correct_answers\": [\"A\", \"F\"]}\n"}
+{"index": 14, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 15, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 16, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 17, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 18, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 19, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 20, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\", \"G\", \"I\"]}\n"}
+{"index": 21, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 22, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 23, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 24, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 25, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 26, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 27, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 28, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 29, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 30, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 31, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 32, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 33, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 34, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 35, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 36, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 37, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 38, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 39, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 40, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 41, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 42, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 43, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 44, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 45, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 46, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"H\"]}\n"}
+{"index": 47, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 48, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 49, "response": "{\"correct_answers\": [\"B\", \"D\", \"H\"]}\n"}
+{"index": 50, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 51, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 52, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 53, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 54, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 55, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 56, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 57, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 58, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 59, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 60, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 61, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 62, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 63, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 64, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 65, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 66, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 67, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 68, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 69, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"H\"]}\n"}
+{"index": 70, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 71, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 72, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 73, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 74, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\"]}\n"}
+{"index": 75, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 76, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}"}
+{"index": 77, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 78, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 79, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"G\"]}\n"}
+{"index": 80, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 81, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 82, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 83, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 84, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 85, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 86, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 87, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 88, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 89, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 90, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 91, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 92, "response": "{\"correct_answers\": [\"C\", \"F\", \"E\", \"B\"]}"}
+{"index": 93, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 94, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 95, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 96, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 97, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 98, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 99, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 100, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 101, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 102, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 103, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 104, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 105, "response": "{\"correct_answers\": [\"D\"]}\n"}
+{"index": 106, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 107, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 108, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 109, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 110, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 111, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 112, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 113, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 114, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 115, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 116, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 117, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 118, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 119, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 120, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 121, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 122, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 123, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 124, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 125, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 126, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 127, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 128, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 129, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 130, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 131, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 132, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"G\", \"H\", \"I\", \"J\"]}\n"}
+{"index": 133, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 134, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 135, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 136, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 137, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\"]}\n"}
+{"index": 138, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 139, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"I\"]}\n"}
+{"index": 140, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 141, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 142, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 143, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 144, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 145, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 146, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 147, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 148, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 149, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 150, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 151, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 152, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 153, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 154, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 155, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 156, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 157, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 158, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 159, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 160, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 161, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 162, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 163, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 164, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 165, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 166, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 167, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 168, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 169, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 170, "response": "{\"correct_answers\": [\"B\", \"D\"]}\n"}
+{"index": 171, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 172, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 173, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 174, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 175, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 176, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 177, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 178, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 179, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 180, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 181, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}\n"}
+{"index": 182, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 183, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 184, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 185, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 186, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 187, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 188, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 189, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 190, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"G\"]}\n"}
+{"index": 191, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 192, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 193, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 194, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 195, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 196, "response": "{\"correct_answers\": [\"B\", \"D\", \"F\"]}\n"}
+{"index": 197, "response": "{\"correct_answers\": [\"C\", \"D\"]}\n"}
+{"index": 198, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 199, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 200, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 201, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 202, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 203, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 204, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 205, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 206, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 207, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 208, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 209, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 210, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 211, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 212, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 213, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 214, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 215, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 216, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 217, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 218, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 219, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\"]}\n"}
+{"index": 220, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 221, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 222, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 223, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 224, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 225, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 226, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}\n"}
+{"index": 227, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 228, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 229, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 230, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 231, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"G\"]}\n"}
+{"index": 232, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 233, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 234, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"G\"]}\n"}
+{"index": 235, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 236, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 237, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 238, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 239, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 240, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 241, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 242, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 243, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 244, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 245, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 246, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 247, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 248, "response": "{\"correct_answers\": [\"B\", \"D\", \"C\"]}\n"}
+{"index": 249, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 250, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 251, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 252, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 253, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 254, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 255, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 256, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 257, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 258, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 259, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 260, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 261, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 262, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 263, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 264, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 265, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 266, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 267, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 268, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 269, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 270, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 271, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 272, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 273, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 274, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 275, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 276, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 277, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 278, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 279, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 280, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 281, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 282, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 283, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 284, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 285, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 286, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 287, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 288, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 289, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 290, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 291, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 292, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 293, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 294, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 295, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 296, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 297, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 298, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 299, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 300, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 301, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 302, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 303, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 304, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 305, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 306, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 307, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 308, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 309, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 310, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 311, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 312, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 313, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 314, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 315, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 316, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 317, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 318, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 319, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 320, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 321, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 322, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 323, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 324, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 325, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 326, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 327, "response": "{\"correct_answers\": [\"A\", \"C\", \"G\", \"F\"]}\n"}
+{"index": 328, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 329, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 330, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 331, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 332, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 333, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 334, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 335, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 336, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 337, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 338, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 339, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 340, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 341, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 342, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 343, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 344, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 345, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 346, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 347, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 348, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 349, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 350, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 351, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 352, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 353, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 354, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 355, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 356, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 357, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 358, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 359, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 360, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 361, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 362, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 363, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 364, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 365, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 366, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 367, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 368, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 369, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 370, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 371, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 372, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 373, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 374, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 375, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 376, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 377, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 378, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 379, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 380, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 381, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 382, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 383, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 384, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 385, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 386, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 387, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 388, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 389, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 390, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 391, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 392, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 393, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 394, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 395, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 396, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 397, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 398, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 399, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 400, "response": "{\"correct_answers\": [\"A\", \"D\", \"F\", \"G\", \"H\", \"I\"]}\n"}
+{"index": 401, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 402, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 403, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 404, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 405, "response": "{\"correct_answers\": [\"A\", \"D\", \"B\"]}\n"}
+{"index": 406, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 407, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 408, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 409, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 410, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 411, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 412, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 413, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 414, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 415, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 416, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 417, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 418, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 419, "response": "{\"correct_answers\": [\"A\", \"B\", \"H\"]}"}
+{"index": 420, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 421, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 422, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 423, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 424, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 425, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 426, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 427, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 428, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 429, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 430, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 431, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 432, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 433, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 434, "response": "{\"correct_answers\": [\"A\", \"D\"]}\n"}
+{"index": 435, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 436, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 437, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 438, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 439, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 440, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 441, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}"}
+{"index": 442, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 443, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 444, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 445, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 446, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 447, "response": "{\"correct_answers\": [\"B\", \"D\", \"A\"]}\n"}
+{"index": 448, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 449, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"F\", \"G\"]}\n"}
+{"index": 450, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 451, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 452, "response": "{\"correct_answers\": [\"C\", \"E\"]}\n"}
+{"index": 453, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 454, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 455, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 456, "response": "{\"correct_answers\": [\"B\", \"C\", \"E\"]}\n"}
+{"index": 457, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 458, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 459, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 460, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 461, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 462, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 463, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 464, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 465, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 466, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 467, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 468, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 469, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 470, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 471, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 472, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 473, "response": "{\"correct_answers\": [\"B\"]}\n"}
+{"index": 474, "response": "{\"correct_answers\": [\"A\", \"C\", \"E\"]}\n"}
+{"index": 475, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 476, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 477, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 478, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 479, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 480, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 481, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 482, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 483, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 484, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 485, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 486, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 487, "response": "{\"correct_answers\": [\"B\", \"C\"]}\n"}
+{"index": 488, "response": "{\"correct_answers\": [\"B\", \"C\", \"F\"]}\n"}
+{"index": 489, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 490, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"G\", \"H\"]}\n"}
+{"index": 491, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 492, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 493, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 494, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 495, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 496, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 497, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 498, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}\n"}
+{"index": 499, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 500, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 501, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 502, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 503, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 504, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 505, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 506, "response": "{\"correct_answers\": [\"A\", \"C\"]}\n"}
+{"index": 507, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 508, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 509, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 510, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 511, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 512, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\", \"G\"]}\n"}
+{"index": 513, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 514, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 515, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 516, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 517, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 518, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 519, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 520, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 521, "response": "{\"correct_answers\": [\"B\", \"D\"]}\n"}
+{"index": 522, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 523, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 524, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 525, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 526, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 527, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 528, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 529, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 530, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\"]}"}
+{"index": 531, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 532, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 533, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"F\", \"G\", \"H\"]}\n"}
+{"index": 534, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 535, "response": "{\"correct_answers\": [\"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 536, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 537, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 538, "response": "{\"correct_answers\": [\"A\"]}\n"}
+{"index": 539, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 540, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 541, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 542, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 543, "response": "{\"correct_answers\": [\"A\", \"E\"]}\n"}
+{"index": 544, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 545, "response": "{\"correct_answers\": [\"A\", \"E\", \"F\"]}\n"}
+{"index": 546, "response": "{\"correct_answers\": [\"A\", \"C\", \"F\"]}\n"}
+{"index": 547, "response": "{\"correct_answers\": [\"A\", \"B\", \"F\"]}\n"}
+{"index": 548, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 549, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 550, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\"]}\n"}
+{"index": 551, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 552, "response": "{\"correct_answers\": [\"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 553, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 554, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 555, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 556, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 557, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 558, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 559, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 560, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 561, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 562, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\", \"G\"]}\n"}
+{"index": 563, "response": "{\"correct_answers\": [\"C\", \"D\"]}\n"}
+{"index": 564, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\"]}\n"}
+{"index": 565, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 566, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 567, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 568, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 569, "response": "{\"correct_answers\": [\"A\", \"F\"]}\n"}
+{"index": 570, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 571, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 572, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 573, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 574, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 575, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\", \"F\"]}\n"}
+{"index": 576, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 577, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 578, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 579, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 580, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\", \"F\"]}\n"}
+{"index": 581, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 582, "response": "{\"correct_answers\": [\"A\", \"B\"]}\n"}
+{"index": 583, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 584, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 585, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 586, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 587, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"F\"]}\n"}
+{"index": 588, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\"]}\n"}
+{"index": 589, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 590, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 591, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 592, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 593, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"F\"]}\n"}
+{"index": 594, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 595, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 596, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\"]}\n"}
+{"index": 597, "response": "{\"correct_answers\": [\"A\", \"B\", \"E\"]}\n"}
+{"index": 598, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"E\"]}\n"}
+{"index": 599, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 600, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 601, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}\n"}
+{"index": 602, "response": "{\"correct_answers\": [\"A\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 603, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"]}\n"}
+{"index": 604, "response": "{\"correct_answers\": [\"C\", \"D\", \"F\"]}\n"}
+{"index": 605, "response": "{\"correct_answers\": [\"A\", \"B\", \"D\", \"E\"]}\n"}
+{"index": 606, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"D\"]}\n"}
+{"index": 607, "response": "{\"correct_answers\": [\"A\", \"B\", \"C\", \"F\"]}\n"}
+{"index": 608, "response": "{\"correct_answers\": [\"A\", \"D\", \"E\", \"F\"]}\n"}

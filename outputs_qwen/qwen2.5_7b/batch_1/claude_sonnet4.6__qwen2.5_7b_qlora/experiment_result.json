@@ -1,0 +1,104 @@
+{
+  "teacher": "anthropic/claude-sonnet-4-6",
+  "student": "Qwen/Qwen2.5-7B-Instruct",
+  "best_accuracy": 0.7777777777777778,
+  "final_proficiency": "7",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 86,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 8,
+      "accuracy": 0.7777777777777778,
+      "avg_jaccard": 0.8851851851851852,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "ransomware",
+        "infostealers",
+        "under-selection",
+        "Anti-Recovery Techniques",
+        "Process Injection Detection",
+        "Defense Evasion"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 7,
+      "accuracy": 0.4117647058823529,
+      "avg_jaccard": 0.8215686274509804,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 17,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "under-selection of injection-supporting reconnaissance APIs"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 7,
+      "accuracy": 0.4444444444444444,
+      "avg_jaccard": 0.8511904761904763,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "Defense Evasion"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 7,
+      "accuracy": 0.5,
+      "avg_jaccard": 0.8229166666666667,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 16,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "under-selection of firewall modification as Defense Evasion",
+        "under-selection of indicator removal behaviors",
+        "ransomware (WannaCry-style)",
+        "under-selection of Disable or Modify Tools (T1562.001) via registry",
+        "semantic confusion between Discovery and Defense Evasion for service/registry access APIs",
+        "under-selection of masquerading via system directory drops",
+        "over-selection in Worm.Ludbaruma process injection classification",
+        "medium difficulty"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 7,
+      "accuracy": 0.4117647058823529,
+      "avg_jaccard": 0.8235294117647057,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 17,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "ransomware",
+        "over-selection of plausible distractors",
+        "remcos_rat",
+        "av_edr_killers",
+        "ATT&CK tactic boundary disambiguation",
+        "under-selection of persistence-as-evasion",
+        "hard"
+      ]
+    }
+  ],
+  "experiment": "claude_sonnet4.6__qwen2.5_7b_qlora",
+  "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora",
+  "status": "completed",
+  "duration_seconds": 16176.9
+}

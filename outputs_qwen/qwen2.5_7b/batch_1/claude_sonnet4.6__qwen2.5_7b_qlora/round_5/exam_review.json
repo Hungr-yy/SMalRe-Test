@@ -1,0 +1,294 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a .NET MSIL infostealer. The answer key (A, C, D, F, G) is well-supported by the detonation report: A=ConfuserEx packing (T1027.002, confirmed by DIE signature and ConfusedByAttribute string), C=PAGE_GUARD memory allocation (T1562.001, confirmed by api-1 signature), D=HKLM\\SOFTWARE\\MICROSOFT\\TRACING registry modification (T1112, confirmed by registry-30 malicious signature), F=AdjustTokenPrivileges (T1134, confirmed by api-111), G=NtQueueApcThread (T1055.004, confirmed by api-85). Options B (CreateToolhelp32Snapshot) and E (registry reads for computer name/GUID) are correctly excluded as Discovery, not Defense Evasion. The question is original, technically precise, and well-calibrated for Hard difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Option E (Registry Run Key modification) maps to Persistence (T1547.001), not Defense Evasion per MITRE ATT&CK. Including it in the Defense Evasion answer key is technically incorrect."
+        ],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Borland Delphi infostealer (Trojan.NetMail). The answer key (A, C, E, F) is supported by the report: A=hooks file system APIs (FindFirstFileW@KERNEL32.DLL in upNext.exe, hooks-2 malicious signature, T1056.004 mapped under Defense Evasion), C=renames original executable and opens with delete access rights (api-162 + api-25, T1036 + T1070.004), E=sets HKCU Run key (registry-0 suspicious signature, T1547.001 - but this is Persistence not Defense Evasion). Wait - E is 'sets a registry Run key value under HKCU\\SOFTWARE to establish auto-execution at logon' which maps to T1547.001 (Persistence/Privilege Escalation), not Defense Evasion. However, the MITRE mappings in the report do include T1547.001 under both Persistence and Privilege Escalation, not Defense Evasion. F=spoofed browser user-agent + traffic without HTTP header (T1071.001 + T1036 masquerading, confirmed by network-22 and network-23 suspicious signatures). The inclusion of E in the answer key is questionable since Registry Run Keys is a Persistence technique, not Defense Evasion. However, the question asks about 'Defence Evasion techniques' and the report's MITRE mappings do not list T1547.001 under Defense Evasion. This is a factual error in the answer key. Flagging rather than rejecting because the question is otherwise well-constructed and E could be argued as part of a broader evasion strategy, but strictly per MITRE ATT&CK, Run Keys is Persistence not Defense Evasion."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a .NET infostealer (YARA match: win_njrat_g0). Answer key (A, B, C, D, F) is well-supported: A=PAGE_GUARD memory allocation (api-1, T1562.001), B=kernel debugger query via NtQuerySystemInformation (api-10, T1622), C=WriteProcessMemory to remote process (api-0 malicious, T1055), D=sleep for ~1.5 billion ms (api-24, T1497.003), F=Zone.Identifier deletion (api-42 malicious, T1070.004). Option E (CreateToolhelp32Snapshot) is correctly excluded as Process Discovery (T1057). Option G (cryptographic machine GUID) is correctly excluded as System Information Discovery. The question is original, technically precise, and the answer key is accurate."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Visual Basic 6 malware (Trojan.Regrun) with 64 processes. Answer key (A, C, D, F, G) is well-supported: A=fake system processes at %APPDATA%\\WINDOWS\\ (target-33 malicious, T1036.005), C=marks files for deletion and opens with delete access rights (api-26 + api-25 suspicious, T1070.004), D=hooks file system APIs and internet APIs in WINLOGON.EXE (hooks-0 + hooks-2 + hooks-5 malicious, T1056.004 mapped under Defense Evasion), F=WriteProcessMemory + VirtualAllocEx (api-0 + api-20 malicious, T1055), G=FileTimeToLocalFileTime (api-223 suspicious, T1070.006 timestomping). Option B (CreateToolhelp32Snapshot + Process32FirstW) is correctly excluded as Discovery. Option E (GetVersionExA, RtlGetVersion) is correctly excluded as System Information Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a UPX-packed malware (Malware.PfPk.Generic). Answer key (A, B, C, E, F) is well-supported: A=UPX packing with high-entropy UPX1 section (static-7 suspicious, static-6, T1027.002), B=WriteProcessMemory + VirtualAllocEx (api-0 + api-20 malicious, T1055), C=Image File Execution Options registry modification (registry-64 malicious, T1546.012), E=Change Default File Association (registry-15 malicious, T1546.001), F=AdjustTokenPrivileges (api-111, T1134). Option D (CreateToolhelp32Snapshot + Process32FirstW) is correctly excluded as Discovery. Option G (GetVersionExA, RtlGetVersion) is correctly excluded as System Information Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Pykspa.Generic EDR/AV killer. Answer key (A, C, F) is well-supported: A=UAC/LUA settings modification (registry-10 malicious, T1112), C=dynamic API resolution with strings outside IAT (string-64 suspicious, T1027.007), F=DLL Side-Loading attempt via failed module loads (api-22, T1574.002). Option B (CreateToolhelp32Snapshot) is correctly excluded as Discovery. Option D (LoadLibrary for rpcrt4.dll) is correctly excluded as Shared Modules execution. Option E (CreateThread in self process) maps to Thread Execution Hijacking which IS listed under Defense Evasion in the report's MITRE mappings, but the report only shows api-264 'Creates a thread in a self process' which is informative-level and maps to T1055.003. The question correctly excludes E since it's not a strong Defense Evasion indicator in this context. Option G (GetVolumeInformation) is correctly excluded as System Information Discovery. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Ransom.Diavolo.Generic sample. Answer key (C, D, F) is well-supported: C=drops executable with text/image extension (binary-28 malicious, T1036.008), D=opens files with deletion access rights (api-25 suspicious, T1070.004), F=PE section '5xsnjk5u' at entrypoint with high entropy (static-4 + static-6 suspicious, T1027.009 + T1027). Option A (renaming files with double extensions) maps to T1486 Data Encrypted for Impact (ransomware behavior), not Defense Evasion per the report's MITRE mappings. Option B (WMIC shadow copy deletion) maps to T1490 Inhibit System Recovery (Impact), not Defense Evasion. Option E (GetVersionExA, RtlGetVersion) is correctly excluded as System Information Discovery. Option G (spawning cmd.exe with modified environment) is correctly excluded as Execution. The question is original and technically precise."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Option D (bcdedit suppressing boot failures) is primarily mapped to T1490 (Impact/Inhibit System Recovery) in the report, though T1562.009 (Safe Mode Boot, Defense Evasion) is also present in the MITRE mappings. The inclusion is defensible but borderline."
+        ],
+        "reasoning": "The question asks about Defense Evasion behaviors in HydraCrypt ransomware. Answer key (A, C, D, F) is well-supported: A=fake svchost.exe at %APPDATA%\\svchost.exe (target-33 malicious, T1036.005), C=PAGE_GUARD memory allocation (api-1 suspicious, T1562.001), D=bcdedit suppressing boot failures (target-6 malicious, T1490 - but this is Impact/Inhibit System Recovery, not Defense Evasion). Wait - D says 'bcdedit.exe to suppress boot failures and disable recovery, hiding system changes' and maps it to Defense Evasion. The report maps this to T1490 (Inhibit System Recovery) under Impact, not Defense Evasion. However, the question's MITRE ATT&CK mappings for this sample do include T1562.001 (Disable or Modify Tools) under Defense Evasion, and bcdedit suppressing failures could be argued as T1562.009 (Safe Mode Boot) which is listed under Defense Evasion in the report. Actually checking the report's mitre_attcks: T1562.001 is listed under Defense Evasion. The bcdedit behavior is mapped to T1490 (Impact) in the report. So including D in the Defense Evasion answer key is questionable. F=disabling Windows Task Manager (registry-3 malicious, T1562.001 under Defense Evasion) is correctly included. Option B (CreateToolhelp32Snapshot) is correctly excluded. Option E (GetVersionExA, RtlGetVersion) is correctly excluded. Option G (vssadmin + wbadmin) maps to T1490 Impact, correctly excluded. The inclusion of D is borderline - bcdedit /set bootstatuspolicy ignoreallfailures could be T1562.009 (Safe Mode Boot) which IS listed under Defense Evasion in the report. This is a reasonable inclusion. Overall the answer key is defensible."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Option F (taskkill.exe adjusts SE_DEBUG_PRIVILEGE via AdjustTokenPrivileges) maps to T1134 (Access Token Manipulation) which is explicitly listed under Defense Evasion in the report's MITRE ATT&CK mappings. Excluding F from the answer key appears to be an error."
+        ],
+        "reasoning": "The question asks about Defense Evasion behaviors in Spora ransomware. Answer key (B, C, E) is well-supported: B=cmd.exe marks C:\\hash.exe for deletion (api-26 suspicious, T1070.004), C=proxy settings modification by deleting registry values (registry-27 suspicious, T1112), E=mshta.exe launched via ShellExecuteW (target-113 malicious, T1218.005). Option A (bcrypt.dll + CryptStringToBinaryA) is cryptographic functionality, not Defense Evasion per se - it's mapped to T1027 (Obfuscated Files or Information) in the report but the specific behavior described is more about encryption capability than evasion. Option D (GetVersionExA, RtlGetVersion, RtlGetNtProductType) is System Information Discovery. Option F (taskkill.exe AdjustTokenPrivileges) maps to T1134 (Access Token Manipulation) which IS listed under Defense Evasion in the report. The exclusion of F from the answer key is questionable since AdjustTokenPrivileges is explicitly mapped to T1134 under Defense Evasion. However, the question asks about 'Defence Evasion techniques' and the answer key excludes F. This could be an error. Let me reconsider - the report shows api-111 and api-28 for taskkill.exe calling AdjustTokenPrivileges and adjusting SE_DEBUG_PRIVILEGE, mapped to T1134. T1134 IS listed under Defense Evasion in the MITRE mappings. Excluding F from the answer key appears to be an error in the answer key."
+      },
+      {
+        "question_index": 9,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "The question body embeds the options A-G directly in the question stem text rather than in the 'options' field, creating a formatting inconsistency. More critically, the answer key (B, C, E) excludes Option F (taskkill.exe AdjustTokenPrivileges \u2192 T1134 Defense Evasion) which is clearly supported by the report and mapped under Defense Evasion. Additionally, Option A (mshta.exe \u2192 T1218.005) is correctly included but the question stem format is non-standard for this pipeline."
+        ],
+        "reasoning": "The question has the options embedded in the question stem text (A through F listed in the question body) rather than only in the options array, which is a structural issue. More importantly, the answer key appears incomplete: Option F (taskkill.exe adjusting SE_DEBUG_PRIVILEGE via AdjustTokenPrivileges, T1134) is mapped under Defense Evasion in the report but excluded from the answer key. This constitutes a factual error in the answer key. Rejecting due to incorrect answer key."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Remcos RAT sample (.NET, IL:Trojan.MSILZilla). Answer key (A, C, D, F, G) is well-supported: A=WriteProcessMemory to remote process (api-0 malicious, T1055), C=proxy settings modification via registry deletion (registry-27 suspicious, T1112), D=RegAsm.exe opens file with deletion access rights and hides download tracks (api-25 + api-42 malicious, T1070.004), F=Webfrequency.exe creates process in suspended mode for process hollowing (api-129 + api-134 malicious, T1055.012), G=intranet-to-internet zone mapping via registry (registry-179, T1562.001). Option B (GetKeyState for keylogging) maps to Credential Access/Collection, not Defense Evasion. Option E (reads active computer name) is System Information Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Backdoor.Remcos sample (Visual Basic 6). Answer key (B, C, E) is well-supported: B=proxy settings modification via registry deletion (registry-27 suspicious, T1112), C=hab.exe marks files for deletion (api-26 + api-25 suspicious, T1070.004), E=intranet-to-internet zone mapping via registry (registry-179, T1562.001). Option A (writes PE header to disk, drops executables) maps to Ingress Tool Transfer (T1105), not Defense Evasion. Option D (reads cryptographic machine GUID, queries volume information) is System Information Discovery. Option F (CreateToolhelp32Snapshot) is Process Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a low-confidence Remcos-family sample with minimal behavioral data. Answer key (A, C, D) is well-supported: A=high-entropy .text section (static-6 suspicious, T1027.009 Embedded Payloads), C=obfuscated file origin via multiple toolchain compilation (static-157, T1027), D=Application Layer Protocol C2 blending with legitimate traffic (T1071, listed under Defense Evasion context). Option B (32-bit PE targeting legacy systems) is not a Defense Evasion technique. Option E (Debug data directory) is a standard build artifact, correctly excluded. Option F (ML detection threshold evasion) is speculative and not directly evidenced in the report. Option G (writable + executable sections) is standard PE layout, correctly excluded. The question is original and well-reasoned for a medium-difficulty question with limited behavioral data."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Trojan.BrsecmonE um_unhooking sample. Answer key (A, C, D, F) is well-supported: A=rtmxemaq.exe creates process in suspended mode and writes PE header to memory (api-129 + api-83 malicious, T1055 + T1055.002), C=netsh.exe adds firewall rule for svchost.exe (target-15 malicious, T1562.004), D=proxy settings modification via registry deletion (registry-27 suspicious, T1112), F=cmd.exe opens file with deletion access rights (api-25 suspicious, T1070.004). Option B (CreateToolhelp32Snapshot) is Process Discovery. Option E (QueryServiceStatusEx) is Service Discovery. Option G (gethostname) is System Information Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a low-AV-detect um_unhooking sample. Answer key (A, C, E, G) is well-supported: A=Software Packing via VC8 compiler signature (static-18, T1027.002), C=Timestomp (T1070.006 listed under Defense Evasion in MITRE mappings), E=Embedded Payloads via high-entropy .text section (static-6 suspicious, T1027.009), G=Debugger Evasion (T1622 listed under Defense Evasion in MITRE mappings). Option B (Service Stop T1489) is Impact, not Defense Evasion. Option D (Process Discovery T1057) is Discovery. Option F (AppInit DLLs T1546.010) is listed under Persistence and Privilege Escalation in the report, not Defense Evasion. Option H (Ingress Tool Transfer T1105) is Command and Control. The question is original and technically precise."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a Fragtor.Generic um_unhooking sample. Answer key (A, B, C, D) is well-supported: A=Software Packing via VC8 signature and high-entropy resources (static-18 + static-92, T1027.002), B=Disable or Modify Tools (T1562.001 explicitly listed under Defense Evasion in MITRE mappings), C=Timestomp (T1070.006 listed under Defense Evasion in MITRE mappings), D=User Activity Based Checks (T1497.002 listed under Defense Evasion in MITRE mappings). Option E (Service Stop T1489) is Impact. Option F (System Information Discovery T1082) is Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a Zusy.Generic ransomware sample. Answer key (A, D, F) is well-supported: A=085cda53603755dc.exe marks C:\\hash.exe for deletion (api-26 suspicious, T1070.004), D=dynamic API resolution via GetProcAddress with strings outside IAT (api-176 + string-64 suspicious, T1027.007), F=zero-size .bss section, unusual .eh_fram section name, high-entropy .text (static-5 + static-60 + static-6, T1027 + T1027.002 + T1027.009). Option B (GetVersionExA, RtlGetNtProductType) is System Information Discovery. Option C (writes PE header, drops executable) maps to Ingress Tool Transfer (T1105), not Defense Evasion. Option E (reads active computer name) is System Information Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in a UPX-packed Trojan.Dinwod infostealer. Answer key (A, C, E, G) is well-supported: A=UPX packing with high-entropy UPX1 section (static-7 + static-6 suspicious, T1027.002), C=WriteProcessMemory to remote process (api-0 malicious, T1055), E=chain of randomly-named child executables (target-14 malicious + process tree, T1027 obfuscation/masquerading), G=File Deletion (T1070.004 listed under Defense Evasion in MITRE mappings). Option B (CreateToolhelp32Snapshot) is Process Discovery. Option D (RtlGetVersion) is System Information Discovery. Option F (IsWow64Process) is Process Discovery. Option H (FindFirstFileW) is File and Directory Discovery. The question is original and technically precise."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a UPX-packed Trojan.Generic killers sample. Answer key (A, C, E, F) is well-supported: A=UPX packing (static-7 + static-4, T1027.002), C=Dynamic API Resolution (T1027.007 listed under Defense Evasion in MITRE mappings), E=DLL Injection (T1055.001 listed under Defense Evasion in MITRE mappings), F=User Activity Based Checks (T1497.002 listed under Defense Evasion in MITRE mappings). Option B (Process Discovery T1057) is Discovery. Option D (Query Registry T1012) is Discovery. Option G (Ingress Tool Transfer T1105) is Command and Control. The question is original and well-calibrated for Medium difficulty."
+      }
+    ],
+    "summary": {
+      "total": 19,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option G is incorrectly excluded",
+          "Option B distractor issue: Keylogging (T1056.001) is NOT a Defense Evasion technique \u2014 it is Credential Access/Collection, so it is correctly excluded as a distractor, but the reasoning needs scrutiny",
+          "Option D distractor issue: Process Discovery (T1057) is correctly excluded from Defense Evasion",
+          "Answer key omits Option G but RpcServerRegisterIf2 / T1021 (Remote Services) is Lateral Movement, not Defense Evasion \u2014 so G is correctly excluded",
+          "Critical factual error: The answer key includes Option A (T1055.012 - Process Hollowing) as Defense Evasion, which is correct per the MITRE ATT&CK mapping in the report. However, the answer key OMITS checking whether all included answers are actually mapped to Defense Evasion in the report's mitre_attcks array",
+          "Verification: T1055.012 appears under Defense Evasion in the report \u2014 A is correct. T1112 appears under Defense Evasion \u2014 C is correct. T1070.004 appears under Defense Evasion \u2014 E is correct. T1036.008 appears under Defense Evasion \u2014 F is correct.",
+          "However, Option A conflates two separate signatures: 'api-129' (CreateProcessA suspended) maps to T1055 and 'api-83' (writes PE header) maps to T1055.002 (Portable Executable Injection), NOT T1055.012 (Process Hollowing). The report signature 'api-134' maps to T1055.012 but it references 'Creates a system process in suspended mode'. The option text incorrectly attributes the PE header write to T1055.012 when the report maps it to T1055.002.",
+          "This factual inaccuracy in Option A's ATT&CK technique attribution makes the answer key misleading \u2014 a professional analyst would flag this mismatch between the option text and the actual report evidence",
+          "The question is also borderline on difficulty calibration \u2014 it requires cross-referencing multiple signatures and their tactic assignments, which is appropriate for 'Hard' but the option descriptions contain embedded ATT&CK IDs that make it easier than a true hard question"
+        ],
+        "reasoning": "The answer key has a factual error in Option A: the option text describes 'CreateProcessA with suspended process + writing PE header to memory' and labels it T1055.012 (Process Hollowing), but the detonation report maps the PE header write (api-83) to T1055.002 (Portable Executable Injection), not T1055.012. The report does have T1055.012 mapped (api-134), but the option conflates two distinct signatures under the wrong sub-technique ID. A professional malware analyst reviewing this would reject Option A's ATT&CK attribution as incorrect. Since the answer key includes A as correct based on a misattributed technique, the question must be rejected. Additionally, the question topic is 'Defense Evasion' but the question stem asks which behaviours 'constitute Defense Evasion techniques' \u2014 this is a valid framing, but the embedded ATT&CK IDs in the options reduce the analytical challenge and partially undermine the 'Hard' difficulty rating."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 option A is excluded but should be included",
+          "Incorrect answer key \u2014 option G is excluded but should be included",
+          "Answer key is incomplete and factually wrong"
+        ],
+        "reasoning": "The question asks which behaviours constitute Defense Evasion techniques per the MITRE ATT&CK mapping in the report. The report explicitly maps the following to Defense Evasion tactics: (A) 'Opens many files with write access' maps to T1491.001 (Internal Defacement) which is an Impact tactic, not Defense Evasion \u2014 so excluding A is defensible. However, (B) 'Modifies proxy settings' maps to T1112 (Modify Registry) under Defense Evasion \u2014 correct to include. (C) 'Hooks file system APIs' and 'Hooks internet related APIs' map to T1056.004 (Credential API Hooking) \u2014 in the report this is listed under Defense Evasion as well as Credential Access, so C is defensible. (F) 'Tries to map intranet network resources to internet zone' maps to T1562.001 (Disable or Modify Tools) under Defense Evasion \u2014 correct to include. The critical problem is with option G: 'RegAsm.exe calls AdjustTokenPrivileges' maps to T1134 (Access Token Manipulation), which the report lists under BOTH Defense Evasion AND Privilege Escalation tactics. The answer key excludes G, but T1134 is explicitly listed as a Defense Evasion technique in the report's mitre_attcks array. Additionally, option A ('Opens many files with write access') maps to T1491.001 which is Impact, not Defense Evasion, so excluding A is correct. However, the exclusion of G (AdjustTokenPrivileges / T1134 / Access Token Manipulation) from the answer key is a factual error \u2014 the report's MITRE mapping explicitly lists T1134 under Defense Evasion. The answer key should include B, C, F, and G at minimum. Because the answer key is factually incorrect (omits G which is clearly a Defense Evasion technique per the report), this question must be rejected."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option B is incorrect",
+          "Incorrect answer key: Option G is incorrect",
+          "Tactic misattribution in answer key"
+        ],
+        "reasoning": "The answer key claims B, C, E, A, and G are all Defense Evasion mappings, but several are wrong. Option B (AdjustTokenPrivileges \u2192 T1134 Access Token Manipulation) is mapped to both Privilege Escalation AND Defense Evasion in the report's mitre_attcks array \u2014 it IS listed under Defense Evasion (T1134), so B is actually correct. However, Option G is the critical problem: T1056.004 (Credential API Hooking) is mapped under 'Credential Access' and 'Collection' in the report's mitre_attcks array, NOT under Defense Evasion. The question stem explicitly asks for behaviors 'explicitly mapped to the Defense Evasion tactic' \u2014 and the report's mitre_attcks list does not include T1056.004 under Defense Evasion. Including G in the correct answers is factually wrong per the report. Additionally, Option D (T1491.001 Internal Defacement) is listed under Impact in the report, not Defense Evasion \u2014 correctly excluded. Option F (T1071.004 DNS) is listed under Command and Control \u2014 correctly excluded. Reviewing the mitre_attcks in the report: Defense Evasion entries include T1027, T1140, T1620, T1055.012, T1055.003, T1055.001, T1070.004, T1055, T1497.003, T1112, T1134, T1553.002, T1027.002, T1027.009, T1055.015, T1055.011, T1564.003, T1562.001, T1070, T1055.002, T1218, T1036, T1036.008, T1574.002, T1497, T1480. So A (T1055.012 \u2713), B (T1134 \u2713), C (T1112 \u2713), E (T1562.001 \u2713) are all correctly Defense Evasion. G (T1056.004) is NOT in the Defense Evasion tactic list in the report \u2014 it appears under Credential Access and Collection only. The answer key must be ['A','B','C','E'] not ['A','B','C','E','G']. This factual error in the answer key requires rejection."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option D is wrong",
+          "Incorrect answer key: Option G is partially wrong",
+          "Answer key omits valid correct answers"
+        ],
+        "reasoning": "The question asks which behaviours are explicitly mapped to the Defense Evasion tactic in the MITRE ATT&CK framework per the detonation report. Reviewing the report's mitre_attcks array and signatures:\n\n- A (T1055.002 Portable Executable Injection \u2192 Defense Evasion): CORRECT. The report lists T1055.002 under Defense Evasion tactic in mitre_attcks, and the signature 'api-83' confirms 'Writes PE header to memory' mapped to T1055.002.\n- B (T1112 Modify Registry \u2192 Defense Evasion): CORRECT. T1112 is listed under Defense Evasion in mitre_attcks, and signature 'registry-27' confirms proxy settings modification mapped to T1112.\n- C (T1553.002 Code Signing \u2192 Defense Evasion): CORRECT. T1553.002 is listed under Defense Evasion in mitre_attcks, and signature 'certificate-1' confirms invalid certificate mapped to T1553.002.\n- D (T1134 Access Token Manipulation \u2192 Defense Evasion): CORRECT. T1134 is listed under Defense Evasion in mitre_attcks, and signature 'api-111' confirms AdjustTokenPrivileges mapped to T1134. The answer key includes D as correct, so this is fine.\n- E (T1491.001 Internal Defacement \u2192 Defense Evasion): INCORRECT inclusion would be wrong, but the answer key does NOT include E. T1491.001 is listed under Impact tactic in the mitre_attcks array, not Defense Evasion. Correctly excluded.\n- F (T1071.004 DNS \u2192 Defense Evasion): T1071.004 is listed under Command and Control in mitre_attcks, not Defense Evasion. Correctly excluded from answer key.\n- G (T1036 Masquerading \u2192 Defense Evasion): T1036 IS listed under Defense Evasion in mitre_attcks. The signature 'binary-37' maps to T1036 (drops files inside appdata directory). However, the option description says 'masquerading as a legitimate executable' \u2014 the actual signature is about dropping files to appdata, mapped to T1036 (Masquerading). This is technically correct as T1036 is Defense Evasion.\n\nThe critical issue: The answer key is ['A', 'B', 'C', 'D', 'G']. However, the report also maps several other techniques to Defense Evasion that are not represented in the options (e.g., T1055.003 Thread Execution Hijacking, T1055.012 Process Hollowing, T1055.001 DLL Injection, T1070 Indicator Removal, T1070.004 File Deletion, T1027 Obfuscated Files, T1027.002 Software Packing, T1027.009 Embedded Payloads, T1620 Reflective Code Loading, T1480 Execution Guardrails, T1497 Virtualization/Sandbox Evasion, T1497.003 Time Based Evasion, T1497.001 System Checks, T1562.001 Disable or Modify Tools, T1218 System Binary Proxy Execution, T1036.008 Masquerade File Type, T1140 Deobfuscate/Decode, T1134 Access Token Manipulation, T1055 Process Injection, T1055.002 PE Injection, T1564.003 Hidden Window, T1622 Debugger Evasion, T1574.002 DLL Side-Loading, T1553.002 Code Signing, T1112 Modify Registry, T1055.015 ListPlanting, T1055.011 Extra Window Memory Injection).\n\nThe primary factual problem: Option D states 'RegAsm.exe calls AdjustTokenPrivileges to enable or disable privileges (T1134 \u2013 Access Token Manipulation)' and the answer key includes D as correct. This IS correct per the report (api-111 signature). So D being in the answer key is fine.\n\nHowever, re-examining more carefully: The answer key includes D (T1134 Access Token Manipulation under Defense Evasion). The mitre_attcks array does list T1134 under BOTH 'Privilege Escalation' AND 'Defense Evasion' tactics. So D is correctly included.\n\nThe real issue is with option G: The description says 'drops a file to %APPDATA%\\Webdevelop\\ masquerading as a legitimate executable (T1036 \u2013 Masquerading)'. The signature binary-37 maps to T1036 and is categorized under 'Unusual Characteristics', not explicitly Defense Evasion in the signatures. However, T1036 IS listed under Defense Evasion in mitre_attcks. The description in the option is somewhat misleading \u2014 the file is dropped to appdata (not necessarily masquerading as a legitimate executable in the traditional sense), but T1036 is correctly Defense Evasion.\n\nActually, upon careful re-review, the answer key [A, B, C, D, G] appears largely correct. However, there is a significant issue: the question is asking which are 'explicitly mapped to Defense Evasion' but option E (T1491.001) is listed under Impact in mitre_attcks (correctly excluded), and option F (T1071.004) is listed under Command and Control (correctly excluded). The answer key seems defensible.\n\nBut wait \u2014 there is a subtle but critical error: Option D maps AdjustTokenPrivileges to T1134 (Access Token Manipulation) under Defense Evasion. Looking at the mitre_attcks array, T1134 appears under BOTH 'Privilege Escalation' AND 'Defense Evasion'. The signature api-111 is categorized under 'System Security' category. The question asks about Defense Evasion mapping specifically. Since T1134 IS in the Defense Evasion section of mitre_attcks, D is correctly included.\n\nThe answer key [A, B, C, D, G] is actually defensible and largely correct. However, I'm flagging this as a reject because: (1) The question stem is somewhat ambiguous about whether it's asking about the mitre_attcks tactic assignments or the signature categories; (2) More importantly, the question omits several other clearly Defense Evasion-mapped behaviors from the options (e.g., T1027.009 high entropy section, T1055.012 process hollowing, T1070.004 file deletion/indicator removal) that are present in the report and would also be correct answers if included as options \u2014 this creates an incomplete/misleading question; (3) Option G's description ('masquerading as a legitimate executable') is a mischaracterization of what the report actually shows (dropping files to appdata directory, mapped to T1036 for masquerading, but the specific behavior described in the option is inaccurate to the report evidence \u2014 the report says 'Drops files inside appdata directory' not 'masquerading as a legitimate executable'). This factual inaccuracy in the option description makes the question misleading and the answer key partially wrong for G."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option B is excluded but T1491.001 (Internal Defacement) IS listed in the MITRE ATT&CK mappings in the detonation report under the Defense Evasion tactic \u2014 however, T1491.001 is actually an Impact technique, not Defense Evasion, so B is correctly excluded on that basis.",
+          "Option D (T1071.004 DNS) is mapped in the report under Command and Control, not Defense Evasion \u2014 correctly excluded.",
+          "Option F (T1056.001 Keylogging) is mapped under Credential Access and Collection, not Defense Evasion \u2014 correctly excluded.",
+          "Critical error: Option G claims hash.exe performs 'time-based checks using NtQuerySystemInformation to detect sandbox or virtual environments (T1497.001 \u2013 System Checks)'. The report does contain T1497.001 (System Checks) under Defense Evasion, and the signature 'string-659' references NtQuerySystemInformation with T1497.001. However, the signature description says 'Able to identify virtual environment by using API string' \u2014 this is a static string match, not a confirmed behavioral API call. More critically, the question stem for G describes it as 'time-based checks' which is incorrect; T1497.001 is System Checks (not time-based), and T1497.003 is Time Based Evasion. The description conflates two different sub-techniques, making G factually inaccurate as written.",
+          "Option C: T1055.012 (Process Hollowing) IS listed under Defense Evasion in the MITRE mappings and the signature 'api-134' confirms 'Creates a system process in suspended mode (likely for process injection)' via CreateProcessA \u2014 this is correctly included.",
+          "Option A: T1027.009 (Embedded Payloads) IS listed under Defense Evasion and signature 'static-6' confirms high entropy in .text section \u2014 correctly included.",
+          "Option E: T1112 (Modify Registry) IS listed under Defense Evasion and signature 'registry-27' confirms proxy settings modification \u2014 correctly included.",
+          "The answer key [A, C, E, G] is partially wrong because G's description is factually inaccurate (mislabels T1497.001 as 'time-based checks' when that is T1497.003). A professional analyst would reject G as written. The correct answer should be [A, C, E] at most, or G needs to be rewritten to accurately describe System Checks behavior.",
+          "Additionally, the question topic is labeled 'Defense Evasion' but the question asks about MITRE ATT&CK Defense Evasion tactic mapping \u2014 this is acceptable framing, but the option descriptions mix tactic-level and technique-level accuracy inconsistently."
+        ],
+        "reasoning": "The answer key is incorrect due to Option G containing a factual error: it describes T1497.001 (System Checks) as 'time-based checks' which is the description of T1497.003 (Time Based Evasion). These are distinct sub-techniques. A professional malware analyst would not accept G as correctly described. Since the answer key is wrong, the verdict must be reject. Additionally, the question has a 'Hard' difficulty label which is appropriate given the complexity, but the factual inaccuracy in option G's description is disqualifying."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  }
+]

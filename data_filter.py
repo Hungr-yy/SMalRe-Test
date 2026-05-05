@@ -72,6 +72,7 @@ STANDARD_FIELDS: tuple[str, ...] = ESSENTIAL_FIELDS + (
 #: Maximum characters for signature description fields.
 SIGNATURE_DESCRIPTION_LEN: int = 50
 
+
 #: MITRE ATT&CK keys to retain (everything else is stripped).
 MITRE_KEEP_KEYS: tuple[str, ...] = ("tactic", "technique", "attck_id")
 

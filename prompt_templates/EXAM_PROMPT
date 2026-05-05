@@ -9,32 +9,40 @@ EXAM_PROMPT = """
 Proficiency: %s
 Feedback: %s
 
+[FEW-SHOT EXAMPLES]
+The following are examples of high-quality CyberSOCEval-style questions.
+Use them as a reference for style, difficulty calibration, and distractor quality.
+Do NOT copy them — generate a NEW question grounded in the [DETONATION REPORT] above.
+
+%s
+
 Generate exactly 1 multiple-choice question from the detonation report above.
 
 Requirements:
 1. The question MUST be grounded in and answerable from the [DETONATION REPORT].
-2. Match the CyberSOCEval Malware Analysis style:
+2. Match the CyberSOCEval Malware Analysis style shown in [FEW-SHOT EXAMPLES]:
    - multi-select multiple-choice (one or more correct options)
    - plausible distractors
    - grounded in report evidence
 3. Prioritize the student's weak areas described in [PREVIOUS_EXAM_RESULTS].
-4. Do NOT copy benchmark questions verbatim.
+4. Do NOT copy benchmark questions or few-shot examples verbatim.
 5. Prefer questions that require reasoning from report evidence rather than generic malware trivia.
 6. The answer must contain only the correct option letters.
 
-Output VALID JSON only in this exact format:
+Output VALID JSON only in this EXACT format.
+Leave "detonation_report" as an empty object — it will be injected automatically.
 {
   "question": {
     "sha256": "...",
     "attack": "...",
     "topic": "...",
     "difficulty": "...",
-    "detonation_report": { ... },
+    "detonation_report": {},
     "question": "...",
     "options": ["A. ...", "B. ...", "C. ..."]
   },
   "answer": {
-    "correct_options": ["A", "C"]
+    "correct_answers": ["A", "C"]
   }
 }
 """

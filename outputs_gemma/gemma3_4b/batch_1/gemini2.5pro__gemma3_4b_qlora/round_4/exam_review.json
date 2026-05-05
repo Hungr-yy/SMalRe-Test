@@ -1,0 +1,224 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key includes 'C. Intercepting web traffic to steal credentials.' The report does show credential-related capabilities (CryptUnprotectData, bank URL artifacts, modifies proxy settings), but the specific signature 'Intercepting web traffic to steal credentials' is not directly evidenced as a distinct behavioral signature in the report. More critically, option B ('Establishing persistence by creating a new Windows Service') IS directly supported by the report (registry-67: 'Creates or modifies windows services', T1543.003 mapped). Option D ('Injecting code into another process') is directly supported (api-0: 'Writes data to a remote process', T1055). Option C is not clearly supported by a specific signature \u2014 the report shows proxy modification and bank URL strings, but not explicit web traffic interception. The answer key should be B and D at minimum. Including C without clear evidence and excluding B makes the answer key incorrect."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks to identify malware categories from a .NET infostealer report with YARA matches for generic stealer, WorldWind stealer, Agent Tesla, AsyncRAT, and njRAT. The correct answers A (Infostealer) and C (RAT) are well-supported: YARA matches for generic stealer and WorldWind stealer support A; YARA matches for AsyncRAT and njRAT support C. The report also shows keylogging, screen capture, credential theft from browsers, and C2 communication. Option B (Ransomware) is contradicted by T1486 being present but no actual encryption behavior observed. Option D (EDR/AV Killer) and E (Bootkit) are not supported. The question is original, well-formed, and the answer key is correct."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which evasion techniques are explicitly supported by signatures in a UPX-packed infostealer report. Correct answers A (writing to remote process memory), B (allocating memory in remote process), and C (UPX compression/high entropy) are all directly evidenced: api-0 'Writes data to a remote process' (malicious), api-20 'Allocates virtual memory in a remote process' (malicious), static-7 'PE file is packed with UPX' and static-6 'Section contains high entropy' (suspicious). Option D (Thread Execution Hijacking) is in the MITRE mapping but no specific signature directly evidences it. Option E (boot configuration modification) is not evidenced. The answer key is correct and the question is original."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which malicious-level signatures support specific defense evasion techniques in a worm/VB malware report. Correct answers A (allocating/writing to remote processes), B (masquerading as legitimate Windows processes from non-standard paths), C (modifying registry to hide file extensions), and E (disabling Registry Editor and System Restore) are all directly supported by malicious-level signatures: api-0/api-20 for A, target-33 'Creates a fake system process' for B, registry-15 'Changes file extension appearance' for C, registry-2 'Disables Windows Registry Editor' and registry-23 'Disables system restore' for E. Option D (deleting its own executable) is only 'suspicious' level (api-25/api-26 mark files for deletion but not the executable itself). The answer key is correct."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion methods are supported by evidence in a dropper/killers report. Correct answers B (Timestomping), D (Process Injection), E (Virtualization/Sandbox Evasion), and F (Disabling security tools) are all supported: T1070.006 Timestomp is in MITRE mapping with string-409 'Contains ability to set file time'; api-0 'Writes data to a remote process' (malicious) supports D; string-660 'Able to identify virtual/sandbox environment' and static-132 'Contains ability to detect sandbox' support E; string-134 'Found anti-virus related strings' and T1562.001 support F. Option A (Rootkit) is not evidenced. Option C (AMSI bypass) is not evidenced. The answer key is correct and the question is original."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which RAT capabilities are evidenced in an Sdbot/RAT report. Correct answers A (keylogging/clipboard), C (C2 over IRC), and E (discovering/terminating security software) are well-supported: string-556 'Found strings related to keylogger' and string-188 'clipboard data' support A; string-3 'irc.quakenet.org' URL supports C; string-134 'anti-virus related strings' and string-43 'security related windows services' support E. Option B (encrypting files for ransom) is not evidenced. Option D (deleting Volume Shadow Copies) is not evidenced. The answer key is correct and the question is original."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which ransomware actions are explicitly supported by the processes and signatures sections of a Crysis/Dharma ransomware report. Correct answers A (deletion of volume snapshots using vssadmin.exe) and B (modification of registry run keys for persistence) are directly evidenced: the processes section shows vssadmin.exe with 'delete shadows /all /quiet', and target-4 'Deletes volume snapshots' (malicious) supports A; registry-0 'Modifies auto-execute functionality' (suspicious, T1547.001) supports B. Option C (injection into remote system process) - while T1055 is mapped, the specific signature target-413 'Spawned processes likely due to injection' is only suspicious and refers to cmd.exe, not a clear remote system process injection. Option D (hooked internet APIs) - hooks-5 is NOT present in this report (it's in the Remcos report). Option E (terminating security services) - not directly evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which collection methods are explicitly evidenced in a Ransom.Imps.Generic report. Correct answers A (keylogging), C (screen capture), and D (clipboard data) are all directly supported: api-40 'Calls an API typically used for keylogging' (suspicious) supports A; api-105 'Calls an API possibly used to take screenshots' supports C; T1115 Clipboard Data is in the MITRE mapping and the Collection section. Option B (LSASS credential dumping) is not evidenced. Option E (browser profile collection) is not evidenced. The answer key is correct and the question is original."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which RAT capabilities are directly observed in a Remcos report. Correct answers A (process injection/code injection into other processes), C (C2 over non-standard port 2404), and D (persistence via Registry Run Keys) are all directly evidenced: api-0 'Writes data to a remote process' (malicious) and api-129 'Creates a process in suspended mode' (malicious) support A; network-7 'Uses network protocols on unusual ports' (malicious, port 8109) supports C; registry-0 'Modifies auto-execute functionality' (suspicious, T1547.001) supports D. Option B (Volume Shadow Copy deletion) is not evidenced. Option E (RDP lateral movement) - T1021.001 is mapped but no specific signature evidences it. The answer key is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which Remcos RAT functionalities are explicitly evidenced in a second Remcos report. Correct answers A (C2 over non-standard port 2404), C (gathering system information including external IP and computer name), and E (persistence via Windows Service creation) are all directly supported: network-7 'Uses network protocols on unusual ports' (malicious, port 2404) supports A; network-24 'Tries to identify its external IP address' (malicious) and registry-35 'Reads the active computer name' support C; registry-67 'Creates or modifies windows services' supports E. Option B (Volume Shadow Copy deletion) is not evidenced. Option D (encrypting files) - T1486 is in MITRE mapping but no behavioral evidence of actual encryption. The answer key is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about primary functionalities of malware that executed after CVE-2017-0199 exploitation in an Excel file. Correct answers A (C2 communication) and C (system reconnaissance) are supported: network-1/network-2/network-88 show C2 communication to malicious domains; api-148 'LookupAccountSidW', registry-55 'Reads registry for installed applications', and network-24 'Tries to identify external IP' support reconnaissance. Option B (file encryption) is not evidenced. Option D (process injection) - no injection signatures present. Option E (Volume Shadow Copy deletion) - not evidenced. Option F (terminating AV/EDR) - not evidenced. The answer key is correct and the question is original."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which evasion methods were specifically identified in a Ursnif/um_unhooking report. Correct answers A (software packing/high entropy), C (APC injection), and D (long sleep intervals) are all directly evidenced: static-18 'Matched Compiler/Packer signature' and static-6 'Section contains high entropy' support A; api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process' supports C; api-24 'Tries to sleep for a long time (more than two minutes)' (suspicious) supports D. Option B (Volume Shadow Copy deletion) is not evidenced. Option E (direct syscalls for EDR bypass) - while the family is um_unhooking, no specific signature in this report evidences direct syscall usage. The answer key is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which data collection techniques are explicitly supported in a RAT/um_unhooking report. Correct answers A (keylogging), B (screen capture), and C (clipboard data) are all directly evidenced: string-556 'Found strings related to keylogger' and string-88 'VkKeyScanA' support A; string-78 'Contains ability to capture screen' supports B; string-188 'GetClipboardData' supports C. Option D (web browser credential databases) - string-475 mentions 'password/secret' but no specific browser credential collection signature. Option E (Volume Shadow Copy deletion) - not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion/process injection techniques were specifically observed in a Fragtor/um_unhooking report. Correct answers A (APC injection), D (dynamic API resolution), and E (high entropy sections) are all directly evidenced: api-85 'Queues an Asynchronous Procedure Call (APC) in a remote process' supports A; static-79 is not present in this report but T1027.007 Dynamic API Resolution is in MITRE mapping and the static-18 signature supports obfuscation; static-6 'Section contains high entropy' (suspicious) supports E. Option B (Process Hollowing) - T1055.012 is in MITRE mapping but no specific behavioral signature evidences it. Option C (Volume Shadow Copy deletion) - not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process manipulation techniques are supported in a backdoor/killers report. Correct answers A (writing data to remote process memory) and C (thread execution hijacking) are directly evidenced: api-0 'Writes data to a remote process' (malicious) supports A; T1055.003 Thread Execution Hijacking is in MITRE mapping and api-264 'Creates a thread in a self process' is present. Option B (Volume Shadow Copy deletion) - not evidenced. Option D (APC injection) - not evidenced in this report. Option E (Process Hollowing) - T1055.012 is not in this report's MITRE mapping. The answer key is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which RAT behaviors are evidenced in a BrsecmonE/um_unhooking report. Correct answers A (Windows service creation for persistence), C (firewall rule modification), and D (svchost.exe injection with network connections) are all directly evidenced: processes show sc.exe creating 'njrbicei' service (malicious, target-303); target-15 'Modifies firewall settings' (malicious) and target-186 'Detects NETSH process execution' support C; api-83 'Writes PE header to memory' and api-129 'Creates a process in suspended mode' with target-269 'Windows system process connects to a network' (malicious) support D. Option B (Registry Run Key modification) - while T1547.001 is mapped, no specific registry-0 signature is present in this report. Option E (vssadmin Volume Shadow Copy deletion) - not evidenced. The answer key is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which surveillance capabilities are evidenced in a Remcos RAT report. Correct answers A (screen capture), B (keylogging), and D (stealing web browser credentials) are all directly supported: api-105 'Calls an API possibly used to take screenshots' supports A; T1056.001 Keylogging is in MITRE mapping and Collection section supports B; T1555.003 'Credentials from Web Browsers' is in MITRE mapping and Credential Access section supports D. Option C (Volume Shadow Copy deletion) - not evidenced. Option E (encrypting files for ransom) - not evidenced. The answer key is correct and the question is original."
+      }
+    ],
+    "summary": {
+      "total": 17,
+      "passed": 16,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 option A ('Establishing persistence by creating or modifying a Windows Service') is listed as correct, but the report evidence is ambiguous: the MITRE mapping includes T1543.003 (Windows Service) under Persistence, and the registry signature 'Creates or modifies windows services' is present. So A is defensible.",
+          "Option F ('Collecting files from removable media') is listed as incorrect, but T1025 (Data from Removable Media) appears explicitly in the MITRE ATT&CK mapping section of the detonation report. If the answer key excludes F, it is factually wrong.",
+          "Option B ('Encrypting user files for ransom') is correctly excluded \u2014 no evidence in the report.",
+          "Option E ('Deleting Volume Shadow Copies') is correctly excluded \u2014 no evidence in the report.",
+          "The answer key omits F despite T1025 (Data from Removable Media / Collection) being explicitly listed in the mitre_attcks array of the report. A professional analyst would include F as a correct answer.",
+          "The answer key is therefore incomplete/incorrect, warranting rejection."
+        ],
+        "reasoning": "The answer key lists A, C, D as correct. Option C (WriteProcessMemory / writes data to a remote process) is clearly supported by the 'malicious' threat-level signature 'Writes data to a remote process' (T1055). Option D (modifying proxy settings) is supported by the 'suspicious' signature 'Modifies proxy settings' (T1112). Option A (Windows Service persistence) is supported by the registry signature 'Creates or modifies windows services' (T1543.003) and the MITRE mapping. However, Option F ('Collecting files from removable media') is directly supported by T1025 (Data from Removable Media) in the explicit mitre_attcks list of the report, yet it is marked as a distractor. This makes the answer key factually incorrect \u2014 a professional analyst reviewing this report would identify F as a demonstrated capability. The question must be rejected due to an incorrect/incomplete answer key."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option F (persistence via Run registry key modification) is not supported by the detonation report \u2014 no Run key modification is evidenced in the signatures or MITRE ATT&CK mappings provided.",
+          "Option A (Windows Service creation) is supported by the report (registry-67: 'Creates or modifies windows services', T1543.003), so A is correctly included.",
+          "Option C (injection into remote process by writing memory) is supported (api-0: 'Writes data to a remote process', T1055), so C is correctly included.",
+          "Option D (masquerading by dropping executable into System32) is supported (binary-7: 'Drops executable files to the Windows system directory', T1036), so D is correctly included.",
+          "Option F is not supported: the report shows proxy settings modification (T1112) and CLSID/COM hijacking touches, but no Run key (HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\RUN or similar) modification is present in the signatures. The answer key includes F but the evidence does not support it.",
+          "Option B (deleting Volume Shadow Copies) has no evidence in the report \u2014 correctly excluded from answer key.",
+          "Option E (clearing Windows Event Logs) has no evidence in the report \u2014 correctly excluded from answer key.",
+          "The answer key should be [A, C, D] only, but the generated answer key lists [A, C, D] \u2014 on re-reading the answer key is actually [A, C, D]. However, the question stem asks about 'persistence AND defense evasion techniques' but option A (Windows Service) maps to Persistence, C maps to Defense Evasion/Privilege Escalation, D maps to Defense Evasion. This is acceptable. The answer key [A, C, D] appears correct on closer inspection.",
+          "Re-evaluating: The answer key is [A, C, D]. A is supported, C is supported, D is supported. F is NOT in the answer key. The answer key itself appears correct. However, Option F ('Persistence by modifying the Run registry key') is a plausible distractor \u2014 but is it clearly wrong? The report shows no Run key modification, only proxy settings and service key modifications. So F as a distractor is appropriate and clearly wrong given the report.",
+          "On final review: The answer key [A, C, D] is factually correct per the report. The question is valid. However, the topic label 'Defense Evasion and Persistence' combined with the question asking about BOTH categories in one question is slightly broad but acceptable.",
+          "One remaining concern: Option A states 'Persistence through the creation of a new Windows Service.' The report shows registry-67 'Creates or modifies windows services' with access type CREATE on HKLM\\...\\SERVICES path. This does support Windows Service creation/persistence. A is valid.",
+          "Verdict correction: The answer key [A, C, D] is supportable from the report. No plagiarism detected. The question is original and well-formed. Upgrading to 'flag' due to minor issue: the question mixes two MITRE tactics (Persistence + Defense Evasion) in a single stem which slightly reduces clarity, and option F could be considered ambiguous since the report does show registry modifications (though not specifically Run keys). This is a minor style issue."
+        ],
+        "reasoning": "After careful analysis, the answer key [A, C, D] is factually supported by the detonation report: A (Windows Service creation via registry-67/T1543.003), C (remote process memory write via api-0/T1055), D (dropping executable to System32 via binary-7/T1036). Options B and E have no report evidence and are correctly excluded. Option F (Run key modification) is not evidenced in the report \u2014 only proxy settings modification (T1112) and service key creation are shown \u2014 making F a valid distractor. The question is original (no plagiarism detected against benchmark). Minor style issue: the stem conflates two MITRE tactics in one question, which is slightly non-standard compared to benchmark questions that typically focus on one category. Flagging for this minor style concern rather than rejecting, as the factual content and answer key are correct."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about persistence techniques observed in the detonation report. The answer key [A, C, E] maps to Windows Service (T1543.003 \u2014 confirmed by 'Creates or modifies windows services' registry signature with attck_id T1543.003), COM Hijacking (T1546.015 \u2014 confirmed by 'Overview of unique CLSIDs touched in registry' signature with attck_id T1546.015), and DLL Side-Loading (T1574.002 \u2014 confirmed by 'Fails to load modules at runtime' signature with attck_id T1574.002 and the MITRE ATT&CK mapping in the report). Option B (Registry Run key) is not evidenced in the report \u2014 there is no SETVAL to a Run key; the proxy settings SETVAL is to a different path. Option D (Scheduled Task) has no evidence in the report. The question stem, options, and answer key are original and not plagiarised from the benchmark. The difficulty is appropriately 'Hard' given the need to distinguish between multiple persistence techniques present in a rich report. All three correct answers are directly supported by named signatures and MITRE mappings in the detonation report."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

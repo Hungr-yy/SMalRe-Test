@@ -10,7 +10,7 @@ Experiment matrix (Latin square):
     Batch 3: T1→S3, T2→S1, T3→S2  (all models reset)
 
 Teachers:
-    T1 = GPT-4o          (OpenAI)
+    T1 = GPT-5.1         (OpenAI)
     T2 = Gemini 2.5 Pro  (Google)
     T3 = Claude Sonnet 4.6 (Anthropic)
 
@@ -49,7 +49,7 @@ Usage
 
     Examples:
       # All 3 teachers → Qwen only
-      python run_experiments.py --teachers gpt4o gemini2.5pro claude_sonnet4.6 --students qwen2.5_7b
+      python run_experiments.py --teachers gpt5.1 gemini2.5pro claude_sonnet4.6 --students qwen2.5_7b
 
       # Gemini + Claude → Llama + Gemma
       python run_experiments.py --teachers gemini2.5pro claude_sonnet4.6 --students llama3.1_8b gemma3_4b
@@ -65,6 +65,7 @@ import os
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -72,11 +73,21 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load API keys from .env file
 
+# Set up logging to both console and file
+_log_dir = Path("output_logs")
+_log_dir.mkdir(exist_ok=True)
+_log_file = _log_dir / datetime.now().strftime("%Y-%m-%d_%H:%M_log")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(_log_file),
+    ],
 )
 logger = logging.getLogger("experiments")
+logger.info("Logging to %s", _log_file)
 
 
 # ---------------------------------------------------------------------------
@@ -85,9 +96,9 @@ logger = logging.getLogger("experiments")
 
 TEACHERS = [
     {
-        "name": "gpt4o",
+        "name": "gpt5.1",
         "provider": "openai",
-        "model": "gpt-4o",
+        "model": "gpt-5.1",
     },
     {
         "name": "gemini2.5pro",
@@ -105,14 +116,19 @@ STUDENTS = [
     {
         "name": "llama3.1_8b",
         "model_name_or_path": "meta-llama/Llama-3.1-8B-Instruct",
+        "backend": "vertex_ai",
+        "use_qlora_inference": True,
     },
     {
         "name": "gemma3_4b",
         "model_name_or_path": "google/gemma-3-4b-it",
+        "backend": "vertex_ai",
     },
     {
         "name": "qwen2.5_7b",
         "model_name_or_path": "Qwen/Qwen2.5-7B-Instruct",
+        "backend": "vertex_ai",
+        "use_qlora_inference": True,
     },
 ]
 
@@ -205,6 +221,8 @@ class ExperimentTracker:
             "best_accuracy": result.get("best_accuracy", 0.0),
             "final_proficiency": result.get("final_proficiency", "N/A"),
             "rounds_completed": result.get("rounds_completed", 0),
+            "response_parsing_error_count": result.get("response_parsing_error_count", 0),
+            "total_questions_attempted": result.get("total_questions_attempted", 0),
             "duration_seconds": result.get("duration_seconds", 0),
             "error": result.get("error"),
             "artifacts_verified": False,
@@ -253,17 +271,41 @@ class ExperimentTracker:
             if not result_path.exists():
                 issues.append("missing experiment_result.json")
 
-            # Check adapter checkpoint exists (local or Vertex AI)
+            # Check adapter checkpoint exists with actual weight files
             best_adapter = output_dir / "best_adapter"
-            vertex_meta = output_dir / "vertex_ai_metadata.json"
-            if not best_adapter.exists() and not vertex_meta.exists():
-                # Also check if any round adapter exists
-                has_any_adapter = any(
-                    (output_dir / f"round_{i}" / "adapter").exists()
-                    for i in range(1, 20)
-                )
+            has_best = best_adapter.exists() and (
+                list(best_adapter.glob("*.safetensors")) or
+                list(best_adapter.glob("*.bin")) or
+                best_adapter.is_symlink()
+            )
+
+            if not has_best:
+                # Check if any round adapter has weight files
+                has_any_adapter = False
+                for i in range(1, 20):
+                    adapter_dir = output_dir / f"round_{i}" / "adapter"
+                    if adapter_dir.exists():
+                        weight_files = (
+                            list(adapter_dir.glob("*.safetensors")) +
+                            list(adapter_dir.glob("*.bin"))
+                        )
+                        if weight_files:
+                            has_any_adapter = True
+                            break
+                        # Also accept vertex_ai_metadata listing adapter_files
+                        meta_path = adapter_dir / "vertex_ai_metadata.json"
+                        if meta_path.exists():
+                            try:
+                                with open(meta_path) as mf:
+                                    meta = json.load(mf)
+                                if meta.get("adapter_files"):
+                                    has_any_adapter = True
+                                    break
+                            except (json.JSONDecodeError, OSError):
+                                pass
+
                 if not has_any_adapter:
-                    issues.append("no adapter checkpoint found")
+                    issues.append("no adapter weight files found")
 
             if issues:
                 logger.warning(
@@ -336,11 +378,15 @@ def build_experiment_config(
         "temperature": base_config.get("teacher", {}).get("temperature", 0.7),
     }
 
-    # Override student – merge with base config to preserve backend and other fields
-    config["student"] = {
+    # Override student – merge with base config, apply per-student backend
+    student_config = {
         **config.get("student", {}),
         "model_name_or_path": student["model_name_or_path"],
+        "backend": student.get("backend", config.get("student", {}).get("backend", "local")),
     }
+    if "use_qlora_inference" in student:
+        student_config["use_qlora_inference"] = student["use_qlora_inference"]
+    config["student"] = student_config
 
     # Remove _config_path to force programmatic StudentTrainer construction
     config.pop("_config_path", None)
@@ -463,7 +509,13 @@ def run_batch(
     for ti, si in pairs:
         teacher = TEACHERS[ti]
         student = STUDENTS[si]
-        label = f"{teacher['name']}__{student['name']}"
+        # Include QLoRA tag in label so adapters/results don't clash
+        # between QLoRA and non-QLoRA runs of the same model
+        qlora_tag = "_qlora" if (
+            student.get("use_qlora_inference")
+            or base_config.get("student", {}).get("use_qlora_inference")
+        ) else ""
+        label = f"{teacher['name']}__{student['name']}{qlora_tag}"
         exp_output_dir = str(batch_dir / label)
 
         config = build_experiment_config(
@@ -704,6 +756,8 @@ def _build_comparison_table(
             "best_accuracy": r.get("best_accuracy", 0.0),
             "final_proficiency": r.get("final_proficiency", "N/A"),
             "rounds_completed": r.get("rounds_completed", 0),
+            "response_parsing_error_count": r.get("response_parsing_error_count", 0),
+            "total_questions_attempted": r.get("total_questions_attempted", 0),
             "duration_seconds": r.get("duration_seconds", 0),
         }
         table.append(entry)
@@ -716,24 +770,28 @@ def _build_comparison_table(
 def _print_comparison_table(table: list[dict[str, Any]]) -> None:
     """Print a formatted comparison table to the log."""
     logger.info("")
-    logger.info("=" * 90)
+    logger.info("=" * 100)
     logger.info("EXPERIMENT RESULTS COMPARISON")
-    logger.info("=" * 90)
+    logger.info("=" * 100)
     logger.info(
-        "%-40s  %-8s  %-10s  %-6s  %-8s",
-        "Experiment", "Status", "Accuracy", "Prof.", "Rounds",
+        "%-40s  %-8s  %-10s  %-6s  %-8s  %-10s",
+        "Experiment", "Status", "Accuracy", "Prof.", "Rounds", "ParseErr",
     )
-    logger.info("-" * 90)
+    logger.info("-" * 100)
     for row in table:
+        parse_err = row.get("response_parsing_error_count", 0)
+        total_q = row.get("total_questions_attempted", 0)
+        parse_str = f"{parse_err}/{total_q}" if total_q else str(parse_err)
         logger.info(
-            "%-40s  %-8s  %-10.4f  %-6s  %-8d",
+            "%-40s  %-8s  %-10.4f  %-6s  %-8d  %-10s",
             row["experiment"],
             row["status"],
             row.get("best_accuracy", 0.0),
             row.get("final_proficiency", "N/A"),
             row.get("rounds_completed", 0),
+            parse_str,
         )
-    logger.info("=" * 90)
+    logger.info("=" * 100)
 
 
 # ---------------------------------------------------------------------------
@@ -764,9 +822,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--target-accuracy",
         type=float,
-        default=0.80,
+        default=2.0,
         dest="target_accuracy",
-        help="Early-stop threshold per experiment (default: 0.80)",
+        help="Early-stop threshold per experiment (default: 2.0 = run all rounds)",
     )
     parser.add_argument(
         "--output-dir",
@@ -812,6 +870,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             f"Choices: {', '.join(_STUDENT_NAMES)}"
         ),
     )
+    parser.add_argument(
+        "--qlora-inference",
+        action="store_true",
+        dest="qlora_inference",
+        help="Enable QLoRA (4-bit) for student inference. "
+             "Required for 7B+ models on L4 GPU with full reports.",
+    )
     return parser.parse_args(argv)
 
 
@@ -855,9 +920,22 @@ def main(argv: list[str] | None = None) -> None:
 
     base_config = load_config(args.config)
 
+    # CLI --qlora-inference overrides per-student config
+    if args.qlora_inference:
+        base_config.setdefault("student", {})["use_qlora_inference"] = True
+
+    # Namespace output directory to avoid clashes when running
+    # concurrent experiments with different student/teacher subsets.
+    # e.g. outputs/qwen2.5_7b/ and outputs/gemma3_4b/
+    output_dir = args.output_dir
+    if args.students or args.teachers:
+        subset_label = "_".join(selected_students) if args.students else "_".join(selected_teachers)
+        output_dir = str(Path(output_dir) / subset_label)
+
     logger.info("SMalA Experiment Matrix")
     logger.info("Teachers:    %s", selected_teachers)
     logger.info("Students:    %s", selected_students)
+    logger.info("Output:      %s", output_dir)
     logger.info("Experiments: %d (%d batches)", num_experiments, len(BATCHES))
     logger.info("Rounds:      %d per experiment", args.rounds)
     logger.info("Parallel:    %d per batch", args.max_parallel)
@@ -868,7 +946,7 @@ def main(argv: list[str] | None = None) -> None:
         base_config=base_config,
         rounds=args.rounds,
         target_accuracy=args.target_accuracy,
-        root_output_dir=args.output_dir,
+        root_output_dir=output_dir,
         max_parallel=args.max_parallel,
         truncate_input=args.truncate_input,
         max_retries=args.max_retries,

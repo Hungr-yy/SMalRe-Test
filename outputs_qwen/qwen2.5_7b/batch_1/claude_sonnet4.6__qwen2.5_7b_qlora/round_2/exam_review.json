@@ -1,0 +1,286 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically about API calls and behavioral indicators supporting process injection in an infostealer sample. The correct answers (A: RtlCreateUserThread, C: WriteProcessMemory, D: OpenProcess, F: NtResumeThread) are all directly evidenced in the detonation report signatures. B (GetDC for screen capture) and E (GetSystemTimeAsFileTime for scheduling) and G (GetLocaleInfoW for locale) are correctly excluded as they are not injection primitives. The question is original, technically sound, and well-calibrated for medium difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 option E is incorrect"
+        ],
+        "reasoning": "The answer key includes E (VirtualAllocEx) but the detonation report signature states 'xyzuqi.exe allocated memory in a remote process' \u2014 the API call logged is 'Allocates virtual memory in a remote process' (api-20), which maps to VirtualAllocEx. However, the option text says 'VirtualAllocEx \u2014 xyzuqi.exe allocated memory in a remote process' which IS correct and supported by the report. Re-examining: A (WriteProcessMemory \u2014 hash.exe wrote 32 bytes to remote process) is supported by api-0. C (CreateToolhelp32Snapshot) is supported by api-103. D (IsWow64Process) is supported by api-146. E (VirtualAllocEx) is supported by api-20. The answer key [A, C, D, E] appears correct. However, option B (CreateCompatibleBitmap for screenshots) is correctly excluded. The answer key is actually valid. Upgrading to pass."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "All four correct answers (A: WriteProcessMemory, C: CreateToolhelp32Snapshot, D: IsWow64Process, E: VirtualAllocEx) are directly evidenced in the detonation report. B (CreateCompatibleBitmap for screenshots) and F (RemoveDirectoryW) and G (GetProcAddress) are correctly excluded as non-injection primitives. The question is original and technically sound."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The correct answers (A: WriteProcessMemory, C: CreateToolhelp32Snapshot, D: IsWow64Process, F: CreateThread in self-process) are all directly evidenced in the detonation report. B (GetTickCount for VM detection), E (InternetOpenA for network), and G (HKCU Run key modification) are correctly excluded as non-injection primitives. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The correct answers (A: WriteProcessMemory, B: VirtualAllocEx, C: CreateToolhelp32Snapshot, D: IsWow64Process, F: CreateThread in self-process) are all directly evidenced in the detonation report. E (CopyFileA) and G (RpcServerRegisterIf2) are correctly excluded. The Worm.Ludbaruma sample report clearly shows all these API calls. The question is original and technically sound."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The correct answers (A: WriteProcessMemory, B: CreateToolhelp32Snapshot, C: IsWow64Process, E: CreateThread in self-process) are all directly evidenced in the detonation report for the Dropper.Generic.Dacic sample. D (RpcStringFreeA for RPC lateral movement) and F (NtShutdownSystem for reboot) and G (EnumWindows for ListPlanting) are correctly excluded as non-injection primitives. The question is original and technically sound."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The correct answers (A: CreateToolhelp32Snapshot, B: Process32FirstW, C: IsWow64Process, E: CreateThread in self-process) are all directly evidenced in the detonation report for the Sdbot.Generic sample. D (GetVersionExA for OS version) is correctly excluded as it is an environment awareness API, not an injection primitive. F (DeleteService) is correctly excluded. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion techniques in a WannaCryptor sample. The correct answers (B: SetFileTime/timestomping T1070.006, C: WaitForSingleObject/time-based evasion T1497.003, E: LoadLibraryA/DLL injection T1055.001, G: RDTSCP/virtualization evasion T1497) are all directly evidenced in the detonation report. A (AES encryption YARA match) maps to T1027 obfuscation, not specifically Defense Evasion in the context asked. D (GetComputerNameW) is Discovery, not Defense Evasion. F (OpenSCManagerA) is service enumeration/Discovery. The answer key is technically defensible."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about T1490 (Inhibit System Recovery) behaviors. The correct answers (A: vssadmin delete shadows, C: wbadmin delete catalog, E: bcdedit recoveryenabled no, G: bcdedit bootstatuspolicy ignoreallfailures) are all directly evidenced in the process execution data. B (SE_DEBUG_PRIVILEGE adjustment) and D (double-extension file writes) and F (PAGE_GUARD memory allocation) are correctly excluded as they do not map to T1490. The question is original and technically sound."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion behaviors in the WannaCry DLL sample. The correct answers (A: hook installation/patching by rundll32.exe, B: proxy settings modification by mssecsvc.exe, C: kill-switch domain contact, D: mssecsvc.exe dropped to Windows directory as masquerading) are all directly evidenced in the detonation report. E (cryptographic GUID reading) is Discovery, not Defense Evasion. F (timestomping) is not evidenced in this specific report. The answer key is technically sound."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a Remcos RAT sample. The correct answers (A: WriteProcessMemory writing 1500 bytes, C: CreateThread in self-process, D: CreateToolhelp32Snapshot for process enumeration, F: IsWow64Process for architecture check, H: T1055.003 Thread Execution Hijacking attribution) are all directly evidenced in the detonation report. B (CreateCompatibleBitmap for screenshots) and E (PAGE_GUARD allocation) and G (NtCreateNamedPipeFile) are correctly excluded. The question is original and technically sound."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a Remcos RAT sample (BScope.Backdoor). The correct answers (A: LoadLibrary, B: GetProcAddress, C: IsWow64Process, G: FindResourceA and LoadResource for embedded resource loading) are all directly evidenced in the detonation report. D (GetKeyState for keylogging) and E (EnumWindows for window enumeration) and F (OpenMutexW) are correctly excluded as non-injection primitives. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about network IOCs in a CVE-2017-0199 Excel exploitation sample. The correct answers (A: ports 443 and 80, B: malicious domain loooooooooooooooooooog.com, D: Base64/Base62 encoded strings, E: browser-spoofing user-agent, G: short-term SSL certificate for link.emcdn.ru) are all directly evidenced in the detonation report. C (unencrypted HTTP only) is incorrect as HTTPS is used. F (IRC C2) is not evidenced. The question is original and technically sound."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a Trojan.BrsecmonE um_unhooking sample. The correct answers (A: WriteProcessMemory, B: CreateProcessA in suspended mode, C: CreateToolhelp32Snapshot, D: PE header written to memory, F: svchost.exe connecting to external IP after spawning, G: IsWow64Process) are all directly evidenced in the detonation report. E (FindFirstFileW for directory search) and H (netsh.exe firewall rule) are correctly excluded as non-injection primitives. The question is original and technically sound."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a Fugrafa.Generic um_unhooking sample. The correct answers (A: CreateToolhelp32Snapshot, B: GetProcAddress for dynamic resolution, C: WriteProcessMemory writing 32 bytes, D: IsWow64Process, F: CreateThread in self-process) are all directly evidenced in the detonation report. E (.NET CLR loading) and G (KsecDD opening) are correctly excluded. The question is original and technically sound."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about Defense Evasion evidence in a um_unhooking sample (PICUS). The correct answers (A: CRC mismatch, C: high entropy section .monor, E: single-character procedure lookup obfuscation, F: GetProcAddress/GetModuleHandleA imports) are all directly evidenced in the detonation report. B (terminal service registry keys) maps to Remote Access/Discovery, not Defense Evasion. D (LPC port connection) is a normal system interaction. G (KsecDD) maps to Kernel Modules persistence. The answer key is technically defensible."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in an infostealer sample (Malware.SF.Generic). The correct answers (A: WriteProcessMemory writing 32 bytes, B: CreateThread in self-process/T1055.003, C: CreateToolhelp32Snapshot for process enumeration, D: IsWow64Process for architecture check, G: spawned process identified as likely due to injection) are all directly evidenced in the detonation report. E (InternetOpenA for C2) and F (FindFirstFileW for directory search) are correctly excluded as non-injection primitives. The question is original and technically sound."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about T1490 (Inhibit System Recovery) behaviors in a Ransom.HydraCrypt.Generic sample. The correct answers (B: vssadmin delete shadows, C: bcdedit recoveryenabled no, D: wbadmin delete catalog, F: bcdedit bootstatuspolicy ignoreallfailures) are all directly evidenced in the process execution data. A (Task Manager disabling) maps to T1562.001 Disable or Modify Tools, not T1490. E (file deletion access rights) maps to T1070.004. The question is original and technically sound."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about process injection evidence in a Pykspa.Generic killers sample. The correct answers (A: CreateToolhelp32Snapshot, B: AdjustTokenPrivileges, C: IsWow64Process, D: LoadLibrary/GetProcAddress for dynamic resolution) are all directly evidenced in the detonation report. E (RtlGetVersion as primary injection mechanism) is incorrect \u2014 it is an environment awareness API, not an injection primitive. F (CreateDirectoryA for DLL staging) is not evidenced as injection-related in this report. The question is original and technically sound."
+      }
+    ],
+    "summary": {
+      "total": 19,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option D is wrong",
+          "Incorrect answer key: Option E is partially wrong",
+          "Answer key includes D (file deletion as 'removal of forensic traces after data collection') which is a stretch \u2014 file deletion is Indicator Removal (T1070.004), not a credential access/collection activity",
+          "Option E (CreateToolhelp32Snapshot for process enumeration to identify credential-holding targets) is a speculative inference not directly supported by the report as a collection activity \u2014 it maps to Discovery (T1057), not Collection or Credential Access",
+          "Option B is listed as incorrect but GetProcAddress is used for dynamic API resolution which could support credential access indirectly \u2014 the distractor reasoning is inconsistent",
+          "The topic 'Credential Access and Data Collection' is not a standard MITRE ATT&CK tactic name, reducing clarity",
+          "The answer key {A, C, D, E} is not defensible: D (marks file for deletion) is an Indicator Removal behavior, not a credential access or data collection behavior; including it as a correct answer for this topic is factually wrong",
+          "A professional malware analyst would not classify 'marks file for deletion' as evidence of credential access or data collection activity"
+        ],
+        "reasoning": "The answer key is factually incorrect. Option D (cmd.exe marks files for deletion) maps to T1070.004 Indicator Removal, not to credential access or data collection. Including it as a correct answer for a question specifically about 'credential access and data collection activities' is a clear factual error. Option E (CreateToolhelp32Snapshot for process enumeration) maps to Discovery (T1057), not Collection or Credential Access \u2014 while it could be a precursor to targeting credential-holding processes, the report does not provide evidence linking this specific API call to credential access intent, making it speculative. The correct answers supportable from the report for this topic are A (CreateCompatibleBitmap \u2192 T1113 Screen Capture, under Collection) and C (EnumWindows/GetWindowTextW \u2192 T1010 Application Window Discovery, supporting data harvesting). The answer key must be rejected as written."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: options C and D are included as correct answers but do not constitute evidence of process injection",
+          "Option G is factually incorrect as stated: the report shows 'Creates a thread in a self process' (api-264, CreateThread in process -1), not CreateRemoteThread in a remote process; the option text says 'via CreateRemoteThread' which is not supported by the report",
+          "Option C (CreateToolhelp32Snapshot for process enumeration) is a reconnaissance step that precedes injection but is not itself evidence of injection occurring; including it as a correct answer conflates discovery with injection",
+          "Option D (IsWow64Process to check architecture) is an environment-awareness call, not evidence of process injection; it should be a distractor",
+          "The answer key includes A, B, C, D, E, G \u2014 but C and D are clearly incorrect per the report evidence and standard malware analysis tradecraft"
+        ],
+        "reasoning": "The question concept is sound and non-plagiarised, targeting process injection detection from behavioral evidence. However, the answer key is materially wrong. Options C (CreateToolhelp32Snapshot) and D (IsWow64Process) are environment-awareness and discovery calls, not evidence of process injection. Option G claims 'CreateRemoteThread' but the report only shows 'Creates a thread in a self process' (api-264), which is a self-injection indicator, not a remote thread creation \u2014 the API name in the option is fabricated/incorrect relative to the report. A professional malware analyst would accept only A (WriteProcessMemory to remote process), B (VirtualAllocEx in remote process), and E (spawned process identified as injection artifact) as direct injection evidence. Because the answer key is wrong, this must be rejected."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option D is factually wrong",
+          "Incorrect answer key: Option G is partially unsupported",
+          "Answer key omits a clearly correct option"
+        ],
+        "reasoning": "The question asks which observations provide evidence of sensitive data collection. Analysis of each option against the detonation report:\n\nOption A (CORRECT - should be in answer): muniw.exe calls CreateCompatibleBitmap \u2014 confirmed in signatures (api-105, T1113 Screen Capture). This is direct evidence of data collection capability. Correctly included in answer key.\n\nOption B (CORRECT distractor exclusion): GetProcAddress is for dynamic API resolution, not data collection per se. Correctly excluded from answer key.\n\nOption C (CORRECT - should be in answer): muniw.exe calls EnumWindows (api-152) and GetWindowTextW (api-151) \u2014 both confirmed in signatures. Window title enumeration is a classic infostealer behavior for application-aware credential theft. Correctly included.\n\nOption D (INCORRECT - should NOT be in answer key): The report shows cmd.exe marks files for deletion (api-26, T1070.004) and opens files with deletion access rights (api-25). This is an indicator removal/anti-forensics behavior, NOT evidence of data collection or 'data staging removal.' The option text claims this is 'to remove forensic traces after data staging' \u2014 this is an inference not supported by the report, and more critically, file deletion is a Defense Evasion technique (T1070.004), not a Collection technique. Including D as a correct answer is factually wrong.\n\nOption E (CORRECT distractor exclusion): CreateToolhelp32Snapshot is process discovery (T1057), not data collection. Correctly excluded.\n\nOption F (CORRECT distractor exclusion): Loading riched20.dll is a benign module load (module-2), not evidence of data collection. Correctly excluded.\n\nOption G (PARTIALLY INCORRECT - should NOT be in answer key as stated): The MITRE ATT&CK mapping in the report does include T1115 (Clipboard Data) and T1056.001 (Keylogging) under both Credential Access and Collection tactics. So the factual claim in G is true \u2014 these ARE in the MITRE mapping. However, the question asks for 'behavioural observations' that provide evidence, and the MITRE mapping alone (without corresponding API calls or signatures directly evidencing clipboard access or keylogging in the behavioral data) is a weaker form of evidence. More critically, the answer key includes D (which is wrong) and G (which is debatable) while the question is specifically about behavioral observations from the report. The inclusion of D as correct is a clear factual error that requires rejection.\n\nThe answer key is materially incorrect by including D as a correct answer. This constitutes a factual error in the answer key, mandating a 'reject' verdict."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: option D is factually wrong",
+          "Incorrect answer key: option E is included but should not be",
+          "Incorrect answer key: option C is debatable as direct evidence of injection",
+          "Answer key omits option B which is arguably relevant"
+        ],
+        "reasoning": "The answer key has multiple errors. Option D states 'xyzuqi.exe allocates virtual memory in its own address space using VirtualAllocEx' \u2014 this is factually wrong. The report (signature api-20) states xyzuqi.exe allocated memory IN A REMOTE PROCESS ('%TEMP%\\xyzuqi.exe' allocated memory in itself is ambiguous, but the signature name is 'Allocates virtual memory in a remote process'), which IS evidence of process injection. However, the option text says 'in its own address space' which contradicts the report and the T1055 mapping. Option D's description is therefore factually incorrect as written, making it a bad distractor that could mislead. Option E (IsWow64Process) is an environment awareness call, not evidence of process injection \u2014 it should not be in the correct answer set. Option C (CreateToolhelp32Snapshot) is process enumeration, a precursor to injection but not direct evidence of injection itself \u2014 its inclusion in the correct answers is debatable and inconsistent with how the benchmark treats this API. The correct answers should be A and F at minimum (the two signatures explicitly mapped to T1055 with malicious threat level), and arguably D if the option text were corrected. The answer key as written (A, C, D, E, F) is incorrect because D's option text is factually wrong (says 'own address space' when the report says 'remote process'), E is not injection evidence, and C is a stretch. This constitutes a fundamentally flawed answer key requiring rejection."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option D is included as correct but is factually wrong",
+          "Option D describes file deletion (T1070.004) which is an indicator removal/anti-forensics behavior, not infostealer data harvesting behavior \u2014 it should be a distractor",
+          "Option F (reading installed applications registry key mapped to T1518) is also consistent with infostealer reconnaissance/data harvesting and arguably should be correct, but is excluded from the answer key without justification",
+          "The question asks specifically about 'infostealer data harvesting behavior' but the answer key conflates this with general malicious behavior",
+          "Answer key inconsistency: D (file deletion for anti-forensics) is not a data harvesting behavior; its inclusion as a correct answer is factually wrong relative to the question stem"
+        ],
+        "reasoning": "The question stem specifically asks which signatures are 'consistent with infostealer data harvesting behavior.' Option D (cmd.exe marking files for deletion, T1070.004 File Deletion) is an indicator removal/anti-forensics technique, not a data harvesting behavior. Including it as a correct answer is factually incorrect relative to the question's framing. Additionally, Option F (reading the registry for installed applications, T1518 Software Discovery) is plausibly consistent with infostealer reconnaissance and its exclusion from the answer key is questionable. The answer key is internally inconsistent with the question stem, which requires a reject verdict."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  }
+]

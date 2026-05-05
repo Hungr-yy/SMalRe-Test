@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically about T1056.004 (Credential API Hooking) as evidenced by upNext.exe hooking filesystem and networking APIs. The detonation report clearly shows hooks-2 (Hooks file system APIs) and hooks-5 (Hooks internet related APIs) both mapped to T1056.004. The correct answer A is well-supported. Distractors B (DLL injection), C (File Deletion), D (Masquerading), and E (Screen Capture) are plausible but not the primary technique evidenced by the hooking behavior. The question is original, technically precise, and answerable from the report."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors demonstrate process injection and defense evasion rather than generic process/file operations. The correct answers A (writing 1500 bytes to remote process) and C (spawning rundll32.exe with no parameters then connecting to remote IP) are directly supported by the report signatures api-0 (Writes data to a remote process), api-20 (Allocates virtual memory in a remote process), and target-248/target-269 (Rundll32 with no parameters, Windows system process connects to network). Options B, D, E are generic operations not specific to injection. The question is original and well-constructed."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors specifically demonstrate anti-analysis/sandbox/VM detection rather than generic system info discovery. Correct answers A (WMI query 'Select ProcessorId From Win32_processor' for VM detection), C (NtQuerySystemInformation for virtualization artifacts), and D (kernel debugger query) are all directly evidenced in the report with appropriate ATT&CK mappings (T1047 for WMI VM detection, T1497.001 for system checks, T1622 for debugger evasion). Options B and E are generic system info discovery, not specifically anti-analysis. The question is original and technically sound."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate EDR/AV killer activity rather than generic defense evasion. Correct answers A (enumerating installed applications/security software via registry, references to McShield.exe) and C (referencing security-related Windows services like SymProxySvc, wuauserv, and attempting to disable/modify tools and firewall policies) are well-supported by the report. The report shows registry-55 (reads registry for installed applications), string-8 (checks for McShield.exe), string-134 (anti-virus related strings SymProxySvc), string-43 (references security-related windows services wuauserv), and string-415 (firewall policy registry). Options B, D, E are generic evasion/discovery. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors best describe defense-evasion techniques interfering with security monitoring. Correct answers A (hooking FindFirstFileW and send/WS2_32.DLL), B (UPX packing and high-entropy sections), and C (creating fake system processes like WINLOGON.EXE under %APPDATA%) are all directly evidenced: hooks-2 (Hooks file system APIs), hooks-5 (Hooks internet related APIs), static-7 (UPX packed), static-6 (high entropy), target-33 (Creates a fake system process). Option D is generic discovery, E is benign. The question is original and technically precise."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate user-mode hooks for credential/network/file interception rather than generic process injection. Correct answers B (hooking Process32NextW and FindFirstFileW in IExplorer.exe) and C (hooking send/WS2_32.DLL in IExplorer.exe) are directly evidenced by hooks-0 (Hooks API calls - Process32NextW in IExplorer.exe) and hooks-5 (Hooks internet related APIs - send@WS2_32.DLL in IExplorer.exe). Option A is generic process injection, D is masquerading/persistence, E is environment awareness. The question is original and well-constructed."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors demonstrate process injection-related defense evasion. Correct answers A (writing 32 bytes to remote process) and B (creating thread in self process) are directly evidenced by api-0 (Writes data to a remote process, threat_level malicious, T1055) and api-264 (Creates a thread in a self process, T1055.003). Options C (marking file for deletion) is indicator removal, D (modifying registry for autostart) is persistence, E (LoadLibrary) is generic module loading. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors map to T1490 (Inhibit System Recovery) rather than T1486 or T1491.001. Correct answers A (vssadmin delete shadows), B (bcdedit bootstatuspolicy/recoveryenabled), and D (wbadmin delete catalog) are all directly evidenced in the process list and signatures (target-4, target-80, target-6). Option C (ransom note) maps to T1491.001 (Internal Defacement), and E (Bcrypt encryption) maps to T1486 (Data Encrypted for Impact). The question is original, technically precise, and the answer key is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors specifically demonstrate defense evasion rather than discovery or collection. Correct answers A (renaming file and dropping PE with .tmp extension - T1036 Masquerading) and D (checking NTFS alternate data streams - T1564.004) are directly evidenced by api-162 (Renames files, T1036) and api-35 (Checks for a resource fork/ADS file, T1564.004). Options B (language/locale reading) is discovery, C (keylogging/screenshots) is collection, E (file/directory discovery) is discovery. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which specific process injection sub-techniques are directly evidenced. The report contains: string-90 (UnmapViewOfSection - T1055.012 Process Hollowing), string-439 (VirtualAllocEx - T1055.003 Thread Execution Hijacking), string-318 (LoadLibrary/FreeLibrary - T1055.001 DLL Injection), api-83 (Writes PE header to memory - T1055.002 PE Injection), api-129/api-134 (Creates process in suspended mode - T1055/T1055.012), string-721 (PostMessage/FindWindowA - T1055.015 ListPlanting), api-264 (Creates thread in self process - T1055.003). The correct answers A, B, C, D, F are all supported. E (APC injection T1055.004) is not evidenced. The question is original and technically sound."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion behaviors are explicitly demonstrated related to network traffic control (firewall/proxy). Correct answers A (netsh.exe modifying firewall rules - target-15, T1562.004) and C (modifying proxy settings in registry - registry-27, T1112) are directly evidenced. Option B (disabling Windows Defender) is not evidenced in the report. Option D (stopping Windows Firewall service) is not evidenced. Option E (scheduled task for firewall restart) is not evidenced. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion/anti-analysis techniques are explicitly supported. Correct answers A (VM detection via binary-8 'known anti-VM trick' and string-666 vmtoolsd.exe, T1497), C (high-entropy sections and embedded payloads - static-6, static-18, T1027.002/T1027.009), and E (debugger evasion - string-183 GetTickCount, T1622) are all directly evidenced. Option B (user-mode API unhooking via direct syscalls) is not evidenced in the report. Option D (timestomping) is listed in MITRE ATT&CK mapping but not evidenced by specific signatures. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE ATT&CK techniques are explicitly supported as process injection-related. Correct answers A (T1055 - api-0 Writes data to remote process, memorydump-8 PE header in memory), C (T1055.001 - string-318 LoadLibrary/FreeLibrary, string-79 RtlCreateUserThread), and D (T1055.003 - string-439 VirtualAllocEx, api-264 Creates thread in self process) are all directly evidenced. Option B (T1497 Virtualization/Sandbox Evasion) is a different category, and E (T1564 Hide Artifacts) is also a different category. The question is original and technically precise."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate user-mode evasion/stealth rather than data theft or encryption impact. Correct answers A (high-entropy packed code with embedded payloads - static-6, static-18, T1027.002/T1027.009), C (DLL injection for persistence/privilege escalation without ransomware impact - T1055.001, T1546.010), and E (user-activity/time-based checks, debugger detection, security software discovery - T1497.002, T1497.003, T1518.001) are all directly evidenced. Option B (file encryption/shadow copy deletion) is not evidenced. Option D (bulk credential exfiltration) is not evidenced. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors support PE injection specifically. Correct answers B (mdzgxwae.exe writes PE header bytes to another process after creating it in suspended mode - api-83 T1055.002, api-129 T1055), C (svchost.exe initiates outbound network connections after being spawned by injected executable - target-269 T1055), and E (ATT&CK technique T1055.002 flagged for the injected process - api-83) are all directly evidenced. Option A describes writing PE to disk (api-43) which is ingress tool transfer, not PE injection. Option D is generic module loading. The question is original and technically precise."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE ATT&CK techniques are most directly supported for the WannaCry-like sample. Correct answers B (T1046 Network Service Discovery - evidenced by ARP broadcast scanning for network devices, network-31/network-32), E (T1018 Remote System Discovery - evidenced by the same ARP scanning behavior), and F (T1071.001 Web Protocols - evidenced by network-2 GETs files from webserver, HTTP GET to kill-switch domain) are all directly supported. Option A (RDP) is not evidenced. Option C (Ingress Tool Transfer) - while tasksche.exe is dropped, the primary evidence is network scanning. Option D (Disable Firewall) is not evidenced. The question is original and the answer key is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors specifically demonstrate credential/data-collection API hooking. Correct answers B (hooks-5: microsofthelp.exe hooks send@WS2_32.DLL, category 'Spyware/Information Retrieval', T1056.004) and C (hooks-0: Hooks API calls on microsofthelp.exe mapped to T1056.004) are directly evidenced. Option A describes hooking Process32NextW and FindFirstFileW which are process/file enumeration hooks (also T1056.004 but for defense evasion/discovery rather than credential collection). Option D is persistence, E is obfuscation, F is indicator removal. The question is original. Note: Option A is also mapped to T1056.004 in the report, but the question specifically asks about 'credential or data-collection' hooking, making B and C the best answers as they involve network (send) and process enumeration hooks categorized under Spyware/Information Retrieval."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which techniques are explicitly evidenced for code execution and defense evasion. Correct answers A (generic process injection - api-0 Writes data to remote process, T1055), B (DLL injection - T1055.001 in MITRE ATT&CK mapping, string-318 LoadLibrary), C (thread execution hijacking - T1055.003 in MITRE ATT&CK mapping), and F (software packing - static-7 UPX packed, static-18 UPX signature) are all directly evidenced. Option D (kernel-mode driver loading) is not evidenced. Option E (user-mode unhooking) is not evidenced. The question is original and the answer key is correct."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

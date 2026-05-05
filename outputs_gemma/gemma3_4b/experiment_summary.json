@@ -1,0 +1,77 @@
+{
+  "total_experiments": 3,
+  "completed": 3,
+  "failed": 0,
+  "verified": 3,
+  "total_duration_seconds": 99689.3,
+  "experiments": [
+    {
+      "experiment": "claude_sonnet4.6__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.6111111111111112,
+      "final_proficiency": "2",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 33769.5
+    },
+    {
+      "experiment": "gemini2.5pro__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.3333333333333333,
+      "final_proficiency": "5",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 33996.0
+    },
+    {
+      "experiment": "gpt5.1__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.2777777777777778,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 31923.8
+    }
+  ],
+  "comparison_table": [
+    {
+      "experiment": "claude_sonnet4.6__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.6111111111111112,
+      "final_proficiency": "2",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 33769.5
+    },
+    {
+      "experiment": "gemini2.5pro__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.3333333333333333,
+      "final_proficiency": "5",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 33996.0
+    },
+    {
+      "experiment": "gpt5.1__gemma3_4b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.2777777777777778,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 31923.8
+    }
+  ]
+}

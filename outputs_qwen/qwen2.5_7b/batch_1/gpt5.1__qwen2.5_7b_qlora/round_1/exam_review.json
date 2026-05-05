@@ -1,0 +1,172 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about MITRE ATT&CK techniques demonstrated by credential theft and data collection capabilities. The detonation report clearly shows T1056.001 (Keylogging) via GetKeyState, SetWindowsHookEx, and keylogger strings; T1555.003 (Credentials from Web Browsers) via key3.db Firefox credential references; and T1113 (Screen Capture) via CopyFromScreen and System.Drawing.CopyFromScreen. T1486 (Data Encrypted for Impact) is in the MITRE list but is not clearly demonstrated by credential theft/collection behaviors \u2014 it's a stretch. T1565.002 is not in the report at all. The answer key [A, C, D] is correct and well-supported. The question is original, technically sound, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about network-based C2/exfiltration behaviors. The detonation report clearly supports: A (browser-like User-Agent without browser launch \u2014 confirmed by 'Uses a browser-related user-agent without launching browser' signature), C (TCP traffic on port 80 without HTTP headers \u2014 confirmed by 'Sends traffic on typical HTTP outbound port, but without HTTP header'), and E (HTTP GET with Base64 in headers \u2014 confirmed by 'HTTP requests contain Base64 strings' and 'GETs files from a webserver'). B (DoH tunneling) is not evidenced. D (SMTP exfiltration) is not evidenced. F (FTP via FtpPutFileA) is not evidenced. Answer key [A, C, E] is correct and well-supported by the report."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about infostealer behaviors for harvesting user data. The report clearly supports: A (hooks file system and internet APIs in upNext.exe \u2014 confirmed by 'Hooks file system APIs' and 'Hooks internet related APIs' signatures), C (keylogging and credential API hooking \u2014 confirmed by T1056.001 and T1056.004 in MITRE list and hook detection), and E (screen capture and local data collection \u2014 confirmed by CreateCompatibleBitmap API call and T1113/T1005 in MITRE list). B (vssadmin shadow copy deletion) is not evidenced. D (wbadmin deletion) is not evidenced. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which APIs indicate environment/sandbox detection. The report supports: A (IsWow64Process \u2014 confirmed API call), B (GetNativeSystemInfo \u2014 confirmed API call), C (GetSystemTimeAsFileTime \u2014 confirmed via 'Contains ability to retrieve file time' and 'Contains ability to delay execution by waiting for signal/timeout'), E (GetTickCount \u2014 confirmed via 'Contains ability to retrieve the time elapsed since the system was started'), F (CreateToolhelp32Snapshot \u2014 confirmed API call for process enumeration), G (GetWindowTextA \u2014 confirmed API call). D (GetDC) is a screen capture API, not primarily environment awareness. H (InternetConnectA) is a network API, not environment awareness. Answer key [A, B, C, E, F, G] is correct and well-supported."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations provide direct evidence of process injection (as opposed to preparation). A ('hash.exe wrote 32 bytes to a remote process') is direct evidence of WriteProcessMemory-style injection \u2014 confirmed by the malicious-level signature. C ('Creates a thread in a self process' with handle -1) is direct evidence of thread injection into self. B (imported APIs like VirtualFree and CreateThread) is static/preparatory evidence, not direct execution evidence. D (high-entropy sections) is obfuscation evidence, not injection evidence. E (loading rpcrt4.dll) is module loading, not injection. Answer key [A, C] is correct and appropriately discriminating."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate EDR/AV killer activity. A (IFEO modification via 'Modifies auto-execute functionality to enable the debugger hack' \u2014 T1546.012) is confirmed by the malicious-level registry signature. C (reading AV-related registry keys \u2014 'Reads Antivirus engine related registry keys' for Tencent/QQ) is confirmed. D (changing file extension appearance \u2014 'Changes file extension appearance of the explorer' \u2014 T1546.001) is confirmed. B (keylogging) is not evidenced in this report. E (dropping PE to common program files) is a persistence/lateral movement behavior, not specifically EDR killing. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about anti-recovery and system recovery inhibition. The process list clearly shows: A (vssadmin delete shadows \u2014 confirmed by vssadmin.exe process with that command line), B (bcdedit /set bootstatuspolicy ignoreallfailures and recoveryenabled no \u2014 confirmed by bcdedit.exe processes), C (wbadmin delete catalog \u2014 confirmed by wbadmin.exe process). D (fake svchost.exe in AppData) is masquerading, not recovery inhibition. E (disabling Task Manager) is a different evasion technique. F (sleeping for sandbox evasion) is time-based evasion. Answer key [A, B, C] is correct and directly supported by the process list."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are explicitly evidenced. A (T1036 Masquerading \u2014 confirmed by 'Renames files' and 'Drops PE files with different extensions' signatures), B (T1497.003 Time Based Evasion \u2014 confirmed by 'Contains ability to delay execution by waiting for signal/timeout' and T1497.003 in MITRE list), C (T1113 Screen Capture \u2014 confirmed by CreateCompatibleBitmap API call), D (T1106 Native API \u2014 confirmed by multiple API call signatures). E (T1059.001 PowerShell) is not evidenced in this report at all \u2014 no PowerShell activity is mentioned. Answer key [A, B, C, D] is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate ransomware inhibiting system recovery and encrypting data. A (WMIC shadowcopy delete \u2014 confirmed by multiple WMIC.exe processes with shadowcopy delete commands) is directly evidenced. C (renaming 100+ files with double extensions \u2014 confirmed by 'Renames many files with double extensions' malicious-level signature) is directly evidenced. B (Windows service creation) is persistence, not specifically ransomware recovery inhibition. D (loading bcrypt and rpcrt4) is general capability, not specific to ransomware. E (dropping executable with text extension) is masquerading, not encryption. Answer key [A, C] is correct and appropriately focused."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion techniques are explicitly used. A (Virtualization/Sandbox Evasion \u2014 confirmed by 'The input sample contains a known anti-VM trick' malicious-level signature and T1497 in MITRE list), C (Software Packing \u2014 confirmed by 'Matched Compiler/Packer signature' with Borland Delphi and T1027.002 in MITRE list), E (Dynamic-link Library Injection \u2014 confirmed by T1055.001 in MITRE list), F (User Activity Based Checks \u2014 confirmed by T1497.002 in MITRE list). B (Timestomping) is in the MITRE list but no specific timestomp signature is present in the signatures section. D (AMSI bypass) is not evidenced at all. Answer key [A, C, E, F] is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are directly supported by observed behaviors. A (T1055.003 Thread Execution Hijacking \u2014 confirmed by 'Creates a thread in a self process' API call signature), C (T1082 System Information Discovery \u2014 confirmed by reading active computer name and supported languages from registry), D (T1027.002 Software Packing \u2014 confirmed by 'PE file has unusual entropy resources' and 'Matched Compiler/Packer signature' with VC8). B (T1547.001 Registry Run Keys \u2014 the report does NOT show explicit creation of Run key values; no registry-0 type signature is present), E (T1555.003 Credentials from Web Browsers \u2014 not evidenced in this report's signatures). Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about C2 techniques supported by network and behavioral indicators. The report shows: A (T1071.001 Web Protocols \u2014 confirmed by HTTP GET requests and web protocol signatures), B (T1573.001 Symmetric Cryptography \u2014 confirmed by TLS/HTTPS connection 'Making HTTPS connections using secure TLS/SSL version'), E (T1571 Non-Standard Port \u2014 confirmed by 'Uses network protocols on unusual ports' malicious signature for port 8109), F (T1105 Ingress Tool Transfer \u2014 confirmed by dropped executable files). C (T1071.003 Mail Protocols) is not evidenced in this report. D (T1095 Non-Application Layer Protocol) is in the MITRE list but no specific raw socket/non-application layer traffic is confirmed in signatures. Answer key [A, B, E, F] is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which observations support um_unhooking/evasion focus rather than overt payload activity. A (high-entropy sections and obfuscated/embedded payload indicators without visible high-level malicious actions \u2014 confirmed by high-entropy .text section, T1027.009, and minimal process activity with only 1 process and no child processes), C (loading dbghelp.dll and security software discovery without child processes \u2014 confirmed by 'Loads the debugger/analysis tool module' signature and T1518.001, with only 1 process spawned), D (Native API calls and DLL injection under Defense Evasion \u2014 confirmed by T1106 and T1055.001 in MITRE list). B (file encryption/shadow copy deletion) is not evidenced. E (large volume of outbound connections) is not evidenced. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate the malware is designed to evade analysis environments rather than commodity data theft. A (virtualization/sandbox checks including NtQuerySystemInformation, IsWow64Process, GetTickCount timing, vmtoolsd.exe check \u2014 all confirmed in signatures), C (opening KsecDD and interacting with \\Device\\Harddisk0\\DR0 \u2014 confirmed by 'Opens the Kernel Security Device Driver' and 'Interacts with the primary disk partition (DR0)' malicious signatures), E (obfuscation/packing including high-entropy sections, AES YARA, XOR loops, CryptStringToBinaryA, compressed buffers \u2014 all confirmed in signatures). B (simple HTTP GET to api.ipify.org) is a basic network behavior, not specifically evasion-focused. D (Outlook registry keys) is data collection, not evasion. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion-related behaviors. A (time-based sandbox evasion by sleeping >2 minutes \u2014 confirmed by 'Tries to sleep for a long time (more than two minutes)' suspicious signature), B (user activity and system checks \u2014 confirmed by T1497.002 and T1497.001 in MITRE list), D (debugger/analysis tool awareness through loading dbghelp and debugger evasion \u2014 confirmed by 'Loads the debugger/analysis tool module' and T1622 in MITRE list), E (code packing and obfuscation \u2014 confirmed by 'PE file has unusual entropy resources', T1027.002, and T1027.009). C (unhooking user-mode security DLLs via direct syscalls) is not evidenced in this report \u2014 there are no hook detection signatures or direct syscall indicators. F (kernel-mode rootkit) is not evidenced. Answer key [A, B, D, E] is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors indicate process injection to hide network communications. A (jwifylqa.exe creates process in suspended mode and writes PE header \u2014 confirmed by 'Creates a process in suspended mode' and 'Writes PE header to memory' malicious signatures), C (svchost.exe spawned by jwifylqa.exe establishes SMTP connections on port 25 \u2014 confirmed by 'Windows system process connects to a network' and 'Sends network traffic on a typical mail related ports' signatures), E (hash.exe allocates virtual memory and writes to remote process \u2014 confirmed by 'Allocates virtual memory in a remote process' and 'Writes data to a remote process' malicious signatures). B is incorrect (hash.exe does more than just directory creation). D (netsh firewall modification) is a separate evasion behavior, not specifically about hiding network comms behind svchost. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about EDR/AV killer behaviors. A (IFEO modification \u2014 confirmed by 'Modifies auto-execute functionality to enable the debugger hack' malicious registry signature, T1546.012), C (reading AV registry keys \u2014 confirmed by 'Reads Antivirus engine related registry keys' malicious signature for Tencent/QQ), D (changing file extension appearance \u2014 confirmed by 'Changes file extension appearance of the explorer' malicious registry signature, T1546.001). B (keylogging) is not evidenced in this report's signatures. E (file encryption) is not evidenced. F (AMSI/ETW patching) is not evidenced. Answer key [A, C, D] is correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are explicitly associated with the sample's behavior. A (T1055 Process Injection \u2014 confirmed by 'Writes data to a remote process' malicious signature), B (T1562.009 Safe Mode Boot \u2014 confirmed by T1562.009 in the MITRE ATT&CK list), C (T1547.001 Registry Run Keys \u2014 confirmed by 'Modifies auto-execute functionality by setting/creating a value in the registry' suspicious signature), E (T1071.001 Web Protocols \u2014 confirmed by network traffic signatures and T1071.001 in MITRE list), F (T1497.003 Time Based Evasion \u2014 confirmed by T1497.003 in MITRE list). D (T1027.002 Software Packing) \u2014 while T1027.002 is in the MITRE list and there's a 'PE file contains unusual section name' signature, the answer key excludes it. However, T1562.009 Safe Mode Boot is explicitly in the MITRE list and the answer key includes it. The answer key [A, B, C, E, F] appears correct based on the evidence."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about behaviors indicating process injection to hide network communications behind a trusted Windows process. A (jwifylqa.exe creates process in suspended mode and writes PE header \u2014 confirmed by 'Creates a process in suspended mode' and 'Writes PE header to memory' malicious signatures), C (svchost.exe establishes outbound SMTP on port 25 \u2014 confirmed by 'Windows system process connects to a network' and mail traffic signatures), E (hash.exe allocates virtual memory and writes to remote process \u2014 confirmed by 'Allocates virtual memory in a remote process' and 'Writes data to a remote process' malicious signatures). B is factually incorrect per the report. D (netsh firewall modification) is a separate behavior. Answer key [A, C, E] is correct."
+      },
+      {
+        "question_index": 19,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about EDR/AV killer behaviors. A (fake system processes like WINLOGON.EXE in AppData \u2014 confirmed by 'Creates a fake system process' malicious signature), B (hooking file system and internet APIs in CSRSS.EXE \u2014 confirmed by 'Hooks API calls', 'Hooks file system APIs', and 'Hooks internet related APIs' suspicious/malicious signatures in CSRSS.EXE), D (matching legitimate Windows process names from non-standard locations \u2014 confirmed by T1036.005 'Match Legitimate Name or Location' and the process list showing WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, SMSS.EXE all running from %APPDATA%\\WINDOWS\\). C (vssadmin shadow copy deletion) is not evidenced. E (file encryption) is not evidenced. F (AMSI/ETW patching) is not evidenced. Answer key [A, B, D] is correct."
+      }
+    ],
+    "summary": {
+      "total": 20,
+      "passed": 20,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

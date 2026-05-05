@@ -1,0 +1,2592 @@
+[
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware sample (Trojan.Ransom.Crysis) exhibits several Defense Evasion techniques. Based strictly on the detonation report signatures and MITRE ATT&CK mappings, which of the following are confirmed Defense Evasion behaviors? Select ALL that apply.",
+      "options": [
+        "A. Timestomp (T1070.006) \u2014 evidenced by FileTimeToSystemTime/FileTimeToLocalFileTime API usage",
+        "B. Masquerading (T1036) \u2014 evidenced by renaming files and dropping executables to the application program directory",
+        "C. GetLogicalDriveStringsW \u2014 used to enumerate drives as a Defense Evasion technique",
+        "D. Debugger Evasion (T1622) \u2014 evidenced by NtQuerySystemInformation kernel debugger query in vssadmin.exe",
+        "E. Double File Extension (T1036.007) \u2014 explicitly mapped in the MITRE ATT&CK list for this sample",
+        "F. IsWow64Process \u2014 used as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Ransom sample (single-process, 150528 bytes), which of the following API calls or behaviors are mapped to Defense Evasion tactics in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. ThreadHideFromDebugger flag set via NtSetInformationThread (T1622 \u2014 Debugger Evasion)",
+        "B. GetLogicalDriveStringsW \u2014 mapped as Defense Evasion in the report",
+        "C. Obfuscated Files or Information (T1027) \u2014 evidenced by high-entropy .text section",
+        "D. Software Packing (T1027.002) \u2014 detected via compiler/packer signature match",
+        "E. GetKeyState \u2014 mapped as a Defense Evasion indicator in this report",
+        "F. User Activity Based Checks (T1497.002) \u2014 explicitly listed under Defense Evasion in the MITRE ATT&CK mappings"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Ransom.Imps.Generic sample (18432 bytes), the report lists several MITRE ATT&CK techniques under Defense Evasion. Which of the following are correctly classified as Defense Evasion in this report, and which are NOT? Select ONLY the options that are confirmed Defense Evasion techniques in the report.",
+      "options": [
+        "A. NTFS File Attributes (T1564.004) \u2014 listed under Defense Evasion",
+        "B. GetKeyState \u2014 listed as a Defense Evasion indicator",
+        "C. Time Based Evasion (T1497.003) \u2014 listed under Defense Evasion",
+        "D. Hidden Window (T1564.003) \u2014 listed under Defense Evasion",
+        "E. GetSystemDefaultLangID \u2014 listed as a Defense Evasion indicator in this report",
+        "F. Clear Windows Event Logs (T1070.001) \u2014 listed under Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware (Trojan.Ransom.Crysis) detonation report includes both Discovery and Defense Evasion MITRE mappings. An analyst must distinguish which behaviors belong strictly to Defense Evasion versus Discovery. Which of the following are mapped ONLY to Defense Evasion (not Discovery) in this report?",
+      "options": [
+        "A. Timestomp (T1070.006)",
+        "B. Virtualization/Sandbox Evasion (T1497) \u2014 this technique appears under both Defense Evasion AND Discovery in this report",
+        "C. Double File Extension (T1036.007)",
+        "D. Debugger Evasion (T1622) \u2014 this technique appears under both Defense Evasion AND Discovery in this report",
+        "E. DLL Side-Loading (T1574.002) \u2014 listed under Defense Evasion only",
+        "F. System Language Discovery (T1614.001)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Remcos RAT sample (PCGB2GtVYuBR0mw.pif, 1247232 bytes), which of the following are confirmed Defense Evasion techniques based on the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Disable or Modify Tools (T1562.001) \u2014 evidenced by PAGE_GUARD memory allocation in sibjs/vbc processes",
+        "B. Masquerade Task or Service (T1036.004) \u2014 explicitly listed under Defense Evasion",
+        "C. GetSystemDefaultLangID \u2014 mapped as a Defense Evasion technique in this report",
+        "D. Portable Executable Injection (T1055.002) \u2014 listed under Defense Evasion, evidenced by PE header written to remote process",
+        "E. Process Hollowing (T1055.012) \u2014 listed under Defense Evasion, evidenced by CreateProcessA in suspended mode targeting system process",
+        "F. IsWow64Process \u2014 listed as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The large Remcos dropper (hash.exe, 39329792 bytes, Jalapeno.Generic) shows multiple Defense Evasion techniques. Which of the following are correctly identified as Defense Evasion in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Timestomp (T1070.006) \u2014 listed under Defense Evasion",
+        "B. GetSystemDefaultLangID called by netsh.exe \u2014 this is a System Language Discovery indicator, NOT Defense Evasion",
+        "C. Disable or Modify System Firewall (T1562.004) \u2014 listed under Defense Evasion, evidenced by netsh firewall modification",
+        "D. Masquerade File Type (T1036.008) \u2014 listed under Defense Evasion, evidenced by dropping PE with .txt extension",
+        "E. User Activity Based Checks (T1497.002) \u2014 listed under Defense Evasion",
+        "F. bcrypt.dll loading \u2014 listed as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Remcos RAT sample (PCGB2GtVYuBR0mw.pif), an analyst reviews the report for Defense Evasion indicators. Some API calls appear in both Discovery and Defense Evasion contexts. Which of the following are mapped EXCLUSIVELY to Defense Evasion (not Discovery) in this report?",
+      "options": [
+        "A. Reflective Code Loading (T1620)",
+        "B. Debugger Evasion (T1622) \u2014 appears under both Defense Evasion AND Discovery in this report",
+        "C. Impair Defenses (T1562)",
+        "D. Time Based Evasion (T1497.003) \u2014 appears under both Defense Evasion AND Discovery in this report",
+        "E. Masquerade Task or Service (T1036.004)",
+        "F. System Checks (T1497.001) \u2014 appears under both Defense Evasion AND Discovery in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NjRAT-like infostealer sample (3472896 bytes, Win/malicious_confidence_100%) shows multiple Defense Evasion techniques. Which of the following are confirmed Defense Evasion techniques in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. bcrypt.dll loading \u2014 explicitly mapped to Defense Evasion (T1027) in this report",
+        "B. Hidden Window (T1564.003) \u2014 listed under Defense Evasion",
+        "C. IsWow64Process \u2014 mapped as a Defense Evasion indicator in this report",
+        "D. Time Based Evasion (T1497.003) \u2014 listed under Defense Evasion",
+        "E. PAGE_GUARD memory allocation \u2014 mapped to Disable or Modify Tools (T1562.001) under Defense Evasion",
+        "F. GetSystemDefaultLangID \u2014 listed as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the NjRAT infostealer (3472896 bytes), the report maps several techniques to Defense Evasion. An analyst must decide which options belong to Defense Evasion versus Discovery or Collection. Which of the following are mapped to Defense Evasion in this report?",
+      "options": [
+        "A. Reflective Code Loading (T1620) \u2014 listed under Defense Evasion",
+        "B. Screen Capture (T1113) \u2014 this is a Collection technique, NOT Defense Evasion",
+        "C. Access Token Manipulation (T1134) \u2014 listed under Defense Evasion",
+        "D. Network Sniffing (T1040) \u2014 this appears under Credential Access and Discovery, NOT Defense Evasion in this report",
+        "E. DLL Side-Loading (T1574.002) \u2014 listed under Defense Evasion",
+        "F. System Language Discovery (T1614.001) \u2014 this is a Discovery technique, NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif, 1247232 bytes) demonstrates multiple process injection techniques. Which of the following API calls or behaviors specifically support Process Hollowing (T1055.012) rather than other injection techniques?",
+      "options": [
+        "A. CreateProcessA called in suspended mode targeting a system process \u2014 directly supports Process Hollowing",
+        "B. WriteProcessMemory writing 32 bytes to a remote process \u2014 supports generic process injection but not specifically hollowing",
+        "C. PE header bytes ('h') written to remote process memory via api-83 \u2014 supports Portable Executable Injection (T1055.002)",
+        "D. api-134: CreateProcessA creates a system process in suspended mode \u2014 the sandbox explicitly labels this as T1055.012",
+        "E. NtQueueApcThread \u2014 supports APC Injection (T1055.004), not Process Hollowing",
+        "F. CreateToolhelp32Snapshot \u2014 used for process discovery, not injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the large Remcos dropper (39329792 bytes), the process tree shows hash.exe spawning rundl32.exe, Stable_Network.exe, host.exe, and GameSDK.exe. Which of the following are confirmed process injection indicators in this detonation report? Select ALL that apply.",
+      "options": [
+        "A. VirtualAllocEx (allocates virtual memory in remote process) \u2014 confirmed by api-20",
+        "B. WriteProcessMemory writing 32 bytes to remote process \u2014 confirmed by api-0",
+        "C. CreateToolhelp32Snapshot called by Stable_Network.exe \u2014 this is a Discovery indicator, not injection",
+        "D. GameSDK.exe calling GetAsyncKeyState \u2014 this is a keylogging/Collection indicator, not injection",
+        "E. Thread Execution Hijacking (T1055.003) \u2014 listed under both Defense Evasion and Privilege Escalation",
+        "F. Dynamic-link Library Injection (T1055.001) \u2014 listed under Defense Evasion and Privilege Escalation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Supporting Indicators",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif) spawns vbc.exe processes that connect to an external IP on port 2247. Which of the following are supporting indicators that vbc.exe is being used as a hollowed/injected host? Select ALL that apply.",
+      "options": [
+        "A. target-269: vbc.exe (a Windows system process) connects to external IP:2247 \u2014 anomalous for a compiler process",
+        "B. stream-38: Shellcode written to a remote process (2 instructions + 89 bytes) \u2014 confirms code injection into another process",
+        "C. CreateToolhelp32Snapshot called by PCGB2GtVYuBR0mw.pif.exe \u2014 supports process discovery prior to injection targeting",
+        "D. IsWow64Process called by PCGB2GtVYuBR0mw.pif.exe \u2014 used to determine target architecture before injection",
+        "E. GetKeyState called by vbc.exe \u2014 this indicates keylogging capability in the injected process",
+        "F. PAGE_GUARD memory allocation \u2014 this is an anti-debugging technique, not an injection supporting indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (167965 bytes) exhibits Defense Evasion behaviors. Which of the following are confirmed Defense Evasion techniques in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Match Legitimate Name or Location (T1036.005) \u2014 evidenced by creating fake system processes (WINLOGON.EXE, CSRSS.EXE) at non-system paths",
+        "B. Safe Mode Boot (T1562.009) \u2014 listed under Defense Evasion",
+        "C. GetSystemDefaultLangID \u2014 mapped as a Defense Evasion technique in this report",
+        "D. Timestomp (T1070.006) \u2014 listed under Defense Evasion",
+        "E. Bypass User Account Control (T1548.002) \u2014 listed under Defense Evasion",
+        "F. IsWow64Process \u2014 mapped as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic sample (660222 bytes, UPX compressed) shows multiple Defense Evasion behaviors. Which of the following are correctly classified as Defense Evasion in this report? Select ALL that apply.",
+      "options": [
+        "A. Clear Windows Event Logs (T1070.001) \u2014 listed under Defense Evasion",
+        "B. Code Signing Policy Modification (T1553.006) \u2014 listed under Defense Evasion",
+        "C. IsWow64Process \u2014 mapped as a Defense Evasion indicator in this report",
+        "D. Masquerade File Type (T1036.008) \u2014 listed under Defense Evasion",
+        "E. Disable or Modify System Firewall (T1562.004) \u2014 listed under Defense Evasion",
+        "F. GetLocaleInfoW \u2014 mapped as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A student analyst reviews the Trojan.Ransom sample (150528 bytes) and must identify Defense Evasion techniques. The report contains both Defense Evasion and Discovery entries. Which of the following are mapped to Defense Evasion (not Discovery) in this specific report?",
+      "options": [
+        "A. Virtualization/Sandbox Evasion (T1497) \u2014 appears under BOTH Defense Evasion AND Discovery in this report",
+        "B. Embedded Payloads (T1027.009) \u2014 listed under Defense Evasion only",
+        "C. Debugger Evasion (T1622) \u2014 appears under BOTH Defense Evasion AND Discovery in this report",
+        "D. Software Packing (T1027.002) \u2014 listed under Defense Evasion only",
+        "E. User Activity Based Checks (T1497.002) \u2014 appears under BOTH Defense Evasion AND Discovery in this report",
+        "F. Masquerading (T1036) \u2014 listed under Defense Evasion only"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The QuasarRAT-like sample (2114136 bytes, Trojan.Generic) contains a rich set of MITRE ATT&CK mappings. Which of the following are confirmed Defense Evasion techniques in this detonation report? Select ALL that apply.",
+      "options": [
+        "A. Match Legitimate Name or Location (T1036.005) \u2014 listed under Defense Evasion",
+        "B. bcrypt.dll loading \u2014 mapped to Defense Evasion (T1027) in this report",
+        "C. IsWow64Process \u2014 mapped as a Defense Evasion indicator in this report",
+        "D. Bypass User Account Control (T1548.002) \u2014 listed under Defense Evasion",
+        "E. Reflective Code Loading (T1620) \u2014 listed under Defense Evasion",
+        "F. GetLogicalDriveStringsW \u2014 mapped as a Defense Evasion technique in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Packer.Malware.NSAnti sample (137264 bytes) exhibits Defense Evasion behaviors. Which of the following are confirmed Defense Evasion techniques based on the report's MITRE ATT&CK mappings and signatures? Select ALL that apply.",
+      "options": [
+        "A. Timestomp (T1070.006) \u2014 evidenced by FileTimeToSystemTime and FileTimeToLocalFileTime API references",
+        "B. Software Packing (T1027.002) \u2014 evidenced by tElock v1.0 packer detection",
+        "C. GetSystemDefaultLangID \u2014 mapped as a Defense Evasion indicator in this report",
+        "D. Execution Guardrails (T1480) \u2014 listed under Defense Evasion",
+        "E. Dynamic API Resolution (T1027.007) \u2014 evidenced by GetProcAddress/LoadLibraryA in import table",
+        "F. WinExec API call \u2014 mapped as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ursnif sample (369152 bytes) and the Trojan.Injuke sample (366592 bytes) both use APC injection. For the Trojan.Injuke sample, which of the following are confirmed Defense Evasion techniques in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Asynchronous Procedure Call (T1055.004) \u2014 listed under Defense Evasion, evidenced by NtQueueApcThread call",
+        "B. Disable or Modify Tools (T1562.001) \u2014 listed under Defense Evasion",
+        "C. IsWow64Process \u2014 mapped as a Defense Evasion indicator in this report",
+        "D. System Checks (T1497.001) \u2014 listed under Defense Evasion",
+        "E. Timestomp (T1070.006) \u2014 listed under Defense Evasion",
+        "F. GetLocaleInfoA \u2014 mapped as a Defense Evasion indicator in this report"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "An analyst examines the Dharma ransomware (Trojan.Ransom.Crysis, 94720 bytes) and must count exactly how many distinct Defense Evasion techniques are listed in the MITRE ATT&CK mappings. The analyst also needs to avoid including techniques that appear only under other tactics. Which statement best describes the correct approach?",
+      "options": [
+        "A. Count only techniques where tactic == 'Defense Evasion'; techniques like T1622 and T1497 that also appear under Discovery should still be counted if they appear under Defense Evasion",
+        "B. Exclude any technique that appears under more than one tactic, since dual-listed techniques are ambiguous",
+        "C. Include GetLogicalDriveStringsW as a Defense Evasion technique since it helps the malware avoid detection",
+        "D. Include IsWow64Process as a Defense Evasion technique since it is used to check the environment",
+        "E. The correct set of Defense Evasion techniques includes T1055.001, T1070.006, T1027, T1622, T1497, T1055.003, T1497.003, T1036, T1497.001, T1497.002, T1055, T1134, T1134.001, T1027.009, T1027.002, T1055.011, T1070.004, T1036.007, T1574.002, T1027.007, T1036.008, T1027.005, T1140, T1480 \u2014 all explicitly listed under Defense Evasion tactic in this report",
+        "F. bcrypt.dll loading should be counted as a Defense Evasion technique for this sample"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A student analyst over-selects options when answering Defense Evasion questions. For the large Remcos dropper (39329792 bytes), which of the following options should NOT be selected as Defense Evasion techniques, because they belong to other tactic categories in this report?",
+      "options": [
+        "A. GetSystemDefaultLangID called by netsh.exe \u2014 this is mapped to System Language Discovery (T1614.001) under Discovery, NOT Defense Evasion",
+        "B. Screen Capture (T1113) \u2014 this is a Collection technique in this report",
+        "C. Disable or Modify System Firewall (T1562.004) \u2014 this IS a Defense Evasion technique in this report",
+        "D. Keylogging (T1056.001) via GetAsyncKeyState \u2014 this is a Credential Access and Collection technique, NOT Defense Evasion",
+        "E. Timestomp (T1070.006) \u2014 this IS a Defense Evasion technique in this report",
+        "F. Security Software Discovery (T1518.001) \u2014 this is a Discovery technique, NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A detonation report for a Trojan.Ransom.Crysis sample shows the following behaviors: (1) vssadmin.exe executed with 'delete shadows /all /quiet', (2) hooks-2 detected 'FindFirstFileA@KERNEL32.DLL' hooked in mode.com, (3) api-162 shows hash.exe renamed 'C:\\dotnet48.exe' to an encrypted extension, (4) api-10 shows vssadmin.exe querying kernel debugger information via NtQuerySystemInformation, (5) static-18 detects a mismatched CRC in DISMHOST.EXE.67A614A7.bin, (6) api-146 shows cmd.exe calling IsWow64Process, (7) GetLogicalDriveStringsW called by hash.exe. Which of the following behaviors are DEFENSE EVASION techniques under MITRE ATT&CK? Select ALL that apply.",
+      "options": [
+        "A. vssadmin.exe deleting volume shadow copies (T1490 - Inhibit System Recovery)",
+        "B. hash.exe renaming files to encrypted extensions (T1036 - Masquerading)",
+        "C. Hooking FindFirstFileA@KERNEL32.DLL in mode.com (T1056.004 - Credential API Hooking, used as Defense Evasion)",
+        "D. NtQuerySystemInformation called by vssadmin.exe to detect debugger (T1622 - Debugger Evasion)",
+        "E. CRC mismatch in DISMHOST.EXE.67A614A7.bin PE header (T1027 - Obfuscated Files or Information)",
+        "F. IsWow64Process called by cmd.exe (T1057 - Process Discovery, NOT Defense Evasion)",
+        "G. GetLogicalDriveStringsW called by hash.exe (T1082 - System Information Discovery, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware sample (Trojan.Ransom.Crysis) exhibits several Defense Evasion behaviors. Which of the following observed indicators from the detonation report are correctly classified as Defense Evasion techniques? Select ALL that apply.",
+      "options": [
+        "A. Timestomp (T1070.006) \u2014 FileTimeToSystemTime/FileTimeToLocalFileTime API calls used to manipulate file timestamps",
+        "B. Debugger Evasion (T1622) \u2014 vssadmin.exe queries kernel debugger information via NtQuerySystemInformation",
+        "C. File Deletion (T1070.004) \u2014 hash.exe opens files with delete access rights and marks them for deletion",
+        "D. GetLogicalDriveStringsW \u2014 enumerating logical drives to identify encryption targets",
+        "E. IsWow64Process \u2014 checking whether the process runs under WOW64 to determine architecture",
+        "F. Double File Extension (T1036.007) \u2014 files renamed with double extensions as a masquerading technique",
+        "G. vssadmin delete shadows /all /quiet \u2014 Inhibit System Recovery (T1490), not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Ransom (ransomware) detonation report with a single process (hash.exe), the sandbox flagged multiple behaviors. Which of the following are genuine Defense Evasion techniques supported by the report's signatures, and which are misclassified? Select ONLY the options that correctly identify Defense Evasion behaviors.",
+      "options": [
+        "A. ThreadHideFromDebugger (T1622) \u2014 api-84 sets ThreadHideFromDebugger data structure, a debugger evasion technique",
+        "B. GetLogicalDriveStringsW \u2014 this is a Discovery/Collection behavior for enumerating drives, NOT Defense Evasion",
+        "C. Software Packing (T1027.002) \u2014 Borland Delphi 3.0 packer signature detected in static analysis",
+        "D. GetKeyState \u2014 this is a keylogging (T1056.001) Collection behavior, NOT Defense Evasion",
+        "E. Time Based Evasion (T1497.003) \u2014 WaitForSingleObject used to delay execution",
+        "F. bcrypt.dll loading \u2014 loading the Bcrypt module is a neutral cryptographic operation, NOT a Defense Evasion indicator by itself",
+        "G. NTFS File Attributes (T1564.004) \u2014 hash.exe checks for ADS (Alternate Data Stream) resource fork files"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Ransom.Imps.Generic sample detonation shows several API calls and behaviors. An analyst must distinguish Defense Evasion from Discovery and Collection behaviors. Which of the following from this report are Defense Evasion techniques (not Discovery or Collection)?",
+      "options": [
+        "A. Hidden Window (T1564.003) \u2014 ShowWindow API reference found in binary strings",
+        "B. GetSystemDefaultLangID \u2014 this maps to System Language Discovery (T1614.001), a Discovery technique",
+        "C. Clear Windows Event Logs (T1070.001) \u2014 indicator removal technique observed",
+        "D. GetKeyState \u2014 this is Keylogging (T1056.001), a Collection/Credential Access technique, not Defense Evasion",
+        "E. Timestomp (T1070.006) \u2014 file time manipulation APIs referenced",
+        "F. CreateCompatibleBitmap \u2014 this is Screen Capture (T1113), a Collection technique, not Defense Evasion",
+        "G. IsWow64Process \u2014 process architecture check, classified as Process Discovery (T1057), not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The large Remcos RAT dropper (39MB, Jalapeno.Generic) detonation shows many behaviors. Which of the following are correctly classified as Defense Evasion techniques based on the report evidence? Select ALL correct answers.",
+      "options": [
+        "A. Masquerade Task or Service (T1036.004) \u2014 schtasks.exe creates a scheduled task named 'System\\SystemCheck' mimicking a legitimate system task",
+        "B. GetSystemDefaultLangID called by netsh.exe \u2014 this is System Language Discovery (T1614.001), not Defense Evasion",
+        "C. Disable or Modify System Firewall (T1562.004) \u2014 netsh.exe adds GameSDK.exe as an allowed program via firewall rule",
+        "D. GetAsyncKeyState called by GameSDK.exe \u2014 this is Keylogging (T1056.001), a Collection technique, not Defense Evasion",
+        "E. Reflective Code Loading (T1620) \u2014 CLR Loader DLL loaded by rundl32.exe enabling in-memory .NET assembly execution",
+        "F. EnumWindows called by GameSDK.exe \u2014 this is Application Window Discovery (T1010), not Defense Evasion",
+        "G. Timestomp (T1070.006) \u2014 FileTimeToLocalFileTime called by Sibuia.exe to manipulate timestamps"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif) uses PowerShell to add Windows Defender exclusions and performs process injection. Which of the following behaviors from the report are correctly mapped to Defense Evasion, and which belong to other tactics?",
+      "options": [
+        "A. Add-MpPreference -ExclusionPath \u2014 Disable or Modify Tools (T1562.001), a Defense Evasion technique",
+        "B. CreateProcessA in suspended mode followed by WriteProcessMemory \u2014 Process Hollowing (T1055.012), classified under both Privilege Escalation and Defense Evasion",
+        "C. GetKeyState called by vbc.exe \u2014 Keylogging (T1056.001), a Credential Access/Collection technique, NOT Defense Evasion",
+        "D. FileTimeToSystemTime called by powershell.exe \u2014 Timestomp (T1070.006), a Defense Evasion technique",
+        "E. LookupAccountSidA \u2014 System Owner/User Discovery (T1033), not Defense Evasion",
+        "F. DNS query to localto.net \u2014 Application Layer Protocol C2 (T1071), Command and Control tactic, not Defense Evasion",
+        "G. IsWow64Process \u2014 Process Discovery (T1057), not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware (Trojan.Ransom.Crysis) detonation shows hooks on file system APIs in mode.com and shadow copy deletion. Which behaviors from the detonation report are Defense Evasion techniques versus Impact or Discovery techniques?",
+      "options": [
+        "A. hooks-2: FindFirstFileA@KERNEL32.DLL hooked in mode.com \u2014 Credential API Hooking (T1056.004) used for Defense Evasion by intercepting file system calls",
+        "B. vssadmin delete shadows /all /quiet \u2014 Inhibit System Recovery (T1490), an Impact technique, NOT Defense Evasion",
+        "C. Masquerading (T1036) \u2014 hash.exe renamed original file dotnet48.exe with a different extension",
+        "D. IsWow64Process called by cmd.exe \u2014 Process Discovery (T1057), not Defense Evasion",
+        "E. Dynamic API Resolution (T1027.007) \u2014 GetProcAddress used to resolve APIs at runtime, avoiding static import detection",
+        "F. LookupAccountSidW \u2014 System Owner/User Discovery (T1033), not Defense Evasion",
+        "G. AdjustTokenPrivileges called by vssadmin.exe \u2014 Access Token Manipulation (T1134), a Defense Evasion technique"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The njRAT-matching infostealer (.NET assembly, win_njrat_g0 YARA match) detonation shows PAGE_GUARD memory allocation and kernel debugger queries. Which of the following are correctly classified as Defense Evasion techniques, and which are misclassified?",
+      "options": [
+        "A. PAGE_GUARD memory allocation (api-1) \u2014 Disable or Modify Tools (T1562.001), an anti-debugging Defense Evasion technique",
+        "B. NtQuerySystemInformation (string-659) \u2014 System Checks (T1497.001), used for sandbox/VM detection, classified under Defense Evasion",
+        "C. GetWindowTextW called by vbc.exe \u2014 Application Window Discovery (T1010), a Discovery technique, NOT Defense Evasion",
+        "D. bcrypt.dll loading \u2014 loading the Bcrypt cryptography module is a neutral library load, NOT a Defense Evasion indicator by itself",
+        "E. Reflective Code Loading (T1620) \u2014 CLR Loader DLL loaded enabling in-memory assembly execution, a Defense Evasion technique",
+        "F. IsWow64Process \u2014 Process Discovery (T1057), not Defense Evasion",
+        "G. AdjustTokenPrivileges (api-111) \u2014 Access Token Manipulation (T1134), classified as Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (av_edr_killers family) spawns fake system processes (WINLOGON.EXE, CSRSS.EXE from %APPDATA%) and disables regedit/cmd. Which of the following behaviors from the detonation report are correctly classified as Defense Evasion?",
+      "options": [
+        "A. Match Legitimate Name or Location (T1036.005) \u2014 WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE spawned from %APPDATA%\\WINDOWS\\ instead of system32",
+        "B. Safe Mode Boot (T1562.009) \u2014 registry modification to boot into safe mode, disabling security tools",
+        "C. GetSystemDefaultLangID \u2014 System Language Discovery (T1614.001), a Discovery technique, NOT Defense Evasion",
+        "D. Bypass User Account Control (T1548.002) \u2014 modifying HKLM\\SOFTWARE shell command registry path for UAC bypass",
+        "E. FileTimeToLocalFileTime (api-223) \u2014 Timestomp (T1070.006), manipulating file timestamps to evade forensics",
+        "F. LookupAccountSidW \u2014 System Owner/User Discovery (T1033), not Defense Evasion",
+        "G. Disabling Windows Registry Editor via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\... \u2014 Modify Registry (T1112), a Defense Evasion technique"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Packer.Malware.NSAnti infostealer (ACProtect/tElock packed) drops xmloder.exe to System32 and uses regedit to import a .reg file. Which of the following behaviors are correctly classified as Defense Evasion versus other tactics?",
+      "options": [
+        "A. Masquerading (T1036) \u2014 dropping xmloder.exe to C:\\Windows\\System32 to blend with legitimate system files",
+        "B. Timestomp (T1070.006) \u2014 FileTimeToSystemTime and FileTimeToLocalFileTime APIs referenced for file time manipulation",
+        "C. GetSystemDefaultLangID \u2014 System Language Discovery (T1614.001), a Discovery technique, NOT Defense Evasion",
+        "D. Execution Guardrails (T1480) \u2014 malware checks environment conditions before proceeding, limiting execution to specific targets",
+        "E. GetLocaleInfoA \u2014 System Location Discovery (T1614), a Discovery technique, NOT Defense Evasion",
+        "F. Software Packing (T1027.002) \u2014 tElock v1.0 packer detected, obfuscating the payload",
+        "G. CopyFileA copying hash.exe \u2014 Data from Local System (T1005), a Collection technique, not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif) performs process injection using multiple techniques. Which specific API call sequences from the detonation report provide direct evidence of process injection, and which are supporting but not injection-specific?",
+      "options": [
+        "A. CreateProcessA called in suspended mode (api-129) + WriteProcessMemory (api-0) + PE header written to remote process (api-83) \u2014 classic Process Hollowing (T1055.012) sequence",
+        "B. CreateProcessA creating a system process in suspended mode (api-134) \u2014 evidence of Process Hollowing targeting a system binary",
+        "C. vbc.exe connects to <IPv4>:2247 \u2014 the injected process establishing C2 communication, confirming successful injection",
+        "D. GetKeyState called by vbc.exe \u2014 keylogging behavior of the injected payload, not the injection mechanism itself",
+        "E. AllocateVirtualMemory in remote process (api-20) \u2014 memory allocation step in injection sequence",
+        "F. CreateToolhelp32Snapshot + Process32FirstW \u2014 process enumeration to select injection target, a supporting Discovery step",
+        "G. PowerShell Add-MpPreference ExclusionPath \u2014 AV exclusion to prevent detection of injected code, a supporting Defense Evasion step"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT dropper (39MB Jalapeno.Generic) spawns multiple processes including rundl32.exe, Stable_Network.exe, host.exe, and GameSDK.exe. Which of the following from the detonation report are direct indicators of process injection, and which are merely process spawning or other behaviors?",
+      "options": [
+        "A. VirtualAllocEx in remote process (api-20) observed for hash.exe and Stable_Network.exe \u2014 memory allocation in remote process, a core injection step",
+        "B. WriteProcessMemory (api-0) \u2014 hash.exe wrote 32 bytes to a remote process, direct injection evidence",
+        "C. CreateProcessW spawning rundl32.exe \u2014 process creation alone is not injection; further WriteProcessMemory would be needed",
+        "D. Thread Execution Hijacking (T1055.003) \u2014 api-264 creates thread in self process (-1 handle), indicating self-injection",
+        "E. GetAsyncKeyState called by GameSDK.exe \u2014 keylogging by injected payload, not the injection mechanism",
+        "F. netsh.exe adding firewall exception \u2014 Defense Evasion/Impact, not process injection",
+        "G. CreateToolhelp32Snapshot + Process32FirstW called by Stable_Network.exe \u2014 process discovery to identify injection target"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware (Trojan.Ransom.Crysis) detonation shows specific ransomware behaviors. Which of the following observations from the report are direct ransomware-specific indicators versus generic malware behaviors?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet \u2014 Inhibit System Recovery (T1490), a ransomware-specific anti-recovery technique",
+        "B. YARA signature 'dharma_ransomware' matched the sample file \u2014 direct family identification",
+        "C. Files renamed with double extension (T1036.007) \u2014 e.g., autoexec.bat renamed to autoexec.bat.id-085CDA53._vijurytos@tuta.io_.V, ransomware file marking pattern",
+        "D. GetProcAddress + LoadLibrary \u2014 generic dynamic API resolution, not ransomware-specific",
+        "E. AES encryption YARA signature match \u2014 encryption capability supporting Data Encrypted for Impact (T1486)",
+        "F. RpcServerRegisterIf2 called by vssadmin.exe \u2014 RPC interface registration, not ransomware-specific",
+        "G. 694 files dropped (binary-10) \u2014 mass file creation consistent with ransomware encrypting and dropping ransom notes"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ransom sample (single process, bcrypt.dll loaded) dropped 791 files and contains 'YOUR FILES ARE ENCRYPTED' strings. Which of the following are ransomware-specific behavioral indicators from this report?",
+      "options": [
+        "A. 'YOUR FILES ARE ENCRYPTEDYour files, documents, photos...' string (string-13) \u2014 ransom note content, direct ransomware indicator",
+        "B. 791 files dropped (binary-10) \u2014 mass file drop consistent with per-file encryption and ransom note placement",
+        "C. bcrypt.dll loaded \u2014 the Bcrypt module provides cryptographic primitives used for file encryption",
+        "D. GetLogicalDriveStringsW (api-109) \u2014 enumerating all logical drives to identify encryption targets",
+        "E. IsWow64Process \u2014 architecture check for process compatibility, not ransomware-specific",
+        "F. ThreadHideFromDebugger (api-84) \u2014 anti-debugging Defense Evasion, not ransomware-specific",
+        "G. QueryServiceStatusEx (api-170) \u2014 service discovery, used to stop security services before encryption"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Downloader.Zlob sample (av_edr_killers family, 53KB) contains an embedded PE executable and uses DLL injection. Which of the following from the detonation report are correctly classified as Defense Evasion techniques?",
+      "options": [
+        "A. Embedded Payloads (T1027.009) \u2014 YARA signatures match embedded PE in .rsrc section and binary contains another embedded PE",
+        "B. DLL Injection (T1055.001) \u2014 LoadLibraryA reference in Anti-Detection category indicates DLL injection capability",
+        "C. GetUserDefaultLCID \u2014 System Location Discovery (T1614), a Discovery technique, NOT Defense Evasion",
+        "D. Execution Guardrails (T1480) \u2014 indicator combinations show environment checks before execution",
+        "E. WaitForSingleObject \u2014 Time Based Evasion (T1497.003), delaying execution to evade sandbox timeouts",
+        "F. GetKeyboardLayoutList \u2014 System Language Discovery (T1614.001), a Discovery technique, NOT Defense Evasion",
+        "G. ShowWindow API reference \u2014 Hidden Window (T1564.003), a Defense Evasion technique"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Dinwod infostealer (UPX-compressed, spawns 64 processes in a chain) uses dynamic API resolution. Which of the following from this report are Defense Evasion techniques, and which are misclassified?",
+      "options": [
+        "A. Software Packing (T1027.002) \u2014 UPX v1.25 packer detected, entrypoint in uncommon UPX0 section",
+        "B. Dynamic API Resolution (T1027.007) \u2014 GetProcAddress used extensively to resolve APIs at runtime",
+        "C. User Activity Based Checks (T1497.002) \u2014 sandbox evasion by checking for user activity before proceeding",
+        "D. IsWow64Process \u2014 Process Discovery (T1057), architecture check, NOT Defense Evasion",
+        "E. Embedded Payloads (T1027.009) \u2014 high-entropy UPX1 section contains compressed/encrypted payload",
+        "F. CreateToolhelp32Snapshot \u2014 Process Discovery (T1057), NOT Defense Evasion",
+        "G. Time Based Evasion (T1497.003) \u2014 delayed execution to evade sandbox time-limited analysis"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ursnif um_unhooking sample uses APC injection (NtQueueApcThread) and loads dbghelp.dll. Which of the following from this detonation report are correctly classified as Defense Evasion techniques versus other tactics?",
+      "options": [
+        "A. Asynchronous Procedure Call injection (T1055.004) \u2014 NtQueueApcThread used to queue APC in remote process, classified as both Privilege Escalation and Defense Evasion",
+        "B. Loading dbghelp.dll (module-16) \u2014 Security Software Discovery (T1518.001), checking for debugger/analysis tools, a Discovery technique",
+        "C. Timestomp (T1070.006) \u2014 file time manipulation APIs observed",
+        "D. GetLocaleInfoA \u2014 System Location Discovery (T1614), a Discovery technique, NOT Defense Evasion",
+        "E. Software Packing (T1027.002) \u2014 Microsoft visual C++ 8 packer signature with unusual entropy resources",
+        "F. Sleeping for 1097794852 milliseconds \u2014 Time Based Evasion (T1497.003), a Defense Evasion technique",
+        "G. RtlGetNtProductType \u2014 System Information Discovery (T1082), not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The QuasarRAT-mutex infostealer (2MB, Trojan.Generic) drops Geforce BeamMP.exe and performs process injection. An analyst must identify which behaviors belong to Defense Evasion versus Discovery. Which are correctly Defense Evasion?",
+      "options": [
+        "A. Hidden Window (T1564.003) \u2014 GetWindowThreadProcessId API reference for window manipulation to hide malware UI",
+        "B. Time Based Evasion (T1497.003) \u2014 hash.exe sleeps for 1566804069 milliseconds to outlast sandbox analysis",
+        "C. GetWindowTextW \u2014 Application Window Discovery (T1010), a Discovery technique, NOT Defense Evasion",
+        "D. Reflective Code Loading (T1620) \u2014 CLR Loader DLL loaded enabling in-memory .NET execution without disk artifacts",
+        "E. IsWow64Process \u2014 Process Discovery (T1057), NOT Defense Evasion",
+        "F. PAGE_GUARD memory allocation (api-1) \u2014 Disable or Modify Tools (T1562.001), anti-debugging trick",
+        "G. SELECT * FROM Win32_BIOS WMI query \u2014 System Checks (T1497.001) for VM detection, classified as Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NetsupportRAT-like Remcos sample (Nullsoft installer, signed certificate) uses DLL search order hijacking and code signing. Which of the following from the detonation report are Defense Evasion techniques, and which are misclassified?",
+      "options": [
+        "A. Code Signing (T1553.002) \u2014 the sample is signed with a valid certificate chain, abusing legitimate signing for evasion",
+        "B. FileTimeToLocalFileTime called by Sibuia.exe \u2014 Timestomp (T1070.006), a Defense Evasion technique",
+        "C. GetSystemDefaultLangID \u2014 System Language Discovery (T1614.001), a Discovery technique, NOT Defense Evasion",
+        "D. DLL Search Order Hijacking (T1574.001) \u2014 api-ms-win-* DLL load failures indicate hijacking attempts",
+        "E. IsWow64Process \u2014 Process Discovery (T1057), NOT Defense Evasion",
+        "F. PAGE_GUARD allocation by sibjs.exe (api-1) \u2014 Disable or Modify Tools (T1562.001), anti-debugging Defense Evasion",
+        "G. CryptAcquireContextW \u2014 generic cryptographic operation, not a Defense Evasion technique by itself"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic AV/EDR killer sample uses UPX packing, token manipulation, and clears event logs. A student must select ONLY the Defense Evasion techniques from the following options. Which are correct?",
+      "options": [
+        "A. Clear Windows Event Logs (T1070.001) \u2014 indicator removal technique, a Defense Evasion technique",
+        "B. Token Impersonation/Theft (T1134.001) \u2014 access token manipulation for Defense Evasion",
+        "C. Registry reads for VMware artifacts (registry-56) \u2014 this is Discovery (Query Registry T1012), NOT Defense Evasion",
+        "D. Code Signing Policy Modification (T1553.006) \u2014 modifying code signing policy to allow unsigned drivers",
+        "E. GetLocaleInfoW \u2014 System Location Discovery (T1614), NOT Defense Evasion",
+        "F. Masquerade File Type (T1036.008) \u2014 dropping files with misleading extensions",
+        "G. EnumWindows \u2014 Application Window Discovery (T1010), NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The second njRAT infostealer (.NET, 3.2MB, Trojan.Agent) shows PAGE_GUARD allocation, kernel debugger queries, and bcrypt.dll loading. A student must carefully distinguish Defense Evasion from Discovery. Which of the following are Defense Evasion techniques supported by this report?",
+      "options": [
+        "A. PAGE_GUARD memory allocation (api-1) \u2014 Disable or Modify Tools (T1562.001), anti-memory-dumping Defense Evasion technique",
+        "B. Queries kernel debugger information (api-10) \u2014 Debugger Evasion (T1622), a Defense Evasion technique",
+        "C. bcrypt.dll loading \u2014 loading the Bcrypt module is a neutral cryptographic library load, NOT a Defense Evasion indicator by itself",
+        "D. SELECT * FROM Win32_BIOS WMI query \u2014 System Checks (T1497.001) for VM detection, Defense Evasion",
+        "E. GetProcessById \u2014 Process Discovery (T1057), a Discovery technique, NOT Defense Evasion",
+        "F. Reflective Code Loading (T1620) \u2014 CLR Loader DLL loaded for in-memory .NET execution, Defense Evasion",
+        "G. GetWindowThreadProcessId \u2014 Application Window Discovery support, NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware sample (Trojan.Ransom.Crysis) exhibits several behaviors during detonation. Which of the following observed indicators specifically constitute Defense Evasion techniques rather than Discovery or Impact behaviors? Select ALL that apply.",
+      "options": [
+        "A. vssadmin.exe delete shadows /all /quiet (T1490 - Inhibit System Recovery)",
+        "B. Timestomping via FileTimeToSystemTime API calls (T1070.006)",
+        "C. Renaming files with double extension (T1036.007 - Double File Extension)",
+        "D. IsWow64Process called by cmd.exe (T1057 - Process Discovery)",
+        "E. DLL Side-Loading indicators detected (T1574.002)",
+        "F. GetLogicalDriveStringsW used to enumerate drives (T1082 - System Information Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Ransom sample (single process, 92 signatures), the sandbox report includes several API calls and loaded modules. Which of the following observations from this report are correctly classified as Defense Evasion (T1562 family) rather than Discovery or Collection?",
+      "options": [
+        "A. api-1: Creates guarded memory regions with PAGE_GUARD (T1562.001 - Disable or Modify Tools)",
+        "B. api-84: Sets ThreadHideFromDebugger data structure (T1622 - Debugger Evasion under Defense Evasion)",
+        "C. api-109: GetLogicalDriveStringsW to enumerate drives (T1082 - System Information Discovery)",
+        "D. api-40: GetKeyState called for keylogging (T1056.001 - Keylogging under Collection)",
+        "E. string-13: Ransom note string detected (T1491.001 - Internal Defacement under Impact)",
+        "F. module-9: bcrypt.dll loaded (benign cryptographic library load, not a Defense Evasion indicator by itself)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Ransom.Imps.Generic sample (18432 bytes, single process) shows several behavioral indicators. An analyst must identify which options represent confirmed Defense Evasion techniques grounded in the report evidence. Which are correct?",
+      "options": [
+        "A. api-40: GetKeyState called \u2014 this is Defense Evasion because it checks for user activity to evade sandboxes",
+        "B. api-40: GetKeyState called \u2014 this is Collection/Credential Access (T1056.001 Keylogging), NOT Defense Evasion",
+        "C. api-35: Checks for NTFS Alternate Data Stream (T1564.004 - Hide Artifacts, Defense Evasion)",
+        "D. static-18: Borland Delphi 3.0 packer detected (T1027.002 - Software Packing, Defense Evasion)",
+        "E. api-149: GetSystemDefaultLangID \u2014 this is a Defense Evasion indicator because it evades security tools",
+        "F. api-149: GetSystemDefaultLangID \u2014 this is System Language Discovery (T1614.001), NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Dharma ransomware detonation, the MITRE ATT&CK mapping includes both Defense Evasion and Discovery entries for T1497 (Virtualization/Sandbox Evasion). Which specific behavioral evidence from the report supports classifying an observed behavior as Defense Evasion rather than Discovery?",
+      "options": [
+        "A. api-10: Queries kernel debugger information (NtQuerySystemInformation) \u2014 supports T1622 Defense Evasion",
+        "B. api-146: IsWow64Process called by cmd.exe \u2014 supports T1057 Process Discovery, NOT Defense Evasion",
+        "C. api-39: Queries volume information of entire harddrive \u2014 supports T1082 System Information Discovery",
+        "D. hooks-2: FindFirstFileA hooked in mode.com \u2014 supports T1056.004 Credential API Hooking (Collection/Credential Access)",
+        "E. yara-0: dharma_ransomware YARA match \u2014 this is a classification indicator, not a Defense Evasion behavior",
+        "F. api-10 querying kernel debugger information is Discovery, not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif, .NET assembly) spawns powershell.exe with Add-MpPreference -ExclusionPath. Which of the following observed behaviors from this report are correctly classified as Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. target-236: powershell Add-MpPreference -ExclusionPath (T1562 - Impair Defenses)",
+        "B. api-129: CreateProcessA in suspended mode for process injection (T1055 - Process Injection, Defense Evasion)",
+        "C. api-83: Writes PE header bytes to remote process (T1055.002 - Portable Executable Injection)",
+        "D. api-146: IsWow64Process called (T1057 - Process Discovery, NOT Defense Evasion)",
+        "E. api-40: GetKeyState called in vbc.exe (T1056.001 - Keylogging, Collection/Credential Access)",
+        "F. registry-26: Reads windows installation language (T1614.001 - System Language Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the large Remcos dropper sample (39MB, Jalapeno.Generic, 10 processes), the report shows netsh.exe modifying firewall rules and GetSystemDefaultLangID being called. Which of the following correctly classifies these observations by MITRE tactic?",
+      "options": [
+        "A. netsh firewall add allowedprogram \u2014 T1562.004 Disable or Modify System Firewall (Defense Evasion)",
+        "B. GetSystemDefaultLangID called by netsh.exe \u2014 T1614.001 System Language Discovery (Discovery), NOT Defense Evasion",
+        "C. GetSystemDefaultLangID \u2014 T1562 Defense Evasion because it checks language to evade analysis",
+        "D. api-149 GetSystemDefaultLangID \u2014 mapped to T1614.001 in the sandbox report, which falls under Discovery tactic",
+        "E. YARA match njrat1 on host.exe \u2014 this is a classification finding, not a Defense Evasion behavior",
+        "F. GameSDK.exe calling GetAsyncKeyState \u2014 T1056.001 Keylogging (Collection), not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NetSup/Remcos sample (6.2MB, Nullsoft installer, 3 processes) shows several evasion behaviors. Which of the following indicators from the report are Defense Evasion techniques and NOT Discovery or other tactics?",
+      "options": [
+        "A. registry-179: Maps intranet resources to internet zone (T1562.001 - Disable or Modify Tools)",
+        "B. api-1: PAGE_GUARD memory allocation in sibjs.exe (T1562.001 - Disable or Modify Tools)",
+        "C. api-223: FileTimeToLocalFileTime called by Sibuia.exe (T1070.006 - Timestomp, Defense Evasion)",
+        "D. api-146: IsWow64Process (T1057 - Process Discovery, NOT Defense Evasion)",
+        "E. static-18: BobSoft Mini Delphi packer (T1027.002 - Software Packing, Defense Evasion)",
+        "F. api-219: RpcServerRegisterIf2 \u2014 T1021 Remote Services (Lateral Movement), NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NjRAT-family infostealer (.NET assembly, Win/malicious_confidence_100%, YARA win_njrat_g0 match) loads bcrypt.dll and allocates PAGE_GUARD memory. Which of the following correctly identifies which behaviors are Defense Evasion vs. other tactics?",
+      "options": [
+        "A. module-9: bcrypt.dll loaded \u2014 this is Defense Evasion because bcrypt is used to evade detection",
+        "B. module-9: bcrypt.dll loaded \u2014 this is a cryptographic library load mapped to T1027 (Obfuscated Files) in the report, not a standalone Defense Evasion evasion behavior",
+        "C. api-1: PAGE_GUARD memory allocation (T1562.001 - Disable or Modify Tools, Defense Evasion)",
+        "D. api-10: Queries kernel debugger information (T1622 - Debugger Evasion, Defense Evasion)",
+        "E. api-146: IsWow64Process (T1057 - Process Discovery, NOT Defense Evasion)",
+        "F. string-56: api.ipify.org reference (T1016 - System Network Configuration Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The ACProtect/tElock packed infostealer (Packer.Malware.NSAnti, 137KB) uses several techniques. Which of the following behaviors from its detonation report are correctly classified as Defense Evasion (T1070 family or T1027 family) rather than Discovery or Execution?",
+      "options": [
+        "A. stream-71: FileTimeToLocalFileTime (T1070.006 - Timestomp, Defense Evasion)",
+        "B. api-26: cmd.exe marks C:\\hash.exe for deletion (T1070.004 - File Deletion, Defense Evasion)",
+        "C. string-661: GetCommandLineA for user activity checks (T1497.002 - User Activity Based Checks, also Discovery)",
+        "D. registry-26: Reads windows installation language (T1614.001 - System Language Discovery, NOT Defense Evasion)",
+        "E. static-18: tElock v1.0 packer detected (T1027.002 - Software Packing, Defense Evasion)",
+        "F. api-103: CreateToolhelp32Snapshot (T1057 - Process Discovery, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (Visual Basic, 8 processes, spawns fake WINLOGON.EXE/CSRSS.EXE) demonstrates masquerading. Which of the following from this report are Defense Evasion behaviors vs. Discovery or Persistence?",
+      "options": [
+        "A. target-33: WINLOGON.EXE running from %APPDATA% (T1036.005 - Match Legitimate Name or Location, Defense Evasion)",
+        "B. registry-15: Changes file extension appearance in explorer (T1546.001 - Change Default File Association, Persistence/Privilege Escalation)",
+        "C. registry-23: Disables system restore (T1112 - Modify Registry, Defense Evasion)",
+        "D. api-149: GetSystemDefaultLangID (T1614.001 - System Language Discovery, NOT Defense Evasion)",
+        "E. registry-2: Disables Windows Registry Editor (T1112 - Modify Registry, Defense Evasion)",
+        "F. api-223: FileTimeToLocalFileTime (T1070.006 - Timestomp, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Sdbot/killers sample (UPX compressed, 5 processes including vxdmon.exe) modifies registry and clears event logs. Which of the following are Defense Evasion indicators grounded in the report, and which are NOT?",
+      "options": [
+        "A. T1070.001 Clear Windows Event Logs \u2014 present in MITRE ATT&CK mapping for this sample",
+        "B. registry-179: Maps intranet to internet zone (T1562.001 - Disable or Modify Tools, Defense Evasion)",
+        "C. api-146: IsWow64Process (T1057 - Process Discovery, NOT Defense Evasion)",
+        "D. registry-56: Reads VMWare registry artifacts (T1012 - Query Registry, Discovery \u2014 not Defense Evasion)",
+        "E. static-4: Entrypoint in uncommon UPX section (T1027 - Obfuscated Files, Defense Evasion)",
+        "F. api-117: ShellExecuteA (T1106 - Native API, Execution \u2014 NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The PCGB2GtVYuBR0mw.pif Remcos sample spawns vbc.exe processes that connect to an external IP on port 2247. The Suricata alert fires 'ET MALWARE Remcos 3.x Unencrypted'. Which API call sequences from this report provide the strongest evidence of process injection into vbc.exe?",
+      "options": [
+        "A. api-129: CreateProcessA called in suspended mode + api-0: Writes data to remote process + stream-38: Shellcode written to remote process",
+        "B. api-83: PE header bytes written to remote process (T1055.002 Portable Executable Injection)",
+        "C. api-134: CreateProcessA for system process in suspended mode (T1055.012 Process Hollowing)",
+        "D. target-269: vbc.exe connects to external IP (network indicator of injected payload executing)",
+        "E. api-40: GetKeyState called in vbc.exe (indicates keylogging capability in injected code)",
+        "F. api-146: IsWow64Process (architecture check, not injection evidence)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The QuasarRAT-family sample (2.1MB, 6 processes, mutant QSR_MUTEX_) injects into svchost.exe. Which specific API call evidence from the report most directly supports identifying the injection technique as Process Hollowing (T1055.012)?",
+      "options": [
+        "A. api-129: Creates process in suspended mode (CreateProcessW with SUSPENDED flag)",
+        "B. api-83: Writes PE header bytes (MZP) to remote process memory",
+        "C. api-0: Writes 32 bytes to remote process",
+        "D. api-20: Allocates virtual memory in remote process",
+        "E. stream-38: Writes shellcode (76+ instructions) to remote process",
+        "F. api-146: IsWow64Process (used for architecture detection, not injection)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ursnif UM unhooking sample (Visual Basic, 369KB) uses APC injection and loads dbghelp.dll. Which of the following behaviors are correctly identified as Defense Evasion vs. other tactics?",
+      "options": [
+        "A. api-85: NtQueueApcThread (T1055.004 - APC Injection, Defense Evasion)",
+        "B. module-16: dbghelp.dll loaded (T1518.001 - Security Software Discovery, NOT Defense Evasion)",
+        "C. api-264: Creates thread in self process (T1055.003 - Thread Execution Hijacking, Defense Evasion)",
+        "D. static-18: Microsoft Visual C++ 8 packer (T1027.002 - Software Packing, Defense Evasion)",
+        "E. api-24: Sleeps for >2 minutes (T1497.003 - Time Based Evasion, Defense Evasion)",
+        "F. api-146: IsWow64Process (T1057 - Process Discovery, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A student analyst reviewing the Dharma ransomware report selects 'GetLogicalDriveStringsW' and 'IsWow64Process' as Defense Evasion indicators. Evaluate whether these selections are correct, and identify what the correct tactic classification should be for each.",
+      "options": [
+        "A. GetLogicalDriveStringsW is correctly classified as Defense Evasion because it helps malware avoid encrypting system drives",
+        "B. GetLogicalDriveStringsW (api-109) is System Information Discovery (T1082), NOT Defense Evasion \u2014 it enumerates drives for encryption targeting",
+        "C. IsWow64Process is correctly classified as Defense Evasion because it detects analysis environments",
+        "D. IsWow64Process (api-146) is Process Discovery (T1057) in the sandbox mapping, NOT Defense Evasion",
+        "E. Both GetLogicalDriveStringsW and IsWow64Process are Discovery indicators, not Defense Evasion",
+        "F. The correct Defense Evasion indicators in this report include ThreadHideFromDebugger (T1622) and Debugger Evasion checks"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NjRAT infostealer sample (3.2MB .NET, drops Client.exe, YARA win_njrat_g0 match) shows multiple evasion behaviors. An analyst must select ONLY the Defense Evasion indicators \u2014 not Discovery, not Collection. Which options are correct?",
+      "options": [
+        "A. api-1: PAGE_GUARD memory allocation (T1562.001 - anti-debugging, Defense Evasion)",
+        "B. api-10: Queries kernel debugger info (T1622 - Debugger Evasion, Defense Evasion)",
+        "C. api-24: Sleeps 1566804069ms (T1497.003 - Time Based Evasion, Defense Evasion)",
+        "D. string-55: WMI query for VM detection (T1047 - WMI, Execution \u2014 also Discovery context)",
+        "E. stream-33: Listens for incoming connections (T1040 - Network Sniffing, Credential Access/Discovery)",
+        "F. api-42: Hides Zone.Identifier ADS (T1070.004 - File Deletion/Indicator Removal, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The large Remcos dropper (39MB) includes a process called Stable_Network.exe and drops a fake 'CL_Debug_Log.txt' that is actually a PE executable. Which of the following behaviors from the report are Defense Evasion, and which are NOT?",
+      "options": [
+        "A. binary-28: CL_Debug_Log.txt is a PE32 executable with .txt extension (T1036.008 - Masquerade File Type, Defense Evasion)",
+        "B. api-24: host.exe sleeps 1566804069ms (T1497.003 - Time Based Evasion, Defense Evasion)",
+        "C. api-40: GameSDK.exe calls GetAsyncKeyState (T1056.001 - Keylogging, Collection \u2014 NOT Defense Evasion)",
+        "D. api-149: GetSystemDefaultLangID called by netsh.exe (T1614.001 - System Language Discovery \u2014 NOT Defense Evasion)",
+        "E. registry-0: GameSDK.exe sets Run key (T1547.001 - Registry Run Keys, Persistence \u2014 NOT Defense Evasion)",
+        "F. target-15: netsh.exe modifies firewall (T1562.004 - Disable or Modify System Firewall, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware (Trojan.Ransom.Crysis, 94KB) spawns vssadmin.exe and hooks filesystem APIs. Which of the following behaviors are specific ransomware anti-recovery and encryption indicators, as opposed to general process injection or discovery behaviors?",
+      "options": [
+        "A. target-4: vssadmin delete shadows /all /quiet (T1490 - Inhibit System Recovery)",
+        "B. hooks-2: FindFirstFileA and FindNextFileA hooked in mode.com (T1056.004 - API Hooking for file enumeration during encryption)",
+        "C. hooks-5: send@WS2_32.DLL hooked in mode.com (T1056.004 - network API hooking)",
+        "D. api-264: Creates thread in self process (T1055.003 - Thread Execution Hijacking, general injection)",
+        "E. yara-103: AES encryption YARA match (encryption algorithm used for file encryption)",
+        "F. api-146: IsWow64Process called by cmd.exe (T1057 - Process Discovery, not ransomware-specific)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Downloader.Zlob killer sample (53KB, single process, embedded PE in resources) shows minimal process activity but contains embedded payloads. Which of the following indicators from this report are Defense Evasion behaviors, and which are NOT?",
+      "options": [
+        "A. yara-140 and yara-26: Embedded PE executable in .rsrc section (T1027.009 - Embedded Payloads, Defense Evasion)",
+        "B. string-226: WaitForSingleObject reference (T1497.003 - Time Based Evasion, Defense Evasion)",
+        "C. string-663: Registry key SOFTWARE\\Microsoft\\Windows\\CurrentVersion checked for user activity (T1497.002 - User Activity Based Checks, Defense Evasion)",
+        "D. string-201: GetUserDefaultLCID (T1614 - System Location Discovery, NOT Defense Evasion)",
+        "E. string-85: CreateToolhelp32Snapshot reference (T1057 - Process Discovery, NOT Defense Evasion)",
+        "F. string-318: LoadLibraryA reference for DLL injection (T1055.001 - DLL Injection, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "A student analyzing the PCGB2GtVYuBR0mw.pif Remcos sample over-selected by including 'Application Layer Protocol' (T1071) and 'DNS queries to tjwpn04kn.localto.net' as Defense Evasion indicators. Evaluate which options correctly identify the tactic boundaries in this report.",
+      "options": [
+        "A. T1071 Application Layer Protocol belongs to Command and Control tactic, NOT Defense Evasion",
+        "B. DNS queries to tjwpn04kn.localto.net (T1071.004) are Command and Control indicators, NOT Defense Evasion",
+        "C. api-129 CreateProcessA in suspended mode (T1055) is correctly Defense Evasion",
+        "D. target-236 Add-MpPreference ExclusionPath (T1562 Impair Defenses) is correctly Defense Evasion",
+        "E. network-88 malicious domain contact (T1566 Phishing) is an Initial Access indicator, NOT Defense Evasion",
+        "F. api-24 long sleep (T1497.003 Time Based Evasion) is correctly Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware detonation report (Trojan.Ransom.Crysis) includes several behaviors. Which of the following observed indicators are correctly classified as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+      "options": [
+        "A. The malware renames files (e.g., dotnet48.exe renamed to an encrypted extension), mapped to Masquerading (T1036)",
+        "B. vssadmin.exe deletes volume shadow copies, mapped to Inhibit System Recovery (T1490)",
+        "C. The malware uses a PE timestamp mismatch (CRC value in PE header does not match actual value), mapped to Obfuscated Files or Information (T1027)",
+        "D. The malware calls GetLogicalDriveStringsW to enumerate drives, mapped to Defense Evasion",
+        "E. The malware uses Timestomp (T1070.006) as evidenced by FileTimeToLocalFileTime-related API calls",
+        "F. The malware calls IsWow64Process to determine architecture, mapped to Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Ransom detonation report (single process, 150528 bytes), the sandbox flagged several behaviors. Which of the following are genuine Defense Evasion indicators supported by the report data? Select ALL that apply.",
+      "options": [
+        "A. ThreadHideFromDebugger flag set on a thread (T1622 Debugger Evasion)",
+        "B. GetLogicalDriveStringsW called to enumerate logical drives \u2014 this is a Defense Evasion indicator",
+        "C. Sleeping for over 26 minutes (T1497.003 Time Based Evasion)",
+        "D. bcrypt.dll loaded at runtime \u2014 this is a Defense Evasion indicator",
+        "E. Software packing detected (high entropy .text section, T1027.002)",
+        "F. GetKeyState called for keylogging \u2014 this is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Ransom.Imps.Generic sample (18432 bytes) exhibits multiple behaviors. Which of the following are correctly mapped to Defense Evasion tactics based on the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Checking for NTFS Alternate Data Streams (T1564.004 Hide Artifacts)",
+        "B. Dropping PE files with .tmp extension (T1036 Masquerading)",
+        "C. GetSystemDefaultLangID called \u2014 this is a Defense Evasion indicator",
+        "D. GetKeyState called for keylogging \u2014 this is a Defense Evasion indicator",
+        "E. Software packing detected via Borland Delphi 3.0 signature (T1027.002)",
+        "F. IsWow64Process called \u2014 this is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Reviewing the Trojan.Ransom.Crysis detonation (94720 bytes, 4 processes including vssadmin.exe), which of the following behaviors observed in the report are Defense Evasion techniques? Select ALL that apply.",
+      "options": [
+        "A. vssadmin.exe deletes all volume shadow copies \u2014 this is an Impact technique (T1490), NOT Defense Evasion",
+        "B. Dynamic API resolution via GetProcAddress/LoadLibrary (T1027.007)",
+        "C. Double file extension used on dropped files (T1036.007 Masquerade File Type)",
+        "D. AdjustTokenPrivileges called by vssadmin.exe \u2014 this is a Defense Evasion indicator (T1134)",
+        "E. Querying kernel debugger information (T1622 Debugger Evasion)",
+        "F. FindFirstFileW searching directories \u2014 this is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Packer.Malware.NSAnti sample (137264 bytes) was detonated and produced many signatures. Which of the following observed behaviors are correctly classified as Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. Timestomping via FileTimeToSystemTime and FileTimeToLocalFileTime API calls (T1070.006)",
+        "B. GetSystemDefaultLangID called to retrieve language \u2014 this is a Defense Evasion indicator",
+        "C. tElock v1.0 packer detected (T1027.002 Software Packing)",
+        "D. File deletion of C:\\hash.exe via cmd.exe /c erase /F (T1070.004)",
+        "E. GetLocaleInfoA called to query locale \u2014 this is a Defense Evasion indicator",
+        "F. XOR operation loops detected in stream disassembly (T1027.005 Indicator Removal from Tools)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Win/malicious_confidence_100% .NET infostealer sample (3472896 bytes) was analyzed. Which of the following indicators from the detonation report are correctly attributed to Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. bcrypt.dll loaded at runtime \u2014 this is a Defense Evasion indicator",
+        "B. PAGE_GUARD memory allocation (anti-debugging trick, T1562.001 Disable or Modify Tools)",
+        "C. IsWow64Process called \u2014 this is a Defense Evasion indicator",
+        "D. Sleeping for over 26 minutes (T1497.003 Time Based Evasion)",
+        "E. Reflective Code Loading via CLR Loader DLL (T1620)",
+        "F. GetSystemDefaultLangID called \u2014 this is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Remcos RAT sample (PCGB2GtVYuBR0mw.pif, 1247232 bytes) exhibits many behaviors. Which of the following are correctly classified as Defense Evasion techniques based on the detonation report? Select ALL that apply.",
+      "options": [
+        "A. PowerShell Add-MpPreference -ExclusionPath command (T1562 Impair Defenses)",
+        "B. GetKeyState called by vbc.exe \u2014 this is a Defense Evasion indicator",
+        "C. Process created in suspended mode for injection (T1055 Process Injection)",
+        "D. PE header written to remote process memory (T1055.002 Portable Executable Injection)",
+        "E. FileTimeToSystemTime called by powershell.exe \u2014 this is a Defense Evasion indicator (Timestomp)",
+        "F. DNS query to tjwpn04kn.localto.net \u2014 this is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The large Remcos dropper (39329792 bytes, Jalapeno.Generic) spawns multiple child processes. Which of the following behaviors observed in the report are Defense Evasion techniques? Select ALL that apply.",
+      "options": [
+        "A. Dropping CL_Debug_Log.txt which is actually a PE executable (T1036.008 Masquerade File Type)",
+        "B. GetSystemDefaultLangID called by netsh.exe \u2014 this is a Defense Evasion indicator",
+        "C. netsh.exe used to add firewall exception (T1562.004 Disable or Modify System Firewall)",
+        "D. Timestomping via FileTimeToLocalFileTime by Sibuia.exe (T1070.006)",
+        "E. GameSDK.exe calls GetAsyncKeyState \u2014 this is a Defense Evasion indicator",
+        "F. rundl32.exe uses Reflective Code Loading / CLR Loader (T1620)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The RiskWare/NetSup sample (6227120 bytes, signed with valid certificate) was detonated. Which of the following are correctly identified as Defense Evasion techniques based on the report? Select ALL that apply.",
+      "options": [
+        "A. Code Signing with a valid certificate (T1553.002)",
+        "B. IsWow64Process called \u2014 this is a Defense Evasion indicator",
+        "C. PAGE_GUARD memory allocated by sibjs.exe (T1562.001 Disable or Modify Tools)",
+        "D. FileTimeToLocalFileTime called by Sibuia.exe (T1070.006 Timestomp)",
+        "E. GetSystemDefaultLangID called \u2014 this is a Defense Evasion indicator",
+        "F. Tries to map intranet resources to internet zone via registry (T1562.001)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Downloader.Zlob sample (53248 bytes, classified as av_edr_killers) has a minimal process tree. Which of the following behaviors are correctly mapped to Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. Embedded PE executable in .rsrc section detected by YARA (T1027.009 Embedded Payloads)",
+        "B. WaitForSingleObject used for timing delay (T1497.003 Time Based Evasion)",
+        "C. GetUserDefaultLCID called \u2014 this is a Defense Evasion indicator",
+        "D. LoadLibraryA reference for DLL injection (T1055.001 Dynamic-link Library Injection)",
+        "E. CreateToolhelp32Snapshot called \u2014 this is a Defense Evasion indicator",
+        "F. ShowWindow API reference (T1564.003 Hidden Window)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (167965 bytes) spawns fake system processes (WINLOGON.EXE, CSRSS.EXE from %APPDATA%). Which of the following are Defense Evasion techniques based on the detonation report? Select ALL that apply.",
+      "options": [
+        "A. Spawning WINLOGON.EXE from %APPDATA% path (T1036.005 Match Legitimate Name or Location)",
+        "B. GetSystemDefaultLangID called \u2014 this is a Defense Evasion indicator",
+        "C. Disabling Windows Registry Editor via registry modification (T1112 Modify Registry)",
+        "D. Disabling system restore via registry (T1112 Modify Registry)",
+        "E. IsWow64Process called \u2014 this is a Defense Evasion indicator",
+        "F. FileTimeToLocalFileTime called (T1070.006 Timestomp)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The PCGB2GtVYuBR0mw.pif Remcos sample (1247232 bytes) injects into vbc.exe processes. Which API call sequences from the detonation report specifically evidence Process Hollowing (T1055.012)? Select ALL that apply.",
+      "options": [
+        "A. CreateProcessA called in suspended mode followed by PE header write to remote process",
+        "B. CreateToolhelp32Snapshot + Process32FirstW used by the main process",
+        "C. A system process (vbc.exe) connects to external IP on port 2247",
+        "D. NtQueueApcThread called for APC injection",
+        "E. api-134: 'Creates a system process in suspended mode (likely for process injection)' mapped to T1055.012",
+        "F. IsWow64Process called to check architecture"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ursnif sample (369152 bytes, um_unhooking family) uses APC injection. Which of the following indicators from the report specifically evidence Asynchronous Procedure Call injection (T1055.004)? Select ALL that apply.",
+      "options": [
+        "A. NtQueueApcThread called (api-85: 'Queues an Asynchronous Procedure Call in a remote process')",
+        "B. CreateToolhelp32Snapshot called for process enumeration",
+        "C. Thread created in self process (api-264)",
+        "D. Sleeping for over 18 minutes (api-24)",
+        "E. LoadLibrary called with ntdll parameter",
+        "F. AppInit DLLs persistence mechanism (T1546.010) listed in MITRE ATT&CK mappings alongside T1055.004"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Generic sample (2114136 bytes, QuasarRAT mutex) injects into svchost.exe. Which specific API call indicators from the report confirm process injection occurred? Select ALL that apply.",
+      "options": [
+        "A. VirtualAllocEx: 'Allocates virtual memory in a remote process' (api-20)",
+        "B. WriteProcessMemory: 'Writes data to a remote process' (api-0, 32 bytes)",
+        "C. CreateProcessW called in suspended mode (api-129)",
+        "D. IsWow64Process called to check architecture",
+        "E. PE header bytes written to remote process (api-83, T1055.002)",
+        "F. Shellcode written to remote process (stream-38)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Dharma ransomware (Trojan.Ransom.Crysis, 94720 bytes) exhibits classic ransomware behaviors. Which of the following are ransomware-specific indicators observed in this detonation report? Select ALL that apply.",
+      "options": [
+        "A. vssadmin.exe with commandline 'vssadmin delete shadows /all /quiet' (T1490 Inhibit System Recovery)",
+        "B. YARA signature 'dharma_ransomware' matched the sample file",
+        "C. Files renamed with double extension (e.g., .id-XXXXX._vijurytos@tuta.io_.V appended)",
+        "D. GetLogicalDriveStringsW called to enumerate drives for encryption targeting",
+        "E. Hooks on FindFirstFileA@KERNEL32.DLL detected in mode.com (T1056.004)",
+        "F. bcrypt.dll loaded \u2014 this indicates AES encryption for file encryption"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Ransom sample (150528 bytes, single process) drops ransom notes and encrypts files. Which of the following behaviors from the detonation report are specific to ransomware impact and recovery prevention? Select ALL that apply.",
+      "options": [
+        "A. String 'YOUR FILES ARE ENCRYPTED' found in memory (T1491.001 Internal Defacement)",
+        "B. GetLogicalDriveStringsW called to enumerate drives (T1082 System Information Discovery \u2014 used to target drives for encryption)",
+        "C. QueryServiceStatusEx called to check service status",
+        "D. 791 files dropped (indicator of mass file modification typical of ransomware)",
+        "E. ThreadHideFromDebugger set (T1622) \u2014 this is a ransomware-specific indicator",
+        "F. bcrypt.dll loaded indicating cryptographic operations for file encryption"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Generic Remcos sample (2114136 bytes, QuasarRAT mutex) has extensive defense evasion. A student must select ONLY the behaviors that are Defense Evasion \u2014 not Discovery or Collection. Which are correctly Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. Access token manipulation via AdjustTokenPrivileges (T1134 Access Token Manipulation)",
+        "B. GetWindowTextW called to get active window titles \u2014 this is Defense Evasion",
+        "C. Zone.Identifier ADS deletion to hide download origin (T1070.004 File Deletion)",
+        "D. CreateCompatibleBitmap called for screenshots \u2014 this is Defense Evasion",
+        "E. PAGE_GUARD memory allocation (T1562.001 Disable or Modify Tools)",
+        "F. Time-based evasion: sleeping for over 26 minutes (T1497.003)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic sample (660222 bytes, UPX compressed) modifies security settings. Which of the following from the detonation report are Defense Evasion techniques \u2014 NOT Discovery or other tactics? Select ALL that apply.",
+      "options": [
+        "A. Mapping intranet resources to internet zone via registry (T1562.001 Disable or Modify Tools)",
+        "B. Clear Windows Event Logs (T1070.001 Indicator Removal)",
+        "C. IsWow64Process called \u2014 this is a Defense Evasion indicator",
+        "D. UPX packing detected (T1027.002 Software Packing)",
+        "E. Reads VMware-specific registry artifacts \u2014 this is a Defense Evasion indicator",
+        "F. Code Signing Policy Modification (T1553.006)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Dinwod sample (341563 bytes, UPX, spawns 64 processes in a chain) exhibits evasion behaviors. Which of the following from the detonation report are Defense Evasion techniques \u2014 NOT Discovery or Collection? Select ALL that apply.",
+      "options": [
+        "A. Dynamic API resolution via GetProcAddress at runtime (T1027.007)",
+        "B. User activity-based checks (T1497.002) \u2014 code branch after environment-aware API",
+        "C. FindFirstFileW called to search directories \u2014 this is Defense Evasion",
+        "D. UPX packing with entrypoint in UPX1 section (T1027.002 Software Packing)",
+        "E. Time-based evasion (T1497.003) observed in the process chain",
+        "F. CreateToolhelp32Snapshot called \u2014 this is Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Injuke sample (366592 bytes, um_unhooking family) uses APC injection and evasion. A student must identify ONLY Defense Evasion indicators \u2014 not Discovery, Collection, or neutral API calls. Which are correctly Defense Evasion? Select ALL that apply.",
+      "options": [
+        "A. Debugger evasion (T1622) based on sandbox detection behaviors",
+        "B. IsWow64Process called \u2014 this is a Defense Evasion indicator",
+        "C. Sleeping for over 18 minutes (T1497.003 Time Based Evasion)",
+        "D. Software packing detected via Microsoft visual C++ 8 with unusual entropy resources (T1027.002)",
+        "E. GetLocaleInfoA called \u2014 this is a Defense Evasion indicator",
+        "F. Disable or Modify Tools (T1562.001) via security software discovery module loading (dbghelp.dll)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Examining the Dharma ransomware detonation report, which of the following observed behaviors are correctly classified as Defense Evasion techniques (T1036 family or T1070 family) rather than Discovery or Impact techniques? Select ALL that apply.",
+      "options": [
+        "A. hash.exe renamed original file 'C:\\dotnet48.exe' to an encrypted extension (T1036 - Masquerading/Rename)",
+        "B. vssadmin.exe deleting volume shadow copies (T1490 - Inhibit System Recovery)",
+        "C. hash.exe dropping executable files to %ProgramData% with misleading names (T1036 - Match Legitimate Name or Location)",
+        "D. hash.exe calling FindFirstFileW to enumerate directories (T1083 - File and Directory Discovery)",
+        "E. hash.exe marking files for deletion after encryption (T1070.004 - File Deletion)",
+        "F. hash.exe calling IsWow64Process to determine architecture (T1057 - Process Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Crysis/Dharma ransomware detonation, the sandbox reports both T1070.006 (Timestomp) and T1622 (Debugger Evasion) under Defense Evasion, alongside several Discovery-tactic techniques. Which of the following API calls or behaviors from this report are evidence of Defense Evasion specifically, and NOT Discovery or Impact?",
+      "options": [
+        "A. vssadmin.exe called with 'delete shadows /all /quiet' \u2014 this is T1490 Impact, not Defense Evasion",
+        "B. api-10: 'vssadmin.exe' queries kernel debugger information (T1622 Debugger Evasion \u2014 Defense Evasion)",
+        "C. api-162: hash.exe renames original files to encrypted extension (T1036 Masquerading \u2014 Defense Evasion)",
+        "D. api-102: hash.exe calls FindFirstFileW to search directories (T1083 \u2014 Discovery, not Defense Evasion)",
+        "E. YARA match for AES encryption in the binary (T1027 Obfuscated Files \u2014 Defense Evasion)",
+        "F. api-148: hash.exe calls LookupAccountSidW to retrieve user information (T1033 \u2014 Discovery, not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The ransomware sample (Trojan.Ransom, single-process detonation) loads bcrypt.dll and sets 'ThreadHideFromDebugger'. An analyst must classify each observed indicator into the correct MITRE tactic. Which indicators belong ONLY to Defense Evasion and NOT to Discovery or Credential Access?",
+      "options": [
+        "A. api-84: Sets 'ThreadHideFromDebugger' thread data structure (T1622 Debugger Evasion \u2014 Defense Evasion)",
+        "B. api-40: GetKeyState called for keylogging (T1056.001 \u2014 Credential Access/Collection, not Defense Evasion)",
+        "C. module-9: Loads bcrypt.dll \u2014 this indicates cryptographic capability used for obfuscation (T1027 \u2014 Defense Evasion)",
+        "D. api-109: GetLogicalDriveStringsW called to enumerate drives (T1082 System Information Discovery \u2014 NOT Defense Evasion)",
+        "E. api-170: QueryServiceStatusEx to retrieve service status (T1007 \u2014 Discovery, not Defense Evasion)",
+        "F. string-13: Ransom note string 'YOUR FILES ARE ENCRYPTED' (T1491.001 \u2014 Impact, not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "For the Trojan.Ransom (Esmeralda) sample, the detonation report includes GetSystemDefaultLangID, GetKeyState, GetLogicalDriveStringsW, IsWow64Process, and api-35 (checks for ADS file). Which of these are correctly mapped to Defense Evasion tactics?",
+      "options": [
+        "A. GetSystemDefaultLangID (T1614.001 System Language Discovery \u2014 Discovery tactic, NOT Defense Evasion)",
+        "B. GetKeyState used for keylogging (T1056.001 Keylogging \u2014 Credential Access/Collection, NOT Defense Evasion)",
+        "C. api-35: Checks for Alternate Data Stream (ADS) file (T1564.004 NTFS File Attributes \u2014 Defense Evasion)",
+        "D. GetLogicalDriveStringsW to enumerate logical drives (T1082 System Information Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "E. IsWow64Process to check if running under WOW64 (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. api-43: Writes PE header to disk \u2014 dropping executable (T1105 Ingress Tool Transfer \u2014 not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Trojan.Ransom (Esmeralda) detonation, an analyst reviewing the report must identify which signatures indicate Defense Evasion. Which of the following from the report are genuine Defense Evasion indicators, and which are misclassified if labeled as such?",
+      "options": [
+        "A. api-1: Allocates memory with PAGE_GUARD (anti-debugging trick) \u2014 correctly Defense Evasion T1562.001",
+        "B. api-109: GetLogicalDriveStringsW \u2014 this is System Information Discovery (T1082), NOT Defense Evasion",
+        "C. api-40: GetKeyState \u2014 this is Keylogging (T1056.001), NOT Defense Evasion",
+        "D. static-18: Borland Delphi packer signature detected (T1027.002 Software Packing \u2014 Defense Evasion)",
+        "E. binary-38: Drops PE files with different extensions (T1036 Masquerading \u2014 Defense Evasion)",
+        "F. api-149: GetSystemDefaultLangID \u2014 this is System Language Discovery (T1614.001), NOT Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Remcos RAT detonation (PCGB2GtVYuBR0mw.pif), several behaviors are present. Which of the following are correctly classified as Defense Evasion and NOT as Discovery, Collection, or C2 tactics?",
+      "options": [
+        "A. powershell.exe executing 'Add-MpPreference -ExclusionPath' to exclude the malware from Windows Defender (T1562.001 Disable or Modify Tools \u2014 Defense Evasion)",
+        "B. vbc.exe calling GetKeyState for keylogging (T1056.001 \u2014 Collection/Credential Access, NOT Defense Evasion)",
+        "C. api-83: Writes PE header bytes to a remote process (T1055.002 Portable Executable Injection \u2014 Defense Evasion)",
+        "D. api-146: IsWow64Process to check architecture (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "E. network-88: Communicates with malicious domain localto.net (T1566 Phishing \u2014 Initial Access, NOT Defense Evasion)",
+        "F. api-134: Creates system process in suspended mode for process hollowing (T1055.012 \u2014 Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The large Remcos dropper (hash, 39MB, _family: remcos) detonation shows GetSystemDefaultLangID called by netsh.exe, PAGE_GUARD memory allocation by sibjs.exe, FileTimeToLocalFileTime by Sibuia.exe, and Disable or Modify System Firewall via netsh. Which of these are Defense Evasion techniques?",
+      "options": [
+        "A. GetSystemDefaultLangID called by netsh.exe (T1614.001 System Language Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "B. sibjs.exe allocating memory with PAGE_GUARD (T1562.001 Disable or Modify Tools \u2014 Defense Evasion)",
+        "C. FileTimeToLocalFileTime called by Sibuia.exe (T1070.006 Timestomp \u2014 Defense Evasion)",
+        "D. netsh firewall add allowedprogram (T1562.004 Disable or Modify System Firewall \u2014 Defense Evasion)",
+        "E. CreateToolhelp32Snapshot called by Stable_Network.exe (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. WinHttpSendRequest called by Stable_Network.exe (T1071.001 Web Protocols \u2014 C2, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Remcos RAT detonation (PCGB2GtVYuBR0mw.pif), the process tree shows vbc.exe spawned from the main process, which then connects to an external IP on port 2247. Which API call sequences in this report most directly evidence process injection into vbc.exe?",
+      "options": [
+        "A. api-129: CreateProcessA called in suspended mode (CREATE_SUSPENDED flag) \u2014 hallmark setup for process hollowing/injection",
+        "B. api-0: WriteProcessMemory writing 32 bytes to a remote process",
+        "C. api-20: VirtualAllocEx allocating memory in a remote process",
+        "D. api-83: Writes PE header bytes ('h' prefix) to a remote process memory",
+        "E. api-146: IsWow64Process \u2014 used for architecture check, not injection evidence",
+        "F. target-269: vbc.exe (injected process) connects to external IP:2247 \u2014 post-injection network activity confirming successful injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The RiskWare/NetSup (Remcos family) detonation shows hash.exe spawning Sibuia.exe and sibjs.exe. The report includes api-0 (WriteProcessMemory to remote process), PAGE_GUARD allocation by sibjs.exe, and a valid code-signing certificate. Which of the following correctly identifies injection-related evidence versus non-injection behaviors?",
+      "options": [
+        "A. api-0: hash.exe writes 1500 bytes to a remote process \u2014 direct WriteProcessMemory injection evidence",
+        "B. certificate-2: Valid certificate on the installer \u2014 this is T1553.002 Code Signing for Defense Evasion, NOT injection",
+        "C. api-1: sibjs.exe allocates PAGE_GUARD memory \u2014 anti-debugging technique, not direct injection mechanism",
+        "D. api-264: Creates a thread in self process (handle -1 = self) \u2014 self-injection/thread creation in own process",
+        "E. api-22: Fails to load missing module \u2014 DLL Side-Loading failure indicator, not injection",
+        "F. api-43: Writes PE header to disk \u2014 dropping a file to disk, not process injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The NJRat infostealer detonation (Win/malicious_confidence_100%, .NET assembly) includes loading bcrypt.dll, PAGE_GUARD memory allocation, sleeping for 1566804069ms, and a YARA match for win_njrat_g0. Which of the following are correctly classified as Defense Evasion and NOT as Discovery or C2?",
+      "options": [
+        "A. module-9: Loads bcrypt.dll \u2014 sandbox maps this to T1027 (Obfuscated Files/Information) \u2014 Defense Evasion",
+        "B. api-1: PAGE_GUARD memory allocation (T1562.001 Disable or Modify Tools \u2014 Defense Evasion, anti-debugging)",
+        "C. api-24: Sleeps for 1566804069ms (T1497.003 Time Based Evasion \u2014 Defense Evasion)",
+        "D. api-146: IsWow64Process (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "E. string-56: References api.ipify.org (T1016 System Network Configuration Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. api-10: Queries kernel debugger information (T1622 Debugger Evasion \u2014 Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the QuasarRAT-based infostealer detonation (hash, 2MB, QuasarRAT mutex), the report shows timestomping, process hollowing into svchost.exe, and a scheduled task for persistence. Which of the following from this report are Defense Evasion and NOT Privilege Escalation or Persistence?",
+      "options": [
+        "A. api-129: CreateProcessW in suspended mode for process hollowing (T1055.012 \u2014 maps to both Privilege Escalation AND Defense Evasion in this report)",
+        "B. api-83: Writes PE header to remote process memory (T1055.002 Portable Executable Injection \u2014 Defense Evasion)",
+        "C. schtasks.exe /create /tn RtkAudioService64 (T1053.005 Scheduled Task \u2014 Persistence, NOT Defense Evasion)",
+        "D. api-42: Deletes Zone.Identifier ADS to hide download origin (T1070.004 File Deletion \u2014 Defense Evasion)",
+        "E. mutant-1: Creates QSR_MUTEX_ mutex (QuasarRAT identifier) \u2014 not a MITRE technique",
+        "F. binary-7: Drops executable to Windows system directory with misleading name (T1036 Masquerading \u2014 Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma (killers family) detonation spawns fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE) from %APPDATA%. The report includes registry-2 (disables regedit), registry-21 (disables cmd), registry-23 (disables system restore), and target-33 (fake system process detection). Which of these are Defense Evasion techniques?",
+      "options": [
+        "A. target-33: Process WINLOGON.EXE running from %APPDATA% (T1036.005 Match Legitimate Name or Location \u2014 Defense Evasion)",
+        "B. registry-2: Disables Windows Registry Editor (T1112 Modify Registry \u2014 Defense Evasion)",
+        "C. registry-23: Disables system restore via registry (T1112 Modify Registry \u2014 maps to System Destruction in sandbox but also Defense Evasion)",
+        "D. api-31: Touches unusual drive letters K:, L: (T1120 Peripheral Device Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "E. registry-21: Disables Command Prompt (T1112 Modify Registry \u2014 Defense Evasion)",
+        "F. api-103: CreateToolhelp32Snapshot for process enumeration (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic (killers family) detonation report includes timestomping, clear Windows event logs (T1070.001), code signing policy modification (T1553.006), and VMware registry checks. Which of the following from this report are correctly Defense Evasion and NOT Discovery?",
+      "options": [
+        "A. T1070.001 Clear Windows Event Logs \u2014 Defense Evasion (Indicator Removal sub-technique)",
+        "B. registry-56: Reads VMware-specific registry keys (T1012 Query Registry \u2014 Discovery, NOT Defense Evasion)",
+        "C. T1553.006 Code Signing Policy Modification \u2014 Defense Evasion",
+        "D. T1070.006 Timestomp \u2014 Defense Evasion",
+        "E. api-152: EnumWindows to enumerate active windows (T1010 Application Window Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. T1497.001 System Checks (virtualization detection) \u2014 maps to both Discovery AND Defense Evasion in ATT&CK"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The small Remcos-family sample (118KB, no verdict, minimal signatures) has only 8 signatures and maps T1027.009 (Embedded Payloads) and T1027 (Obfuscated Files) to Defense Evasion, plus T1071 to C2. An analyst must decide: does the absence of process injection API calls mean there is NO Defense Evasion, or are the static indicators sufficient? Which answer is correct?",
+      "options": [
+        "A. The static-6 signature (high entropy .text section, T1027.009) is sufficient evidence of Defense Evasion via Embedded Payloads even without runtime injection APIs",
+        "B. Without runtime API calls like VirtualAllocEx or WriteProcessMemory, there can be no Defense Evasion classification",
+        "C. T1027 (Obfuscated Files or Information) mapped from the compiler/packer signature is a valid Defense Evasion indicator from static analysis",
+        "D. T1071 (Application Layer Protocol) is a Defense Evasion technique in this context",
+        "E. The low AV detection (44%) means Defense Evasion techniques are definitely present but undetected",
+        "F. avtest-9 (low-confidence CrowdStrike detection) is a Defense Evasion indicator"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The UM unhooking sample (Trojan.Ursnif, 369KB) uses NtQueueApcThread for APC injection and loads dbghelp.dll. The MITRE mapping includes T1055.004 (APC Injection) under both Privilege Escalation and Defense Evasion, and T1622 (Debugger Evasion). Which behaviors in this report are Defense Evasion and which are misclassified if labeled as such?",
+      "options": [
+        "A. api-85: NtQueueApcThread called for APC injection (T1055.004 \u2014 correctly Defense Evasion AND Privilege Escalation)",
+        "B. module-16: Loads dbghelp.dll \u2014 sandbox maps to T1518.001 Security Software Discovery (Discovery, NOT Defense Evasion)",
+        "C. T1622 Debugger Evasion \u2014 correctly Defense Evasion",
+        "D. api-24: Sleeps for 1097794852ms (T1497.003 Time Based Evasion \u2014 Defense Evasion)",
+        "E. T1027.002 Software Packing (static-18 packer signature) \u2014 Defense Evasion",
+        "F. api-147: GetLocaleInfoA (T1614 System Location Discovery \u2014 Discovery, NOT Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Packer.Malware.NSAnti infostealer (137KB, Delphi, tElock packer) detonation shows timestomping via FileTimeToSystemTime, dynamic API resolution, and self-deletion via cmd.exe. An analyst must distinguish Defense Evasion from Discovery. Which of the following are Defense Evasion?",
+      "options": [
+        "A. stream-71: FileTimeToLocalFileTime (T1070.006 Timestomp \u2014 Defense Evasion)",
+        "B. registry-26: Reads Windows installation language (T1614.001 System Language Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "C. static-79: GetProcAddress+LoadLibraryA for dynamic API resolution (T1027.007 Dynamic API Resolution \u2014 Defense Evasion)",
+        "D. stream-39: Code branch decision after GetVersion (T1497 Virtualization/Sandbox Evasion \u2014 Defense Evasion)",
+        "E. api-103: CreateToolhelp32Snapshot for process snapshot (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. api-26: cmd.exe marks hash.exe for deletion (T1070.004 File Deletion \u2014 Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Crysis/Dharma ransomware detonation shows vssadmin.exe deleting shadows, hooks on FindFirstFileA and send@WS2_32.DLL, dropping 694 files, and a YARA match for dharma_ransomware. Which combination of behaviors is MOST specific to ransomware (as opposed to generic malware)?",
+      "options": [
+        "A. target-4: vssadmin.exe 'delete shadows /all /quiet' (T1490 Inhibit System Recovery \u2014 ransomware-specific anti-recovery)",
+        "B. hooks-2: Hooks FindFirstFileA (T1056.004 Credential API Hooking) \u2014 used for file enumeration interception during encryption",
+        "C. binary-10: Drops 694 files (T1491.001 Internal Defacement) \u2014 mass file modification consistent with ransomware encryption",
+        "D. api-128: CreateProcessW to spawn cmd.exe \u2014 generic process creation, not ransomware-specific",
+        "E. hooks-5: Hooks send@WS2_32.DLL \u2014 network interception, could indicate key exchange with C2",
+        "F. api-146: IsWow64Process \u2014 architecture check, not ransomware-specific"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the large Remcos dropper (39MB, _family: remcos), the process tree includes hash.exe \u2192 rundl32.exe \u2192 Stable_Network.exe \u2192 CL_Debug_Log.txt (a PE disguised as a text file). The report shows api-20 (VirtualAllocEx), api-0 (WriteProcessMemory), and stream-38 (shellcode written to remote process). Which of the following precisely identifies the injection technique and its evidence?",
+      "options": [
+        "A. api-20 (VirtualAllocEx in remote process) + api-0 (WriteProcessMemory) + api-128 (CreateProcessW) = Classic DLL/PE injection setup",
+        "B. binary-28: CL_Debug_Log.txt is actually a PE executable (T1036.008 Masquerade File Type) \u2014 not injection but masquerading",
+        "C. stream-38: Shellcode written to remote process \u2014 direct shellcode injection evidence",
+        "D. api-22: Fails to load missing module \u2014 DLL Side-Loading failure, not injection",
+        "E. registry-0: Modifies autorun registry key (T1547.001) \u2014 persistence, not injection",
+        "F. api-24: Long sleep (T1497.003) \u2014 sandbox evasion, not injection"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.Dinwod infostealer (UPX-packed, spawns 64 processes in a chain) detonation report includes UPX packing, dynamic API resolution, and user activity checks. An analyst reviewing Defense Evasion must avoid including Discovery behaviors. Which of the following are correctly Defense Evasion?",
+      "options": [
+        "A. static-7: UPX packing detected (T1027.002 Software Packing \u2014 Defense Evasion)",
+        "B. T1497.002 User Activity Based Checks \u2014 maps to BOTH Defense Evasion AND Discovery; when used to avoid sandbox analysis it is Defense Evasion",
+        "C. api-146: IsWow64Process (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "D. T1027.007 Dynamic API Resolution \u2014 Defense Evasion",
+        "E. api-103: CreateToolhelp32Snapshot (T1057 Process Discovery \u2014 Discovery, NOT Defense Evasion)",
+        "F. T1070.004 File Deletion (api-26 marks files for deletion) \u2014 Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  }
+]

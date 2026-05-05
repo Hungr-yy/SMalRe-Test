@@ -1,0 +1,2887 @@
+{
+  "feedback": "The model demonstrates strong overall performance on this malware analysis benchmark, achieving exact match accuracy of 72.2% (13/18 questions correct) with an average Jaccard similarity of 0.88. Parse quality is perfect with no parse failures. The model shows particular strength in process injection detection, ransomware behavior analysis, network IOC extraction, and credential access topics, achieving perfect scores on several of these. The model's primary weaknesses manifest as over-selection errors (adding extra incorrect options) and under-selection errors (missing one correct option), both occurring in roughly equal measure. Specific failure cases: Q2 (API Hooking) - over-selected by adding F (RegOpenKeyA) which is not in the gold set; Q4 (Defense Evasion for killers) - over-selected F (mutant creation) instead of G (timestomping T1070.006); Q8 (Network IOC for ransomware/WannaCry) - under-selected, missing A (kill-switch sinkhole domain contact); Q13 (Evasion Techniques for um_unhooking) - under-selected, missing H (high-entropy packed content); Q14 (Process Injection for um_unhooking) - under-selected, missing H (Thread Local Storage); Q16 (Process Injection Detection for um_unhooking) - significant error, predicted {A,C,D,G} vs gold {A,B,C,D,F}, missing B and F while adding G. Q17 (Behavioral Analysis for remcos) - major over-selection, predicted all 7 options vs gold {B,C,D,E,G}. The model tends slightly toward over-selection overall (avg predicted 4.11 vs avg gold 3.94). Attack family breakdown shows the model performs perfectly on ransomware (3/3) and near-perfectly on infostealers (4/5) and remcos (4/5 excluding the behavioral analysis question). The um_unhooking family is the weakest area with only 2/5 exact matches, and killers shows 2/3. Hard questions show reduced performance (1/2 exact match). Key training recommendations: (1) Focus on um_unhooking process injection questions, especially distinguishing Thread Local Storage from other injection sub-techniques; (2) Train on behavioral analysis questions requiring precise threat_level discrimination (malicious vs suspicious vs informative); (3) Improve evidence grounding for network behavior questions involving kill-switch sinkhole detection; (4) Reduce over-selection tendency by training the model to more carefully verify each candidate option against report evidence before including it.",
+  "proficiency": 7,
+  "metrics": {
+    "num_questions": 18,
+    "num_exact_matches": 13,
+    "exact_match_accuracy": 0.7222,
+    "avg_jaccard": 0.8794,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.9028,
+    "macro_option_recall": 0.9306,
+    "avg_predicted_answer_count": 4.111,
+    "avg_gold_answer_count": 3.944,
+    "answer_count_bias": "over-selecting"
+  },
+  "strengths": [
+    "Perfect parse rate: all 18 model answers were correctly formatted and parseable.",
+    "Strong performance on ransomware behavior analysis (3/3 exact matches), demonstrating solid understanding of anti-recovery techniques and process injection sub-techniques.",
+    "Excellent performance on process injection detection questions where API call evidence is clear (Q3, Q5, Q6, Q11, Q15 all correct).",
+    "Strong credential access topic performance (Q18 correct) showing good understanding of infostealer credential harvesting APIs and strings.",
+    "Reliable network IOC extraction for Remcos RAT (Q10 correct) and ransomware WannaCry network behavior (Q7 correct, partial miss on Q8).",
+    "Consistent exact match on evasion technique questions for infostealers (Q1 correct) and Remcos static analysis (Q12 correct).",
+    "Good calibration overall: average predicted count (4.11) is close to average gold count (3.94)."
+  ],
+  "weaknesses": [
+    {
+      "area_type": "attack",
+      "area_name": "um_unhooking",
+      "description": "The model struggles with um_unhooking samples, achieving only 2/5 exact matches. Errors include missing Thread Local Storage injection (Q14), missing high-entropy packed content evasion (Q13), and a significant process injection detection error (Q16) where the model missed 'wrote 32 bytes to a remote process' (B) and 'svchost connects outbound after injection' (F) while incorrectly adding GetProcAddress (G).",
+      "severity": "high",
+      "evidence_question_indices": [
+        12,
+        13,
+        15
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "over-selection on behavioral analysis",
+      "description": "Q17 (Remcos behavioral analysis) shows severe over-selection: the model selected all 7 options (A-G) while the gold set is only {B,C,D,E,G}. The model failed to distinguish malicious-rated signatures from suspicious/informative ones, including A (modifies auto-execute registry - suspicious) and F (sends traffic without HTTP header - suspicious) which are not rated malicious.",
+      "severity": "high",
+      "evidence_question_indices": [
+        16
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection on hard evasion questions",
+      "description": "On hard evasion questions (Q1 and Q13), the model missed one correct option in Q13 (H: high-entropy packed content for um_unhooking). The model correctly identified A,C,D,E,G but missed H despite the report containing high-entropy section indicators mapped to T1027.009.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        12
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "av_edr_killers",
+      "description": "The killers family shows 2/3 exact matches. Q4 (Defense Evasion for Pykspa.Generic) had an error where the model selected F (named mutant creation) instead of G (timestomping T1070.006). The mutant is informative/not a defense evasion indicator in the MITRE mapping, while timestomping is explicitly mapped.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        3
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Network Indicator of Compromise Extraction",
+      "description": "Q8 (WannaCry network behavior) missed option A (kill-switch sinkhole domain contact). The report clearly shows the malware contacts 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' which is the WannaCry kill-switch domain. The model identified C, D, F correctly but missed this well-known WannaCry behavioral indicator.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        7
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "API Hooking and Credential Access",
+      "description": "Q2 over-selected by including F (RegOpenKeyA@ADVAPI32.DLL) which appears as an informative string reference but was not listed as a hooked API in the hook detection signatures. The gold set only includes Process32NextW, FindFirstFileW, and send@WS2_32.DLL as hooked APIs per the hooks-0, hooks-2, and hooks-5 signatures.",
+      "severity": "low",
+      "evidence_question_indices": [
+        1
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "hard",
+      "description": "Hard questions show reduced performance: 1/2 exact matches (Q1 correct, Q13 incorrect). The model misses subtle evidence indicators on hard questions that require comprehensive enumeration of all relevant report artifacts.",
+      "severity": "low",
+      "evidence_question_indices": [
+        0,
+        12
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 5,
+        "exact_match_accuracy": 0.8,
+        "avg_jaccard": 0.9333,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.8542,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 3,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.6667,
+        "avg_jaccard": 0.8611,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 5,
+        "exact_match_accuracy": 0.4,
+        "avg_jaccard": 0.7867,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 16,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.8854,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.8333,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Evasion Techniques": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.6667,
+        "avg_jaccard": 0.8611,
+        "parse_error_rate": 0.0
+      },
+      "API Hooking and Credential Access": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Detection": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.6667,
+        "avg_jaccard": 0.8333,
+        "parse_error_rate": 0.0
+      },
+      "Defense Evasion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection Techniques": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.6667,
+        "avg_jaccard": 0.8889,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection & Privilege Escalation": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Anti-Recovery Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Network Indicator of Compromise Extraction": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.8333,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection & Defense Evasion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Behavioral Analysis": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.7143,
+        "parse_error_rate": 0.0
+      },
+      "Credential Access Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the sandbox detonation report for the um_unhooking sample (Trojan.Ursnif, 369152 bytes), which of the following API call observations constitute direct evidence of process injection activity? Select ALL that apply.",
+        "options": [
+          "A. 'hash.exe' called 'NtQueueApcThread' \u2014 indicating APC injection into a remote process (T1055.004)",
+          "B. 'hash.exe' creates a thread in process '-1' (self-thread creation via CreateThread)",
+          "C. 'hash.exe' trying to access non-existent files (executable) \u2014 file probing behavior",
+          "D. 'hash.exe' sleeping for 1097794852 milliseconds \u2014 long sleep evasion",
+          "E. 'hash.exe' opens a process 'C:\\hash.exe' \u2014 self-process handle acquisition",
+          "F. The MITRE ATT&CK mapping includes T1055.004 (Asynchronous Procedure Call) under both Privilege Escalation and Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The detonation report for this um_unhooking sample (Trojan.Generic, 606084 bytes) contains several process injection indicators. Which of the following signatures or behaviors constitute direct evidence of process injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "C. static-6: Section .text has entropy 6.1252 (suspicious, T1027.009)",
+          "D. string-481: Reference to explorer.exe process (informative, T1055)",
+          "E. static-6: Section .tc has entropy 6.484398 (suspicious, T1027.009)",
+          "F. api-43: 'Writes a PE file header to disc' (suspicious, T1105)",
+          "G. registry-0: Modifies auto-execute registry key (suspicious, T1547.001)",
+          "H. T1055.005 Thread Local Storage listed in MITRE ATT&CK mappings for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes) with 9 processes, which of the following are direct indicators of process injection or hollowing observed in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. api-20: 'hash.exe allocated memory in C:\\hash.exe' (malicious, T1055)",
+          "C. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002)",
+          "D. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055)",
+          "E. target-269: 'svchost.exe connects to a network after injection' (malicious, T1055)",
+          "F. target-303: 'sc.exe starts service cygqxrtx' (malicious, T1569.002)",
+          "G. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "H. T1055.012 Process Hollowing listed in MITRE ATT&CK mappings for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Ursnif, 369152 bytes) includes T1055.004 Asynchronous Procedure Call in its MITRE ATT&CK mappings. Which signature in the detonation report provides the most direct evidence for APC injection?",
+        "options": [
+          "A. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "B. api-85: 'hash.exe called NtQueueApcThread' (informative, T1055.004)",
+          "C. static-6: Section .text has high entropy (suspicious, T1027.009)",
+          "D. api-176: 'hash.exe called GetProcAddress' (informative, T1106)",
+          "E. api-24: 'hash.exe sleeping for 1097794852 milliseconds' (suspicious, T1497.003)",
+          "F. static-92: PE file has unusual entropy resources (suspicious, T1027.002)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 9329512 bytes) maps T1055.005 Thread Local Storage and T1546.010 AppInit DLLs in its MITRE ATT&CK output. Which of the following statements accurately describes what the detonation report reveals about this sample's injection capabilities? Select ALL that apply.",
+        "options": [
+          "A. Thread Local Storage injection (T1055.005) is listed as both a Privilege Escalation and Defense Evasion technique in the MITRE mappings",
+          "B. AppInit DLLs (T1546.010) is listed as a Persistence and Privilege Escalation technique in the MITRE mappings",
+          "C. The report contains a malicious-rated signature for writing to a remote process (api-0, T1055)",
+          "D. The report contains a hook detection signature for FindFirstFileW or send@WS2_32.DLL",
+          "E. The sample is UPX-packed based on static parser output",
+          "F. The sample contacts mhanational.org over HTTPS port 443 per network traffic signatures"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes), which of the following evasion-related indicators are present in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. static-6: Section .text has entropy 6.3938 mapped to T1027.009 Embedded Payloads (suspicious)",
+          "B. api-59: 'hash.exe interacting with \\Device\\Harddisk0\\DR0' mapped to T1542.003 Bootkit (malicious)",
+          "C. suricata-1: 'ET TOR Known Tor Relay/Router' alert (suspicious)",
+          "D. string-176: Contains Tor Onion URL mapped to T1090.003 Multi-hop Proxy (informative)",
+          "E. network-81: High entropy domain 'time-a.nist.gov' mapped to T1568.002 DGA (informative)",
+          "F. binary-71: Sample file has high entropy 7.981273 mapped to T1027 (informative)",
+          "G. stream-87: GetTickCount used for VM detection (informative, T1497)",
+          "H. string-666: References vmtoolsd.exe for sandbox detection (informative, T1497)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes) has a static-6 signature indicating high entropy in section .text. What MITRE ATT&CK technique does this map to, and what is the threat_level_human rating of this signature?",
+        "options": [
+          "A. T1027.002 Software Packing, rated malicious",
+          "B. T1027.009 Embedded Payloads, rated suspicious",
+          "C. T1027.009 Embedded Payloads, rated informative",
+          "D. T1027 Obfuscated Files or Information, rated suspicious",
+          "E. T1027.002 Software Packing, rated suspicious",
+          "F. T1140 Deobfuscate/Decode Files or Information, rated informative"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), which of the following behavioral signatures are rated 'malicious' (threat_level 2) in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. api-0: Writes data to a remote process",
+          "B. api-20: Allocates virtual memory in a remote process",
+          "C. api-117: Calls ShellExecuteA to execute an application",
+          "D. target-14: Spawns a lot of processes",
+          "E. api-129: Creates a process in suspended mode",
+          "F. network-88: Application communicates with malicious domain lazystax.ru",
+          "G. target-303: Starts service using SC.exe",
+          "H. target-15: Modifies firewall settings via netsh.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The killers sample (Pykspa.Generic, 11808768 bytes) includes timestomping in its MITRE ATT&CK mappings. Which signature in the detonation report provides direct evidence for timestomping (T1070.006)?",
+        "options": [
+          "A. mutant-0: Creates named mutant 'gfiyttnoixhvefhxpxbb' (informative)",
+          "B. static-6: Section .data has entropy 6.4778 mapped to T1027.009 (suspicious)",
+          "C. string-249: Reference to API GetSystemTimeAsFileTime mapped to T1070.006 (informative)",
+          "D. registry-10: Modifies UAC/LUA settings (malicious, T1112)",
+          "E. string-409: Reference to SetFileTime API mapped to T1070.006 (informative)",
+          "F. api-264: Creates a thread in a self process (informative, T1055.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the killers sample (Dropper.Generic.Dacic.3035, 491520 bytes), which of the following MITRE ATT&CK techniques are explicitly mapped in the detonation report under the Defense Evasion tactic? Select ALL that apply.",
+        "options": [
+          "A. T1070.006 Timestomp",
+          "B. T1055.001 Dynamic-link Library Injection",
+          "C. T1027.009 Embedded Payloads",
+          "D. T1497.001 System Checks",
+          "E. T1036.008 Masquerade File Type",
+          "F. T1070.004 File Deletion",
+          "G. T1562.001 Disable or Modify Tools",
+          "H. T1134 Access Token Manipulation"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The killers sample (Pykspa.Generic, 11808768 bytes) has a mutant-0 signature creating '\\Sessions\\1\\BaseNamedObjects\\gfiyttnoixhvefhxpxbb'. What is the threat_level_human of this signature, and does it map to a MITRE ATT&CK defense evasion technique?",
+        "options": [
+          "A. Rated malicious; maps to T1562.001 Disable or Modify Tools",
+          "B. Rated informative; does not map to a MITRE ATT&CK technique in the report",
+          "C. Rated suspicious; maps to T1480 Execution Guardrails",
+          "D. Rated informative; maps to T1082 System Information Discovery",
+          "E. Rated suspicious; maps to T1070 Indicator Removal",
+          "F. Rated malicious; maps to T1036 Masquerading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (Remcos.Generic, 494080 bytes, file.exe), which of the following signatures are rated 'malicious' (threat_level 2) in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. target-58: The analysis spawned a process identified as malicious (remcos.exe, 16/23 AV vendors)",
+          "B. binary-11: Dropped file remcos.exe identified as malicious (16/23 AV vendors)",
+          "C. api-0: file.exe wrote 32 bytes to a remote process (T1055)",
+          "D. api-129: remcos.exe called CreateProcessW in suspended mode (T1055)",
+          "E. hooks-2: FindFirstFileW@KERNEL32.DLL hooked in remcos.exe (T1056.004)",
+          "F. hooks-5: send@WS2_32.DLL hooked in remcos.exe (T1056.004)",
+          "G. network-7: TCP traffic to port 2404 (T1571)",
+          "H. registry-0: Modifies auto-execute registry key (T1547.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (Remcos.Generic, 494080 bytes), the report includes several signatures rated 'suspicious' (threat_level 1). Which of the following are rated suspicious but NOT malicious in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. registry-0: Modifies auto-execute functionality by setting a registry value (T1547.001)",
+          "B. binary-1: Drops executable files (remcos.exe.bin)",
+          "C. static-6: Section .text has high entropy (T1027.009)",
+          "D. network-23: Sends traffic on HTTP port without HTTP header (T1071.001)",
+          "E. registry-27: Modifies proxy settings (T1112)",
+          "F. hooks-2: FindFirstFileW@KERNEL32.DLL hooked in remcos.exe (T1056.004)",
+          "G. suricata-1: ET DYN_DNS DNS Query to DynDNS Domain alert",
+          "H. network-7: Uses network protocols on unusual ports (port 2404)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (Remcos.Generic, 494080 bytes) exhibits several network behaviors. Which of the following network-related indicators are present in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. network-0: Contacts domain 'geoplugin.net'",
+          "B. network-2: GETs /json.gp from geoplugin.net (T1071.001)",
+          "C. network-7: TCP traffic to port 2404 (malicious, T1571)",
+          "D. network-24: Tries to identify external IP address via geoplugin.net (malicious, T1016)",
+          "E. network-51: Queries DNS for 'liveos.zapto.org'",
+          "F. suricata-2: 'ET MALWARE Remcos 3.x Unencrypted' alert (malicious)",
+          "G. network-23: Sends traffic on HTTP port 80 without HTTP header (suspicious)",
+          "H. network-88: Application communicates with malicious domain"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The WannaCry sample (CVE-2017-0147, 5267459 bytes) exhibits distinctive network behavior. Which of the following network indicators are present in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. network-0: Contacts 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' (the WannaCry kill-switch sinkhole domain)",
+          "B. network-2: GETs files from webserver at the kill-switch domain (informative)",
+          "C. network-31: Detected a large number of ARP broadcast requests (malicious)",
+          "D. network-17: Contacts 60 or more hosts in at least 22 different networks (malicious)",
+          "E. network-7: Uses network protocols on unusual ports (TCP 62082, 62096) (malicious)",
+          "F. suricata-2: 'ET TROJAN Possible WannaCry DNS Lookup' alert (malicious)",
+          "G. network-21: Malicious artifacts seen in context of contacted host (malicious)",
+          "H. network-32: Detected increased number of ARP broadcast requests (suspicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) deploys API hooking for credential theft. Based solely on the hook detection signatures (identifier type 11) in the detonation report, which APIs are confirmed as hooked? Select ALL that apply.",
+        "options": [
+          "A. Process32NextW@KERNEL32.DLL (hooks-0, suspicious, T1056.004)",
+          "B. RegOpenKeyA@ADVAPI32.DLL (string-229, informative, T1012)",
+          "C. FindFirstFileW@KERNEL32.DLL (hooks-2, malicious, T1056.004)",
+          "D. send@WS2_32.DLL (hooks-5, malicious, T1056.004)",
+          "E. GetProcAddress@KERNEL32.DLL (api-176, informative, T1106)",
+          "F. CreateProcessA@KERNEL32.DLL (api-128, informative, T1106)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) has a string-229 signature: 'Contains ability to query registry keys (API string)' referencing RegOpenKeyA. What is the threat_level_human of this signature, and does it represent a hooked API per the hook detection signatures in this report?",
+        "options": [
+          "A. Rated malicious; RegOpenKeyA is confirmed as a hooked API in hooks-0",
+          "B. Rated informative; RegOpenKeyA appears as a string reference but is NOT listed in any hook detection signature",
+          "C. Rated suspicious; RegOpenKeyA is confirmed as a hooked API in hooks-2",
+          "D. Rated informative; RegOpenKeyA is confirmed as a hooked API in hooks-5",
+          "E. Rated suspicious; RegOpenKeyA appears as a string reference but is NOT listed in any hook detection signature",
+          "F. Rated malicious; RegOpenKeyA is confirmed as a hooked API in hooks-2"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The killers sample (Trojan.Generic, 471040 bytes, UPX compressed) maps T1070.006 Timestomp under Defense Evasion. Which signatures in the detonation report provide evidence for timestomping capability? Select ALL that apply.",
+        "options": [
+          "A. string-249: Contains ability to retrieve file time via FileTimeToSystemTime (informative, T1070.006)",
+          "B. string-409: Contains ability to set file time via SetFileTime (informative, T1070.006)",
+          "C. api-223: Calls FileTimeToLocalFileTime (suspicious, T1070.006)",
+          "D. static-7: PE file is packed with UPX (suspicious, T1027.002)",
+          "E. static-6: UPX1 section has entropy 7.86813 (suspicious, T1027.009)",
+          "F. stream-5: RtlCreateUserThread used for remote thread creation (suspicious, T1055.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Generic, 9329512 bytes), the MITRE ATT&CK mappings include T1055.005 Thread Local Storage and T1055.003 Thread Execution Hijacking. Which of the following accurately describes the evidence available in the detonation report for these injection sub-techniques? Select ALL that apply.",
+        "options": [
+          "A. T1055.005 Thread Local Storage appears in both Privilege Escalation and Defense Evasion tactic mappings",
+          "B. T1055.003 Thread Execution Hijacking appears in both Privilege Escalation and Defense Evasion tactic mappings",
+          "C. api-264: 'Creates a thread in a self process' is rated malicious and maps to T1055.003",
+          "D. api-264: 'Creates a thread in a self process' is rated informative and maps to T1055.003",
+          "E. The sample has a malicious-rated signature api-0 for writing to a remote process (T1055)",
+          "F. A hook detection signature (hooks-*) is present in this report confirming API hooking"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (CVE-2017-0199, 1252864 bytes, Excel document) exhibits several behaviors during detonation. Carefully reviewing the threat_level_human ratings, which of the following signatures are rated 'malicious' (threat_level 2)? Select ALL that apply.",
+        "options": [
+          "A. network-16: GETs files from a webserver (malicious, T1071.001)",
+          "B. network-88: Application communicates with malicious domain 'loooooooooooooooooooog.com' (malicious, T1566)",
+          "C. suricata-2: 'ET EXPLOIT SUSPICIOUS Possible CVE' alert (malicious)",
+          "D. network-23: Sends traffic on HTTPS port without HTTP header (suspicious, T1071.001)",
+          "E. suricata-1: 'ET INFO Possible HTA Application Download' alert (suspicious)",
+          "F. network-22: Uses browser-related user-agent without launching browser (suspicious, T1071.001)",
+          "G. avtest-8: CrowdStrike ML detection (malicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Lazy.Generic, 17818630 bytes, UPX compressed) has multiple evasion-related signatures. Which of the following are present in this detonation report and correctly paired with their MITRE ATT&CK technique? Select ALL that apply.",
+        "options": [
+          "A. static-6: UPX1 section entropy 7.86813 mapped to T1027.009 Embedded Payloads (suspicious)",
+          "B. static-7: PE file packed with UPX mapped to T1027.002 Software Packing (suspicious)",
+          "C. stream-5: RtlCreateUserThread mapped to T1055.001 DLL Injection (suspicious)",
+          "D. static-0: CRC value in PE header does not match actual value mapped to T1027 (suspicious)",
+          "E. stream-129: NtResumeThread mapped to T1106 Native API (suspicious)",
+          "F. stream-22: NtResumeThread native function calls mapped to T1106 Native API (malicious)",
+          "G. static-4: Entrypoint in uncommon section UPX1 mapped to T1027 (suspicious)",
+          "H. memorydump-8: Found PE header in memory mapped to T1055 (informative)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes) exhibits several process injection indicators. Which of the following signatures or behaviors from the detonation report specifically confirm active code injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe' wrote 32 bytes to a remote process",
+          "B. api-264: Creates a thread in a self process (handle -1)",
+          "C. static-6: Section contains high entropy (.text, entropy 6.125)",
+          "D. static-60: PE file contains unusual section name (.eh_fram)",
+          "E. string-4: 'Shell_TrayWnd' taskbar window class string found",
+          "F. registry-0: Modifies auto-execute functionality in HKCU Run key",
+          "G. api-43: Writes a PE file header to disc (16260 bytes)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample classified as Trojan.Generic (606084 bytes) has Thread Local Storage (T1055.005) listed in its MITRE ATT&CK mappings alongside several other injection sub-techniques. Which of the following MITRE technique IDs are explicitly present in this sample's mitre_attcks list? Select ALL that apply.",
+        "options": [
+          "A. T1055.005 - Thread Local Storage",
+          "B. T1055.012 - Process Hollowing",
+          "C. T1055.004 - Asynchronous Procedure Call",
+          "D. T1055.001 - Dynamic-link Library Injection",
+          "E. T1055.003 - Thread Execution Hijacking",
+          "F. T1055.011 - Extra Window Memory Injection",
+          "G. T1055.015 - ListPlanting"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes) uses multiple defense evasion techniques. Examining the signatures and MITRE mappings, which of the following evasion indicators are present in this specific detonation report? Select ALL that apply.",
+        "options": [
+          "A. static-6: Section contains high entropy (.text, entropy 6.630) mapped to T1027.009",
+          "B. api-129: Creates a process in suspended mode mapped to T1055",
+          "C. api-83: Writes PE header bytes to a remote process mapped to T1055.002",
+          "D. T1070.006 Timestomp is listed in the MITRE ATT&CK mappings",
+          "E. T1562.009 Safe Mode Boot is listed in the MITRE ATT&CK mappings",
+          "F. api-10: Queries kernel debugger information mapped to T1622",
+          "G. T1027.005 Indicator Removal from Tools is listed in the MITRE ATT&CK mappings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), the process tree shows hash.exe spawning cmd.exe, sc.exe, netsh.exe, and ultimately svchost.exe. Which of the following behavioral indicators from the signatures confirm that code was injected into svchost.exe? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe' wrote 32 bytes to a remote process",
+          "B. api-20: 'hash.exe' allocated memory in 'C:\\hash.exe'",
+          "C. api-129: 'mpvpepag.exe' called CreateProcessA with suspended flag",
+          "D. api-83: 'mpvpepag.exe' wrote PE header bytes to a remote process",
+          "E. target-269: Process 'svchost.exe' connects to a network address on port 25",
+          "F. target-303: 'sc.exe' starts service cygqxrtx",
+          "G. api-138: 'svchost.exe' called NtCreateNamedPipeFile"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Ursnif, 369152 bytes) contains several evasion-related signatures. Which of the following indicators from this specific report are correctly mapped to defense evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. static-6: Section contains high entropy (.text, entropy 6.629) mapped to T1027.009 (Embedded Payloads)",
+          "B. api-85: 'hash.exe' called NtQueueApcThread mapped to T1055.004 (APC Injection)",
+          "C. api-24: Tries to sleep for a long time (1097794852 ms) mapped to T1497.003",
+          "D. static-92: PE file has unusual entropy resources mapped to T1027.002",
+          "E. T1070.006 Timestomp is present in the MITRE ATT&CK mappings for this sample",
+          "F. hooks-8: rundll32.exe wrote bytes to virtual address (hook installation)",
+          "G. T1562.001 Disable or Modify Tools is present in the MITRE ATT&CK mappings"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes) includes both static and dynamic evasion indicators. Which of the following are correctly identified as evasion-related indicators in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. binary-8: The input sample contains a known anti-VM trick (CPUID trick) mapped to T1497",
+          "B. binary-26: The input sample possibly contains the RDTSCP instruction mapped to T1497",
+          "C. static-187: .rdata section contains high entropy (7.265) mapped to T1027.009",
+          "D. certificate-0: The input sample is signed with a certificate mapped to T1553.002",
+          "E. api-59: Interacts with the primary disk partition (DR0) mapped to T1542.003",
+          "F. suricata-1: ET TOR Known Tor Relay/Router alert",
+          "G. network-29: Sends network traffic on the daytime protocol port mapped to T1571"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (Remcos.Generic, 494080 bytes) was detonated and produced 292 signatures. An analyst must determine which signatures indicate definitively malicious behavior versus merely suspicious or informative behavior. Which of the following signatures are rated 'malicious' (threat_level 2) in this report? Select ALL that apply.",
+        "options": [
+          "A. registry-0: Modifies auto-execute functionality (HKCU Run key) - rated suspicious",
+          "B. target-58: Spawned process 'remcos.exe' identified as malicious by 16/23 AV vendors",
+          "C. api-129: Creates a process in suspended mode (remcos.exe) mapped to T1055",
+          "D. hooks-2: Hooks file system APIs (FindFirstFileW) in remcos.exe",
+          "E. hooks-5: Hooks internet related APIs (send@WS2_32.DLL) in remcos.exe",
+          "F. network-23: Sends traffic on HTTP port without HTTP header - rated suspicious",
+          "G. network-7: Uses network protocols on unusual ports (port 2404)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (file.exe, 494080 bytes), an analyst is classifying signatures by their threat_level_human rating. Which of the following signatures are rated 'suspicious' (threat_level 1) rather than 'malicious' (threat_level 2) or 'informative'? Select ALL that apply.",
+        "options": [
+          "A. registry-0: Modifies auto-execute functionality in HKCU Software Run",
+          "B. binary-1: Drops executable files (remcos.exe.bin)",
+          "C. static-6: Section contains high entropy (.text, entropy 6.x) mapped to T1027.009",
+          "D. network-23: Sends traffic on typical HTTP outbound port without HTTP header",
+          "E. suricata-1: Detected alert ET DYN_DNS DNS Query to DynDNS Domain",
+          "F. hooks-2: Hooks file system APIs FindFirstFileW in remcos.exe",
+          "G. registry-27: Modifies proxy settings (HKCU)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Pykspa.Generic, 11808768 bytes) has multiple defense evasion techniques mapped. Which of the following MITRE ATT&CK technique IDs are explicitly present in the Defense Evasion tactic for this sample? Select ALL that apply.",
+        "options": [
+          "A. T1070.006 - Timestomp",
+          "B. T1070.004 - File Deletion",
+          "C. T1027.009 - Embedded Payloads",
+          "D. T1027.007 - Dynamic API Resolution",
+          "E. T1562.001 - Disable or Modify Tools",
+          "F. T1553.002 - Code Signing",
+          "G. T1036.005 - Match Legitimate Name or Location"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Pykspa.Generic, 11808768 bytes) contains a signature 'mutant-0' describing a created mutex named 'gfiyttnoixhvefhxpxbb'. Additionally, the report includes a static-6 signature. What is the correct characterization of these two indicators in the context of MITRE ATT&CK defense evasion mapping? Select ALL that apply.",
+        "options": [
+          "A. The mutant-0 (named mutex creation) is rated 'informative' and is NOT mapped to a defense evasion MITRE technique",
+          "B. The mutant-0 (named mutex creation) is rated 'malicious' and maps to T1480 Execution Guardrails",
+          "C. The static-6 (high entropy .data section, entropy 6.477) is rated 'suspicious' and maps to T1027.009",
+          "D. T1070.006 Timestomp is confirmed present in this sample's MITRE ATT&CK mappings",
+          "E. The sample's MITRE mappings include T1027.005 Indicator Removal from Tools",
+          "F. T1562.001 Disable or Modify Tools is NOT present in this sample's defense evasion techniques",
+          "G. The sample contains T1036.008 Masquerade File Type in its defense evasion techniques"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The WannaCry ransomware sample (CVE-2017-0147, 5267459 bytes) exhibits distinctive network behavior. Which of the following network-based indicators are present in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. network-0: The malware contacts 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' (the WannaCry kill-switch sinkhole domain)",
+          "B. network-2: The malware sends a GET request to the kill-switch domain",
+          "C. network-31: Detected a large number of ARP broadcast requests for network device lookup",
+          "D. network-17: Contacts 60 or more hosts in at least 22 different networks",
+          "E. network-7: Uses network protocols on unusual ports (62082, 62096)",
+          "F. suricata-2: Detected alert 'ET TROJAN Possible WannaCry DNS Lookup'",
+          "G. network-88: Application communicates with a malicious domain (loooooooooooooooooooog.com)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) installs API hooks for credential access. The hook detection signatures (hooks-0, hooks-2, hooks-5) identify specific hooked APIs. Which of the following APIs are confirmed as hooked in this specific detonation report according to the hook detection signatures? Select ALL that apply.",
+        "options": [
+          "A. Process32NextW@KERNEL32.DLL (hooks-0, rated suspicious)",
+          "B. FindFirstFileW@KERNEL32.DLL (hooks-2, rated malicious)",
+          "C. send@WS2_32.DLL (hooks-5, rated malicious)",
+          "D. RegOpenKeyA@ADVAPI32.DLL (string-229, rated informative)",
+          "E. CreateProcessA@KERNEL32.DLL (api-128, rated informative)",
+          "F. InternetOpenA@WININET.DLL (api-199, rated informative)",
+          "G. GetProcAddress@KERNEL32.DLL (api-176, rated informative)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) contains the string-229 signature: 'Contains ability to query registry keys (API string)' with description referencing 'RegOpenKeyA'. What is the correct classification of this indicator in the context of the hook detection signatures for this report? Select ALL that apply.",
+        "options": [
+          "A. RegOpenKeyA appears in string-229 as an informative string reference, NOT as a hooked API in any hook detection signature",
+          "B. RegOpenKeyA is confirmed as a hooked API in hooks-0 signature",
+          "C. The three confirmed hooked APIs in this report are Process32NextW, FindFirstFileW, and send@WS2_32.DLL",
+          "D. RegOpenKeyA being in the IAT import list means it is actively hooking registry access",
+          "E. string-229 is rated 'informative' and maps to T1012 Query Registry, not to T1056.004 Credential API Hooking",
+          "F. The hook detection signatures (hooks-0, hooks-2, hooks-5) all map to T1056.004 Credential API Hooking"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes) has Thread Local Storage (T1055.005) in its MITRE ATT&CK mappings. Which of the following statements correctly describe the evidence for Thread Local Storage injection versus other injection techniques in this specific report? Select ALL that apply.",
+        "options": [
+          "A. T1055.005 Thread Local Storage is explicitly listed in both Privilege Escalation and Defense Evasion tactics in this sample's mitre_attcks",
+          "B. The report contains api-264 'Creates a thread in a self process' which maps to T1055.003 Thread Execution Hijacking",
+          "C. T1055.012 Process Hollowing is also present in this sample's MITRE ATT&CK mappings",
+          "D. The static-6 signature showing high entropy in .text section maps to T1027.009 and is rated suspicious",
+          "E. T1055.004 APC Injection is present in this sample's MITRE ATT&CK mappings",
+          "F. api-0 'wrote 32 bytes to a remote process' maps to T1055 Process Injection and is rated malicious",
+          "G. T1562.009 Safe Mode Boot is present in this sample's defense evasion techniques"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos sample (RiskWare[RemoteAdmin]/NetSup.gen, 6227120 bytes) contains 251 signatures. An analyst must distinguish malicious from suspicious signatures. Which of the following signatures from this report are rated 'malicious' (threat_level 2)? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe' wrote 1500 bytes to a remote process mapped to T1055",
+          "B. api-43: Writes a PE file header to disc (32768 bytes) - rated suspicious",
+          "C. binary-60: Dropped file has high entropy - rated suspicious",
+          "D. api-1: Creates guarded memory regions (PAGE_GUARD) - rated suspicious",
+          "E. registry-27: Modifies proxy settings - rated suspicious",
+          "F. api-228: Calls CryptAcquireContextW - rated suspicious",
+          "G. api-223: Calls FileTimeToLocalFileTime - rated suspicious"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Dropper.Generic.Dacic.3035, 491520 bytes) contains multiple defense evasion indicators. Which of the following signatures are rated 'malicious' (threat_level 2) in this specific detonation report? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe' wrote 32 bytes to a remote process mapped to T1055",
+          "B. binary-60: Dropped file '%TEMP%\\gegdsimsogm.exe' has high entropy - rated suspicious",
+          "C. static-0: CRC value in PE header does not match actual value - rated suspicious",
+          "D. api-9: Queries process information (SystemProcessInformation) - rated suspicious",
+          "E. static-6: Section contains high entropy (.text) - rated suspicious",
+          "F. string-126: Found system commands related strings (PING) - rated suspicious",
+          "G. avtest-8: Sample detected by CrowdStrike with relatively high confidence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 9329512 bytes) has several evasion-related indicators. Which of the following indicators from this specific detonation report are present and correctly described? Select ALL that apply.",
+        "options": [
+          "A. binary-8: Contains a known anti-VM trick (CPUID trick) rated malicious, mapped to T1497",
+          "B. static-6: Section contains high entropy (.text, entropy 6.754) rated suspicious, mapped to T1027.009",
+          "C. binary-26: Contains RDTSCP instruction rated informative, mapped to T1497",
+          "D. network-23: Sends traffic on HTTPS port without HTTP header rated suspicious",
+          "E. static-187: .rdata section contains high entropy (7.265) rated informative, mapped to T1027.009",
+          "F. T1553.002 Code Signing is present in the MITRE ATT&CK mappings for this sample",
+          "G. api-49: Opens more than 500 files with write access rated malicious"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Lazy.Generic, 17818630 bytes) is UPX-packed and shows process injection behavior. Which of the following indicators from this specific detonation report confirm process injection activity? Select ALL that apply.",
+        "options": [
+          "A. stream-34: Contains ability to write to a remote process (WriteProcessMemory) rated suspicious",
+          "B. stream-5: Contains ability to create a remote thread (RtlCreateUserThread) rated suspicious",
+          "C. memorydump-8: Found PE header 'MZ' in memory rated informative",
+          "D. stream-22: Contains native function calls (NtResumeThread) rated malicious",
+          "E. static-7: PE file is packed with UPX rated suspicious",
+          "F. static-4: Entrypoint in PE header is within uncommon section (UPX1) rated suspicious",
+          "G. stream-129: Contains ability to modify processes thread functionality (NtResumeThread) rated suspicious"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (file.exe, 494080 bytes) spawns remcos.exe which then injects into iexplore.exe. Reviewing all signatures in the report, which of the following are rated 'malicious' (threat_level 2)? Select ALL that apply.",
+        "options": [
+          "A. target-58: Spawned process 'remcos.exe' identified as malicious by 16/23 AV vendors",
+          "B. binary-11: Dropped file 'remcos.exe' identified as malicious by 16/23 AV vendors",
+          "C. api-0: 'file.exe' wrote 32 bytes to a remote process mapped to T1055",
+          "D. api-129: 'remcos.exe' called CreateProcessW with suspended flag mapped to T1055",
+          "E. hooks-2: Hooks file system APIs (FindFirstFileW) in remcos.exe mapped to T1056.004",
+          "F. hooks-5: Hooks internet related APIs (send@WS2_32.DLL) in remcos.exe mapped to T1056.004",
+          "G. network-7: Uses network protocols on unusual ports (TCP port 2404)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Ursnif, 369152 bytes) uses APC injection (T1055.004). Which of the following indicators from this specific detonation report provide direct evidence of APC injection versus other injection techniques? Select ALL that apply.",
+        "options": [
+          "A. api-85: 'hash.exe' called NtQueueApcThread mapped to T1055.004 APC Injection",
+          "B. api-264: Creates a thread in a self process (handle -1) mapped to T1055.003",
+          "C. T1055.004 Asynchronous Procedure Call is explicitly listed in both Privilege Escalation and Defense Evasion tactics",
+          "D. static-6: Section contains high entropy (.text, entropy 6.629) mapped to T1027.009",
+          "E. api-24: Tries to sleep for a long time (1097794852 ms) mapped to T1497.003",
+          "F. T1055.012 Process Hollowing is present in this sample's MITRE ATT&CK mappings",
+          "G. static-98: PE files contains large number of export functions (more than 100)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes) exhibits several process injection indicators. Which of the following signatures or behaviors from the detonation report specifically confirm active process injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process C:\\...' (malicious, T1055)",
+          "B. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "C. static-6: 'Section contains high entropy' (suspicious, T1027.009)",
+          "D. registry-0: 'Modifies auto-execute functionality by setting/creating a value in the registry' (suspicious, T1547.001)",
+          "E. api-43: 'Writes a PE file header to disc' (suspicious, T1105)",
+          "F. string-481: 'Reference explorer.exe process' (informative, T1055)",
+          "G. mitre_attck: Thread Local Storage (T1055.005) listed under Privilege Escalation and Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Ursnif, 369152 bytes), which MITRE ATT&CK process injection sub-techniques are explicitly mapped in the detonation report's mitre_attcks field? Select ALL that apply.",
+        "options": [
+          "A. T1055.001 Dynamic-link Library Injection",
+          "B. T1055.003 Thread Execution Hijacking",
+          "C. T1055.004 Asynchronous Procedure Call",
+          "D. T1055.005 Thread Local Storage",
+          "E. T1055.011 Extra Window Memory Injection",
+          "F. T1055.012 Process Hollowing",
+          "G. T1055.015 ListPlanting"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Examining the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes) with 9 processes, which of the following behavioral observations from the detonation report are direct evidence of process injection occurring at runtime? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. api-20: 'hash.exe allocated memory in C:\\hash.exe' (malicious, T1055)",
+          "C. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055)",
+          "D. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002)",
+          "E. target-269: 'svchost.exe connects to a network' (malicious, T1055)",
+          "F. api-264: 'hash.exe creates a thread in self process' (informative, T1055.003)",
+          "G. static-6: 'Section contains high entropy' (suspicious, T1027.009)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes, UPX compressed) shows multiple evasion techniques. Which of the following indicators from the detonation report map to defense evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. static-7: 'PE file is packed with UPX' (suspicious, T1027.002)",
+          "B. static-6: 'Section UPX1 contains high entropy 7.868' (suspicious, T1027.009)",
+          "C. stream-34: 'WriteProcessMemory@KERNEL32.DLL' (suspicious, T1055)",
+          "D. api-223: 'FileTimeToLocalFileTime called' (suspicious, T1070.006)",
+          "E. string-249: 'GetSystemTimeAsFileTime referenced' (informative, T1070.006)",
+          "F. static-0: 'CRC value in PE header does not match actual value' (suspicious, T1027)",
+          "G. api-24: 'Tries to sleep for a long time' (suspicious, T1497.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes, Borland Delphi), which of the following signatures from the detonation report indicate defense evasion or anti-analysis behavior? Select ALL that apply.",
+        "options": [
+          "A. static-6: 'Section .text contains high entropy 6.3938' (suspicious, T1027.009)",
+          "B. api-59: 'Interacts with the primary disk partition DR0' (malicious, T1542.003)",
+          "C. string-176: 'Contains Tor Onion URL' (informative, T1090.003)",
+          "D. stream-87: 'GetTickCount used to detect virtual environment' (informative, T1497)",
+          "E. string-666: 'Found string vmtoolsd.exe' (informative, T1497)",
+          "F. string-659: 'NtQuerySystemInformation to identify virtual environment' (informative, T1497.001)",
+          "G. mutant-0: 'Creates mutants DBWinMutex' (informative)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 9329512 bytes) has Thread Local Storage listed as a process injection technique. Which specific evidence in the detonation report supports the presence of T1055.005 Thread Local Storage injection? Select ALL that apply.",
+        "options": [
+          "A. T1055.005 Thread Local Storage explicitly listed under Privilege Escalation in mitre_attcks",
+          "B. T1055.005 Thread Local Storage explicitly listed under Defense Evasion in mitre_attcks",
+          "C. api-264: 'Creates a thread in a self process' mapped to T1055.003",
+          "D. static-187: '.rdata section contains high entropy 7.265' mapped to T1027.009",
+          "E. T1546.010 AppInit DLLs listed under Persistence and Privilege Escalation",
+          "F. binary-8: 'CPUID trick found in sample' (malicious, T1497)",
+          "G. api-176: 'GetProcAddress called' (informative, T1106)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Pykspa.Generic, 11808768 bytes) exhibits multiple defense evasion techniques. Which of the following are explicitly mapped as Defense Evasion techniques in the detonation report's mitre_attcks field? Select ALL that apply.",
+        "options": [
+          "A. T1070.006 Timestomp",
+          "B. T1027.009 Embedded Payloads",
+          "C. T1497.002 User Activity Based Checks",
+          "D. T1134.001 Token Impersonation/Theft",
+          "E. T1027.005 Indicator Removal from Tools",
+          "F. mutant-0: Creates mutants (informative) - named mutant creation as defense evasion",
+          "G. T1112 Modify Registry"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Dropper.Generic.Dacic.3035, 491520 bytes) shows timestomping behavior. Which specific indicators from the detonation report confirm T1070.006 Timestomp is present? Select ALL that apply.",
+        "options": [
+          "A. string-409: 'Contains ability to set file time (SetFileTime API string)' (informative, T1070.006)",
+          "B. string-249: 'Contains ability to retrieve file time (GetSystemTimeAsFileTime API string)' (informative, T1070.006)",
+          "C. T1070.006 Timestomp explicitly listed under Defense Evasion in mitre_attcks",
+          "D. mutant-0: 'Creates mutants pctfjohcnupctfjohcnu' (informative) - as timestomping indicator",
+          "E. api-25: 'Opens file with deletion access rights' (suspicious, T1070.004)",
+          "F. static-6: 'Section .text contains high entropy' (suspicious, T1027.009)",
+          "G. binary-60: 'Dropped file has high entropy' (suspicious, T1027)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (Remcos.Generic, 494080 bytes) has multiple behavioral signatures. Which of the following signatures are rated as MALICIOUS (threat_level_human: malicious) in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'file.exe wrote 32 bytes to a remote process' (T1055)",
+          "B. registry-0: 'Modifies auto-execute functionality by setting/creating a value in the registry' (T1547.001)",
+          "C. api-129: 'remcos.exe called CreateProcessW with suspended mode' (T1055)",
+          "D. hooks-2: 'FindFirstFileW@KERNEL32.DLL hooked in remcos.exe' (T1056.004)",
+          "E. hooks-5: 'send@WS2_32.DLL hooked in remcos.exe' (T1056.004)",
+          "F. network-23: 'Sends traffic on typical HTTP outbound port without HTTP header' (T1071.001)",
+          "G. network-7: 'Uses network protocols on unusual ports TCP port 2404' (T1571)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (RiskWare[RemoteAdmin]/NetSup.gen, 6227120 bytes) has 251 signatures. Focusing on threat level discrimination: which of the following signatures are rated SUSPICIOUS (threat_level_human: suspicious) rather than malicious or informative? Select ALL that apply.",
+        "options": [
+          "A. api-43: 'Writes a PE file header to disc' (T1105)",
+          "B. api-1: 'Creates guarded memory regions' (T1562.001)",
+          "C. api-0: 'hash.exe wrote 1500 bytes to a remote process' (T1055)",
+          "D. registry-27: 'Modifies proxy settings' (T1112)",
+          "E. api-26: 'Marks file for deletion' (T1070.004)",
+          "F. api-228: 'CryptAcquireContextW called' (T1027)",
+          "G. binary-60: 'Dropped file has high entropy' (T1027)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (Remcos.Generic, 494080 bytes) has process tree: file.exe -> remcos.exe -> iexplore.exe. Which of the following behavioral indicators from the detonation report are rated MALICIOUS and directly relate to the core RAT functionality (credential hooking, C2, process injection)? Select ALL that apply.",
+        "options": [
+          "A. hooks-2: 'FindFirstFileW@KERNEL32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "B. hooks-5: 'send@WS2_32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "C. network-7: 'TCP traffic to port 2404' (malicious, T1571)",
+          "D. network-24: 'Tries to identify external IP address via geoplugin.net' (malicious, T1016)",
+          "E. registry-0: 'Modifies auto-execute registry key' (suspicious, T1547.001)",
+          "F. network-23: 'Sends traffic on HTTP port without HTTP header' (suspicious, T1071.001)",
+          "G. suricata-2: 'ET MALWARE Remcos 3.x Unencrypted alert' (malicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The WannaCry sample (CVE-2017-0147, 5267459 bytes DLL) has distinctive network behavior. Which of the following network indicators from the detonation report are present and relevant to WannaCry's known behavior? Select ALL that apply.",
+        "options": [
+          "A. network-0: 'Contacts domain www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' (informative) - the WannaCry kill-switch sinkhole domain",
+          "B. network-2: 'GETs files from webserver GET / HTTP/1.1 Host: www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' (informative)",
+          "C. network-32: 'Increased ARP broadcast requests for network device lookup' (suspicious)",
+          "D. network-31: 'Large number of ARP broadcast requests' (malicious)",
+          "E. network-17: 'Contacts 60 or more hosts in at least 22 different networks' (malicious)",
+          "F. network-7: 'Uses network protocols on unusual ports TCP 62082 62096' (malicious)",
+          "G. suricata-2: 'ET TROJAN Possible WannaCry DNS Lookup' (malicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the WannaCry sample (CVE-2017-0147), the kill-switch domain contact is a critical behavioral indicator. Which specific evidence in the detonation report confirms the malware attempted to reach the kill-switch sinkhole domain? Select ALL that apply.",
+        "options": [
+          "A. network-0: Contacts domains field shows 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'",
+          "B. network-2: GETs files from webserver with Host header containing the sinkhole domain",
+          "C. suricata-2: Alert 'ET TROJAN Possible WannaCry DNS Lookup' triggered",
+          "D. network-21: 'Malicious artifacts seen in context of a contacted host' (malicious)",
+          "E. hooks-8: 'rundll32.exe wrote bytes to virtual address' (suspicious)",
+          "F. binary-11: '78/87 AV vendors marked dropped file tasksche.exe as malicious' (malicious)",
+          "G. registry-1: 'Reads cryptographic machine GUID' (suspicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) with microsofthelp.exe spawned uses API hooking for credential access. Which signatures in the detonation report are specifically identified as HOOKED APIs (origin: Hook Detection) and what do they hook? Select ALL that apply.",
+        "options": [
+          "A. hooks-0: 'Process32NextW@KERNEL32.DLL hooked in microsofthelp.exe' (suspicious, T1056.004)",
+          "B. hooks-2: 'FindFirstFileW@KERNEL32.DLL hooked in microsofthelp.exe' (malicious, T1056.004)",
+          "C. hooks-5: 'send@WS2_32.DLL hooked in microsofthelp.exe' (malicious, T1056.004)",
+          "D. string-229: 'RegOpenKeyA API string reference' (informative, T1012) - registry API hook",
+          "E. api-176: 'GetProcAddress called by hash.exe' (informative, T1106)",
+          "F. api-8: 'RegOpenKeyA@ADVAPI32.DLL looked up via GetProcAddress' (informative, T1129)",
+          "G. target-413: 'Spawned processes likely due to injection' (suspicious, T1055)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the infostealer sample (Malware.SF.Generic, 87258 bytes), the hook detection signatures identify specific APIs being hooked. Which of the following statements about the hooked APIs are accurate based on the detonation report? Select ALL that apply.",
+        "options": [
+          "A. Process32NextW is hooked in microsofthelp.exe as identified by hooks-0 (suspicious, T1056.004)",
+          "B. FindFirstFileW is hooked in microsofthelp.exe as identified by hooks-2 (malicious, T1056.004)",
+          "C. send@WS2_32.DLL is hooked in microsofthelp.exe as identified by hooks-5 (malicious, T1056.004)",
+          "D. RegOpenKeyA@ADVAPI32.DLL is listed as a hooked API in a hook detection signature",
+          "E. GetProcAddress is hooked as part of dynamic API resolution",
+          "F. The hooks are attributed to microsofthelp.exe which is a process spawned via injection per target-413",
+          "G. InternetOpenA is listed as a hooked API in the hook detection signatures"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Pykspa.Generic, 11808768 bytes) has a complex set of defense evasion mappings. Which of the following MITRE ATT&CK technique IDs are explicitly listed under Defense Evasion in the detonation report's mitre_attcks? Select ALL that apply.",
+        "options": [
+          "A. T1070.006 Timestomp",
+          "B. T1027.009 Embedded Payloads",
+          "C. T1055.015 ListPlanting",
+          "D. T1134.003 Make and Impersonate Token",
+          "E. T1480 Execution Guardrails",
+          "F. mutant-0: Named mutant creation mapped as defense evasion technique",
+          "G. T1140 Deobfuscate/Decode Files or Information"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 606084 bytes) contains multiple evasion signatures. Which of the following signatures from the detonation report specifically map to T1027.009 Embedded Payloads (high-entropy packed content)? Select ALL that apply.",
+        "options": [
+          "A. static-6: 'hash has section name .text with entropy 6.1252' (suspicious, T1027.009)",
+          "B. T1027.009 Embedded Payloads listed under Defense Evasion in mitre_attcks",
+          "C. static-7: 'PE file is packed with UPX' (suspicious, T1027.002)",
+          "D. static-4: 'Entrypoint in PE header is within uncommon section UPX0' (suspicious, T1027)",
+          "E. yara-140: 'YARA signature matched on embedded PE in file sample' (informative, T1027.009)",
+          "F. static-5: 'PE file contains zero-size sections raw size of .bss is zero' (informative, T1027)",
+          "G. memorydump-8: 'Found PE header MZ in memory' (informative, T1055)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Ursnif, 369152 bytes) uses APC injection. Which specific indicators from the detonation report confirm T1055.004 Asynchronous Procedure Call injection is used? Select ALL that apply.",
+        "options": [
+          "A. api-85: 'hash.exe called NtQueueApcThread' (informative, T1055.004)",
+          "B. T1055.004 Asynchronous Procedure Call listed under Privilege Escalation in mitre_attcks",
+          "C. T1055.004 Asynchronous Procedure Call listed under Defense Evasion in mitre_attcks",
+          "D. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "E. static-92: 'PE file has unusual entropy resources CORJC:7' (suspicious, T1027.002)",
+          "F. api-24: 'hash.exe sleeping for 1097794852 milliseconds' (suspicious, T1497.003)",
+          "G. T1546.010 AppInit DLLs listed under Persistence and Privilege Escalation"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (CVE-2017-0199, Excel file, 1252864 bytes) has network-related signatures. Which of the following signatures from the detonation report are rated as MALICIOUS (threat_level_human: malicious)? Select ALL that apply.",
+        "options": [
+          "A. network-16: 'GETs files from webserver GET /430/nhu/sheisbestforbetterforgoodthingstoget' (malicious, T1071.001)",
+          "B. network-88: 'Application communicates with malicious domain loooooooooooooooooooog.com' (malicious, T1566)",
+          "C. network-23: 'Sends traffic on typical HTTP outbound port without HTTP header' (suspicious, T1071.001)",
+          "D. suricata-2: 'ET EXPLOIT SUSPICIOUS Possible CVE' (malicious)",
+          "E. network-22: 'Uses browser-related user-agent without launching browser' (suspicious, T1071.001)",
+          "F. suricata-1: 'ET INFO Possible HTA Application Download' (suspicious)",
+          "G. certificate-0: 'Input sample is signed with a certificate' (informative, T1553.002)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Lazy.Generic, 17818630 bytes, UPX compressed) has multiple evasion signatures. Which of the following indicators from the detonation report map specifically to software packing or obfuscation evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. static-7: 'PE file is packed with UPX' (suspicious, T1027.002)",
+          "B. static-6: 'Section UPX1 contains high entropy 7.868' (suspicious, T1027.009)",
+          "C. static-4: 'Entrypoint in PE header is within uncommon section UPX1' (suspicious, T1027)",
+          "D. static-0: 'CRC value in PE header does not match actual value' (suspicious, T1027)",
+          "E. stream-5: 'RtlCreateUserThread@NTDLL.DLL used' (suspicious, T1055.001)",
+          "F. stream-34: 'WriteProcessMemory@KERNEL32.DLL used' (suspicious, T1055)",
+          "G. stream-22: 'NtResumeThread@NTDLL.DLL native function calls' (malicious, T1106)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the detonation report for the um_unhooking sample (Trojan.Generic, 606084 bytes), which of the following signatures or behaviors constitute direct evidence of process injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process C:\\...' (malicious, T1055)",
+          "B. api-264: 'Creates a thread in a self process' (informative, T1055.003)",
+          "C. static-6: 'Section contains high entropy' (suspicious, T1027.009)",
+          "D. api-43: 'Writes a PE file header to disc' (suspicious, T1105)",
+          "E. registry-0: 'Modifies auto-execute functionality' (suspicious, T1547.001)",
+          "F. static-6 entropy combined with api-0 remote write indicates packed payload injected into remote process",
+          "G. string-309: 'Contains ability to modify thread functionality - possible hijack (OpenThread)' (suspicious, T1055.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Ursnif, 369152 bytes) maps to T1055.004 (Asynchronous Procedure Call injection). Which specific API call in the detonation report provides the strongest direct evidence for APC injection?",
+        "options": [
+          "A. api-264: 'hash.exe creates a thread in process -1' (informative, T1055.003)",
+          "B. api-85: 'hash.exe called NtQueueApcThread' (informative, T1055.004)",
+          "C. api-176: 'hash.exe called GetProcAddress' (informative, T1106)",
+          "D. api-284: 'Opens a handle to the specified local process' (suspicious, T1489)",
+          "E. api-24: 'Tries to sleep for a long time' (suspicious, T1497.003)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Generic, 606084 bytes), the MITRE ATT&CK mappings include T1055.005 (Thread Local Storage injection). Which combination of report artifacts provides evidence supporting TLS injection as a technique used in this sample? Select ALL that apply.",
+        "options": [
+          "A. The MITRE ATT&CK mapping explicitly lists T1055.005 Thread Local Storage under both Privilege Escalation and Defense Evasion tactics",
+          "B. api-0: 'wrote 32 bytes to a remote process' confirms cross-process memory writes consistent with TLS callback injection setup",
+          "C. hooks-0: 'Process32NextW@KERNEL32.DLL' hook detected in the injected process",
+          "D. static-6: 'Section contains high entropy .text section' is the primary indicator of TLS injection",
+          "E. registry-9: 'Checks warning level of secure to non-secure traffic' is a TLS injection indicator",
+          "F. The process tree shows hash.exe spawning 085cda53603755dc.exe which then persists via registry run key, consistent with TLS callback establishing persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), which of the following signatures indicate defense evasion or anti-analysis techniques? Select ALL that apply.",
+        "options": [
+          "A. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055) - process hollowing setup",
+          "B. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002) - Portable Executable injection",
+          "C. static-6: 'Section contains high entropy .text with entropy 6.63' (suspicious, T1027.009) - packed/obfuscated content",
+          "D. target-15: 'Modifies firewall settings via netsh.exe' (malicious, T1562.004)",
+          "E. api-10: 'Queries kernel debugger information' (informative, T1622) - anti-debugging",
+          "F. mutant-0: 'Creates mutants ZonesCacheCounterMutant' (informative) - mutex for single-instance check",
+          "G. network-88: 'Application communicates with malicious domain lazystax.ru' (malicious, T1566)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes) exhibits several evasion techniques. Which signatures from the detonation report map specifically to defense evasion via obfuscation or packing? Select ALL that apply.",
+        "options": [
+          "A. static-6: 'Section contains high entropy .text with entropy 6.39' (suspicious, T1027.009)",
+          "B. binary-71: 'Sample file has high entropy 7.98' (informative, T1027) - encrypted/compressed content",
+          "C. api-59: 'Interacts with primary disk partition DR0' (malicious, T1542.003)",
+          "D. static-18: 'Matched Compiler/Packer signature Borland Delphi 3.0' (informative, T1027.002)",
+          "E. network-29: 'Sends network traffic on daytime protocol port' (malicious, T1571)",
+          "F. string-4: 'Shell_TrayWnd - Taskbar window class may be used for injection' (suspicious, T1055.011)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Analyzing the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), which of the following are direct behavioral indicators that svchost.exe was used as an injection target? Select ALL that apply.",
+        "options": [
+          "A. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002)",
+          "B. target-269: 'Windows system process svchost.exe connects to IPv4:25' (malicious, T1055) - post-injection network activity",
+          "C. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055) - process created suspended for hollowing",
+          "D. target-303: 'sc.exe starts service cygqxrtx' (malicious, T1569.002)",
+          "E. network-10: 'Mail traffic to IPv4 on port 25 SMTP' (malicious, T1071.003) - svchost sending SMTP after injection",
+          "F. api-138: 'svchost.exe called NtCreateNamedPipeFile' (informative, T1570)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the av_edr_killers sample classified as Dropper.Generic.Dacic (491520 bytes), which signatures from the detonation report map to MITRE ATT&CK Defense Evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055) - process injection",
+          "B. string-409: 'Contains ability to set file time SetFileTime' (informative, T1070.006) - timestomping",
+          "C. mutant-0: 'Creates mutants pctfjohcnupctfjohcnu' (informative) - named mutant creation",
+          "D. static-6: 'Section contains high entropy .text with entropy 6.06' (suspicious, T1027.009) - obfuscated content",
+          "E. binary-60: 'Dropped file gegdsimsogm.exe has high entropy' (suspicious, T1027) - encrypted dropped payload",
+          "F. string-660: 'Able to identify virtual/sandbox environment vboxguestadditions' (informative, T1497.001) - sandbox detection",
+          "G. api-9: 'Queries process information SystemProcessInformation' (suspicious, T1057)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Pykspa.Generic, 11808768 bytes) includes T1070.006 (Timestomp) in its MITRE ATT&CK mappings. Which specific evidence from the detonation report supports this classification rather than a generic file-time read?",
+        "options": [
+          "A. string-249: 'Contains ability to retrieve file time GetSystemTimeAsFileTime' (informative, T1070.006)",
+          "B. registry-10: 'Modifies the UAC/LUA settings' (malicious, T1112) - this is the timestomping evidence",
+          "C. static-18: 'Matched Compiler/Packer signature Microsoft visual C++ 7.0' (informative, T1027.002)",
+          "D. The combination of T1070.006 in MITRE mappings with string-249 referencing GetSystemTimeAsFileTime indicates the malware reads and potentially manipulates file timestamps",
+          "E. mutant-0: 'Creates mutants gfiyttnoixhvefhxpxbb' (informative) - the mutant name encodes timestamp information"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the Remcos RAT sample (Remcos.Generic, 494080 bytes), which of the following signatures are rated as MALICIOUS (threat_level 2) and thus constitute the strongest behavioral indicators of malicious activity? Select ALL that apply.",
+        "options": [
+          "A. registry-0: 'Modifies auto-execute functionality by setting/creating a value in the registry' (suspicious, T1547.001)",
+          "B. target-58: 'The analysis spawned a process identified as malicious - remcos.exe 16/23 AV vendors' (malicious, T1204.002)",
+          "C. network-23: 'Sends traffic on typical HTTP outbound port without HTTP header' (suspicious, T1071.001)",
+          "D. api-0: 'file.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "E. hooks-2: 'FindFirstFileW@KERNEL32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "F. hooks-5: 'send@WS2_32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "G. network-7: 'Uses network protocols on unusual ports TCP port 2404' (malicious, T1571)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (494080 bytes), the detonation report contains both malicious and suspicious/informative signatures. Which of the following signatures are rated only as SUSPICIOUS (threat_level 1) and should NOT be included in a set of malicious-only behavioral indicators?",
+        "options": [
+          "A. registry-0: 'Modifies auto-execute functionality' (suspicious, T1547.001)",
+          "B. api-129: 'Creates a process in suspended mode' (malicious, T1055)",
+          "C. network-23: 'Sends traffic on typical HTTP outbound port without HTTP header' (suspicious, T1071.001)",
+          "D. binary-1: 'Drops executable files remcos.exe' (suspicious, T1105)",
+          "E. suricata-1: 'ET DYN_DNS DNS Query to DynDNS Domain' (suspicious)",
+          "F. network-7: 'Uses network protocols on unusual ports port 2404' (malicious, T1571)",
+          "G. registry-27: 'Modifies proxy settings' (suspicious, T1112)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A malware analyst must classify behavioral signatures from the Remcos RAT sample (494080 bytes) by threat level to prioritize incident response. Which of the following accurately describes the threat level assignments for these signatures based on the detonation report?",
+        "options": [
+          "A. hooks-2 (FindFirstFileW hooked) = malicious; hooks-5 (send@WS2_32 hooked) = malicious; registry-0 (auto-execute modification) = suspicious",
+          "B. hooks-2 = suspicious; hooks-5 = suspicious; registry-0 = malicious",
+          "C. network-24 (tries to identify external IP via geoplugin.net) = malicious; network-23 (traffic without HTTP header) = malicious",
+          "D. api-129 (creates suspended process) = malicious; binary-11 (dropped file identified as malicious by 16/23 AV) = malicious; static-6 (high entropy section) = suspicious",
+          "E. suricata-2 (ET MALWARE Remcos 3.x Unencrypted) = malicious; network-7 (unusual port 2404) = malicious; api-0 (writes to remote process) = malicious"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Malware.SF.Generic, 87258 bytes) installs API hooks for credential access. Based exclusively on the hook detection signatures (identifier type 11) in the detonation report, which APIs are confirmed as hooked? Select ALL that apply.",
+        "options": [
+          "A. Process32NextW@KERNEL32.DLL - hooked in microsofthelp.exe (hooks-0, suspicious, T1056.004)",
+          "B. RegOpenKeyA@ADVAPI32.DLL - hooked in microsofthelp.exe",
+          "C. FindFirstFileW@KERNEL32.DLL - hooked in microsofthelp.exe (hooks-2, malicious, T1056.004)",
+          "D. send@WS2_32.DLL - hooked in microsofthelp.exe (hooks-5, malicious, T1056.004)",
+          "E. CreateProcessA@KERNEL32.DLL - hooked in microsofthelp.exe",
+          "F. GetProcAddress@KERNEL32.DLL - hooked in microsofthelp.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the infostealer sample (Malware.SF.Generic, 87258 bytes), the string-229 signature states 'Contains ability to query registry keys (API string) - Found reference to API RegOpenKeyA'. What is the correct threat level for this signature, and does it appear in the hook detection signatures?",
+        "options": [
+          "A. string-229 is rated malicious (threat_level 2) and RegOpenKeyA is confirmed as a hooked API",
+          "B. string-229 is rated informative (threat_level 0) and RegOpenKeyA is a string reference only, NOT confirmed as a hooked API in hook detection signatures",
+          "C. string-229 is rated suspicious (threat_level 1) and RegOpenKeyA appears in both string references and hook detection",
+          "D. string-229 is rated informative and RegOpenKeyA is hooked alongside Process32NextW and send@WS2_32.DLL",
+          "E. The threat level of string-229 cannot be determined from the report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The WannaCry ransomware sample (CVE-2017-0147, 5267459 bytes) exhibits distinctive network behavior. Which of the following network indicators are present in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. network-0: The malware contacts domain 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' (informative) - the WannaCry kill-switch sinkhole domain",
+          "B. network-31: Detected a large number of ARP broadcast requests for network device lookup (malicious)",
+          "C. network-17: Contacts very many different hosts - 60 or more hosts in at least 22 different networks (malicious)",
+          "D. network-7: Uses network protocols on unusual ports TCP port 62082 and 62096 (malicious)",
+          "E. suricata-2: Detected alert 'ET TROJAN Possible WannaCry DNS Lookup' (malicious)",
+          "F. network-23: Sends traffic on typical HTTP outbound port without HTTP header"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The WannaCry sample (CVE-2017-0147) contacts 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'. What is the significance of this domain contact in the context of WannaCry's behavior, and what evidence in the detonation report confirms this contact?",
+        "options": [
+          "A. This is a C2 domain used for receiving encryption keys; confirmed by network-21 'Malicious artifacts seen in context of contacted host'",
+          "B. This is the WannaCry kill-switch domain; if reachable, WannaCry stops execution. Confirmed by network-0 'Contacts domains www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' and network-2 'GETs files from webserver GET / HTTP/1.1 Host: www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com'",
+          "C. This domain is used for data exfiltration; confirmed by network-17 'Contacts very many different hosts'",
+          "D. This is a DGA-generated domain used for C2 beaconing; confirmed by network-32 'Increased ARP broadcast requests'",
+          "E. This domain contact is unrelated to kill-switch behavior and represents normal DNS resolution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The um_unhooking sample (Trojan.Generic, 9329512 bytes) includes several evasion-related signatures. Which signatures specifically indicate the use of packed or high-entropy content consistent with T1027.009 (Embedded Payloads) or T1027.002 (Software Packing)? Select ALL that apply.",
+        "options": [
+          "A. static-187: '.rdata section contains high entropy - entropy 7.265' (informative, T1027.009)",
+          "B. static-6: 'Section contains high entropy .text with entropy 6.75' (suspicious, T1027.009)",
+          "C. binary-71: 'Sample file has high entropy 7.18' (informative, T1027) - likely encrypted/compressed content",
+          "D. static-18: 'Matched Compiler/Packer signature VC8 Microsoft Corporation' (informative, T1027.002)",
+          "E. binary-26: 'Input sample possibly contains RDTSCP instruction' (informative, T1497) - VM detection artifact",
+          "F. binary-8: 'Input sample contains known anti-VM trick CPUID trick' (malicious, T1497)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes), which of the following signatures map to T1027.009 (Embedded Payloads) indicating high-entropy packed content? Select ALL that apply.",
+        "options": [
+          "A. static-6: 'Section contains high entropy .text with entropy 6.39' (suspicious, T1027.009)",
+          "B. binary-71: 'Sample file has high entropy 7.98' (informative, T1027)",
+          "C. api-59: 'Interacts with primary disk partition DR0' (malicious, T1542.003)",
+          "D. string-176: 'Contains Tor Onion URL .onion' (informative, T1090.003)",
+          "E. static-18: 'Matched Compiler/Packer signature Borland Delphi 3.0' (informative, T1027.002)",
+          "F. network-29: 'Sends network traffic on daytime protocol port' (malicious, T1571)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The av_edr_killers sample (Lazy.Generic, 17818630 bytes, UPX compressed) exhibits multiple defense evasion techniques. Which signatures from the detonation report map to T1070.006 (Timestomp) specifically? Select ALL that apply.",
+        "options": [
+          "A. string-249: 'Contains ability to retrieve file time GetSystemTimeAsFileTime' (informative, T1070.006)",
+          "B. api-223: 'Calls an API typically used to query local/system time as file time - FileTimeToLocalFileTime' (suspicious, T1070.006)",
+          "C. static-7: 'PE file is packed with UPX' (suspicious, T1027.002)",
+          "D. static-6: 'Section contains high entropy UPX1 with entropy 7.86' (suspicious, T1027.009)",
+          "E. stream-34: 'Contains ability to write to a remote process WriteProcessMemory' (suspicious, T1055)",
+          "F. string-184: 'Found registry location strings which can modify auto-execute functionality' (suspicious, T1547)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The infostealer sample (Trojan.Agent/NjRAT, 3266048 bytes) shows process injection activity. Based on the detonation report, which signatures provide direct evidence of process injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process C:\\...' (malicious, T1055)",
+          "B. api-264: 'hash.exe creates a thread in process -1' (informative, T1055.003) - self-injection only",
+          "C. yara-0: 'YARA signature win_njrat_g0 matched file sample' (malicious) - family identification",
+          "D. binary-0: 'Client.exe dropped as PE32 executable' (informative, T1105) - dropped payload for injection",
+          "E. api-28: 'hash.exe adjusted SE_DEBUG_PRIVILEGE' (suspicious, T1134) - privilege for cross-process operations",
+          "F. memorydump-8: 'Found PE header MZ in memory' - indicates reflective loading or process injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Analyzing the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), which combination of API calls and process tree observations provides the most complete picture of the process hollowing injection chain? Select ALL that apply.",
+        "options": [
+          "A. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055) - creates hollow target",
+          "B. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002) - unmaps and rewrites PE",
+          "C. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055) - initial shellcode write",
+          "D. target-269: 'svchost.exe connects outbound to IPv4:25 after injection' (malicious, T1055) - post-injection C2",
+          "E. sc.exe process tree: creates service cygqxrtx pointing to mpvpepag.exe - persistence mechanism post-injection",
+          "F. api-37: 'Opens the Kernel Security Device Driver KsecDD' (informative) - kernel interaction for hollowing"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Examining the sandbox detonation report for this um_unhooking sample (Trojan.Generic, 606084 bytes), which of the following signatures or behaviors provide direct evidence of process injection into a remote process? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. api-264: 'Creates a thread in a self process' (085cda53603755dc.exe, informative, T1055.003)",
+          "C. static-6: Section contains high entropy in .text section (suspicious, T1027.009)",
+          "D. api-43: 'Writes a PE file header to disc' - hash.exe wrote 16260 bytes starting with PE header (suspicious, T1105)",
+          "E. registry-0: '085cda53603755dc.exe modifies auto-execute registry key' (suspicious, T1547.001)",
+          "F. api-26: '085cda53603755dc.exe marked C:\\hash.exe for deletion' (suspicious, T1070.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample classified as Trojan.Ursnif (369152 bytes, _family: um_unhooking), which MITRE ATT&CK process injection sub-techniques are explicitly listed in the mitre_attcks field? Select ALL that apply.",
+        "options": [
+          "A. T1055.001 - Dynamic-link Library Injection",
+          "B. T1055.003 - Thread Execution Hijacking",
+          "C. T1055.004 - Asynchronous Procedure Call",
+          "D. T1055.005 - Thread Local Storage",
+          "E. T1055.012 - Process Hollowing",
+          "F. T1055.015 - ListPlanting",
+          "G. T1055.002 - Portable Executable Injection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Generic, 606084 bytes), the MITRE ATT&CK mapping includes Thread Local Storage injection (T1055.005). Which signatures or report indicators from this detonation provide supporting evidence for Thread Local Storage as an injection vector, distinguishing it from other injection sub-techniques present in the same report? Select ALL that apply.",
+        "options": [
+          "A. T1055.005 (Thread Local Storage) is explicitly listed in mitre_attcks under both Privilege Escalation and Defense Evasion tactics",
+          "B. api-264: '085cda53603755dc.exe creates a thread in process -1' mapped to T1055.003 (Thread Execution Hijacking)",
+          "C. api-0: 'hash.exe wrote 32 bytes to a remote process' mapped to T1055 (generic Process Injection)",
+          "D. static-6: Section contains high entropy (.text, entropy 6.1252) mapped to T1027.009",
+          "E. The presence of T1055.005 in the MITRE mapping alongside T1055.003 and T1055.011 indicates multiple concurrent injection techniques were detected",
+          "F. api-43: 'Writes a PE file header to disc' mapped to T1105 (Ingress Tool Transfer)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes, 9 processes), which of the following signatures indicate defense evasion or anti-analysis techniques? Select ALL that apply.",
+        "options": [
+          "A. static-6: Section contains high entropy (.text, entropy 6.6301) mapped to T1027.009 (Embedded Payloads/Obfuscated Files)",
+          "B. api-10: 'netsh.exe queries kernel debugger information' mapped to T1622 (Debugger Evasion)",
+          "C. target-15: 'Process netsh.exe with commandline advfirewall modifies firewall settings' mapped to T1562.004 (Disable or Modify System Firewall)",
+          "D. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' mapped to T1055 (Process Injection)",
+          "E. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' mapped to T1055.002 (Portable Executable Injection)",
+          "F. target-303: 'sc.exe starts service cygqxrtx' mapped to T1569.002 (Service Execution)",
+          "G. binary-71: 'Sample file has high entropy 7.185061' (informative, T1027)",
+          "H. static-6 combined with binary-71 indicating packed/high-entropy content consistent with T1027.009"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "H"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample (Trojan.BrsecmonE, 10837624 bytes), the process tree shows mpvpepag.exe spawning svchost.exe which then connects outbound. Which of the following signatures directly evidence this post-injection network behavior and the injection mechanism itself? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. target-269: 'Windows system process svchost.exe connects to IPv4:25' (malicious, T1055)",
+          "C. api-83: 'mpvpepag.exe wrote PE header bytes to a remote process' (malicious, T1055.002)",
+          "D. api-129: 'mpvpepag.exe called CreateProcessA with suspended mode' (malicious, T1055)",
+          "E. network-10: 'Mail traffic to IPv4 on port 25 SMTP' (malicious, T1071.003)",
+          "F. api-20: 'hash.exe allocated memory in C:\\hash.exe' (malicious, T1055)",
+          "G. target-186: 'netsh.exe with advfirewall commandline' (informative, T1562.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Win/malicious_confidence_100%, 356352 bytes, Delphi-compiled), which of the following signatures are rated as MALICIOUS (threat_level_human: malicious) and indicate defense evasion or impact behaviors? Select ALL that apply.",
+        "options": [
+          "A. network-29: 'Sends network traffic on the daytime protocol port (evasive sleep)' mapped to T1571 (malicious)",
+          "B. network-24: 'Tries to identify its external IP address via api.ipify.org' mapped to T1016 (malicious)",
+          "C. api-59: 'Interacts with the primary disk partition DR0' mapped to T1542.003 Bootkit (malicious)",
+          "D. static-6: 'Section contains high entropy .text entropy 6.3938' mapped to T1027.009 (suspicious)",
+          "E. string-56: 'Found reference to external IP lookup service api.ipify.org' mapped to T1016 (malicious)",
+          "F. stream-139: 'Contains XOR operation loops' mapped to T1027.005 (informative)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the av_edr_killers sample (Pykspa.Generic, 11808768 bytes), which of the following signatures are explicitly mapped to Defense Evasion tactics in the mitre_attcks field and are supported by behavioral evidence in the signatures list? Select ALL that apply.",
+        "options": [
+          "A. T1070.006 (Timestomp) - present in mitre_attcks under Defense Evasion",
+          "B. T1027.009 (Embedded Payloads) - static-6 shows .data section entropy 6.4778 mapped to T1027.009 (suspicious)",
+          "C. T1622 (Debugger Evasion) - present in mitre_attcks under Defense Evasion",
+          "D. mutant-0: 'Creates mutants gfiyttnoixhvefhxpxbb' (informative) - indicates Defense Evasion via named mutex",
+          "E. T1112 (Modify Registry) - registry-10 'Modifies UAC/LUA settings' (malicious) mapped to T1112",
+          "F. T1027.002 (Software Packing) - present in mitre_attcks under Defense Evasion",
+          "G. string-409: 'Contains ability to set file time SetFileTime' mapped to T1070.006 (informative)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the av_edr_killers sample (Pykspa.Generic, 11808768 bytes), an analyst is trying to identify which specific MITRE ATT&CK Defense Evasion sub-technique is evidenced by the SetFileTime API reference and the corresponding MITRE mapping. Which option correctly identifies this technique and distinguishes it from the mutant creation behavior?",
+        "options": [
+          "A. SetFileTime maps to T1070.006 (Timestomp) - a Defense Evasion technique; mutant creation (mutant-0) is informative and maps to no specific Defense Evasion technique",
+          "B. SetFileTime maps to T1070.004 (File Deletion) - mutant creation maps to T1562.001 (Disable or Modify Tools)",
+          "C. SetFileTime maps to T1070.006 (Timestomp) - mutant creation maps to T1562.001 (Disable or Modify Tools) as a Defense Evasion indicator",
+          "D. SetFileTime maps to T1124 (System Time Discovery) - mutant creation maps to T1480 (Execution Guardrails)",
+          "E. Both SetFileTime and mutant creation are mapped to T1027 (Obfuscated Files or Information)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (Remcos.Generic, 494080 bytes, file.exe), which of the following signatures are rated as MALICIOUS (threat_level: 2) in the report? Select ALL that apply.",
+        "options": [
+          "A. target-58: 'The analysis spawned a process identified as malicious - remcos.exe 16/23 AV vendors' (malicious)",
+          "B. binary-11: 'The analysis extracted a file identified as malicious - remcos.exe 16/23 AV vendors' (malicious)",
+          "C. api-0: 'file.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "D. api-129: 'remcos.exe called CreateProcessW with suspended mode' (malicious, T1055)",
+          "E. hooks-2: 'FindFirstFileW hooked in remcos.exe' (malicious, T1056.004)",
+          "F. hooks-5: 'send@WS2_32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "G. network-7: 'TCP traffic to IPv4 on port 2404' (malicious, T1571)",
+          "H. registry-0: 'file.exe modifies auto-execute registry key' (suspicious, T1547.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (Remcos.Generic, 494080 bytes), an analyst must distinguish between MALICIOUS-rated signatures and SUSPICIOUS-rated signatures when assessing the threat. Which of the following are rated SUSPICIOUS (threat_level: 1) rather than malicious? Select ALL that apply.",
+        "options": [
+          "A. registry-0: 'file.exe modifies auto-execute functionality HKCU\\SOFTWARE Run key' (suspicious, T1547.001)",
+          "B. binary-1: 'Drops executable files remcos.exe.bin' (suspicious, T1105)",
+          "C. network-23: 'Sends traffic on typical HTTP outbound port without HTTP header' (suspicious, T1071.001)",
+          "D. registry-27: 'file.exe modifies proxy settings' (suspicious, T1112)",
+          "E. api-0: 'file.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "F. hooks-2: 'FindFirstFileW hooked in remcos.exe' (malicious, T1056.004)",
+          "G. suricata-1: 'ET DYN_DNS DNS Query to DynDNS Domain' (suspicious)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Behavioral Analysis",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Remcos RAT sample (Remcos.Generic, 494080 bytes), an analyst must select ALL signatures that are classified as malicious-level indicators of credential access or process injection. The analyst must NOT include suspicious-rated or informative-rated signatures. Which options are correct?",
+        "options": [
+          "A. hooks-2: 'FindFirstFileW@KERNEL32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "B. hooks-5: 'send@WS2_32.DLL hooked in remcos.exe' (malicious, T1056.004)",
+          "C. api-129: 'remcos.exe called CreateProcessW with suspended mode' (malicious, T1055)",
+          "D. api-0: 'file.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "E. static-6: 'section contains high entropy .text entropy 6.x' (suspicious, T1027.009)",
+          "F. registry-0: 'file.exe modifies auto-execute registry key HKCU Run' (suspicious, T1547.001)",
+          "G. network-23: 'Sends traffic on HTTP port without HTTP header' (suspicious, T1071.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the WannaCry sample (CVE-2017-0147, 5267459 bytes, DLL), the network traffic shows contact with a specific domain that is a well-known WannaCry kill-switch indicator. Which of the following network signatures from this report provide evidence of this kill-switch behavior and other significant network IOCs? Select ALL that apply.",
+        "options": [
+          "A. network-0: 'Contacts domains: www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' - the WannaCry kill-switch sinkhole domain",
+          "B. network-2: 'GETs files from a webserver: GET / HTTP/1.1 Host: www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' - HTTP GET to kill-switch domain",
+          "C. suricata-2: 'ET TROJAN Possible WannaCry DNS Lookup' (malicious) - Suricata alert confirming WannaCry DNS activity",
+          "D. network-17: 'Contacts very many different hosts - 60 or more hosts in at least 22 different networks' (malicious) - SMB scanning behavior",
+          "E. network-32: 'Detected increased number of ARP broadcast requests' (suspicious) - network device lookup",
+          "F. network-55: 'JA3 SSL client fingerprint' (informative) - encrypted channel indicator",
+          "G. hooks-8: 'rundll32.exe wrote bytes to virtual address' (suspicious) - hook installation"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Network Indicator of Compromise Extraction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the WannaCry sample (CVE-2017-0147), the domain 'www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com' appears in network traffic. What is the correct interpretation of this domain contact in the context of WannaCry's behavior?",
+        "options": [
+          "A. This domain is the WannaCry kill-switch domain; if it resolves successfully, WannaCry halts encryption - its contact is a primary behavioral IOC for WannaCry identification",
+          "B. This domain is a C2 server used by WannaCry for receiving encryption keys and sending victim data",
+          "C. This domain is a DGA-generated domain used for command and control beaconing",
+          "D. This domain is used for lateral movement coordination between infected hosts",
+          "E. This domain is an update server used by WannaCry to download additional payloads"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the infostealer sample (Malware.SF.Generic, 87258 bytes, microsofthelp.exe), the hook detection signatures identify specific APIs being hooked. Which APIs are confirmed as hooked by the hook detection signatures (hooks-0, hooks-2, hooks-5) in this report? Select ALL that apply.",
+        "options": [
+          "A. Process32NextW@KERNEL32.DLL - hooked in microsofthelp.exe (hooks-0, suspicious, T1056.004)",
+          "B. FindFirstFileW@KERNEL32.DLL - hooked in microsofthelp.exe (hooks-2, malicious, T1056.004)",
+          "C. send@WS2_32.DLL - hooked in microsofthelp.exe (hooks-5, malicious, T1056.004)",
+          "D. RegOpenKeyA@ADVAPI32.DLL - referenced as string but NOT listed as a hooked API in hook detection signatures",
+          "E. CreateProcessA - called by hash.exe (api-128, informative) but not a hooked API",
+          "F. GetProcAddress - called by hash.exe (api-176, informative) but not a hooked API"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "API Hooking and Credential Access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the infostealer sample (Malware.SF.Generic, 87258 bytes), the string-229 signature reports 'Contains ability to query registry keys - Found reference to API RegOpenKeyA'. Why should RegOpenKeyA NOT be included as a hooked API when answering questions about hook-based credential access in this sample?",
+        "options": [
+          "A. RegOpenKeyA appears only as a string reference in the file/memory (string-229, informative, T1012) and is not listed in any hook detection signature (hooks-*) in this report",
+          "B. RegOpenKeyA is excluded because it is a kernel-mode API and cannot be hooked from user-mode",
+          "C. RegOpenKeyA is excluded because it is only present in the static import table, not called at runtime",
+          "D. RegOpenKeyA is excluded because it maps to T1012 (Query Registry) rather than T1056.004 (Credential API Hooking)",
+          "E. RegOpenKeyA is excluded because its threat level is malicious rather than suspicious"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection Detection",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Generic, 9329512 bytes), which of the following signatures and MITRE mappings provide direct evidence of process injection activity? Select ALL that apply, and be careful to exclude signatures that are merely informative indicators of injection-related API strings without runtime confirmation.",
+        "options": [
+          "A. api-264: 'hash.exe creates a thread in process -1' (informative, T1055.003) - self-thread creation only",
+          "B. T1055.005 (Thread Local Storage) listed under Privilege Escalation and Defense Evasion in mitre_attcks",
+          "C. T1055.003 (Thread Execution Hijacking) listed under Privilege Escalation in mitre_attcks",
+          "D. T1055.001 (DLL Injection) listed under Privilege Escalation in mitre_attcks",
+          "E. binary-26: 'Sample possibly contains RDTSCP instruction' (informative, T1497) - VM detection only",
+          "F. binary-8: 'Sample contains known anti-VM trick CPUID trick' (malicious, T1497) - VM evasion only",
+          "G. static-187: '.rdata section contains high entropy 7.265' (informative, T1027.009)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the av_edr_killers sample (Dropper.Generic.Dacic.3035, 491520 bytes), which of the following signatures are rated MALICIOUS (threat_level: 2) and map to Defense Evasion or Process Injection tactics? Select ALL that apply.",
+        "options": [
+          "A. api-0: 'hash.exe wrote 32 bytes to a remote process' (malicious, T1055)",
+          "B. binary-60: 'Dropped file gegdsimsogm.exe has high entropy' (suspicious, T1027)",
+          "C. static-0: 'CRC value in PE header does not match actual value' (suspicious, T1027)",
+          "D. api-9: 'hash.exe queried SystemProcessInformation' (suspicious, T1057)",
+          "E. static-6: 'Section contains high entropy .text entropy 6.0641' (suspicious, T1027.009)",
+          "F. avtest-8: 'CrowdStrike detected with high confidence' (malicious)",
+          "G. T1070.006 (Timestomp) is listed in mitre_attcks under Defense Evasion for this sample"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "F",
+          "G"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion Techniques",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample (Trojan.Generic, 9329512 bytes), which of the following signatures indicate sandbox or VM evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. binary-8: 'The input sample contains a known anti-VM trick CPUID trick' (malicious, T1497)",
+          "B. binary-26: 'The input sample possibly contains the RDTSCP instruction' (informative, T1497)",
+          "C. static-187: '.rdata section contains high entropy 7.265' (informative, T1027.009)",
+          "D. api-264: 'hash.exe creates a thread in self process' (informative, T1055.003)",
+          "E. T1497 (Virtualization/Sandbox Evasion) listed under both Defense Evasion and Discovery in mitre_attcks",
+          "F. T1497.003 (Time Based Evasion) listed under Defense Evasion in mitre_attcks",
+          "G. certificate-0: 'The input sample is signed with a certificate' (informative, T1553.002)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection Detection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the infostealer sample (Lazy.Generic, 17818630 bytes, UPX compressed), which of the following signatures provide direct runtime evidence of process injection (as opposed to merely referencing injection-related API strings statically)? Select ALL that apply.",
+        "options": [
+          "A. stream-34: 'Contains ability to write to a remote process - WriteProcessMemory@KERNEL32.DLL' (suspicious, T1055) - runtime stream detection",
+          "B. stream-5: 'Contains ability to create a remote thread - RtlCreateUserThread@NTDLL.DLL' (suspicious, T1055.001) - runtime stream detection",
+          "C. string-318: 'Contains ability to load/free library - LoadLibraryA' (informative, T1055.001) - static string reference only",
+          "D. string-92: 'Contains ability to inject code - CreateThread' (informative, T1055) - static string reference only",
+          "E. stream-129: 'Contains ability to modify processes thread functionality - NtResumeThread@NTDLL.DLL' (suspicious, T1106) - runtime stream detection",
+          "F. stream-22: 'Contains native function calls - NtResumeThread@NTDLL.DLL' (malicious, T1106) - malicious-rated native API call"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E",
+          "F"
+        ]
+      }
+    }
+  ]
+}

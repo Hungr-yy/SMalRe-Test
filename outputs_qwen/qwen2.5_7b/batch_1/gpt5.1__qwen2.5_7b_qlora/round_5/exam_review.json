@@ -1,0 +1,148 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks students to discriminate between process injection sub-techniques based on concrete API-level evidence in the report. The report shows 'Writes data to a remote process' (T1055 generic) and 'Creates a thread in a self process' (T1055.003 self-injection). Options B (DLL injection via LoadLibrary in remote process context), D (process hollowing), and E (EWM injection) are not evidenced by concrete signatures. Answer key A and C is correct: generic WriteProcessMemory-style injection is evidenced by the malicious-level signature 'Writes data to a remote process', and self-thread creation is evidenced by 'Creates a thread in a self process'. The question is original, technically sound, and well-calibrated for Hard difficulty."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question requires distinguishing concretely evidenced injection techniques from those only in the MITRE table. The report shows: 'Writes data to a remote process' (A - T1055 generic), 'Creates a thread in a self process' (C - T1055.003 self), and 'Hooks API calls' / 'Hooks file system APIs' / 'Hooks internet related APIs' (E - T1056.004 credential API hooking). Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced - LoadLibrary is called but not in a remote process context. Option D (EWM injection) is not evidenced. Answer key A, C, E is correct and well-supported by the signatures. Original question, good difficulty calibration."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection sub-techniques are supported by concrete evidence. The report contains: 'Contains ability to create a remote thread' (stream-5, T1055.001 - supports A), 'Found a string that may be used as part of an injection method' referencing 'shell_traywnd' (T1055.011 - supports C), 'Contains ability to write to a remote process' (stream-34, T1055 generic - supports D), and 'Found PE header in memory' (memorydump-8, T1055 generic - also supports D). Option B (thread execution hijacking via VirtualAllocEx on existing thread stack) is not specifically evidenced. Option E (process hollowing) is not evidenced. Answer key A, C, D is correct. The question is original and technically sound."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are supported by explicit signatures/API evidence in a kernel driver (PE32 native) report. The report has: static-18 (Software Packing T1027.002 - A), summary-29 (Execution Guardrails T1480 - C), string-226 KeWaitForSingleObject (Time Based Evasion T1497.003 - D), string-220 IoCreateDevice + string-474 device driver access (Windows Service T1543.003 - E). Option B (T1055 Process Injection) has no concrete evidence in the signatures. Option F (T1486) has no evidence. Answer key A, C, D, E is correct. Original question, well-reasoned."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced. The report shows: 'Writes data to a remote process' (malicious-level, T1055 generic - A), 'Creates a thread in a self process' (T1055.003 self-injection - C). Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced - LoadLibrary is called but not in a remote process context. Option D (process hollowing) is not evidenced. Option E (EWM injection) is not evidenced. Answer key A, C is correct. The question is original and well-calibrated."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced. The report shows: 'Writes data to a remote process' (malicious-level, T1055 generic - A), 'Creates a thread in a self process' (T1055.003 self-injection - C). Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced. Option D (process hollowing) is not evidenced. Option E (EWM injection) is not evidenced. Answer key A, C is correct. Original question, good difficulty."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced in a ransomware sample. The report shows 'Creates a thread in a self process' (T1055.003 self-injection - A). Option B (EWM injection) is not evidenced by concrete APIs. Option C (generic T1055 inferred from high-entropy sections) is incorrect reasoning - high entropy alone doesn't evidence injection. Option D (DLL injection via remote LoadLibrary/WriteProcessMemory) is not evidenced. Option E (no injection beyond MITRE table) is incorrect because A is evidenced. Answer key A is correct. Original question."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced in a Spora ransomware sample. The report shows: 'Writes data to a remote process' (malicious-level, T1055 generic - A), 'Creates a thread in a self process' (T1055.003 self-injection - C). Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced. Option D (process hollowing) is not evidenced. Option E (EWM injection) is not evidenced. Answer key A, C is correct. Original question."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors provide direct evidence of data encryption for impact vs. obfuscation. The report shows: 'Renames more than 100 files with double extensions' (malicious-level, T1486 - A) and 'Deletes volume snapshots' via WMIC (malicious-level, T1490 - C). Option B (loading bcrypt) is a supporting indicator but not direct evidence of user data encryption. Option D (dropping executable as text file) is masquerading, not encryption. Option E (high entropy dropped file) is obfuscation/packing, not user data encryption. Answer key A, C is correct. Original question, well-reasoned."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are supported by explicit evidence in a minimal static-only report (no dynamic execution). The report has: static-157 (compiler/packer signature, T1027 - A), static-6 (section high entropy, T1027.009 - C). Option B (T1486 Data Encrypted for Impact) has no evidence. Option D (T1055 Process Injection) has no evidence. Option E (T1573 Encrypted Channel) has no evidence. Answer key A, C is correct. Original question."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced in a Remcos sample. The report shows: 'Creates a thread in a self process' (T1055.003 self-injection - B), and the generic T1055 is in the MITRE table but no WriteProcessMemory/remote allocation is observed (E). Option A (DLL injection) is not directly evidenced. Option C (process hollowing) is not evidenced. Option D (EWM injection) is not evidenced. Answer key B, E is correct - B is evidenced by the signature, and E (generic T1055 without specific sub-technique) is supported by the thread creation in self process which maps to T1055 generically. This is a reasonable answer key."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced. The report shows 'Creates a thread in a self process' (T1055.003 - B). Options A (DLL injection), C (process hollowing), D (EWM injection), E (generic T1055 without sub-technique) are not directly evidenced by concrete signatures. Answer key B is correct. Original question."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection sub-techniques are concretely evidenced. The report shows: 'Queues an Asynchronous Procedure Call (APC) in a remote process' via NtQueueApcThread (T1055.004 - A), and 'Creates a thread in a self process' (T1055.003 - C). Option B (process hollowing) is not evidenced. Option D (DLL injection via LoadLibrary into remote process) is not directly evidenced. Option E (EWM injection) is not evidenced. Answer key A, C is correct. Original question."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced. The report shows: 'Queues an Asynchronous Procedure Call (APC) in a remote process' via NtQueueApcThread (T1055.004 - A and F). Options A and F both describe APC injection - A describes it as injection into a remote process, F describes it as queuing APC in a remote process for stealthy execution. Both are correct descriptions of the same observed behavior. Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced. Option C (thread execution hijacking within same process) - the report shows 'Creates a thread in a self process' but this is self-injection, not hijacking. Option D (EWM injection) is not evidenced. Option E (generic T1055 only) is incorrect since A/F are evidenced. Answer key A, F is correct - both describe the NtQueueApcThread behavior. Original question."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced in a Remcos sample. The report shows 'Creates a thread in a self process' (T1055.003 - A). Option B (process hollowing via DISMHOST.EXE) - the dropped file is a legitimate Windows binary used for DLL side-loading, not process hollowing. Option C (DLL injection via LoadLibrary/GetProcAddress) - these are called but not in a remote process context. Option D (EWM injection via Shell_TrayWnd) - scanning for Shell_TrayWnd is application window discovery, not EWM injection. Option E (no injection beyond MITRE table) is incorrect since A is evidenced. Answer key A is correct. Original question."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced in a Trojan.Dinwod sample. The report shows 'Writes data to a remote process' (malicious-level, T1055 generic - A). Option B (DLL injection) is not directly evidenced. Option C (thread execution hijacking in remote process) is not evidenced - no thread suspension/modification of remote threads. Option D (process hollowing) is not evidenced. Option E (no injection evidenced) is incorrect since A is evidenced. Answer key A is correct. Original question."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which injection techniques are concretely evidenced. The report shows: 'Writes data to a remote process' (malicious-level, T1055 generic - A), 'Creates a thread in a self process' (T1055.003 - C), and drops a secondary PE file to disk (F - gegdsimsogm.exe dropped to %TEMP% but no injection of it into another process is evidenced). Option B (DLL injection via LoadLibrary into remote process) is not directly evidenced. Option D (process hollowing) is not evidenced. Option E (EWM injection) is not evidenced. Answer key A, C, F is correct. Original question, well-reasoned."
+      }
+    ],
+    "summary": {
+      "total": 17,
+      "passed": 17,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

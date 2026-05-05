@@ -1,0 +1,891 @@
+2026-03-26 16:45:21,530 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:45:25,419 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 16:45:29,078 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:45:29,097 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 16:45:34,901 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 16:45:37,540 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:45:39,709 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 16:45:39,727 [gpt5.1__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 16:45:39,728 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 16:45:43,425 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:45:52,267 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:45:56,995 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:46:03,045 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:46:09,880 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:46:17,783 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:46:24,591 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:46:24,614 [claude_sonnet4.6__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 16:46:24,614 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 16:47:01,797 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:47:01,824 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 16:47:01,824 [gpt5.1__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 16:47:01,824 [gpt5.1__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 16:47:01,824 [gpt5.1__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 16:47:07,242 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, base model=google/gemma-3-4b-it
+2026-03-26 16:47:50,208 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:47:50,209 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 17 passed, 0 flagged, 2 rejected (out of 18)
+2026-03-26 16:47:50,209 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 0: The answer key includes 'H' (Credentials In Files / T1552.001) but the report evidence for this is the FTP credentials location string (recentservers.xml), which is more specifically covered by option D (FTP credentials via FileZilla recentservers.xml). Option H refers to generic 'credentials stored in files on the local system' which is a broader category. More critically, option 'C' (Dumping LSASS) is correctly excluded, but the answer key includes 'G' (Network Sniffing / T1040) which IS mapped in the MITRE ATT&CK section of the report. However, the question asks for behaviours 'directly evidenced by signatures or MITRE ATT&CK mappings observed during sandbox detonation' — T1040 is mapped but there is no specific signature evidence of active network sniffing during detonation. The answer key is debatable but the inclusion of 'H' as a separate answer from 'D' is problematic since both refer to the same underlying evidence (recentservers.xml = credentials in files). The answer key lists A, B, D, E, G, H — but D and H overlap significantly, and G (network sniffing) has no direct signature evidence in the report beyond the MITRE mapping. This makes the answer key factually questionable for a professional analyst.
+2026-03-26 16:47:50,209 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 16: The answer key lists A, C, D, E but option D is 'APC Injection (T1055.004)' which is NOT in the MITRE ATT&CK mappings for this sample (Trojan.BrsecmonE). The MITRE mappings include T1055.001, T1055.003, T1055.011, T1055.012 (Process Hollowing), T1055.002 (Portable Executable Injection), but NOT T1055.004. The correct answers should be A (Thread Execution Hijacking - T1055.003 ✓), C (DLL Injection - T1055.001 ✓), E (Extra Window Memory Injection - T1055.011 ✓), and possibly B (Process Hollowing - T1055.012 ✓ which IS in the mappings). The answer key is factually incorrect by including D (APC Injection) and excluding B (Process Hollowing) which is explicitly mapped.
+2026-03-26 16:47:50,210 [claude_sonnet4.6__gemma3_4b_qlora] main: 2/18 questions rejected; regenerating failed ones …
+2026-03-26 16:47:56,388 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:47:56,389 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 16:48:04,335 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:48:04,336 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 16
+2026-03-26 16:48:04,336 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 2/5 (2 regenerated questions) …
+2026-03-26 16:48:29,564 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:48:29,565 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 2 rejected (out of 2)
+2026-03-26 16:48:29,565 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 0: The answer key lists B (Process Hollowing T1055.012) as correct, but reviewing the first detonation report's mitre_attcks array, T1055.012 is not present. The infostealers report includes T1055.003 (Thread Execution Hijacking), T1055 (Process Injection), T1055.011 (Extra Window Memory Injection), and T1620 (Reflective Code Loading), but NOT T1055.012. Option B's claim that Process Hollowing is 'evidenced by an explicit MITRE ATT&CK mapping in the report' is factually false for this report. The answer key must be rejected as incorrect.
+2026-03-26 16:48:29,565 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 16: Upon careful review, the answer key for question 1 (A, B, D, E, G) is factually supportable from the remcos detonation report. T1055.003 is evidenced by the 'Creates a thread in a self process' signature; T1055.012 appears explicitly in the mitre_attcks array and is supported by the 'Creates a process in suspended mode' signature; T1055.001 and T1055.011 appear in mitre_attcks; T1055 is evidenced by the malicious-rated 'Writes data to a remote process' signature. Options C and F are correctly excluded. However, the question is being rejected because option B's explanatory text ('evidenced by remcos.exe calling CreateProcessW with a suspended process flag') is technically accurate per the signature data, but the signature maps to T1055 generically, not T1055.012 specifically. This creates an ambiguity that could mislead students. Additionally, the question is structurally very similar to question 0 (same topic, same format, same style of evidence-linking), raising concerns about question bank diversity. The primary rejection reason is the B option's attribution issue — the suspended process signature is mapped to T1055 in the report, not T1055.012, making the answer key's justification for B technically imprecise even if T1055.012 does appear in the MITRE mappings section. This is a factual accuracy issue sufficient for rejection.
+2026-03-26 16:48:29,565 [claude_sonnet4.6__gemma3_4b_qlora] main: 2/18 questions rejected; regenerating failed ones …
+2026-03-26 16:48:37,635 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:48:37,636 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 16:48:44,106 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:48:44,107 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 16
+2026-03-26 16:48:44,107 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 3/5 (2 regenerated questions) …
+2026-03-26 16:49:01,374 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:49:01,376 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 2 passed, 0 flagged, 0 rejected (out of 2)
+2026-03-26 16:49:01,376 [claude_sonnet4.6__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 16:49:01,378 [claude_sonnet4.6__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 16:49:01,378 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 16:49:06,423 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, base model=google/gemma-3-4b-it
+2026-03-26 16:52:11,810 [gemini2.5pro__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 16:52:11,810 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 16:53:25,963 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 16:53:25,988 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 19 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 16:53:25,988 [gemini2.5pro__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 16:53:25,988 [gemini2.5pro__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 16:53:25,988 [gemini2.5pro__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 16:53:30,729 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, base model=google/gemma-3-4b-it
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/6394301405674340352 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/4171774989567000576 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 16:57:52,381 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 16:57:52,407 [claude_sonnet4.6__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.61  |  Jaccard: 0.89  |  Parse errors: 0/18 (0%)
+2026-03-26 16:57:52,407 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 16:57:53,891 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 16:57:53,910 [gpt5.1__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.28  |  Jaccard: 0.74  |  Parse errors: 0/18 (0%)
+2026-03-26 16:57:53,910 [gpt5.1__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 16:58:41,475 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 16:58:47,691 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:00:00,470 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:00:00,471 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 19 valid (19/100 total)
+2026-03-26 17:01:02,282 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:01:02,285 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 17:01:07,124 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:01:07,125 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 17:01:07,125 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-26 17:01:19,539 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:01:19,540 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 18 valid (37/100 total)
+2026-03-26 17:02:44,464 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:02:44,466 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 19 valid (56/100 total)
+2026-03-26 17:02:57,713 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:02:57,714 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (21/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/6227668219461632000 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 17:03:19,063 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 17:03:19,087 [gemini2.5pro__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.22  |  Jaccard: 0.67  |  Parse errors: 0/18 (0%)
+2026-03-26 17:03:19,087 [gemini2.5pro__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 17:04:02,389 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:04:02,391 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (76/100 total)
+2026-03-26 17:04:46,470 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:04:46,471 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (41/100 total)
+2026-03-26 17:05:35,569 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:05:35,570 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 18 valid (94/100 total)
+2026-03-26 17:05:35,570 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 6 examples short. Generating 1 additional batches.
+2026-03-26 17:06:04,190 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 17:06:04,191 [gpt5.1__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 6 valid (100/100 total)
+2026-03-26 17:06:04,191 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 17:06:04,194 [gpt5.1__gemma3_4b_qlora] main: Proficiency: 6  |  Accuracy: 0.28  |  Jaccard: 0.74  |  Parse errors: 0
+2026-03-26 17:06:04,194 [gpt5.1__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection of options', 'Defense evasion and UM unhooking', 'MITRE ATT&CK mapping', 'Medium-difficulty multi-label items', 'AV/EDR killers and UM-unhooking fine-grained distinctions']
+2026-03-26 17:06:04,194 [gpt5.1__gemma3_4b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-26 17:06:04,197 [gpt5.1__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-26 17:06:07,838 [gpt5.1__gemma3_4b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-26 17:06:07,838 [gpt5.1__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 17:06:29,063 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 17:06:34,909 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:06:34,909 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (61/100 total)
+2026-03-26 17:07:35,162 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 17:08:32,257 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:08:32,258 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-26 17:08:32,258 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+2026-03-26 17:09:15,545 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 17:10:29,298 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 17:10:29,299 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-26 17:10:29,299 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 17:10:29,301 [claude_sonnet4.6__gemma3_4b_qlora] main: Proficiency: 7  |  Accuracy: 0.61  |  Jaccard: 0.89  |  Parse errors: 0
+2026-03-26 17:10:29,301 [claude_sonnet4.6__gemma3_4b_qlora] main: Top weaknesses: ['um_unhooking', 'over-selection on behavioral analysis', 'under-selection on hard evasion questions', 'av_edr_killers', 'Network Indicator of Compromise Extraction']
+2026-03-26 17:10:29,301 [claude_sonnet4.6__gemma3_4b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-26 17:10:29,303 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-26 17:10:32,619 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-26 17:10:32,619 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 17:10:50,763 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 17:11:51,919 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 17:11:51,920 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 17:11:51,922 [gemini2.5pro__gemma3_4b_qlora] main: Proficiency: 4  |  Accuracy: 0.22  |  Jaccard: 0.67  |  Parse errors: 0
+2026-03-26 17:11:51,922 [gemini2.5pro__gemma3_4b_qlora] main: Top weaknesses: ['Set Selection Failure', 'Remcos RAT', 'Process Injection Detection', 'Semantic Confusion']
+2026-03-26 17:11:51,922 [gemini2.5pro__gemma3_4b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-26 17:11:51,924 [gemini2.5pro__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-26 17:11:56,226 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-26 17:11:56,226 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3608262086192267264 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 17:14:50,540 [gpt5.1__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1676780796003745792 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 17:19:19,418 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/8736173211906998272 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 17:21:10,431 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-26 18:11:23,456 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:11:23,456 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:11:23,456 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:11:23,457 [gemini2.5pro__gemma3_4b_qlora] main: New best accuracy 0.2222; adapter at outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/best_adapter
+2026-03-26 18:11:23,457 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:11:23,457 [gemini2.5pro__gemma3_4b_qlora] main: [google/gemini-2.5-pro → google/gemma-3-4b-it] Round 2 / 5
+2026-03-26 18:11:23,457 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:11:23,457 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=4) …
+2026-03-26 18:13:54,953 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:13:54,954 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:13:54,954 [gpt5.1__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:13:54,955 [gpt5.1__gemma3_4b_qlora] main: New best accuracy 0.2778; adapter at outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/best_adapter
+2026-03-26 18:13:54,955 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:13:54,955 [gpt5.1__gemma3_4b_qlora] main: [openai/gpt-5.1 → google/gemma-3-4b-it] Round 2 / 5
+2026-03-26 18:13:54,955 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:13:54,955 [gpt5.1__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=6) …
+2026-03-26 18:13:59,649 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:05,288 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:12,087 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:17,033 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:22,865 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:28,939 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:33,650 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:40,724 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:45,911 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:50,724 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:14:55,733 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:00,035 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:05,632 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:09,284 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:13,855 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:17,668 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:25,816 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:30,045 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:15:30,070 [gpt5.1__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 18:15:30,070 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 18:16:15,495 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:16:15,495 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_1/adapter
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] main: New best accuracy 0.6111; adapter at outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/best_adapter
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] main: [anthropic/claude-sonnet-4-6 → google/gemma-3-4b-it] Round 2 / 5
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 18:16:15,496 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-26 18:16:23,285 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:16:33,763 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:16:40,628 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:16:46,323 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:16:46,324 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 18:16:46,324 [gpt5.1__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 18:16:46,325 [gpt5.1__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 18:16:46,325 [gpt5.1__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 18:16:47,664 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:16:49,713 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-26 18:16:57,384 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:06,597 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:16,525 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:27,180 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:34,729 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:43,157 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:17:52,063 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:01,280 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:15,411 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:26,069 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:35,073 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:43,268 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:18:51,825 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:19:02,356 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:19:02,374 [claude_sonnet4.6__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 18:19:02,375 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 18:19:55,798 [gemini2.5pro__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 18:19:55,798 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 18:20:44,713 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:20:44,714 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 14 passed, 0 flagged, 3 rejected (out of 18)
+2026-03-26 18:20:44,714 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 1: The answer key includes C (DLL Injection via FreeLibrary API string reference). However, FreeLibrary is an informative string reference, not a direct API call observation of DLL injection. More critically, option E (Process Hollowing via NtUnmapViewOfSection) is listed in the MITRE mappings but there is no NtUnmapViewOfSection API call in the signatures — it is only a string reference (string-90: 'tUnmapViewOfSection'). Option H (ListPlanting via FindWindowA) is included in the answer key, but the report maps FindWindowA to T1055.015 only as a string reference, not a confirmed API call. The answer key conflates MITRE ATT&CK mappings (which are inferred) with 'directly evidenced by specific API calls or memory operations.' Options A and D are clearly correct (malicious-level WriteProcessMemory and VirtualAllocEx). Option B is correct (Thread Execution Hijacking via CreateThread in self-process, informative but present). The answer key is partially incorrect and the question stem's criterion ('directly evidenced by specific API calls, memory operations, or monitored target observations') is not consistently applied in the answer key.
+2026-03-26 18:20:44,714 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 5: The question asks which behaviors are classified at 'malicious' threat level (threat_level: 2) and support active defense evasion or anti-analysis in the Spora ransomware sample. The answer key is A, B, C. Option A (taskkill terminating processes, target-9, threat_level 2) is correct. Option B (mshta.exe execution, target-113, threat_level 2) is correct as a LOLbin/defense evasion technique. Option C (writes data to remote process + allocates virtual memory, api-0 and api-20, both threat_level 2) is correct. However, the question asks specifically about 'active defense evasion or anti-analysis actions.' Option B (mshta.exe opening a ransom note HTA file) is primarily an impact/execution action, not a defense evasion action — the question stem is misleading here. More critically, options D (network-88, malicious), which is communication with a malicious domain, is excluded from the answer key but is also threat_level 2. The answer key is inconsistent: D is also threat_level 2 malicious but excluded without clear justification. The question's framing ('defense evasion or anti-analysis') is ambiguous enough to cause answer key disputes. This warrants rejection.
+2026-03-26 18:20:44,714 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 10: The question asks which behaviors are classified at 'malicious' threat level (threat_level: 2) and support classifying the sample as Remcos RAT. The answer key is A and B. However, reviewing the signatures: the mutant 'Rmc-H6V4FW' (mutant-0) is classified as 'informative' (threat_level_human: 'informative'), not malicious. Option A states the mutant name is 'consistent with Remcos mutex naming conventions' — while this is analytically true, the signature itself is informative-level, not malicious-level. The question specifically asks for behaviors 'classified at the malicious threat level (threat_level: 2).' Only avtest-8 (CrowdStrike detection) is at threat_level 2 in this report. The answer key is incorrect because A is based on an informative-level signature. This is a factual error in the answer key.
+2026-03-26 18:20:44,714 [claude_sonnet4.6__gemma3_4b_qlora] main: 3/18 questions rejected; regenerating failed ones …
+2026-03-26 18:20:56,078 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:20:56,079 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 1
+2026-03-26 18:21:07,444 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:21:07,446 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 5
+2026-03-26 18:21:14,288 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:21:14,289 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 18:21:14,289 [gemini2.5pro__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 18:21:14,290 [gemini2.5pro__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 18:21:14,290 [gemini2.5pro__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 18:21:16,048 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:21:16,049 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 10
+2026-03-26 18:21:16,049 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 2/5 (3 regenerated questions) …
+2026-03-26 18:21:17,735 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round1
+2026-03-26 18:22:06,406 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:22:06,408 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 1 passed, 0 flagged, 3 rejected (out of 3)
+2026-03-26 18:22:06,408 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 1: The question asks which malicious threat_level:2 observations directly support classifying the sample as an infostealer. Reviewing the report signatures at threat_level:2: (1) api-0 'Writes data to a remote process' (T1055) - malicious; (2) api-120 'WinExec with %WINDIR% parameter' (T1106) - malicious; (3) registry-32 'Reads Antivirus engine registry keys' (T1518.001) - malicious; (4) target-248 'Rundll32 execution with no parameters' (T1218.008) - malicious; (5) target-269 'Windows system process connects to network' (T1055) - malicious; (6) avtest-8 'CrowdStrike detection' - malicious. The answer key provides [C, D, E] but excludes A (api-0, writes data to remote process, threat_level:2) and B (api-120, WinExec, threat_level:2), both of which are explicitly marked threat_level:2 in the report. Option A describes api-0 correctly as malicious-level. Option B describes api-120 correctly as malicious-level. Option G incorrectly states api-20 (VirtualAlloc) is malicious-level — in the report api-20 is also threat_level:2 ('Allocates virtual memory in a remote process'), so G is also correct. The answer key [C, D, E] is materially incomplete and incorrect. Additionally, the question conflates 'malicious threat level' with 'infostealer attribution' in a way that makes the selection criteria ambiguous — the question asks for both conditions simultaneously, but the answer key does not consistently apply either criterion. This is a fundamentally flawed answer key and must be rejected.
+2026-03-26 18:22:06,408 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 5: The question asks which defense evasion/anti-analysis behaviours are classified at threat_level:2 in the signatures. Reviewing the report: threat_level:2 signatures are: (1) api-120 'WinExec with cmd /c parameter' (T1106) - malicious; (2) target-115 'Rundll32 process execution' (T1218.011) - malicious; (3) static-97 'PE file contains executable resources' (T1027.009) - malicious; (4) avtest-8 'CrowdStrike detection' - malicious. The answer key provides [A, B, C]. Option A maps to api-120 (WinExec, malicious) — correct. Option B maps to target-115 (Rundll32 execution, malicious) — correct. Option C maps to static-97 (PE executable resources, malicious) — correct. Option D claims UPX packing with entrypoint in UPX0 is evidenced by a malicious-level static parser finding — but static-4 ('Entrypoint in PE header is within an uncommon section') and static-7 ('PE file is packed with UPX') are both threat_level:1 (suspicious), NOT malicious. So D is correctly excluded. Option E (avp.exe check) maps to string-45 which is threat_level:1 (suspicious), not malicious — correctly excluded. Option F (marks file for deletion) maps to api-26 which is threat_level:1 (suspicious), not malicious — correctly excluded. Option G (dynamic API resolution) — static-79 is informative, not malicious — correctly excluded. So the answer key [A, B, C] appears correct. However, avtest-8 (CrowdStrike detection) is also threat_level:2 but is not listed as an option. The answer key is actually correct for the options presented. Re-evaluating: the answer key [A, B, C] is correct. This question should pass. Revising verdict to pass.
+2026-03-26 18:22:06,408 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 10: The question asks which observations are classified at threat_level:2 in the sandbox signatures for the CVE-2017-0199 remcos sample. Reviewing the report signatures at threat_level:2: (1) network-16 'GETs files from a webserver' (T1071.001) - malicious; (2) network-88 'Application communicates with a malicious domain' (T1566) - malicious; (3) suricata-2 'Suricata Alert for possible CVE-2017-0199 exploit' - malicious; (4) avtest-8 'CrowdStrike Static Analysis and ML detection' - malicious. The answer key provides [A, C, E, F]. Option A maps to network-88 (malicious domain) — correct. Option C maps to suricata-2 (CVE-2017-0199 Suricata alert) — correct. Option E maps to avtest-8 (CrowdStrike) — correct. Option F maps to network-16 (GETs files from webserver) — correct. Options B (browser user-agent without browser — network-22, threat_level:1 suspicious), D (Base64 in HTTP requests — network-60, informative), G (TCP to port 443 without HTTP header — network-23, threat_level:1 suspicious), and H (short-term SSL certificate — certificate-3, informative) are all correctly excluded. The answer key [A, C, E, F] is actually correct and complete for the threat_level:2 signatures that map to the provided options. This question should pass. Revising verdict to pass.
+2026-03-26 18:22:06,408 [claude_sonnet4.6__gemma3_4b_qlora] main: 3/18 questions rejected; regenerating failed ones …
+2026-03-26 18:22:23,324 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:22:23,324 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 1
+2026-03-26 18:22:32,156 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:22:32,157 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 5
+2026-03-26 18:22:39,436 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:22:39,437 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 10
+2026-03-26 18:22:39,437 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 3/5 (3 regenerated questions) …
+2026-03-26 18:23:22,922 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:23:22,923 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 3 passed, 0 flagged, 1 rejected (out of 3)
+2026-03-26 18:23:22,923 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 5: The answer key states A, C, E, G as correct. Reviewing the detonation report signatures at threat_level:2 (malicious): (1) api-120 'Calls an API typically used to run the specified application' (WinExec with cmd /c) = E correct; (2) target-115 'Detected Rundll32 process execution' (T1218.011) = A correct; (3) static-97 'PE file contains executable resources' (T1027.009) = C correct; (4) avtest-8 'Sample detected by CrowdStrike Static Analysis and ML' = G correct. However, option B states 'PE file is packed with UPX — static parser detected UPX packer with entrypoint in UPX0 section (static-7, T1027.002)'. In the report, static-7 is classified at threat_level:1 (suspicious), NOT threat_level:2 (malicious). So B is correctly excluded. Similarly, static-4 'Entrypoint in PE header is within an uncommon section' (H) is threat_level:1 (suspicious). Option D 'Marks file for deletion' (api-26) is threat_level:1 (suspicious). Option F 'Possibly checks for the presence of a forensics/monitoring tool' (string-45) is threat_level:1 (suspicious). On re-examination, the answer key A, C, E, G appears correct. However, there is a subtle issue: the question asks which observations are 'classified at threat_level:2 (malicious) in the sandbox signatures AND directly support classifying this sample as malicious.' The avtest-8 (CrowdStrike ML) is threat_level:2 but is an external system result, not a behavioral sandbox signature per se. More critically, reviewing the report again carefully: api-120 (WinExec) is threat_level:2, target-115 (Rundll32) is threat_level:2, static-97 (PE executable resources) is threat_level:2, avtest-8 is threat_level:2. The answer key A, C, E, G maps to: A=target-115, C=static-97, E=api-120, G=avtest-8. This is actually correct. Upon further reflection, the answer key is correct and the question is valid. Reversing my initial concern — this question should PASS. However, I note one genuine issue: option H ('Entrypoint in PE header is within an uncommon section — static-4, T1027') is listed as a distractor but static-4 is threat_level:1 (suspicious), so it is correctly excluded. The answer key is accurate. Changing verdict to pass.
+2026-03-26 18:23:22,923 [claude_sonnet4.6__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 18:23:35,823 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:23:35,824 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 5
+2026-03-26 18:23:35,824 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 4/5 (1 regenerated questions) …
+2026-03-26 18:23:52,843 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:23:52,844 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 1 flagged, 0 rejected (out of 1)
+2026-03-26 18:23:52,844 [claude_sonnet4.6__gemma3_4b_qlora] main: Flagged question 5 (kept): The question is original, not plagiarised from any benchmark item. The answer key (A, C, D, E, G) is factually supportable from the detonation report: UPX packing is confirmed by static-7 and static-18; embedded payloads by static-97 and yara-26; dynamic API resolution by static-79; Rundll32 proxy execution by target-115; and token impersonation by string-306/mitre_attcks entry T1134.001. Distractors F and H have no evidentiary basis in the report. The only minor concern is that B (Timestomping) is borderline — GetSystemTimeAsFileTime is mapped to T1070.006 in the report's signatures but this is a weak automated mapping, and the answer key correctly excludes it. The question meets CyberSOCEval standards for format, difficulty, and technical specificity. Flagged only for the verbose inline citation style and the borderline B distractor, neither of which is a factual error.
+2026-03-26 18:23:52,844 [claude_sonnet4.6__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 18:23:52,845 [claude_sonnet4.6__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 18:23:52,845 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 18:23:56,472 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/5840358651507769344 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:24:03,174 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 18:24:03,194 [gpt5.1__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.17  |  Jaccard: 0.67  |  Parse errors: 0/18 (0%)
+2026-03-26 18:24:03,194 [gpt5.1__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 18:25:09,221 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:26:10,347 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:26:10,348 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 18:27:15,780 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:27:15,782 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 19 valid (39/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7798861539460513792 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:28:06,822 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 18:28:06,845 [gemini2.5pro__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.33  |  Jaccard: 0.78  |  Parse errors: 0/18 (0%)
+2026-03-26 18:28:06,846 [gemini2.5pro__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 18:28:14,151 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:28:14,228 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (59/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7114877346053619712 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:28:38,230 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 18:28:38,252 [claude_sonnet4.6__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.11  |  Jaccard: 0.63  |  Parse errors: 0/18 (0%)
+2026-03-26 18:28:38,252 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 18:29:20,916 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:29:20,917 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 19 valid (78/100 total)
+2026-03-26 18:30:20,434 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:30:20,438 [claude_sonnet4.6__gemma3_4b_qlora] json_repair: Reconstructed JSON from field-level regex extraction.
+2026-03-26 18:30:20,438 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Evaluation field 'strengths' is dict instead of list; attempting repair.
+2026-03-26 18:30:22,567 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:30:22,573 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Repaired 'strengths' on attempt 1/3.
+2026-03-26 18:30:22,574 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Evaluation field 'weaknesses' is dict instead of list; attempting repair.
+2026-03-26 18:30:25,690 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:30:25,691 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Repaired 'weaknesses' on attempt 1/3.
+2026-03-26 18:30:36,398 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:30:36,399 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (98/100 total)
+2026-03-26 18:30:36,399 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 2 examples short. Generating 1 additional batches.
+2026-03-26 18:30:50,175 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 18:30:50,176 [gpt5.1__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 2 valid (100/100 total)
+2026-03-26 18:30:50,176 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 18:30:50,180 [gpt5.1__gemma3_4b_qlora] main: Proficiency: 5  |  Accuracy: 0.17  |  Jaccard: 0.67  |  Parse errors: 0
+2026-03-26 18:30:50,180 [gpt5.1__gemma3_4b_qlora] main: Top weaknesses: ['Systematic over-selection of options', 'Fine-grained ATT&CK discrimination', 'Defense evasion vs generic discovery/collection', 'EDR/AV killers and UM unhooking', 'Credential API hooking vs other hooks']
+2026-03-26 18:30:50,180 [gpt5.1__gemma3_4b_qlora] main: Curriculum: 100 new examples, 200 accumulated total
+2026-03-26 18:30:50,182 [gpt5.1__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 200 accumulated examples …
+2026-03-26 18:30:53,400 [gpt5.1__gemma3_4b_qlora] student_trainer: Uploaded 200 training examples to gs://smala/training_data/curriculum_2.jsonl
+2026-03-26 18:30:53,400 [gpt5.1__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 18:31:12,909 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 18:32:17,180 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:32:17,181 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 18:32:22,536 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 18:33:37,334 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 18:33:52,146 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:33:52,148 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 18:34:41,863 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 18:35:47,802 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:35:47,803 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 18:36:34,733 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 18:36:34,733 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 18:36:34,735 [gemini2.5pro__gemma3_4b_qlora] main: Proficiency: 6  |  Accuracy: 0.33  |  Jaccard: 0.78  |  Parse errors: 0
+2026-03-26 18:36:34,735 [gemini2.5pro__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection and Poor Precision', 'Defense Evasion', 'Process Injection Detection', 'Answer Count Miscalibration']
+2026-03-26 18:36:34,735 [gemini2.5pro__gemma3_4b_qlora] main: Curriculum: 100 new examples, 200 accumulated total
+2026-03-26 18:36:34,738 [gemini2.5pro__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 200 accumulated examples …
+2026-03-26 18:36:38,030 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Uploaded 200 training examples to gs://smala/training_data/curriculum_2.jsonl
+2026-03-26 18:36:38,030 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 18:37:34,143 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:37:34,145 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 18:39:36,244 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:39:36,248 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 18:39:40,714 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:39:40,715 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 18:39:40,715 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 1 valid (81/100 total)
+2026-03-26 18:39:40,715 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+2026-03-26 18:41:21,509 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 18:41:21,510 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-26 18:41:21,510 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 18:41:21,515 [claude_sonnet4.6__gemma3_4b_qlora] main: Proficiency: 5  |  Accuracy: 0.11  |  Jaccard: 0.63  |  Parse errors: 0
+2026-03-26 18:41:21,515 [claude_sonnet4.6__gemma3_4b_qlora] main: Top weaknesses: ['Systematic over-selection / threat-level discrimination failure']
+2026-03-26 18:41:21,515 [claude_sonnet4.6__gemma3_4b_qlora] main: Curriculum: 100 new examples, 200 accumulated total
+2026-03-26 18:41:21,519 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 200 accumulated examples …
+2026-03-26 18:41:24,908 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Uploaded 200 training examples to gs://smala/training_data/curriculum_2.jsonl
+2026-03-26 18:41:24,908 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7429566370016133120 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:43:02,585 [gpt5.1__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round2
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3930832409502679040 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:48:21,434 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round2
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1944744973832290304 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 18:52:05,312 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round2
+2026-03-26 20:25:20,719 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] main: [openai/gpt-5.1 → google/gemma-3-4b-it] Round 3 / 5
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:25:20,720 [gpt5.1__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=5) …
+2026-03-26 20:25:29,063 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:34,508 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:41,169 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:46,066 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:50,813 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:55,018 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:25:59,541 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:03,499 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:07,069 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:13,988 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:18,564 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:22,560 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:26,679 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:32,490 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:36,995 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:42,978 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:47,103 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:50,939 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:26:50,957 [gpt5.1__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 20:26:50,957 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 20:28:14,761 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:28:14,762 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 17 passed, 0 flagged, 1 rejected (out of 18)
+2026-03-26 20:28:14,762 [gpt5.1__gemma3_4b_qlora] main: Rejected question 0: The question asks which MITRE ATT&CK techniques are DIRECTLY evidenced. Option A (T1055.001 via CreateRemoteThread/WriteProcessMemory) is well-evidenced in the report — the report explicitly shows CreateRemoteThread and WriteProcessMemory API strings, and the 'Contains ability to create a remote thread' and 'Contains ability to write to a remote process' signatures are present. The answer key excludes A but includes B, C, D, E. However, A is arguably the most directly evidenced technique. Option B (T1055.011 via shell_traywnd) is evidenced by the string-4 signature referencing 'shell_traywnd'. Option C (T1497 via VBoxService.exe and VMware trick) is directly evidenced. Option D (T1113 via BitBlt) is directly evidenced. Option E (T1547 via registry auto-execute strings) is directly evidenced. The exclusion of A from the answer key is incorrect — T1055.001 is directly evidenced by CreateRemoteThread and WriteProcessMemory API strings and stream signatures. The answer key should include A, B, C, D, E or at minimum A. This makes the answer key factually wrong.
+2026-03-26 20:28:14,762 [gpt5.1__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 20:28:19,598 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:28:19,598 [gpt5.1__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 20:28:19,598 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 2/5 (1 regenerated questions) …
+2026-03-26 20:28:31,693 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:28:31,693 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 1 rejected (out of 1)
+2026-03-26 20:28:31,693 [gpt5.1__gemma3_4b_qlora] main: Rejected question 0: Option E is incorrectly excluded from the answer key. The report does NOT show explicit invocation of cmd.exe with command-line arguments in the process tree — the report shows only one process (hash.exe) with no child processes. However, T1059.003 (Windows Command Shell) IS listed in the mitre_attcks array of the detonation report, and the signature for GetCommandLineA maps to T1059.003. The question stem asks for techniques 'directly evidenced by the sample's observed APIs, strings, and signatures,' and GetCommandLineA is present in the signatures with attck_id T1059.003. The option E description is misleading ('explicit invocation of cmd.exe with command-line arguments observed in the process tree') — this specific evidence is NOT in the report (no cmd.exe process spawned), making E a poorly constructed distractor that is partially correct (T1059.003 is in the MITRE list) but the stated evidence is wrong. More critically, the answer key omits E but the technique IS mapped in the report, creating an ambiguous and potentially incorrect answer key. Additionally, the question conflates static string evidence with dynamic behavioral evidence without clear distinction. The answer key should either include E (since T1059.003 is in the mitre_attcks list) or the option description needs to accurately reflect the actual evidence. As written, the answer key is inconsistent with the report data.
+2026-03-26 20:28:31,694 [gpt5.1__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 20:28:39,142 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:28:39,143 [gpt5.1__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 20:28:39,143 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 3/5 (1 regenerated questions) …
+2026-03-26 20:29:01,401 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:29:01,402 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 1 rejected (out of 1)
+2026-03-26 20:29:01,402 [gpt5.1__gemma3_4b_qlora] main: Rejected question 0: The answer key is partially incorrect. Option C (T1497.002) is marked correct, but the option's description ('using APIs/logic to detect lack of user interaction or scripted execution in a VM/sandbox') does not accurately describe the evidence in the report (a static string reference to GetCommandLineA). The mismatch between the option text and the actual evidence makes the answer key misleading and factually invalid from a professional analyst's perspective. While T1497.002 appears in the MITRE ATT&CK mapping section of the report, the option's explanatory text mischaracterizes the technique's implementation, creating an incorrect answer key relative to the option as written. This constitutes a factual validity failure requiring rejection.
+2026-03-26 20:29:01,402 [gpt5.1__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 20:29:06,437 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:29:06,438 [gpt5.1__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 20:29:06,438 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 4/5 (1 regenerated questions) …
+2026-03-26 20:29:18,142 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:29:18,143 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 1 passed, 0 flagged, 0 rejected (out of 1)
+2026-03-26 20:29:18,143 [gpt5.1__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 20:29:18,144 [gpt5.1__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 20:29:18,144 [gpt5.1__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 20:29:22,518 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round2
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] main: [anthropic/claude-sonnet-4-6 → google/gemma-3-4b-it] Round 3 / 5
+2026-03-26 20:33:08,748 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:33:08,749 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=5) …
+2026-03-26 20:33:16,082 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:16,838 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:16,838 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_2/adapter
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] main: New best accuracy 0.3333; adapter at outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/best_adapter
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] main: [google/gemini-2.5-pro → google/gemma-3-4b-it] Round 3 / 5
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 20:33:16,839 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=6) …
+2026-03-26 20:33:22,184 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:29,192 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:36,130 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:42,461 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:48,150 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:33:54,283 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:01,557 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:06,992 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:13,756 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:18,547 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:24,326 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:30,124 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:37,981 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:44,163 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:51,226 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:34:59,512 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:35:08,116 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:35:08,137 [claude_sonnet4.6__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 20:35:08,137 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 20:36:30,095 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:36:30,097 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 20:36:30,097 [claude_sonnet4.6__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 20:36:30,097 [claude_sonnet4.6__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 20:36:30,097 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 20:36:33,770 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round2
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/8075832916543799296 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 20:37:06,553 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 20:37:06,571 [gpt5.1__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.00  |  Jaccard: 0.65  |  Parse errors: 0/18 (0%)
+2026-03-26 20:37:06,571 [gpt5.1__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 20:38:01,431 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:39:30,389 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:39:30,390 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 19 valid (19/100 total)
+2026-03-26 20:40:28,370 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:40:28,372 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (39/100 total)
+2026-03-26 20:40:31,932 [gemini2.5pro__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 20:40:31,933 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/5457552683181277184 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 20:41:17,380 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 20:41:17,400 [claude_sonnet4.6__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.00  |  Jaccard: 0.44  |  Parse errors: 0/18 (0%)
+2026-03-26 20:41:17,400 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 20:41:22,489 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:41:22,490 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 19 valid (58/100 total)
+2026-03-26 20:41:48,467 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:41:48,470 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 25 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 20:41:48,471 [gemini2.5pro__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 20:41:48,472 [gemini2.5pro__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 20:41:48,472 [gemini2.5pro__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 20:41:51,995 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:41:52,301 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round2
+2026-03-26 20:42:23,115 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:42:23,116 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 19 valid (77/100 total)
+2026-03-26 20:43:21,397 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:43:21,398 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 19 valid (96/100 total)
+2026-03-26 20:43:21,398 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 4 examples short. Generating 1 additional batches.
+2026-03-26 20:43:25,667 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:43:25,668 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 20:43:39,767 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 20:43:39,768 [gpt5.1__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 4 valid (100/100 total)
+2026-03-26 20:43:39,768 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 20:43:39,770 [gpt5.1__gemma3_4b_qlora] main: Proficiency: 4  |  Accuracy: 0.00  |  Jaccard: 0.65  |  Parse errors: 0
+2026-03-26 20:43:39,770 [gpt5.1__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection and poor answer-count calibration', 'Fine-grained ATT&CK and behavior discrimination', 'Defense evasion vs. discovery vs. impact', 'Process injection sub-technique identification', 'Evasion and unhooking families (e.g., T1562, um_unhooking)']
+2026-03-26 20:43:39,770 [gpt5.1__gemma3_4b_qlora] main: Curriculum: 100 new examples, 300 accumulated total
+2026-03-26 20:43:39,772 [gpt5.1__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 300 accumulated examples …
+2026-03-26 20:43:43,101 [gpt5.1__gemma3_4b_qlora] student_trainer: Uploaded 300 training examples to gs://smala/training_data/curriculum_3.jsonl
+2026-03-26 20:43:43,101 [gpt5.1__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 20:44:56,610 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:44:56,612 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/6015436087021797376 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 20:46:05,358 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 20:46:05,377 [gemini2.5pro__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.28  |  Jaccard: 0.73  |  Parse errors: 0/18 (0%)
+2026-03-26 20:46:05,378 [gemini2.5pro__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 20:46:12,464 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:46:12,466 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 20:47:32,507 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:47:32,520 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 20:48:32,070 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 20:49:13,059 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 20:49:13,060 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 20:49:13,060 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 20:49:13,063 [claude_sonnet4.6__gemma3_4b_qlora] main: Proficiency: 2  |  Accuracy: 0.00  |  Jaccard: 0.44  |  Parse errors: 0
+2026-03-26 20:49:13,063 [claude_sonnet4.6__gemma3_4b_qlora] main: Top weaknesses: ['threat_level discrimination failure', 'over-selection / answer-count miscalibration', 'evidence-grounding failure', 'Behavioral Analysis', 'Process Injection Detection']
+2026-03-26 20:49:13,063 [claude_sonnet4.6__gemma3_4b_qlora] main: Curriculum: 100 new examples, 300 accumulated total
+2026-03-26 20:49:13,065 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 300 accumulated examples …
+2026-03-26 20:49:16,424 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Uploaded 300 training examples to gs://smala/training_data/curriculum_3.jsonl
+2026-03-26 20:49:16,424 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 20:49:46,975 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 20:51:00,603 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 20:52:22,803 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 20:53:46,953 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 20:53:46,953 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 20:53:46,956 [gemini2.5pro__gemma3_4b_qlora] main: Proficiency: 4  |  Accuracy: 0.28  |  Jaccard: 0.73  |  Parse errors: 0
+2026-03-26 20:53:46,956 [gemini2.5pro__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection', 'Ransomware and RATs', 'Defense Evasion', 'Semantic Confusion', 'Evidence-Grounding Failure']
+2026-03-26 20:53:46,956 [gemini2.5pro__gemma3_4b_qlora] main: Curriculum: 100 new examples, 300 accumulated total
+2026-03-26 20:53:46,957 [gemini2.5pro__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 300 accumulated examples …
+2026-03-26 20:53:50,082 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Uploaded 300 training examples to gs://smala/training_data/curriculum_3.jsonl
+2026-03-26 20:53:50,082 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3709593077808103424 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 20:58:26,585 [gpt5.1__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round3
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/8556029226812178432 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 21:04:28,665 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round3
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3367882456081367040 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 21:08:36,432 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round3
+2026-03-26 22:21:17,952 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] main: [openai/gpt-5.1 → google/gemma-3-4b-it] Round 4 / 5
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:21:17,953 [gpt5.1__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=4) …
+2026-03-26 22:21:25,097 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:21:31,550 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:21:36,525 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:21:42,245 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:21:54,471 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:21:58,889 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:03,617 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:08,923 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:13,375 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:18,874 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:25,434 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:31,703 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:47,717 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:51,472 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:22:55,877 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:23:00,752 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:23:06,079 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:23:10,127 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:23:10,156 [gpt5.1__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 22:23:10,156 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 22:24:28,892 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:24:28,893 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 23 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 22:24:28,893 [gpt5.1__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 22:24:28,894 [gpt5.1__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 22:24:28,894 [gpt5.1__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 22:24:32,331 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round3
+2026-03-26 22:31:16,815 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:16,816 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:16,816 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:16,816 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:31:16,816 [claude_sonnet4.6__gemma3_4b_qlora] main: [anthropic/claude-sonnet-4-6 → google/gemma-3-4b-it] Round 4 / 5
+2026-03-26 22:31:16,816 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:31:16,817 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=2) …
+2026-03-26 22:31:22,927 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:31:25,157 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_3/adapter
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] main: [google/gemini-2.5-pro → google/gemma-3-4b-it] Round 4 / 5
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-26 22:31:25,158 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=4) …
+2026-03-26 22:31:28,664 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:31:36,000 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:31:44,984 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:31:51,838 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:31:58,444 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:05,490 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:11,897 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:20,870 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:28,243 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:34,542 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:40,322 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/8180541607880163328 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 22:32:48,249 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 22:32:48,271 [gpt5.1__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.28  |  Jaccard: 0.69  |  Parse errors: 0/18 (0%)
+2026-03-26 22:32:48,271 [gpt5.1__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 22:32:49,131 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:32:53,341 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:33:01,479 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:33:08,853 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:33:18,062 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:33:23,418 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:33:23,442 [claude_sonnet4.6__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 22:33:23,442 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 22:33:48,422 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:34:45,254 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:34:45,255 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 16 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 22:34:45,256 [claude_sonnet4.6__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 22:34:45,256 [claude_sonnet4.6__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 22:34:45,256 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 22:34:48,561 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round3
+2026-03-26 22:35:23,709 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:35:23,710 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 19 valid (19/100 total)
+2026-03-26 22:36:24,519 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:36:24,586 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 18 valid (37/100 total)
+2026-03-26 22:37:29,991 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:37:30,007 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 19 valid (56/100 total)
+2026-03-26 22:38:39,181 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:38:39,182 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 19 valid (75/100 total)
+2026-03-26 22:39:54,311 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:39:54,312 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 19 valid (94/100 total)
+2026-03-26 22:39:54,312 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 6 examples short. Generating 1 additional batches.
+2026-03-26 22:40:20,973 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-26 22:40:20,974 [gpt5.1__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 6 valid (100/100 total)
+2026-03-26 22:40:20,974 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 22:40:20,980 [gpt5.1__gemma3_4b_qlora] main: Proficiency: 6  |  Accuracy: 0.28  |  Jaccard: 0.69  |  Parse errors: 0
+2026-03-26 22:40:20,981 [gpt5.1__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection of options', 'Discovery vs Defense Evasion vs Impact confusion', 'Process injection interpretation', 'av_edr_killers / process injection & evasion', 'um_unhooking / sandbox and VM evasion']
+2026-03-26 22:40:20,981 [gpt5.1__gemma3_4b_qlora] main: Curriculum: 100 new examples, 400 accumulated total
+2026-03-26 22:40:20,984 [gpt5.1__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 400 accumulated examples …
+2026-03-26 22:40:24,400 [gpt5.1__gemma3_4b_qlora] student_trainer: Uploaded 400 training examples to gs://smala/training_data/curriculum_4.jsonl
+2026-03-26 22:40:24,400 [gpt5.1__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 22:41:28,939 [gemini2.5pro__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-26 22:41:28,939 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 22:42:49,711 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:42:49,712 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 16 passed, 0 flagged, 1 rejected (out of 18)
+2026-03-26 22:42:49,713 [gemini2.5pro__gemma3_4b_qlora] main: Rejected question 0: The answer key includes 'C. Intercepting web traffic to steal credentials.' The report does show credential-related capabilities (CryptUnprotectData, bank URL artifacts, modifies proxy settings), but the specific signature 'Intercepting web traffic to steal credentials' is not directly evidenced as a distinct behavioral signature in the report. More critically, option B ('Establishing persistence by creating a new Windows Service') IS directly supported by the report (registry-67: 'Creates or modifies windows services', T1543.003 mapped). Option D ('Injecting code into another process') is directly supported (api-0: 'Writes data to a remote process', T1055). Option C is not clearly supported by a specific signature — the report shows proxy modification and bank URL strings, but not explicit web traffic interception. The answer key should be B and D at minimum. Including C without clear evidence and excluding B makes the answer key incorrect.
+2026-03-26 22:42:49,713 [gemini2.5pro__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2673765163512889344 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 22:43:02,614 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 22:43:02,637 [claude_sonnet4.6__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.06  |  Jaccard: 0.61  |  Parse errors: 0/18 (0%)
+2026-03-26 22:43:02,637 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 22:43:42,549 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:43:53,134 [gemini2.5pro__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 22:43:53,134 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 2/5 (1 regenerated questions) …
+2026-03-26 22:44:07,124 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:44:07,125 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 1 rejected (out of 1)
+2026-03-26 22:44:07,126 [gemini2.5pro__gemma3_4b_qlora] main: Rejected question 0: The answer key lists A, C, D as correct. Option C (WriteProcessMemory / writes data to a remote process) is clearly supported by the 'malicious' threat-level signature 'Writes data to a remote process' (T1055). Option D (modifying proxy settings) is supported by the 'suspicious' signature 'Modifies proxy settings' (T1112). Option A (Windows Service persistence) is supported by the registry signature 'Creates or modifies windows services' (T1543.003) and the MITRE mapping. However, Option F ('Collecting files from removable media') is directly supported by T1025 (Data from Removable Media) in the explicit mitre_attcks list of the report, yet it is marked as a distractor. This makes the answer key factually incorrect — a professional analyst reviewing this report would identify F as a demonstrated capability. The question must be rejected due to an incorrect/incomplete answer key.
+2026-03-26 22:44:07,126 [gemini2.5pro__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 22:44:46,220 [gemini2.5pro__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 22:44:46,220 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 3/5 (1 regenerated questions) …
+2026-03-26 22:45:12,512 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:45:12,513 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 1 rejected (out of 1)
+2026-03-26 22:45:12,513 [gemini2.5pro__gemma3_4b_qlora] main: Rejected question 0: After careful analysis, the answer key [A, C, D] is factually supported by the detonation report: A (Windows Service creation via registry-67/T1543.003), C (remote process memory write via api-0/T1055), D (dropping executable to System32 via binary-7/T1036). Options B and E have no report evidence and are correctly excluded. Option F (Run key modification) is not evidenced in the report — only proxy settings modification (T1112) and service key creation are shown — making F a valid distractor. The question is original (no plagiarism detected against benchmark). Minor style issue: the stem conflates two MITRE tactics in one question, which is slightly non-standard compared to benchmark questions that typically focus on one category. Flagging for this minor style concern rather than rejecting, as the factual content and answer key are correct.
+2026-03-26 22:45:12,513 [gemini2.5pro__gemma3_4b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-26 22:45:35,276 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:45:35,278 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 22:45:39,671 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:45:39,671 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 22:45:39,671 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-26 22:45:49,370 [gemini2.5pro__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-26 22:45:49,370 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 4/5 (1 regenerated questions) …
+2026-03-26 22:45:59,151 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:45:59,152 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 1 passed, 0 flagged, 0 rejected (out of 1)
+2026-03-26 22:45:59,152 [gemini2.5pro__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-26 22:45:59,153 [gemini2.5pro__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-26 22:45:59,153 [gemini2.5pro__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 22:46:02,578 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round3
+2026-03-26 22:47:20,085 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:47:20,086 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (21/100 total)
+2026-03-26 22:48:53,445 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:48:53,446 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (41/100 total)
+2026-03-26 22:50:33,514 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:50:33,515 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (61/100 total)
+2026-03-26 22:52:26,530 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:52:26,531 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-26 22:52:26,531 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7878800432846340096 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 22:52:44,836 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 22:52:44,863 [gemini2.5pro__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.28  |  Jaccard: 0.72  |  Parse errors: 0/18 (0%)
+2026-03-26 22:52:44,863 [gemini2.5pro__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 22:53:51,961 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 22:53:51,962 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-26 22:53:51,962 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 22:53:51,966 [claude_sonnet4.6__gemma3_4b_qlora] main: Proficiency: 3  |  Accuracy: 0.06  |  Jaccard: 0.61  |  Parse errors: 0
+2026-03-26 22:53:51,966 [claude_sonnet4.6__gemma3_4b_qlora] main: Top weaknesses: ['threat-level field discrimination', 'over-selection / precision failure', 'hard', 'Threat Level Discrimination', 'um_unhooking']
+2026-03-26 22:53:51,966 [claude_sonnet4.6__gemma3_4b_qlora] main: Curriculum: 100 new examples, 400 accumulated total
+2026-03-26 22:53:51,970 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 400 accumulated examples …
+2026-03-26 22:53:55,499 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Uploaded 400 training examples to gs://smala/training_data/curriculum_4.jsonl
+2026-03-26 22:53:55,499 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-26 22:56:12,434 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 22:57:43,020 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/934249807441035264 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 22:58:40,430 [gpt5.1__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round4
+2026-03-26 22:58:50,749 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 22:59:57,027 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 23:01:24,382 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 23:01:24,382 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 23:01:24,385 [gemini2.5pro__gemma3_4b_qlora] main: Proficiency: 5  |  Accuracy: 0.28  |  Jaccard: 0.72  |  Parse errors: 0
+2026-03-26 23:01:24,385 [gemini2.5pro__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection', 'Defense Evasion', 'um_unhooking', 'Hard', 'Answer-count Miscalibration']
+2026-03-26 23:01:24,385 [gemini2.5pro__gemma3_4b_qlora] main: Curriculum: 100 new examples, 400 accumulated total
+2026-03-26 23:01:24,387 [gemini2.5pro__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 400 accumulated examples …
+2026-03-26 23:01:27,913 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Uploaded 400 training examples to gs://smala/training_data/curriculum_4.jsonl
+2026-03-26 23:01:27,913 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/5835292101926977536 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 23:11:39,366 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round4
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/965212054879207424 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 23:20:10,019 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round4
+2026-03-27 00:11:09,992 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] main: [openai/gpt-5.1 → google/gemma-3-4b-it] Round 5 / 5
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:11:09,993 [gpt5.1__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=6) …
+2026-03-27 00:11:16,170 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:24,021 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:30,085 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:35,254 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:42,237 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:49,712 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:11:54,562 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:00,975 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:06,382 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:14,063 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:22,146 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:27,296 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:31,010 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:36,097 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:41,353 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:46,862 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:51,127 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:55,467 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:12:55,485 [gpt5.1__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-27 00:12:55,485 [gpt5.1__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-27 00:13:58,128 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:13:58,130 [gpt5.1__gemma3_4b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-27 00:13:58,130 [gpt5.1__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-27 00:13:58,130 [gpt5.1__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-27 00:13:58,130 [gpt5.1__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-27 00:14:02,528 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round4
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/315427071142658048 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 00:21:20,244 [gpt5.1__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-27 00:21:20,268 [gpt5.1__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.22  |  Jaccard: 0.71  |  Parse errors: 0/18 (0%)
+2026-03-27 00:21:20,268 [gpt5.1__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-27 00:22:28,865 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:24:20,116 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:24:20,118 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 18 valid (18/100 total)
+2026-03-27 00:25:40,278 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:25:40,279 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 18 valid (36/100 total)
+2026-03-27 00:26:50,137 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:26:50,138 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 18 valid (54/100 total)
+2026-03-27 00:28:04,583 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:28:04,584 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 19 valid (73/100 total)
+2026-03-27 00:29:09,855 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:29:09,855 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:29:09,856 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:29:09,856 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:29:09,856 [claude_sonnet4.6__gemma3_4b_qlora] main: [anthropic/claude-sonnet-4-6 → google/gemma-3-4b-it] Round 5 / 5
+2026-03-27 00:29:09,856 [claude_sonnet4.6__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:29:09,856 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=3) …
+2026-03-27 00:29:17,185 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:23,070 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:30,321 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:33,957 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:29:34,093 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 18 valid (91/100 total)
+2026-03-27 00:29:34,093 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 9 examples short. Generating 1 additional batches.
+2026-03-27 00:29:39,016 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:44,721 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:51,410 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:29:58,320 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:04,597 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:10,076 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:17,548 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:24,956 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:30,529 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:30,692 [gpt5.1__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-27 00:30:30,693 [gpt5.1__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 9 valid (100/100 total)
+2026-03-27 00:30:30,693 [gpt5.1__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-27 00:30:30,696 [gpt5.1__gemma3_4b_qlora] main: Proficiency: 6  |  Accuracy: 0.22  |  Jaccard: 0.71  |  Parse errors: 0
+2026-03-27 00:30:30,696 [gpt5.1__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection of options', 'Discovery vs. Defense Evasion vs. Impact discrimination', 'UM Unhooking / advanced evasion', 'Hard questions', 'MITRE ATT&CK Discovery-only classification']
+2026-03-27 00:30:30,696 [gpt5.1__gemma3_4b_qlora] main: Curriculum: 100 new examples, 500 accumulated total
+2026-03-27 00:30:30,698 [gpt5.1__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 500 accumulated examples …
+2026-03-27 00:30:34,041 [gpt5.1__gemma3_4b_qlora] student_trainer: Uploaded 500 training examples to gs://smala/training_data/curriculum_5.jsonl
+2026-03-27 00:30:34,041 [gpt5.1__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-27 00:30:37,622 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:42,574 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:49,187 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:30:55,924 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:31:02,373 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:31:09,524 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:31:09,547 [claude_sonnet4.6__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-27 00:31:09,548 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-27 00:32:58,495 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:32:58,497 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 15 passed, 0 flagged, 3 rejected (out of 18)
+2026-03-27 00:32:58,497 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 0: The question asks which behaviors are supported ONLY by threat_level 2 (malicious) signatures. The answer key includes E ('Executing ShellExecuteW to launch a child process') but the ShellExecuteW signature (api-117) is rated threat_level 2 (malicious) — so that is correct. However, the answer key also includes D ('Spawning a large number of child processes') which maps to signature target-14 rated threat_level 2 (malicious) — also correct. But the answer key EXCLUDES F ('Marking files for deletion via cmd.exe') and G ('Modifying proxy settings via registry DELETEVAL on HKCU'). Checking the report: api-26 (Marks file for deletion) is threat_level 1 (suspicious), and registry-27 (Modifies proxy settings) is threat_level 1 (suspicious) — so F and G are correctly excluded. However, the answer key includes A (Writes data to remote process, api-0, threat_level 2 ✓), B (Allocates virtual memory in remote process, api-20, threat_level 2 ✓), C (Uses network protocols on unusual ports, network-7, threat_level 2 ✓), D (Spawns a lot of processes, target-14, threat_level 2 ✓), E (ShellExecuteW, api-117, threat_level 2 ✓). All five are indeed threat_level 2. F (api-26 marks file for deletion) is threat_level 1 suspicious — correctly excluded. G (registry-27 modifies proxy) is threat_level 1 suspicious — correctly excluded. H (binary-1 drops executable files) is threat_level 1 suspicious — correctly excluded. So the answer key [A,B,C,D,E] appears correct. However, on closer inspection, the CrowdStrike avtest-8 signature is also threat_level 2 but is not represented as an option. The answer key appears factually correct. Re-evaluating: this question is actually valid. Changing verdict to pass.
+2026-03-27 00:32:58,497 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 1: The question asks which behaviors are confirmed at the malicious tier (threat_level 2). The answer key is [A, B, D, E]. Option C states 'Marks the original dropper file for deletion' — checking the report, api-26 (Marks file for deletion) and api-25 (Opens file with deletion access rights) are both rated threat_level 1 (suspicious), NOT threat_level 2. So C is correctly excluded. Option G ('Spawned processes likely due to injection') maps to target-413 which is threat_level 1 (suspicious) — correctly excluded. Option F ('Modifies auto-execute registry keys') maps to registry-0 which is threat_level 1 (suspicious) — correctly excluded. The malicious-tier (threat_level 2) signatures are: api-0 (Writes data to remote process) → A ✓, hooks-2 (Hooks file system APIs) → B ✓, hooks-5 (Hooks internet related APIs) → D ✓, binary-7 (Drops executable files to Windows system directory) → E ✓, avtest-8 (CrowdStrike detection) — not represented as an option. So [A, B, D, E] is correct. This question passes.
+2026-03-27 00:32:58,497 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 2: The question asks which behaviors are supported ONLY by malicious-tier (threat_level 2) signatures. The answer key is [A, B, D, E, G]. Checking each option against the report signatures: A (Allocates virtual memory in remote process) → api-20, threat_level 2 ✓. B (Drops executable PE to Windows System32) → binary-7, threat_level 2 ✓. C (Uses regedit.exe to silently import .reg file) → target-118, threat_level 1 (suspicious) — correctly excluded. D (Contains PE file embedded as resource) → static-97, threat_level 2 ✓. E (Detected by CrowdStrike) → avtest-8, threat_level 2 ✓. F (Writes PE file header to disk) → api-43, threat_level 1 (suspicious) — correctly excluded. G (Calls WinExec to execute command shell) → api-120, threat_level 2 ✓. So [A, B, D, E, G] is correct. This question passes.
+2026-03-27 00:32:58,497 [claude_sonnet4.6__gemma3_4b_qlora] main: 3/18 questions rejected; regenerating failed ones …
+2026-03-27 00:33:05,728 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:33:05,729 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-27 00:33:13,821 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:33:13,822 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 1
+2026-03-27 00:33:21,632 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:33:21,633 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 2
+2026-03-27 00:33:21,633 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 2/5 (3 regenerated questions) …
+2026-03-27 00:33:50,337 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:33:50,338 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:33:50,338 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_4/adapter
+2026-03-27 00:33:50,338 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:33:50,338 [gemini2.5pro__gemma3_4b_qlora] main: [google/gemini-2.5-pro → google/gemma-3-4b-it] Round 5 / 5
+2026-03-27 00:33:50,338 [gemini2.5pro__gemma3_4b_qlora] main: ============================================================
+2026-03-27 00:33:50,339 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=5) …
+2026-03-27 00:33:59,907 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:33:59,909 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 3 rejected (out of 3)
+2026-03-27 00:33:59,909 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 0: The question asks for behaviors confirmed at threat_level 2 (malicious). Reviewing the signatures: A (api-0, 'Writes data to a remote process') = threat_level 2 ✓; B (api-20, 'Allocates virtual memory in a remote process') = threat_level 2 ✓; C ('Marks the original dropper file for deletion') = api-26 is threat_level 2 ✓; D (network-7, 'Uses network protocols on unusual ports') = threat_level 2 ✓; E (target-14, 'Spawns a lot of processes') = threat_level 2 ✓; F ('Drops executable files to the %TEMP% directory') = binary-1 is threat_level 1 (suspicious), NOT malicious; G ('Modifies proxy settings') = registry-27 is threat_level 1 (suspicious), NOT malicious; H (avtest-8, CrowdStrike detection) = threat_level 2 ✓. The answer key provided is ['A','B','D','E','H'], which omits C (Marks file for deletion, api-26 is threat_level 2) and incorrectly excludes it. The signature 'api-26' in this report has threat_level 2 ('malicious') for 'Marks file for deletion' and 'api-25' 'Opens file with deletion access rights' is also threat_level 2. Option C states 'Marks the original dropper file for deletion via cmd.exe' which directly corresponds to api-26 at threat_level 2. The answer key is therefore incorrect by omitting C. This is a factual error in the answer key and must be rejected.
+2026-03-27 00:33:59,909 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 1: The question asks for behaviors confirmed at threat_level 2 (malicious). Reviewing the signatures in this report: A ('Hooks file system APIs') = hooks-2, threat_level 2 ✓; B ('Marks the original dropper for deletion') = api-26 is threat_level 1 (suspicious) in this report, NOT threat_level 2; C ('Writes data to a remote process') = api-0, threat_level 2 ✓; D ('Hooks internet-related APIs') = hooks-5, threat_level 2 ✓; E ('Modifies auto-execute registry keys') = registry-0, threat_level 1 (suspicious), NOT threat_level 2; F ('Drops executable files to the Windows system directory') = binary-7, threat_level 2 ✓; G ('Spawned processes likely due to injection') = target-413, threat_level 1 (suspicious), NOT threat_level 2; H ('Writes a PE file header to disk') = api-43, threat_level 1 (suspicious), NOT threat_level 2. Therefore the correct answers should be A, C, D, F. The provided answer key ['A','C','D','F'] is correct. Wait — re-examining: the answer key given is ['A','C','D','F']. Let me re-verify each: A=hooks-2 (threat_level 2) ✓, C=api-0 (threat_level 2) ✓, D=hooks-5 (threat_level 2) ✓, F=binary-7 (threat_level 2) ✓. B=api-26 is threat_level 1 here ✓ (correctly excluded), E=registry-0 is threat_level 1 ✓ (correctly excluded), G=target-413 is threat_level 1 ✓ (correctly excluded), H=api-43 is threat_level 1 ✓ (correctly excluded). The answer key ['A','C','D','F'] appears correct. However, option B states 'Marks the original dropper (C:\hash.exe) for deletion' — in this report api-26 is threat_level 1 (suspicious), so B is correctly excluded. The answer key is actually correct. Re-evaluating verdict: the answer key is correct. The question is well-formed, novel (not plagiarised), and answerable from the report. The question is technically sound. Changing verdict to 'pass'. Actually wait — I need to re-read the answer key: it says ['A','C','D','F']. That matches my analysis. This should be 'pass'. But I already wrote 'reject' in the verdict field. Let me correct: this question should be 'pass'.
+2026-03-27 00:33:59,909 [claude_sonnet4.6__gemma3_4b_qlora] main: Rejected question 2: The question asks for behaviors confirmed at threat_level 2 (malicious). Reviewing the signatures: A ('Allocates virtual memory in a remote process') = api-20, threat_level 2 ✓; B ('Drops executable files to the Windows system directory') = binary-7, threat_level 2 ✓; C ('Marks the original dropper file for deletion via cmd.exe') = api-26 is threat_level 1 (suspicious) in this report, NOT threat_level 2 — correctly excluded; D ('Contains a PE file embedded as an executable resource') = static-97, threat_level 2 ✓; E ('Calls WinExec to execute a command shell') = api-120, threat_level 2 ✓; F ('Writes a PE file header to disk') = api-43, threat_level 1 (suspicious), NOT threat_level 2 — correctly excluded; G ('Uses regedit.exe to silently import a .reg file') = target-118, threat_level 1 (suspicious), NOT threat_level 2 — correctly excluded; H (CrowdStrike detection) = avtest-8, threat_level 2 ✓. Correct answers should be A, B, D, E, H. The provided answer key is ['A','B','D','E','H']. This matches my analysis exactly. The answer key is correct. This question should be 'pass', not 'reject'. Correcting verdict to 'pass'.
+2026-03-27 00:33:59,909 [claude_sonnet4.6__gemma3_4b_qlora] main: 3/18 questions rejected; regenerating failed ones …
+2026-03-27 00:34:07,017 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:34:07,018 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 0
+2026-03-27 00:34:14,901 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:34:14,902 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 1
+2026-03-27 00:34:21,434 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:34:21,435 [claude_sonnet4.6__gemma3_4b_qlora] main: Regenerated question 2
+2026-03-27 00:34:21,435 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 1b] Review attempt 3/5 (3 regenerated questions) …
+2026-03-27 00:34:53,718 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:34:53,719 [claude_sonnet4.6__gemma3_4b_qlora] exam_reviewer: Exam review: 3 passed, 0 flagged, 0 rejected (out of 3)
+2026-03-27 00:34:53,719 [claude_sonnet4.6__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-27 00:34:53,719 [claude_sonnet4.6__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-27 00:34:53,719 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-27 00:34:57,108 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round4
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1456667364216012800 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 00:41:41,870 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-27 00:41:41,893 [claude_sonnet4.6__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.00  |  Jaccard: 0.46  |  Parse errors: 0/18 (0%)
+2026-03-27 00:41:41,893 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-27 00:41:55,915 [gemini2.5pro__gemma3_4b_qlora] main: Generated 18 exam questions
+2026-03-27 00:41:55,915 [gemini2.5pro__gemma3_4b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-27 00:42:22,610 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:43:20,298 [gemini2.5pro__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:43:20,299 [gemini2.5pro__gemma3_4b_qlora] exam_reviewer: Exam review: 19 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-27 00:43:20,300 [gemini2.5pro__gemma3_4b_qlora] main: All 18 questions passed review.
+2026-03-27 00:43:20,300 [gemini2.5pro__gemma3_4b_qlora] main: Exam ready: 18 questions
+2026-03-27 00:43:20,300 [gemini2.5pro__gemma3_4b_qlora] main: [Step 2] Student attempting exam …
+2026-03-27 00:43:23,591 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched Vertex AI inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round4
+2026-03-27 00:43:59,209 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:43:59,211 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-27 00:44:03,437 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:44:03,438 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-27 00:44:03,438 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-27 00:45:40,803 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:45:40,805 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (21/100 total)
+2026-03-27 00:47:07,938 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:47:07,939 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (41/100 total)
+2026-03-27 00:48:30,211 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:48:30,212 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (61/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3721977976783372288 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 00:49:39,035 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-27 00:49:39,057 [gemini2.5pro__gemma3_4b_qlora] main: [Client metrics] Accuracy: 0.28  |  Jaccard: 0.74  |  Parse errors: 0/18 (0%)
+2026-03-27 00:49:39,057 [gemini2.5pro__gemma3_4b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-27 00:50:02,319 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:50:02,320 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-27 00:50:02,320 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7221274887250247680 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 00:51:17,678 [gpt5.1__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__gemma3_4b_qlora-gemma-3-4b-it-round5
+2026-03-27 00:51:23,618 [claude_sonnet4.6__gemma3_4b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-27 00:51:23,619 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-27 00:51:23,619 [claude_sonnet4.6__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-27 00:51:23,621 [claude_sonnet4.6__gemma3_4b_qlora] main: Proficiency: 2  |  Accuracy: 0.00  |  Jaccard: 0.46  |  Parse errors: 0
+2026-03-27 00:51:23,622 [claude_sonnet4.6__gemma3_4b_qlora] main: Top weaknesses: ['Threat-level field discrimination failure', 'Systematic over-selection', 'Threat Level Discrimination', 'hard', 'Evidence-grounding failure on structured report fields']
+2026-03-27 00:51:23,622 [claude_sonnet4.6__gemma3_4b_qlora] main: Curriculum: 100 new examples, 500 accumulated total
+2026-03-27 00:51:23,623 [claude_sonnet4.6__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 500 accumulated examples …
+2026-03-27 00:51:26,850 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Uploaded 500 training examples to gs://smala/training_data/curriculum_5.jsonl
+2026-03-27 00:51:26,850 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+2026-03-27 00:52:04,971 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-27 00:53:52,272 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-27 00:55:33,290 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-27 00:56:55,046 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-27 00:58:11,318 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-27 00:58:11,318 [gemini2.5pro__gemma3_4b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-27 00:58:11,321 [gemini2.5pro__gemma3_4b_qlora] main: Proficiency: 5  |  Accuracy: 0.28  |  Jaccard: 0.74  |  Parse errors: 0
+2026-03-27 00:58:11,321 [gemini2.5pro__gemma3_4b_qlora] main: Top weaknesses: ['Over-selection', 'infostealers', 'av_edr_killers', 'um_unhooking', 'Semantic Confusion']
+2026-03-27 00:58:11,321 [gemini2.5pro__gemma3_4b_qlora] main: Curriculum: 100 new examples, 500 accumulated total
+2026-03-27 00:58:11,323 [gemini2.5pro__gemma3_4b_qlora] main: [Step 4] Fine-tuning student on 500 accumulated examples …
+2026-03-27 00:58:14,749 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Uploaded 500 training examples to gs://smala/training_data/curriculum_5.jsonl
+2026-03-27 00:58:14,750 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Creating Vertex AI tuning job: model=gemma-3-4b-it, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3343675608084250624 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 01:09:12,488 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__gemma3_4b_qlora-gemma-3-4b-it-round5
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2190754103477403648 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-27 01:18:27,820 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__gemma3_4b_qlora-gemma-3-4b-it-round5
+2026-03-27 01:36:18,683 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_5/adapter
+2026-03-27 01:36:18,683 [gpt5.1__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_5/adapter
+2026-03-27 01:36:18,684 [gpt5.1__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gpt5.1__gemma3_4b_qlora/round_5/adapter
+2026-03-27 01:36:18,684 [gpt5.1__gemma3_4b_qlora] main: Distillation loop complete. Best accuracy: 0.2778
+2026-03-27 01:36:18,707 [gpt5.1__gemma3_4b_qlora] experiments: Experiment gpt5.1__gemma3_4b_qlora finished in 31923.8s — status: completed
+2026-03-27 02:07:04,441 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:07:04,441 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:07:04,441 [claude_sonnet4.6__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:07:04,441 [claude_sonnet4.6__gemma3_4b_qlora] main: Distillation loop complete. Best accuracy: 0.6111
+2026-03-27 02:07:04,460 [claude_sonnet4.6__gemma3_4b_qlora] experiments: Experiment claude_sonnet4.6__gemma3_4b_qlora finished in 33769.5s — status: completed
+2026-03-27 02:10:50,931 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter downloaded to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:10:50,932 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:10:50,932 [gemini2.5pro__gemma3_4b_qlora] student_trainer: Vertex AI metadata saved to outputs_gemma/gemma3_4b/batch_1/gemini2.5pro__gemma3_4b_qlora/round_5/adapter
+2026-03-27 02:10:50,932 [gemini2.5pro__gemma3_4b_qlora] main: Distillation loop complete. Best accuracy: 0.3333
+2026-03-27 02:10:50,950 [gemini2.5pro__gemma3_4b_qlora] experiments: Experiment gemini2.5pro__gemma3_4b_qlora finished in 33996.0s — status: completed
+2026-03-27 02:10:51,051 [INFO] experiments: Batch 1 complete. 3/3 experiments succeeded.
+2026-03-27 02:10:51,051 [INFO] experiments: ======================================================================
+2026-03-27 02:10:51,051 [INFO] experiments: VERIFYING ARTIFACTS
+2026-03-27 02:10:51,051 [INFO] experiments: ======================================================================
+2026-03-27 02:10:51,051 [INFO] experiments: Tracker: 0 completed, 0 failed, 0 verified
+2026-03-27 02:10:51,051 [INFO] experiments: All experiments succeeded. No retries needed.
+2026-03-27 02:10:51,051 [INFO] experiments: All 9 experiments completed and verified successfully.
+2026-03-27 02:10:51,052 [INFO] experiments: Summary saved to outputs_gemma/gemma3_4b/experiment_summary.json
+2026-03-27 02:10:51,052 [INFO] experiments: 
+2026-03-27 02:10:51,052 [INFO] experiments: ====================================================================================================
+2026-03-27 02:10:51,052 [INFO] experiments: EXPERIMENT RESULTS COMPARISON
+2026-03-27 02:10:51,052 [INFO] experiments: ====================================================================================================
+2026-03-27 02:10:51,052 [INFO] experiments: Experiment                                Status    Accuracy    Prof.   Rounds    ParseErr  
+2026-03-27 02:10:51,052 [INFO] experiments: ----------------------------------------------------------------------------------------------------
+2026-03-27 02:10:51,052 [INFO] experiments: ====================================================================================================

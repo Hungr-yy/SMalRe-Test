@@ -1,0 +1,2473 @@
+{
+  "feedback": "Overall, the model shows mixed malware-analysis capability: it answers many items with substantial overlap to the gold answers (high Jaccard and recall), but exact-match accuracy is modest because it frequently selects extra distractor options. It generally understands which behaviors correspond to defense evasion, process injection, and ransomware impact, and it performs especially well on Remcos RAT questions and several MITRE ATT&CK mapping tasks. However, it struggles to be selective, often over-claiming techniques or including discovery-only behaviors as evasion or impact.\n\nScoring-wise, exact_match_accuracy is about 0.38, while avg_jaccard is high (~0.72), showing that the model usually has the right ideas but fails the strict set-matching requirement. Precision (~0.61) lags recall (~0.90), and the model selects more options on average than the gold key (2.25 vs 2.06), indicating a mild but consistent over-selection bias.\n\nStrengths include: good performance on Remcos RAT classification and network ATT&CK mappings; solid understanding of ransomware-specific impact behaviors (shadow copy deletion, wbadmin catalog deletion, bcdedit anti-recovery changes); and correct identification of many process injection and defense evasion patterns when explicitly signaled in the report. The model also has no parse/format issues.\n\nKey weaknesses: it often over-selects by adding plausible but unsupported options, especially around ATT&CK mappings and evasion vs discovery distinctions. It sometimes treats generic system or process discovery (CreateToolhelp32Snapshot, OS version checks) as if they were evasion or impact techniques, and it occasionally misreads process-injection evidence (e.g., counting self-threads or dynamic library loading as cross-process injection). These errors appear across multiple attack families (killers, ransomware, um_unhooking) and are most severe on hard questions that require fine-grained evidence-grounding.\n\nFor further training, focus on:\n- Exercises that require strict evidence-grounded inclusion: only select options explicitly supported by the detonation report and mapped ATT&CK IDs.\n- Disambiguation between discovery vs defense evasion vs impact, especially for OS/version checks, process enumeration, and file discovery APIs.\n- Precision in process injection recognition: distinguishing cross-process write/remote thread/PE header writes from in-process LoadLibrary/GetProcAddress or self-thread creation.\n- Calibration drills where the model must decide how many options to select and is penalized for over-selection.\n\nIn summary, the model is useful and shows emerging competence, but it needs targeted work on precision, ATT&CK nuance, and avoiding over-interpretation of generic discovery telemetry.",
+  "proficiency": 6,
+  "metrics": {
+    "num_questions": 19,
+    "num_exact_matches": 7,
+    "exact_match_accuracy": 0.3684210526,
+    "avg_jaccard": 0.721047619,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.6134210526,
+    "macro_option_recall": 0.9033333333,
+    "avg_predicted_answer_count": 2.2526315789,
+    "avg_gold_answer_count": 2.0526315789,
+    "answer_count_bias": "over-selecting"
+  },
+  "strengths": [
+    "Consistently high overlap with gold answers (high Jaccard and recall), indicating good recognition of relevant behaviors and techniques.",
+    "Strong performance on Remcos RAT questions, correctly identifying RAT-specific behaviors and network ATT&CK techniques.",
+    "Good understanding of ransomware impact behaviors, especially inhibit system recovery actions like vssadmin, wbadmin, and bcdedit changes.",
+    "Reasonable ability to map behaviors to MITRE ATT&CK techniques when the report explicitly labels them (e.g., obfuscation, dynamic API resolution, embedded payloads).",
+    "No parse or formatting errors; model outputs well-formed option sets for all questions."
+  ],
+  "weaknesses": [
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Over-selection of options",
+      "description": "The model frequently selects additional distractor options beyond the correct set, lowering exact-match accuracy despite good recall. This is evident where it adds plausible but unsupported behaviors or techniques.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        14,
+        17
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Discovery vs Defense Evasion vs Impact confusion",
+      "description": "The model sometimes treats generic discovery or profiling (OS version, process enumeration, system info) as if they were defense evasion or impact, leading to incorrect inclusions.",
+      "severity": "high",
+      "evidence_question_indices": [
+        0,
+        4,
+        6,
+        7,
+        8,
+        11,
+        14
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "Process injection interpretation",
+      "description": "On some items, the model misclassifies behaviors as process injection, including self-thread creation, generic module loading, or unrelated actions, instead of requiring clear cross-process memory writes and remote thread creation.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        3,
+        15,
+        17
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "av_edr_killers / process injection & evasion",
+      "description": "Within the AV/EDR killers family, the model often over-claims capabilities (e.g., process injection, masquerading, impact) beyond what is directly evidenced, indicating weaker calibration in this family.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        3,
+        4,
+        5,
+        14
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "um_unhooking / sandbox and VM evasion",
+      "description": "For unhooking and sandbox-evasion scenarios, the model tends to add extra options related to discovery or generic behavior rather than strictly those with explicit sandbox/VM-evasion evidence.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        11,
+        12,
+        15,
+        17,
+        18
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "Hard questions",
+      "description": "Performance on hard questions is notably weaker, with only 1 out of 4 answered exactly correctly and frequent over-selection, showing difficulty with fine-grained distinctions and strict evidence-grounding.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "Fine-grained ATT&CK mapping and evidence-grounded inclusion",
+      "description": "The model sometimes includes techniques that are plausible but not explicitly supported by the report\u2019s ATT&CK mappings or evidence, indicating a need for stricter evidence-grounding in ATT&CK classification.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        0,
+        5,
+        7,
+        9,
+        11,
+        14,
+        15,
+        17
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.6666666667,
+        "avg_jaccard": 0.8,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 6,
+        "exact_match_accuracy": 0.3333333333,
+        "avg_jaccard": 0.7083333333,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.25,
+        "avg_jaccard": 0.6325,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 6,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.7764285714,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 15,
+        "exact_match_accuracy": 0.4,
+        "avg_jaccard": 0.7438095238,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.25,
+        "avg_jaccard": 0.6466666667,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Defense Evasion vs Discovery": {
+        "num_questions": 2,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.6875,
+        "parse_error_rate": 0.0
+      },
+      "Fine-grained ATT&CK mapping and evidence-grounded inclusion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Process Injection and EDR/AV Evasion": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.25,
+        "parse_error_rate": 0.0
+      },
+      "EDR/AV & Sandbox Evasion vs. Generic Discovery": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.375,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.625,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping \u2013 Inhibit System Recovery vs. Discovery": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.75,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping vs. Impact and Discovery": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping (Impact vs. Discovery vs. Defense Evasion)": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.625,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping vs. Generic Behavior": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Technique Mapping (Command and Control vs. Impact)": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.7,
+        "parse_error_rate": 0.0
+      },
+      "Behavioral Analysis / ATT&CK Mapping Precision": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Technique Identification vs. Discovery": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      },
+      "MITRE ATT&CK Framework Mapping": {
+        "num_questions": 1,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.5,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Discovery vs Defense Evasion vs Impact; evidence-grounded ATT&CK mapping",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the first infostealer sample (hash.exe that drops vnc.exe and windef.exe), which behaviours are BEST mapped to MITRE Discovery techniques only (and NOT to Defense Evasion or Impact) based on the report?",
+        "options": [
+          "A. Reading installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL (T1518 Software Discovery)",
+          "B. Creating guarded memory regions with PAGE_GUARD in windef.exe (T1562.001 Disable or Modify Tools)",
+          "C. Reading the active computer name and cryptographic machine GUID (T1082 System Information Discovery)",
+          "D. Tries to map intranet network resources to internet zone (T1562.001 Disable or Modify Tools)",
+          "E. Deleting downloaded-file zone identifiers to hide internet origin (T1070.004 File Deletion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process injection interpretation; self vs remote",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (hash.exe that writes shellcode to a remote process), which evidence indicates TRUE cross-process injection rather than self-thread creation or normal module loading?",
+        "options": [
+          "A. \"hash.exe\" creates a thread in process \"-1\" (self) via CreateThread (api-264)",
+          "B. \"hash.exe\" wrote PE header bytes (\"MZP\") to a remote process and wrote shellcode instructions there (api-83 and stream-38)",
+          "C. \"hash.exe\" loaded rpcrt4.dll at runtime (module-10)",
+          "D. \"hash.exe\" allocated virtual memory in \"C:\\hash.exe\" only (no other target)",
+          "E. \"hash.exe\" wrote 32 bytes to a remote process \"C:\\Windows\\system32\\svchost.exe\" (api-0)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "AV/EDR killer vs generic spyware; evidence-grounded capability",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Chydo dropper sample (hash.exe with _family \"killers\" that drops gegdsimsogm.exe), which behaviours are directly supported as Defense Evasion and NOT merely Discovery or generic execution?",
+        "options": [
+          "A. Opening \\Device\\KsecDD and adjusting SeShutdownPrivilege (T1134 / T1529)",
+          "B. Mapping intranet network resources to internet zone (registry-179, T1562.001 Disable or Modify Tools)",
+          "C. Creating a Windows service via registry (services key) for persistence (T1543.003 Windows Service)",
+          "D. High-entropy packed sections and Safengine-like signatures (T1027 / T1027.002 Obfuscated/Software Packing)",
+          "E. CreatingToolhelp32Snapshot and Process32FirstW for process discovery (T1057 Process Discovery)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process injection recognition; avoiding over-claiming",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Sdbot-based killer sample (hash.exe that drops dlldsk32.exe), which option BEST describes the supported process injection technique, based strictly on the report?",
+        "options": [
+          "A. Generic self-thread creation only, no cross-process injection",
+          "B. Process Hollowing of svchost.exe based on CreateProcess in suspended mode and PE overwrite",
+          "C. Writing PE headers and data into a remote process, with a remote Windows system process later connecting to the network (api-0, api-83, target-269)",
+          "D. Pure DLL side-loading without any memory modifications",
+          "E. Only reflective DLL loading inside the same process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs generic discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Generic.Ransom.Small sample (hash.dll run via rundll32, spawning mssecsvc.exe), which actions are clearly mapped to Inhibit System Recovery (T1490) rather than discovery or persistence?",
+        "options": [
+          "A. Deleting volume shadows with vssadmin.exe and wmic shadowcopy delete",
+          "B. Modifying proxy settings in HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS",
+          "C. Deleting the Windows Backup catalog using wbadmin delete catalog -quiet",
+          "D. Reading the cryptographic machine GUID and computer name from the registry",
+          "E. Spawning mssecsvc.exe as a malicious service binary in %WINDIR%"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion vs Discovery; environment checks",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the HydraCrypt-like ransomware sample (hash.exe with _family \"ransomware\" that drops %APPDATA%\\svchost.exe), which behaviours are primarily Discovery/system profiling and NOT themselves Defense Evasion or Impact?",
+        "options": [
+          "A. Calling GetVersionExA, RtlGetVersion, and GetNativeSystemInfo to collect OS details",
+          "B. Using vssadmin.exe, wbadmin.exe, and bcdedit.exe to remove backups and disable recovery",
+          "C. Reading installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL",
+          "D. Adjusting token privileges and opening \\Device\\KsecDD",
+          "E. Sleeping for 1,566,804,069 milliseconds as an anti-VM delay"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware impact vs generic file I/O",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Crysis/Dharma ransomware sample (Trojan.Ransom.Crysis), which evidence most directly supports 'Data Encrypted for Impact' (T1486) rather than just heavy file access?",
+        "options": [
+          "A. Dropping many files, including ASP/PHP and DLLs with added ID and email extensions",
+          "B. Opening more than 500 files with write access (api-49) combined with high-entropy dropped files and AES-encryption YARA hits",
+          "C. Deleting autoexec.bat and marking it for deletion",
+          "D. Creating new Windows services via registry (registry-67)",
+          "E. Hooking file system APIs in mode.com"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Evidence-grounded answer-count calibration",
+        "difficulty": "easy",
+        "detonation_report": {},
+        "question": "In the Generic.Ransom.Small .NET ransomware sample (hash.exe), which of the following are explicitly observed anti-recovery actions?",
+        "options": [
+          "A. Running vssadmin delete shadows /all /quiet",
+          "B. Executing wbadmin delete catalog -quiet",
+          "C. Modifying bcdedit to ignore boot failures and disable recovery",
+          "D. Encrypting the MBR to prevent booting",
+          "E. Deleting the Windows event logs"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Discovery vs Defense Evasion; security software discovery",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Regrun-based killer sample (Trojan.Regrun), which behaviour is clearly Security Software Discovery (T1518.001) rather than a direct evasion or impact action?",
+        "options": [
+          "A. Searching for RegEdit_RegEdit window classes via FindWindow (api-70)",
+          "B. Reading antivirus-related registry keys and installed applications lists",
+          "C. Hooking WinExec and file APIs inside IExplorer.exe",
+          "D. Modifying proxy settings to disable system-wide proxy",
+          "E. Writing services.exe into %LOCALAPPDATA%\\Services"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Sandbox/VM evasion vs generic discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the large BrsecmonE/Tofsee-related sample (hash.exe with _family \"um_unhooking\"), which behaviours are clearly Virtualization/Sandbox Evasion (T1497) rather than generic system discovery?",
+        "options": [
+          "A. Reading HKLM\\SOFTWARE\\VMWARE, INC.\\VMWARE TOOLS and using GetTimeZoneInformation with execution guardrails (stream-39)",
+          "B. Calling GetNativeSystemInfo and GetLogicalDriveStringsA to enumerate hardware and drives",
+          "C. Loading dbghelp.dll and querying SystemProcessInformation",
+          "D. Touching many files in the Windows directory via FindFirstFileW and CreateFile",
+          "E. Adjusting token privileges and opening \\Device\\KsecDD"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "User-mode unhooking vs normal API usage",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Fragtor/Llac sample (hash.exe with _family \"um_unhooking\"), which evidence most strongly suggests potential user-mode unhooking or stealthy instrumentation rather than benign behaviour?",
+        "options": [
+          "A. High-entropy .text section and Safengine Shielden packer signatures",
+          "B. Importing many APIs dynamically via GetProcAddress and LoadLibrary",
+          "C. Exporting an unusually large number of functions (static-98) and using APC-based remote thread queuing (api-85 NtQueueApcThread)",
+          "D. Reading HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\NLS\\Language",
+          "E. Touching hash.exe.Local in the current directory"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "ATT&CK mapping; Execution vs Persistence vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Fugrafa/Safengine-packed sample (hash.exe with _family \"um_unhooking\"), which techniques are explicitly supported as Defense Evasion (not just Execution or Persistence) in the report?",
+        "options": [
+          "A. Obfuscated Files or Information via Safengine Shielden and high-entropy sections (T1027/T1027.002/T1027.009)",
+          "B. Loading the .NET runtime (mscoree) for managed code execution (T1129)",
+          "C. Writing data to a remote process \"C:\\hash.exe\" (api-0) without any remote network activity",
+          "D. Hiding download origin by opening and manipulating C:\\hash.exe:Zone.Identifier (api-42, api-25)",
+          "E. Creating a Windows service sqlsec.exe for persistence (registry-67, binary-1)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Family identification from behaviour; avoiding over-claiming",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Based only on the first infostealer sample (hash.exe that drops vnc.exe and windef.exe, performs keylogging and browser credential theft), which malware family classification is BEST supported?",
+        "options": [
+          "A. Pure ransomware focused on encryption and backup deletion",
+          "B. Infostealer/spyware with credential theft and screen capture",
+          "C. AV/EDR killer focused solely on disabling security tools",
+          "D. Worm primarily spreading via removable media",
+          "E. Benign remote administration tool with user consent"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process injection vs simple persistence; evidence threshold",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Regrun-based killer sample (Trojan.Regrun), which option best summarises the supported process injection behaviour, distinguishing it from mere service creation or file drops?",
+        "options": [
+          "A. Only creating Windows services in %APPDATA%\\WINDOWS; no cross-process memory writes observed",
+          "B. Writing data and allocating memory in remote processes (api-0, api-20) and then hooking APIs in IExplorer.exe (hooks-0, hooks-2, hooks-5), indicating code injection into that process",
+          "C. Using only AppInit_DLLs persistence with no runtime injection",
+          "D. Pure DLL side-loading via services.exe in a system folder",
+          "E. No injection; all behaviour is in hash.exe itself"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evasion vs Discovery; anti-VM tricks",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Fugrafa/Safengine-packed sample (hash.exe with _family \"um_unhooking\"), which observed behaviours are clearly anti-VM/sandbox evasion (T1497) rather than generic system information discovery?",
+        "options": [
+          "A. Using CPUID trick and RDTSCP timing checks in sample.bin (binary-8, binary-26)",
+          "B. Reading HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\NLS\\Language",
+          "C. Touching mscoree.dll and loading the .NET runtime",
+          "D. Reading the cryptographic machine GUID and computer name",
+          "E. Creating a Windows service sqlsec.exe"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "ATT&CK mapping: Inhibit System Recovery vs Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the HydraCrypt-like ransomware (hash.exe with _family \"ransomware\"), which of the following are correctly mapped to Inhibit System Recovery (T1490) as opposed to general Defense Evasion (e.g., T1562.001)?",
+        "options": [
+          "A. Disabling Task Manager via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM\\DISABLETASKMGR",
+          "B. Running bcdedit to set bootstatuspolicy ignoreallfailures and recoveryenabled no",
+          "C. Deleting volume shadow copies via vssadmin and wmic shadowcopy delete",
+          "D. Deleting browser history and cache from user profiles",
+          "E. Deleting the Windows Backup catalog with wbadmin delete catalog -quiet"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Discovery vs Evasion; precision in ATT&CK mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Remcos RAT sample (hash.exe that drops %APPDATA%\\remcos\\remcos.exe and hab.exe), which activities are Discovery only and should NOT be classified as Defense Evasion by themselves?",
+        "options": [
+          "A. Reading installed applications and Windows trust settings via registry (registry-55, registry-20)",
+          "B. Modifying HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS\\PROXY* values",
+          "C. Hooking WinExec, send@WS2_32.DLL, and FindFirstFileW in IExplorer.exe",
+          "D. Creating autorun entries in HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\RUN",
+          "E. Marking files for deletion in %LOCALAPPDATA%\\Temp"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Correct answer-count calibration; injection vs discovery vs persistence",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Regrun-based killer sample, which of the following are explicitly supported as Process Injection (T1055.*) techniques and NOT just persistence or discovery?",
+        "options": [
+          "A. Allocating virtual memory in a remote process C:\\hash.exe and writing 32 bytes there (api-20, api-0)",
+          "B. Creating Windows services in %APPDATA%\\WINDOWS for LSASS.EXE and WINLOGON.EXE",
+          "C. Hooking file system and network APIs in IExplorer.exe (hooks-0, hooks-2, hooks-5)",
+          "D. Scanning for RegEdit_RegEdit windows via FindWindow (api-70)",
+          "E. Dropping services.exe to %LOCALAPPDATA% and setting Run keys"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "MITRE mapping precision; Execution vs Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the BrsecmonE/Tofsee-related sample (hash.exe, _family \"um_unhooking\"), which behaviours are clearly Execution (T1106/T1059/T1569.002) rather than Defense Evasion?",
+        "options": [
+          "A. Creating and starting the xtblsmos service via sc.exe with rtmxemaq.exe as binPath",
+          "B. Modifying the Windows firewall rules via netsh advfirewall firewall add rule",
+          "C. Writing PE headers into a remote process and creating it in suspended mode (api-83, api-129)",
+          "D. Dropping rtmxemaq.exe into %WINDIR%\\system32\\xtblsmos\\",
+          "E. Contacting SMTP and HTTP endpoints over non-standard ports"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process injection vs self-thread creation; evidence-grounded ATT&CK mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (hash.exe spawning vnc.exe and windef.exe), which option best describes the process injection behaviour that is actually evidenced, without over-interpreting self-threads or generic module loading?",
+        "options": [
+          "A. The sample performs cross-process injection by writing data and PE headers into a remote process and creating it in suspended mode.",
+          "B. The sample only creates threads in its own process and therefore does not perform any form of process injection.",
+          "C. The sample performs DLL injection solely via LoadLibrary calls within its own process.",
+          "D. The sample uses AppInit DLLs to inject into all GUI processes on the system."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Discovery vs Defense Evasion vs Impact (system & process discovery only)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the second infostealer sample (hash.exe spawning rundll32.exe and notepad_.exe), which behaviour is purely discovery and should NOT be classified as defense evasion or impact by itself?",
+        "options": [
+          "A. \"hash.exe\" calling CreateToolhelp32Snapshot and Process32FirstW to enumerate processes.",
+          "B. \"hash.exe\" modifying proxy settings under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS.",
+          "C. \"rundll32.exe\" creating or modifying Windows services via HKLM\\SYSTEM\\CurrentControlSet\\Services.",
+          "D. \"hash.exe\" writing PE headers to disk to drop notepad_.exe."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process injection recognition vs generic API usage (CreateProcess in suspended mode, PE header writes)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample (hash.exe spawning dlldsk32.exe and cmd.exe), which option most accurately captures the process injection technique evidenced, without adding unsupported variants?",
+        "options": [
+          "A. Generic process injection using WriteProcessMemory and CreateProcess in suspended mode, with PE headers written into the remote process.",
+          "B. APC-based injection, as indicated by NtQueueApcThread calls into a remote process.",
+          "C. Reflective DLL loading entirely within the current process, with no cross-process writes.",
+          "D. Process Doppelg\u00e4nging, as indicated by transactions on the NTFS file system."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Discovery vs Defense Evasion (firewall modification vs system info)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the BrsecmonE killer sample (hash.exe creating xtblsmos service and modifying firewall rules via netsh.exe), which behaviour is clearly defense evasion rather than simple discovery?",
+        "options": [
+          "A. netsh.exe adding a firewall rule to allow inbound traffic for %WINDIR%\\system32\\svchost.exe.",
+          "B. hash.exe reading HKLM\\SYSTEM\\ControlSet001\\Control\\Nls\\Language to get the system language.",
+          "C. svchost.exe calling GetAdaptersInfo to enumerate network adapters.",
+          "D. hash.exe querying RtlGetVersion to obtain OS version information."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs generic discovery (vssadmin, wbadmin, bcdedit)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Generic.Ransom.Small sample that drops %APPDATA%\\svchost.exe and runs vssadmin, WMIC, bcdedit, and wbadmin, which combination of actions should be mapped to Inhibit System Recovery (T1490), without including unrelated discovery?",
+        "options": [
+          "A. vssadmin delete shadows /all /quiet, wmic shadowcopy delete, and wbadmin delete catalog -quiet.",
+          "B. GetVersionExA OS version query and GetNativeSystemInfo CPU architecture discovery.",
+          "C. AdjustTokenPrivileges to enable SeDebugPrivilege.",
+          "D. CreateToolhelp32Snapshot and Process32FirstW to enumerate running processes."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Data Encrypted for Impact vs note dropping and recovery inhibition",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the HydraCrypt.Generic ransomware sample (hash.exe and %APPDATA%\\svchost.exe dropping many files and read_it.txt ransom notes), which evidence best supports classification as Data Encrypted for Impact (T1486), rather than only note dropping or system recovery inhibition?",
+        "options": [
+          "A. svchost.exe writing more than 1900 files and the presence of ransom note text such as \"Your computer was infected with a ransomware virus\".",
+          "B. hash.exe sleeping for 1,566,804,069 milliseconds using Sleep (time-based evasion).",
+          "C. svchost.exe disabling Task Manager via registry under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\POLICIES\\SYSTEM.",
+          "D. vssadmin.exe, WMIC.exe, and wbadmin.exe commands that delete shadows and backup catalog."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "ATT&CK mapping: Discovery vs Impact vs Defense Evasion in Crysis/Dharma-like sample",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Crysis/Dharma ransomware sample (hash.exe dropping many files with id-085CDA53 and using vssadmin.exe), which behaviour should be mapped to Impact: Inhibit System Recovery (T1490), and not to Discovery or generic file access?",
+        "options": [
+          "A. vssadmin.exe deleting volume shadow copies via \"vssadmin delete shadows /all /quiet\".",
+          "B. hash.exe calling FindFirstFileW to enumerate files on disk.",
+          "C. hash.exe reading HKLM\\SYSTEM\\ControlSet001\\Control\\Nls\\Language to get system language.",
+          "D. hash.exe touching files in Program Files and Windows directories."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Evidence-grounded answer-count calibration (only one correct ATT&CK tactic)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the WannaCry-related DLL sample (hash.dll run via rundll32.exe and spawning mssecsvc.exe), the report shows mass ARP scanning, dropped tasksche.exe, and Suricata alerts for WannaCry DNS. Which single ATT&CK tactic is best represented by the ARP broadcast behaviour alone?",
+        "options": [
+          "A. Discovery (Remote System Discovery / Network Scanning).",
+          "B. Impact (Data Encrypted for Impact).",
+          "C. Defense Evasion (Indicator Removal).",
+          "D. Initial Access (Drive-by Compromise)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "EDR/AV killing vs generic security discovery (Regrun sample)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Regrun killer sample (hash.exe dropping services.exe and spawning many fake system processes like WINLOGON.EXE and LSASS.EXE from %APPDATA%\\WINDOWS), which behaviour clearly indicates credential or security tooling hooking (T1056.004) rather than simple process creation?",
+        "options": [
+          "A. IExplorer.exe hooking WinExec, FindFirstFileW, and send@WS2_32.DLL as shown by Hook Detection signatures.",
+          "B. hash.exe copying itself to services.exe in the user AppData directory.",
+          "C. hash.exe touching unusual drive letters K:, L:, and M:.",
+          "D. D3_08.exe being launched from %WINDIR% multiple times."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Masquerading vs legitimate system binaries (fake system paths)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Still in the Regrun killer sample, which behaviour is a clear example of Masquerading (T1036.005), and should not be confused with a legitimate system component?",
+        "options": [
+          "A. Processes WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, and SMSS.EXE executing from %APPDATA%\\WINDOWS\\ rather than \\Windows\\System32\\.",
+          "B. hash.exe calling GetVersionExA to obtain OS version information.",
+          "C. hash.exe reading desktop.ini configuration files.",
+          "D. hash.exe opening \\Device\\KsecDD."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM unhooking vs generic discovery (Safengine-packed um_unhooking sample)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Safengine Shielden packed um_unhooking sample (hash.exe only, no children), which evidence supports a user-mode unhooking / anti-analysis interpretation rather than generic discovery alone?",
+        "options": [
+          "A. hash.exe reading ntdll.dll and mscoree.dll from disk combined with high-entropy .text and .rdata sections and Safengine packing signatures.",
+          "B. hash.exe calling CreateDirectoryW to create a new folder.",
+          "C. hash.exe calling GetLogicalDriveStringsW to enumerate drives.",
+          "D. hash.exe querying HKLM\\SYSTEM\\ControlSet001\\Control\\Nls\\Language for system language."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "VM/sandbox detection vs generic system info (CPUID/RDTSCP tricks)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample that contains CPUID and RDTSCP tricks (hash.exe, with CPUID and RDTSCP artifacts in sample.bin), which behaviour is specifically indicative of Virtualization/Sandbox Evasion (T1497) rather than ordinary system information discovery?",
+        "options": [
+          "A. Presence of CPUID- and RDTSCP-based timing checks in the binary to detect virtualized environments.",
+          "B. Calls to GetNativeSystemInfo to retrieve CPU architecture.",
+          "C. Calls to GetVersionExA to retrieve OS version.",
+          "D. Reading the active computer name from HKLM\\SYSTEM\\ControlSet001\\Control\\ComputerName."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion vs Discovery (firewall and event log manipulation)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample (which is also tagged as um_unhooking), which behaviour combination should be classified as Defense Evasion (T1562 / T1070) rather than Discovery?",
+        "options": [
+          "A. Use of ClearEventLogA and OpenEventLogA to clear Windows event logs, plus DeleteFileA to remove files.",
+          "B. Use of GetComputerNameA and gethostname to retrieve local hostnames.",
+          "C. Use of GetLogicalDriveStringsA to enumerate drives.",
+          "D. Use of tasklist.exe and CreateToolhelp32Snapshot to enumerate processes."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "ATT&CK mapping: Execution Guardrails vs generic environment checks",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Dropper.Generic.Dacic.3035 killer sample (hash.exe dropping gegdsimsogm.exe and using multiple time and locale APIs), which evidence most strongly supports Execution Guardrails (T1480) instead of plain discovery?",
+        "options": [
+          "A. Indicator combination summary explicitly noting \"Shows ability to use execution guardrails\" along with multiple time and locale checks used to gate execution.",
+          "B. Single call to GetSystemTimeAsFileTime.",
+          "C. Single call to GetLocaleInfoA to retrieve system locale.",
+          "D. Reading HKLM\\SOFTWARE\\POLICIES\\MICROSOFT\\Windows for software policies."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Discovery vs Persistence vs Defense Evasion (Remcos service & autorun)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Backdoor.Remcos sample (hash.exe dropping %TEMP%\\hab.exe and %APPDATA%\\remcos\\remcos.exe), which behaviour is clearly Persistence (T1547.001) rather than just discovery or initial execution?",
+        "options": [
+          "A. hab.exe creating HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run entries pointing to remcos.exe.",
+          "B. hash.exe reading C:\\Windows\\win.ini.",
+          "C. hash.exe opening \\Device\\KsecDD.",
+          "D. remcos.exe calling GetLogicalDriveStringsW."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Network ATT&CK mapping vs Impact (Remcos HTTP C2)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the same Remcos sample, network telemetry shows HTTP connections from remcos.exe using custom user-agents and C2-like domains. Which ATT&CK technique best fits this behaviour, without over-claiming impact?",
+        "options": [
+          "A. Command and Control: Web Protocols (T1071.001).",
+          "B. Impact: Data Encrypted for Impact (T1486).",
+          "C. Discovery: System Network Configuration Discovery (T1016).",
+          "D. Initial Access: Phishing (T1566)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Credential Access vs Discovery (browser data and keylogging APIs)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (hash.exe spawning vnc.exe and windef.exe), which behaviour is correctly mapped to Credential Access rather than generic discovery?",
+        "options": [
+          "A. Use of GetAsyncKeyState and CreateCompatibleBitmap (screen capture and keylogging) combined with access to browser data files under %APPDATA%\\...\\Profiles.",
+          "B. Calls to CreateToolhelp32Snapshot and Process32FirstW.",
+          "C. Calls to GetVersionExA and RtlGetVersion.",
+          "D. DNS queries to ip-api.com to determine external IP."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Ingress Tool Transfer vs local execution (dropping vnc.exe and SystemPropertiesPerformance.exe)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the same infostealer sample, hash.exe writes PE headers to disk and drops %TEMP%\\vnc.exe and %USERPROFILE%\\btpanui\\SystemPropertiesPerformance.exe, then schedules a task to run the latter. Which ATT&CK technique does this best represent, without conflating it with lateral movement?",
+        "options": [
+          "A. Command and Control: Ingress Tool Transfer (T1105) for bringing additional tools onto the host.",
+          "B. Lateral Movement: Remote Services (T1021) because services.exe is used.",
+          "C. Impact: Data Encrypted for Impact (T1486).",
+          "D. Initial Access: Drive-by Compromise (T1189)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion vs Discovery (environment checks, system info)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Which of the following behaviours in this infostealer sample represent DISCOVERY rather than DEFENSE EVASION techniques?",
+        "options": [
+          "A. Reading the active computer name and cryptographic machine GUID from the registry",
+          "B. Creating guarded memory regions with PAGE_GUARD to hinder memory dumping",
+          "C. Calling GetNativeSystemInfo and GetVersionExA to gather OS and hardware details",
+          "D. Making a code branch decision directly after GetLocalTime (time-based check)",
+          "E. Reading the registry for installed applications under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process Injection interpretation (self-thread vs remote injection)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Based on this infostealer detonation, which evidence indicates TRUE cross-process injection rather than benign self-thread creation?",
+        "options": [
+          "A. \"hash.exe\" creates a thread in process \"-1\" (self) using CreateThread",
+          "B. \"hash.exe\" wrote 32 bytes to a remote process and then wrote a PE header (\"MZP\") into that remote process",
+          "C. \"hash.exe\" loads rpcrt4.dll and resolves RPC functions dynamically",
+          "D. Hybrid Analysis reports: \"Writes shellcode to a remote process\" in another process",
+          "E. \"hash.exe\" calls LoadLibrary and GetProcAddress within its own address space"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection vs Discovery in AV/EDR killer",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the AV/EDR killer sample \"Dropper.Generic.Dacic.3035\", which options are supported as PROCESS INJECTION techniques (MITRE T1055 variants) rather than mere discovery or static capability?",
+        "options": [
+          "A. \"hash.exe\" wrote 32 bytes to a remote process \"C:\\hash.exe\"",
+          "B. Dotnet strings reference VirtualFree and other injection-related APIs, but no runtime use is logged",
+          "C. \"hash.exe\" creates a thread in process \"-1\" (self) using CreateThread",
+          "D. \"hash.exe\" queried SystemProcessInformation via NtQuerySystemInformation",
+          "E. The static parser shows imports for AddAccessAllowedAce and token APIs"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion vs Discovery vs Impact (registry and services)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the \"Trojan.Regrun\" sample, which behaviours are clearly DEFENSE EVASION (T1562 / T1036) rather than Discovery or Impact?",
+        "options": [
+          "A. Creating fake system processes WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE and SMSS.EXE in %APPDATA%\\WINDOWS",
+          "B. Scanning for the RegEdit_RegEdit window class",
+          "C. Touching many unusual drive letters (K:, L:, etc.)",
+          "D. Marking numerous dropped executables in user profile paths for deletion",
+          "E. Dropping services.exe into %LOCALAPPDATA% and copying hash.exe to D3_08.exe under %WINDIR%"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Virtualization/Sandbox Evasion vs generic Discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the UM-unhooking sample \"Trojan.BrsecmonE\", which behaviours are explicitly indicative of VIRTUALIZATION/SANDBOX EVASION (T1497) rather than generic system discovery?",
+        "options": [
+          "A. Querying GetSystemTimeAsFileTime and immediately branching on the result",
+          "B. Reading HKLM\\SOFTWARE\\VMWARE, INC.\\VMWARE TOOLS registry keys",
+          "C. Using GetLogicalDriveStringsA to list logical drives",
+          "D. Querying GlobalMemoryStatus and GetSystemInfo to profile hardware",
+          "E. Loading dbghelp.dll from %WINDIR%\\System32"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion vs Discovery (firewall and AV tampering)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the \"Trojan.BrsecmonE\" detonation, which actions are DEFENSE EVASION by modifying security controls (T1562) rather than simple discovery?",
+        "options": [
+          "A. netsh.exe command: advfirewall firewall add rule name=\"Host-process for services of Windows\" dir=in action=allow program=\"%WINDIR%\\system32\\svchost.exe\" enable=yes>nul",
+          "B. Reading HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\NLS\\LANGUAGE for installation language",
+          "C. Reading installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL",
+          "D. Opening \\Device\\KsecDD from userland",
+          "E. Querying EnumServicesStatusW and service-related registry keys"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs generic Discovery",
+        "difficulty": "easy",
+        "detonation_report": {},
+        "question": "For the .NET ransomware sample \"Generic.Ransom.Small\", which actions specifically map to Inhibit System Recovery (T1490) rather than general execution or discovery?",
+        "options": [
+          "A. vssadmin.exe delete shadows /all /quiet",
+          "B. wmic shadowcopy delete",
+          "C. bcdedit /set {default} bootstatuspolicy ignoreallfailures",
+          "D. bcdedit /set {default} recoveryenabled no",
+          "E. Reading browser cache files from %APPDATA%"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware impact vs credential theft / infostealing",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the same \"Generic.Ransom.Small\" ransomware, which behaviours represent DATA ENCRYPTED FOR IMPACT (T1486) or its direct indicators, as opposed to infostealing or credential access?",
+        "options": [
+          "A. \"svchost.exe\" writing more than 100 files with double extensions",
+          "B. \"svchost.exe\" accessing browser cache and mail files under %APPDATA%",
+          "C. Dropping and marking for deletion Tor-related binaries under C:\\TorService",
+          "D. Reading Windows Credential Manager data",
+          "E. Deleting backup catalog via wbadmin delete catalog -quiet"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion vs Discovery (anti-analysis & guarded memory)",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the \"Ransom.HydraCrypt.Generic\" sample, which behaviours are clearly DEFENSE EVASION (anti-analysis) rather than simple environment discovery?",
+        "options": [
+          "A. Allocating memory with PAGE_GUARD to make dumping harder",
+          "B. Calling GetNativeSystemInfo to retrieve CPU architecture",
+          "C. Sleeping for 1,566,804,069 milliseconds",
+          "D. Reading the active computer name and machine GUID from the registry",
+          "E. Adjusting SE_DEBUG_PRIVILEGE on its own process"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Precise ATT&CK mapping \u2013 Inhibit System Recovery vs Impact vs Discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For \"Trojan.Ransom.Crysis\" (Dharma) detonation, which options correctly map to Inhibit System Recovery (T1490) ONLY, not generic discovery or other impact?",
+        "options": [
+          "A. vssadmin delete shadows /all /quiet",
+          "B. Dropping hundreds of encrypted files and ransom notes across the filesystem",
+          "C. bcdedit modifications (not observed in this sample)",
+          "D. wbadmin delete catalog -quiet (not observed in this sample)",
+          "E. AdjustTokenPrivileges by vssadmin.exe when deleting shadow copies"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection technique classification (APC vs others)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the UM-unhooking sample \"Fragtor.Generic\" (Trojan.Llac), which evidence specifically supports Asynchronous Procedure Call (APC) injection (T1055.004) rather than other T1055 sub-techniques or non-injection behavior?",
+        "options": [
+          "A. \"hash.exe\" creates a thread in its own process (handle -1)",
+          "B. \"hash.exe\" calls NtQueueApcThread on a remote thread handle",
+          "C. \"hash.exe\" writes shellcode bytes into its own address space",
+          "D. \"hash.exe\" loads dbghelp.dll and enumerates modules",
+          "E. \"hash.exe\" allocates virtual memory in a remote process but never queues an APC"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "UM-unhooking / EDR evasion vs generic module loading",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In \"Fugrafa.Generic\" (Safengine Shielden packed), which behaviours best support a conclusion of USER-MODE UNHOOKING / EDR BYPASS rather than just normal module loading?",
+        "options": [
+          "A. Reading ntdll.dll from disk and touching mscoree.dll before executing managed code",
+          "B. Loading ntdll.dll, kernel32.dll, and resolving many APIs by ordinal from .text section",
+          "C. Using Safengine Shielden packer with high-entropy .text and .sedata sections that reconstruct import tables at runtime",
+          "D. Calling GetLogicalDriveStringsW to enumerate drives",
+          "E. Copying hash.exe to sqlsec.exe and dropping it to disk"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Network ATT&CK vs Impact \u2013 C2 vs data destruction",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the malicious Excel document exploiting CVE-2017-0199, which behaviours are clearly COMMAND AND CONTROL (T1071/T1132) rather than impact or initial access?",
+        "options": [
+          "A. GET /430/nhu/sheisbestforbetterforgoodthingstoget HTTP/1.1 to link.emcdn.ru with Base64/Base62 content",
+          "B. Dropping hash.xls.lnk into %APPDATA% to persist the lure document",
+          "C. Using HTTPS to <IPv4>:443 with TLSv1.2 and custom JA3 fingerprints",
+          "D. Creating hash.xls.LNK in the user\u2019s Startup folder",
+          "E. Displaying malicious macro content to the user"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Discovery vs Defense Evasion vs Persistence (Remcos chain)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Remcos infection chain (hash.exe -> hab.exe -> WScript.exe -> remcos.exe), which actions are PERSISTENCE mechanisms rather than discovery or evasion?",
+        "options": [
+          "A. hab.exe creating HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run entry pointing to %TEMP%\\hab.exe",
+          "B. hash.exe reading HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL to list installed applications",
+          "C. remcos.exe launched with modified environment from %APPDATA%\\remcos\\remcos.exe",
+          "D. hash.exe touching C:\\Windows\\win.ini and C:\\MSVBVM60.DLL",
+          "E. hash.exe modifying proxy settings under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion vs Discovery \u2013 proxy and AV-related registry",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Within the Remcos sample, which behaviours are DEFENSE EVASION (T1562/T1036) rather than just system profiling?",
+        "options": [
+          "A. Modifying proxy settings via DELETEVAL on HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS\\ProxyServer",
+          "B. Reading HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY\\MACHINEGUID",
+          "C. Reading HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\COMPUTERNAME\\ACTIVE COMPUTERNAME",
+          "D. Dropping remcos.exe into %APPDATA%\\remcos and launching it via cmd /c",
+          "E. Reading antivirus engine registry keys under HKLM\\SOFTWARE\\TENCENT\\PLATFORM_..."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "MITRE ATT&CK mapping \u2013 Process Injection sub-techniques",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Sdbot-based AV/EDR killer sample (Sdbot.Generic), which options are explicitly supported as PROCESS INJECTION sub-techniques (T1055.002, T1055.012, etc.) and should be mapped as such, rather than generic process creation or API use?",
+        "options": [
+          "A. \"hash.exe\" wrote PE header bytes (\"hash\") to a remote process and then created that process in suspended mode",
+          "B. \"hash.exe\" simply called CreateProcessA to spawn cmd.exe with a batch file",
+          "C. \"hash.exe\" created a thread in its own process only (handle -1)",
+          "D. \"hash.exe\" allocated memory in a remote process and wrote 32 bytes to it",
+          "E. The presence of UPX packing and high-entropy sections in UPX0/UPX1"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Evidence-grounded inclusion \u2013 Code signing vs obfuscation",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the UM-unhooking sample \"Generic Trojan\" (Safengine Shielden packed, code-signed), which behaviours justify mapping to Code Signing (T1553.002) and Obfuscated Files or Information (T1027) respectively?",
+        "options": [
+          "A. The PE is signed with a valid certificate issued to a third-party publisher",
+          "B. The sample has high-entropy .text and .rdata sections and Safengine Shielden packer signature",
+          "C. The malware reads HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\NLS\\LANGUAGE",
+          "D. It calls GetLogicalDriveStringsW to enumerate drives",
+          "E. It drops sqlsec.exe as an unpacked payload"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Answer-count calibration \u2013 single correct ATT&CK mapping",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the WannaCry-like DLL sample (CVE-2017-0147, mssecsvc.exe), which behaviour is best mapped to Data Encrypted for Impact (T1486)?",
+        "options": [
+          "A. Large number of ARP broadcasts and scanning many hosts on SMB ports",
+          "B. Dropping tasksche.exe detected as malicious ransomware component",
+          "C. Contacting the kill-switch domain www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com",
+          "D. Opening services via OpenSCManager and OpenService APIs",
+          "E. Modifying IE proxy settings via HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Answer-count calibration \u2013 limiting to supported techniques",
+        "difficulty": "easy",
+        "detonation_report": {},
+        "question": "In the first infostealer sample, which single option is clearly a CREDENTIAL ACCESS behaviour (MITRE Credential Access tactic) rather than generic collection or discovery?",
+        "options": [
+          "A. Keylogging via GetAsyncKeyState in the Sdbot sample (not present here)",
+          "B. Accessing browser credential stores under Credentials from Web Browsers (T1555.003) as reported in mitre_attcks",
+          "C. Reading HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\NLS\\LANGUAGE for locale",
+          "D. Taking screenshots via CreateCompatibleBitmap",
+          "E. Enumerating processes with CreateToolhelp32Snapshot"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "MITRE ATT&CK mapping \u2013 evidence vs plausible but unsupported",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the first infostealer sample (Trojan.Generic, hash.exe spawning vnc.exe and windef.exe), which ATT&CK techniques are DIRECTLY evidenced by the report and should be selected? Focus on what is explicitly supported, not what is merely plausible.",
+        "options": [
+          "A. T1055 \u2013 Process Injection",
+          "B. T1071.001 \u2013 Web Protocols",
+          "C. T1005 \u2013 Data from Local System",
+          "D. T1497 \u2013 Virtualization/Sandbox Evasion",
+          "E. T1562.001 \u2013 Disable or Modify Tools",
+          "F. T1083 \u2013 File and Directory Discovery"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Process injection \u2013 cross\u2011process vs self activity",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (Trojan.Generic, hash.exe spawning vnc.exe and windef.exe), which option best describes the process injection activity that is explicitly observed?",
+        "options": [
+          "A. Only self\u2011thread creation is observed; there is no process injection.",
+          "B. hash.exe allocates memory and writes shellcode into a remote process, then starts execution there.",
+          "C. windef.exe loads .NET runtime but does not perform any cross\u2011process memory operations.",
+          "D. vnc.exe injects code into svchost.exe using standard DLL loading."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process injection recognition and non\u2011injection behaviors",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the killer sample \"Trojan.Chydo\" (hash.exe dropping gegdsimsogm.exe), which behaviors constitute clear evidence of PROCESS INJECTION (T1055 family) as opposed to simple execution or discovery?",
+        "options": [
+          "A. hash.exe creates a thread in its own process (CreateThread / api-264).",
+          "B. hash.exe writes 32 bytes to a remote process and allocates virtual memory in that process.",
+          "C. hash.exe drops a new PE file (gegdsimsogm.exe) to disk.",
+          "D. The report shows import and string references to VirtualFree and other injection\u2011related APIs, but no runtime cross\u2011process writes.",
+          "E. hash.exe queries SystemProcessInformation via NtQuerySystemInformation (api-9)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense evasion vs discovery \u2013 registry and services",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample (hash.exe dropping dlldsk32.exe and modifying firewall and proxy settings), which activities are clearly DEFENSE EVASION (T1562.* / T1112) rather than mere discovery?",
+        "options": [
+          "A. Reading installed applications from HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall.",
+          "B. Modifying proxy settings via registry value deletion (registry-27).",
+          "C. Using netsh.exe to add a firewall rule allowing svchost.exe inbound connections.",
+          "D. Querying TCP/IP interface details from the registry (registry-130).",
+          "E. Reading antivirus\u2011related registry keys (registry-32)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Sandbox/VM evasion vs generic environment discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the um_unhooking sample \"Trojan.BrsecmonE\" (hash.exe dropping rtmxemaq.exe and using netsh/sc), which behaviors are explicit evidence of VIRTUALIZATION/SANDBOX EVASION (T1497) rather than generic system profiling?",
+        "options": [
+          "A. Reading the active computer name and cryptographic machine GUID from the registry.",
+          "B. Calling GetVersionExA, RtlGetVersion, and GetNativeSystemInfo to enumerate OS version and architecture.",
+          "C. Using GetTimeZoneInformation with an immediate branch decision (stream-39).",
+          "D. Querying for VMware\u2011specific registry keys or strings (e.g., \"SOFTWARE\\VMware, Inc.\").",
+          "E. Spawning many processes and writing data to a remote process."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense evasion vs discovery \u2013 environment checks",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample \"Trojan.BrsecmonE\", which of the following should be classified as DISCOVERY (T1082/T1057) rather than DEFENSE EVASION, based on the report?",
+        "options": [
+          "A. IsWow64Process checks to determine process architecture.",
+          "B. netsh.exe modifying firewall rules to allow svchost.exe inbound.",
+          "C. Reading installed applications from HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall.",
+          "D. GetNativeSystemInfo and GetLogicalDriveStrings to enumerate system and drives.",
+          "E. Creating a process in suspended mode and writing PE headers to its memory."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs generic system activity",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the .NET ransomware sample labeled Generic.Ransom.Small (hash.exe dropping %APPDATA%\\svchost.exe), which behaviors are direct evidence of T1490 \u2013 Inhibit System Recovery?",
+        "options": [
+          "A. vssadmin.exe delete shadows /all /quiet",
+          "B. wmic shadowcopy delete",
+          "C. wbadmin delete catalog -quiet",
+          "D. Adjusting SE_DEBUG_PRIVILEGE via AdjustTokenPrivileges",
+          "E. Writing many files with double extensions (api-201)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Discovery vs Impact \u2013 ransomware behaviors",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Crysis/Dharma ransomware sample (Trojan.Ransom.Crysis), which of the following are IMPACT techniques (T1486/T1491.001/T1490) rather than discovery or setup?",
+        "options": [
+          "A. vssadmin.exe delete shadows /all /quiet",
+          "B. Writing hundreds of files with new extension patterns and ransom markers (binary-10, dropped files with .id-... email tags).",
+          "C. Checking OS version and product type via RtlGetVersion and RtlGetNtProductType.",
+          "D. Modifying Run registry keys for persistence (registry-0).",
+          "E. Marking autoexec.bat for deletion and reopening it with delete access (api-25, api-26)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Evidence\u2011grounded ATT&CK mapping \u2013 command usage",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the HydraCrypt-like ransomware sample (Ransom.HydraCrypt.Generic), which ATT&CK techniques are explicitly evidenced by the chained cmd.exe invocations observed?",
+        "options": [
+          "A. T1059.003 \u2013 Windows Command Shell",
+          "B. T1490 \u2013 Inhibit System Recovery",
+          "C. T1105 \u2013 Ingress Tool Transfer",
+          "D. T1047 \u2013 Windows Management Instrumentation",
+          "E. T1053 \u2013 Scheduled Task/Job"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process injection vs PE dropping \u2013 calibration",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the killer sample \"Dump:Generic.Dacic.3035\" (Trojan.Chydo), which behavior is evidence of PROCESS INJECTION (T1055) rather than just dropping and executing another file?",
+        "options": [
+          "A. hash.exe writes a PE header to disk (api-43) and drops gegdsimsogm.exe.",
+          "B. hash.exe writes 32 bytes to a remote process and allocates memory in that remote process (api-0, api-20).",
+          "C. hash.exe touches many files in C:\\Windows\\AppPatch\\.",
+          "D. gegdsimsogm.exe has high entropy and is packed.",
+          "E. hash.exe creates a thread in its own process (api-264)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Unhooking / anti\u2011analysis vs generic packing",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample \"Trojan.BrsecmonE\", which observed patterns most strongly support user\u2011mode unhooking / anti\u2011analysis behavior rather than just generic packing?",
+        "options": [
+          "A. High\u2011entropy packed sections (UPX0, UPX1) and Safengine/Safengine\u2011like signatures.",
+          "B. Loading dbghelp.dll and querying SystemProcessInformation.",
+          "C. Creating a process in suspended mode, writing PE headers to its memory, then resuming it (api-129, api-83).",
+          "D. Using CreateNamedPipe and NtCreateNamedPipeFile for internal IPC.",
+          "E. Using netsh.exe to modify firewall rules."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Process injection \u2013 distinguishing evidence from labels",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Remcos sample (hash.exe \u2192 hab.exe \u2192 remcos.exe), which item is solid runtime evidence for process injection (T1055), rather than just a generic label or dropped file?",
+        "options": [
+          "A. target-413: \"Process C:\\hash.exe spawned likely due to injection\" (heuristic label).",
+          "B. api-20: hab.exe allocates virtual memory in %TEMP%\\hab.exe (self\u2011allocation).",
+          "C. api-0: hash.exe writes 32 bytes to a remote process handle.",
+          "D. binary-37: Dropping remcos.exe into %APPDATA%\\remcos\\.",
+          "E. registry-0: Creating Run key for hab.exe in HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Discovery vs EDR evasion \u2013 process & window enumeration",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Remcos sample (hash.exe / hab.exe / remcos.exe), which of the following behaviors should be mapped to DISCOVERY (T1057/T1010) rather than defense evasion?",
+        "options": [
+          "A. Scanning for window classes like \"Shell_TrayWnd\" (api-70).",
+          "B. Reading installed applications from HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall (registry-55).",
+          "C. Modifying proxy settings in HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings (registry-27).",
+          "D. Enumerating processes via CreateToolhelp32Snapshot and Process32FirstW (api-103, api-104).",
+          "E. Marking its own dropped file for deletion (api-26)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Network ATT&CK mapping \u2013 avoid over\u2011selection",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the second infostealer sample (Dump:Generic.Dacic, hash.exe contacting www.zigui.org), which network\u2011related ATT&CK techniques are explicitly evidenced by the report?",
+        "options": [
+          "A. T1071.001 \u2013 Web Protocols (HTTP)",
+          "B. T1071.003 \u2013 Mail Protocols (SMTP/IMAP/POP3)",
+          "C. T1071.004 \u2013 DNS",
+          "D. T1095 \u2013 Non\u2011Application Layer Protocol",
+          "E. T1573 \u2013 Encrypted Channel"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Ransomware vs infostealer behaviors \u2013 impact calibration",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Compare the ransomware sample Generic.Ransom.Small with the first infostealer sample (Trojan.Generic). Which behaviors are present ONLY in the ransomware and indicate DATA ENCRYPTED FOR IMPACT (T1486) or ransom activity, not seen in the infostealer?",
+        "options": [
+          "A. Writing many files with double extensions and high volume of modified files (api-201).",
+          "B. Taking screenshots via CreateCompatibleBitmap.",
+          "C. Stealing browser and mail data (handles to browser databases and mail files).",
+          "D. Dropping and executing a fake svchost.exe from %APPDATA%.",
+          "E. Deleting volume shadows and backup catalogs via vssadmin/wbadmin."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "EDR/AV killer vs generic RAT \u2013 service and tool tampering",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample, which behaviors specifically indicate DISABLING OR MODIFYING SECURITY TOOLS (T1562.001) rather than just generic configuration changes?",
+        "options": [
+          "A. Modifying proxy settings in HKCU\\...\\Internet Settings (registry-27).",
+          "B. Reading Symantec service names like SymProxySvc from strings (string-134).",
+          "C. Using netsh.exe to add or change firewall rules (target-15).",
+          "D. Deleting its own Zone.Identifier ADS to hide download origin (api-42).",
+          "E. Reading installed antivirus engine registry keys (registry-32)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Thread / APC injection variants \u2013 evidence grounding",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample \"Fragtor.Generic\" (hash.exe with APC injection indicators), which evidence supports Asynchronous Procedure Call (APC) injection (T1055.004) rather than just generic threading?",
+        "options": [
+          "A. api-264: hash.exe creates a thread in its own process.",
+          "B. api-85: hash.exe calls NtQueueApcThread on a thread handle.",
+          "C. Presence of many export functions and high entropy in resources.",
+          "D. Loading dbghelp.dll and querying process information.",
+          "E. Dropping an additional executable to disk."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "MITRE mapping \u2013 Initial Access vs Execution vs Impact (WannaCry DLL)",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the WannaCry DLL sample (hash.dll run via rundll32, spawning mssecsvc.exe and scanning the network), which options correctly map the observed behaviors to ATT&CK tactics without over\u2011claiming impact?",
+        "options": [
+          "A. Drive\u2011by compromise (T1189) \u2013 evidenced by mssecsvc.exe modifying IE security settings.",
+          "B. Service Execution (T1569.002) \u2013 mssecsvc.exe manipulating services via OpenSCManager/OpenService.",
+          "C. Network Discovery / Lateral Movement (e.g., ARP scanning) \u2013 network-31/network-32 ARP broadcasts.",
+          "D. Data Encrypted for Impact (T1486) \u2013 explicit file encryption activity is shown in the report.",
+          "E. Command and Control (T1071/T1095) \u2013 HTTP requests to the kill\u2011switch domain and other hosts."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Code signing / packing vs evasion \u2013 ATT&CK precision",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the um_unhooking sample \"Fugrafa.Generic\" (Safengine Shielden packed .NET loader), which behaviors justify mapping to OBFSUCATED FILES OR INFORMATION (T1027 / T1027.002 / T1027.009) without additionally claiming unrelated evasion techniques?",
+        "options": [
+          "A. Safengine Shielden packer signatures and high\u2011entropy .text/.rdata sections.",
+          "B. Code signing by a legitimate\u2011looking certificate (T1553.002).",
+          "C. Long sleep via Sleep(1566804069) before execution (T1497.003).",
+          "D. Dropping sqlsec.exe and adjusting SE_DEBUG_PRIVILEGE.",
+          "E. Reading system version and product type via RtlGetVersion/RtlGetNtProductType."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-infostealer-1",
+        "attack": "infostealers",
+        "topic": "Process Injection and EDR/AV Evasion \u2013 evidence vs. self-activity",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "Based on the first infostealer sample, which option shows clear cross-process injection rather than just in-process activity or generic module loading?",
+        "options": [
+          "A. \"hash.exe\" wrote 32 bytes to a remote process and later wrote PE header bytes (\"MZP\") to a remote process (T1055, T1055.002).",
+          "B. \"hash.exe\" creates a thread in process \"-1\" (self process) (T1055.003).",
+          "C. \"hash.exe\" called \"LoadLibrary\" and \"GetProcAddress\" to load and resolve APIs in its own address space.",
+          "D. \"windef.exe\" is allocating memory with PAGE_GUARD (anti-debugging) but not writing into another process."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-infostealer-2",
+        "attack": "infostealers",
+        "topic": "Discovery vs. Defense Evasion \u2013 system info and process enumeration",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the second infostealer sample, which behavior is BEST classified as discovery (profiling the environment) rather than defense evasion?",
+        "options": [
+          "A. \"hash.exe\" called \"CreateToolhelp32Snapshot\" and \"Process32FirstW\" to enumerate running processes (T1057).",
+          "B. \"rundll32.exe\" (Access type: \"SETVAL\") modifies proxy settings in HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS (T1112).",
+          "C. \"hash.exe\" wrote 1500 bytes to a remote process and allocated memory in \"C:\\hash.exe\" (T1055).",
+          "D. \"hash.exe\" created the service registry key HKLM\\SYSTEM\\CurrentControlSet\\Services\\<name> (T1543.003)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-infostealer-3",
+        "attack": "infostealers",
+        "topic": "Network ATT&CK mapping \u2013 Application Layer Protocol vs. generic behavior",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the first infostealer sample, which option correctly maps the observed HTTP and Base64 traffic to MITRE ATT&CK techniques, without over-claiming unrelated impact?",
+        "options": [
+          "A. HTTP GET requests to \"ip-api.com/json\" with Base64 in headers correspond to Application Layer Protocol: Web Protocols (T1071.001) and Data Encoding (T1132).",
+          "B. HTTP GET requests to \"ip-api.com\" indicate Data Encrypted for Impact (T1486).",
+          "C. DNS queries for \"ip-api.com\" alone are sufficient to claim Exfiltration Over Alternative Protocol (T1048).",
+          "D. Contacting \"ip-api.com\" on port 80 with no HTTP header proves Endpoint Denial of Service (T1499)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-killer-1",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection recognition \u2013 hollowing vs. generic file drops",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Chydo dropper (killers family), which option is the strongest evidence of process injection into another process, as opposed to just dropping executables or creating self-threads?",
+        "options": [
+          "A. \"hash.exe\" wrote 32 bytes to a remote process \"C:\\hash.exe\" and later allocated virtual memory in that remote process (T1055).",
+          "B. \"hash.exe\" creates a thread in process \"-1\" (self process) using T1055.003.",
+          "C. \"hash.exe\" writes file \"%TEMP%\\gegdsimsogm.exe\" and drops a PE32 executable there (T1105).",
+          "D. \"hash.exe\" touched files in the Windows directory such as C:\\Windows\\AppPatch\\sysmain.sdb (T1083)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-killer-2",
+        "attack": "av_edr_killers",
+        "topic": "Discovery vs. Defense Evasion \u2013 sandbox checks vs. generic discovery",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Chydo dropper, which behaviors together MOST clearly support Virtualization/Sandbox Evasion (T1497), rather than just normal system discovery?",
+        "options": [
+          "A. Strings like \"vboxguestadditions\" and registry reads from HKLM\\SOFTWARE\\VMware, Inc.\\VMware Tools, plus GetCursorPos-based sandbox checks.",
+          "B. Reading installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL (T1518).",
+          "C. Calling GetNativeSystemInfo and GetSystemInfo to determine CPU architecture (T1082).",
+          "D. Using CreateToolhelp32Snapshot to list processes (T1057) and FindFirstFileW to enumerate files (T1083)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-killer-3",
+        "attack": "av_edr_killers",
+        "topic": "ATT&CK mapping \u2013 Execution Guardrails vs. generic environment checks",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Chydo dropper report, which evidence justifies mapping to Execution Guardrails (T1480), and which options are only generic discovery?",
+        "options": [
+          "A. The \"summary-29\" indicator explicitly states \"Shows ability to use execution guardrails\" based on combined environment-aware checks and time-based logic.",
+          "B. Simple OS version queries via GetVersionExA alone are sufficient to claim T1480.",
+          "C. Reading the active computer name from the registry (HKLM\\SYSTEM\\CONTROLSET001\\CONTROL\\COMPUTERNAME) is sufficient to claim T1480.",
+          "D. Enumerating processes with CreateToolhelp32Snapshot and Process32FirstW automatically implies T1480."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-killer-4-sdbot",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion vs. Discovery \u2013 firewall and AV tampering",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample, which options are CLEARLY Defense Evasion (T1562.*) rather than mere discovery?",
+        "options": [
+          "A. Using netsh.exe to add a firewall rule allowing svchost.exe inbound and modifying firewall-related registry keys (T1562.004).",
+          "B. Reading the registry for installed applications under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL (T1518).",
+          "C. Querying antivirus-related keys under HKLM\\SOFTWARE\\TENCENT\\PLATFORM_... (T1518.001).",
+          "D. Scanning for window classes like \"Shell_TrayWnd\" and calling GetForegroundWindow and GetWindowTextA (T1010)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-ransom-small-1",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs. generic command execution",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Generic.Ransom.Small sample, which combination of child processes most directly supports mapping to Inhibit System Recovery (T1490) instead of generic command execution?",
+        "options": [
+          "A. vssadmin.exe delete shadows /all /quiet, WMIC shadowcopy delete, two bcdedit.exe commands to disable recovery, and wbadmin delete catalog -quiet.",
+          "B. A single cmd.exe process launched with no parameters.",
+          "C. svchost.exe loading CLR and Bcrypt modules for .NET runtime and cryptography.",
+          "D. hash.exe touching C:\\Windows\\Microsoft.NET\\ and reading browser profile files."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-ransom-small-2",
+        "attack": "ransomware",
+        "topic": "Discovery vs. Impact \u2013 browser data access",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For Generic.Ransom.Small, svchost.exe accesses browser profile files and mail files (e.g., Outlook .pst). How should this behavior be primarily classified?",
+        "options": [
+          "A. Collection of Data from Local System (T1005) and Local Email Collection (T1114.001), not Impact.",
+          "B. Data Encrypted for Impact (T1486), because any file access by ransomware is encryption.",
+          "C. Service Stop (T1489), since accessing mail files implies stopping mail services.",
+          "D. System Information Discovery (T1082), because it is reading files on disk."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-wannacry-dll",
+        "attack": "ransomware",
+        "topic": "MITRE mapping \u2013 Initial Access vs. Command and Control vs. Impact",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the WannaCryptor (CVE-2017-0147) DLL sample, which option correctly distinguishes the purpose of the observed network activity and dropped files?",
+        "options": [
+          "A. DNS and HTTP requests to the kill-switch domain and multiple ARP scans correspond to Command and Control / propagation (T1071.001, T1016), while the dropped tasksche.exe (WannaCry payload) is used for Impact (T1486).",
+          "B. The ARP broadcast requests alone are sufficient to claim Data Encrypted for Impact (T1486).",
+          "C. Contacting many hosts on unusual ports directly maps to Inhibit System Recovery (T1490).",
+          "D. Dropping tasksche.exe alone proves Initial Access via Phishing (T1566)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-crysis",
+        "attack": "ransomware",
+        "topic": "Inhibit System Recovery vs. Discovery \u2013 vssadmin usage",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Crysis/Dharma ransomware sample, which option best explains why vssadmin.exe activity is mapped to Inhibit System Recovery (T1490) and NOT just discovery?",
+        "options": [
+          "A. vssadmin.exe is launched with \"delete shadows /all /quiet\", which deletes all volume shadow copies rather than merely listing them.",
+          "B. vssadmin.exe is executed with no arguments, which only shows its help text.",
+          "C. vssadmin.exe only queries kernel debugger information, which is a sandbox check.",
+          "D. vssadmin.exe is loaded as a DLL into another process without any command-line arguments."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-hydracrypt",
+        "attack": "ransomware",
+        "topic": "Defense Evasion vs. Impact \u2013 Task Manager disable and ransom note",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the HydraCrypt-like ransomware sample, which set of behaviors should be mapped to Defense Evasion vs. Impact, without over-claiming?",
+        "options": [
+          "A. Disabling Task Manager via HKCU\\...\\Policies\\System\\DisableTaskMgr and using PAGE_GUARD memory (T1562.001) are Defense Evasion; dropping many encrypted files and read_it.txt ransom notes are Impact: Data Encrypted for Impact / Internal Defacement (T1486, T1491.001).",
+          "B. Any registry read is Defense Evasion, and any file write is Impact.",
+          "C. vssadmin and wbadmin usage are Discovery techniques, while disabling Task Manager is Impact.",
+          "D. Creating a fake svchost.exe in %APPDATA% is Discovery, not Defense Evasion."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-remcos-1",
+        "attack": "remcos_rat",
+        "topic": "Discovery vs. Evasion \u2013 process and window enumeration",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Remcos sample with hab.exe and remcos.exe, which behavior is correctly treated as Discovery (environment profiling) rather than EDR/AV evasion?",
+        "options": [
+          "A. Calling CreateToolhelp32Snapshot, Process32FirstW, and GetForegroundWindow / GetWindowTextA to enumerate processes and active windows (T1057, T1010).",
+          "B. Modifying proxy settings under HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS (T1112).",
+          "C. Dropping remcos.exe into %APPDATA%\\remcos and setting a Run key (T1547.001).",
+          "D. Allocating memory in a remote process and creating it in suspended mode (T1055)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-remcos-2",
+        "attack": "remcos_rat",
+        "topic": "Process Injection vs. self-threads \u2013 evidence grounding",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the same Remcos sample, which option is the BEST evidence of cross-process injection, distinguishing it from self-thread creation?",
+        "options": [
+          "A. \"hash.exe\" wrote 32 bytes to a remote process \"%TEMP%\\hab.exe\" and \"hab.exe\" allocated memory in \"%TEMP%\\hab.exe\" using VirtualAllocEx (T1055).",
+          "B. \"rundll32.exe\" creates a thread in process \"-1\" (self) using CreateThread (T1055.003).",
+          "C. \"hash.exe\" calls LoadLibraryA and GetProcAddress to load APIs.",
+          "D. \"hash.exe\" opens \"\\Device\\KsecDD\" (Kernel Security Device Driver)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-um-1-brsecmon",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion vs. Discovery \u2013 firewall rule and service creation",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.BrsecmonE (um_unhooking) sample, which option correctly identifies Defense Evasion behaviors without mislabeling pure discovery?",
+        "options": [
+          "A. Using netsh.exe to add a firewall allow rule for svchost.exe (T1562.004) and creating a persistent service \"xtblsmos\" via sc.exe (T1543.003) are Defense Evasion/Persistence; reading installed applications is Discovery (T1518).",
+          "B. Reading installed applications from HKCU\\...\\UNINSTALL (T1518) is the primary Defense Evasion behavior.",
+          "C. Checking system language via GetSystemDefaultLangID (T1614.001) is Defense Evasion.",
+          "D. Any use of CreateDirectoryW is Defense Evasion."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-um-2-fragtor",
+        "attack": "um_unhooking",
+        "topic": "Process Injection \u2013 APC injection vs. generic PE packing",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Fragtor/Llac um_unhooking sample, which option demonstrates Asynchronous Procedure Call (APC) injection (T1055.004) rather than just packing or discovery?",
+        "options": [
+          "A. \"hash.exe\" called NtQueueApcThread with a remote thread handle and a pointer into memory previously written to a remote process.",
+          "B. The presence of high-entropy sections and Safengine Shielden packer signatures (T1027.002).",
+          "C. Calls to GetVersionExA and RtlGetNtProductType to retrieve OS information (T1082).",
+          "D. Touching C:\\hash.exe.Local and other local files (T1083)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-um-3-generic",
+        "attack": "um_unhooking",
+        "topic": "Virtualization/Sandbox Evasion vs. generic discovery",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the generic um_unhooking sample signed with a certificate, which evidence most strongly supports Virtualization/Sandbox Evasion (T1497) instead of just system discovery?",
+        "options": [
+          "A. The input sample contains CPUID and RDTSCP tricks as anti-VM artifacts in sample.bin, and Suricata alerts show TLS handshake failures to test sandbox network behavior.",
+          "B. The sample reads the computer name and OS version from the registry (T1082).",
+          "C. The sample touches msocre.dll and other system DLLs in C:\\Windows\\System32.",
+          "D. The sample drops sqlsec.exe and writes its PE header to disk (T1105)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-excel-exploit",
+        "attack": "infostealers",
+        "topic": "Initial Access vs. Execution vs. C2 \u2013 Office exploit chain",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the malicious Excel (CVE-2017-0199) document, which option correctly separates Initial Access, Execution, and Command and Control behaviors?",
+        "options": [
+          "A. Phishing with a weaponized Excel file (T1566) and user execution (T1204) provide Initial Access; EXCEL.EXE /dde loading rich edit controls is Execution (T1129); HTTP(S) GET to link.emcdn.ru with Base64/Base62 paths is C2 via Web Protocols and Data Encoding (T1071.001, T1132).",
+          "B. The presence of a digital signature alone is Execution Guardrails (T1480).",
+          "C. Writing a .LNK file in %APPDATA% is Command and Control.",
+          "D. Any DNS query is Impact: Account Access Removal (T1531)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash-regrun",
+        "attack": "av_edr_killers",
+        "topic": "Masquerading vs. generic file creation \u2013 evidence strictness",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Trojan.Regrun killer sample, which behavior is strong evidence of Masquerading (T1036.005) rather than just arbitrary file creation?",
+        "options": [
+          "A. Creating processes named WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, and SMSS.EXE from %APPDATA%\\WINDOWS\\ paths, mimicking core Windows system processes.",
+          "B. Dropping services.exe into %LOCALAPPDATA% and executing it once.",
+          "C. Touching MSVBVM60.DLL in C:\\Windows\\System32.",
+          "D. Reading desktop.ini from user profile directories."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Process Injection and EDR/AV Evasion \u2013 distinguish real cross\u2011process injection from self\u2011threads and generic module loading",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the first infostealer sample (top of DATA_SOURCE, _family=\"infostealers\" with processes hash.exe, vnc.exe, windef.exe), which option BEST describes the evidence for actual cross\u2011process code injection (as opposed to self\u2011threads or ordinary module loading)? Select ALL options that are directly supported by the report.",
+        "options": [
+          "A. The signature \"api-264\" shows hash.exe creating a thread in its own process, indicating process injection.",
+          "B. The signature \"api-0\" shows hash.exe writing data to a remote process and \"stream-38\" shows shellcode written to a remote process, indicating cross\u2011process injection.",
+          "C. The signatures for LoadLibrary and GetProcAddress in hash.exe and windef.exe show dynamic API resolution, which by itself proves process injection.",
+          "D. The signature \"api-83\" shows hash.exe writing a PE header into a remote process's memory, consistent with portable executable injection."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion vs Discovery \u2013 sandbox/VM evasion vs generic system profiling",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Consider the Dropper.Generic.Dacic.3035 sample (_family=\"killers\" with DISMHOST.EXE.67A9C8A7.bin). Which behaviors in the report specifically support Virtualization/Sandbox Evasion (T1497) rather than generic system discovery? Select ALL options that are explicitly evidenced.",
+        "options": [
+          "A. Reading the active computer name and cryptographic machine GUID via registry (registry-35, registry-1).",
+          "B. Presence of strings and registry keys related to VMware tools and sandbox detection (string-660, string-661, string-668, static-132).",
+          "C. Use of GetSystemInfo and GetLogicalDriveStringsA to enumerate hardware and drives (string-89, string-84).",
+          "D. Long sleeps and time\u2011based checks using GetSystemTimeAsFileTime and GetTickCount (string-226, string-205, stream-39)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "MITRE ATT&CK mapping \u2013 Inhibit System Recovery vs generic discovery",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Generic.Ransom.Small sample (_family=\"ransomware\" with %APPDATA%\\svchost.exe calling vssadmin, wmic, bcdedit, wbadmin), which ATT&CK impact technique is directly supported by the observed use of vssadmin, wmic shadowcopy delete, bcdedit, and wbadmin? Select ALL correct options and avoid including techniques that are only discovery or collection.",
+        "options": [
+          "A. T1490 Inhibit System Recovery",
+          "B. T1486 Data Encrypted for Impact",
+          "C. T1499 Endpoint Denial of Service",
+          "D. T1491.001 Internal Defacement"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion vs Discovery \u2013 security software discovery vs disabling or modifying tools",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "In the Sdbot.Generic killer sample (_family=\"killers\" with dlldsk32.exe and extensive registry and API usage), which option BEST represents explicit evidence of DISABLING or MODIFYING security tools (T1562.001), as opposed to merely discovering them? Select ALL options that are directly supported by the report.",
+        "options": [
+          "A. Reading antivirus-related registry keys under HKLM\\SOFTWARE\\TENCENT\\PLATFORM_ (registry-32).",
+          "B. Modifying proxy settings in HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\INTERNET SETTINGS (registry-27).",
+          "C. Creating or modifying Windows services via registry-67 and using sc.exe (registry-67, static-188).",
+          "D. Enumerating installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS\\CURRENTVERSION\\UNINSTALL (registry-55)."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Process Injection \u2013 distinguishing APC/PE injection from generic behavior in user\u2011mode unhooking sample",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Fragtor/Llac sample (_family=\"um_unhooking\" with hash.exe only), which options show clear evidence of process injection into ANOTHER process (T1055.*), as opposed to self\u2011threads, packing, or generic resource loading? Select ALL that are explicitly supported.",
+        "options": [
+          "A. api-264 shows hash.exe creating a thread in process \"-1\" (self\u2011thread), indicating cross\u2011process injection.",
+          "B. api-85 shows NtQueueApcThread being called on a remote thread, and the report labels it as \"Queues an Asynchronous Procedure Call (APC) in a remote process (injection)\".",
+          "C. static-6 and static-18 show high entropy and a Safengine packer signature, indicating packing but not necessarily injection.",
+          "D. api-0 and api-20 are NOT present in this sample; therefore, we cannot claim cross\u2011process injection based on remote WriteProcessMemory/VirtualAllocEx here."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Evasion vs Discovery \u2013 mapping ransomware environment checks correctly",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "For the Ransom.HydraCrypt.Generic sample (_family=\"ransomware\" with hash.exe spawning %APPDATA%\\svchost.exe), which behaviors are clearly DEFENSE EVASION (sandbox/analysis evasion or disabling tools) rather than simple system discovery? Select ALL options that are explicitly supported by the report.",
+        "options": [
+          "A. Using GetVersionExA, RtlGetVersion, and registry-35 to read OS version and computer name.",
+          "B. Creating guarded memory regions with PAGE_GUARD (api-1) to hinder memory dumping.",
+          "C. Long sleep via api-24 (sleeping for 1566804069 ms) combined with time\u2011based checks (T1497.003).",
+          "D. Reading the registry for installed applications (registry-55) to profile software on the host."
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C"
+        ]
+      }
+    }
+  ]
+}

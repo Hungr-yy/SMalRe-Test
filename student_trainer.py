@@ -34,6 +34,38 @@ from huggingface_hub import InferenceClient
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
+# Retry helper (CyberSOCEval-aligned exponential backoff)
+# ---------------------------------------------------------------------------
+
+def _retry_with_backoff(
+    fn,
+    *args,
+    max_retries: int = 3,
+    base_delay: float = 0.5,
+    max_delay: float = 30.0,
+    **kwargs,
+):
+    """Call *fn* with exponential backoff on transient failures.
+
+    Delay schedule: ``base_delay * 2^attempt``, capped at *max_delay*.
+    """
+    last_exc: Exception | None = None
+    for attempt in range(max_retries + 1):
+        try:
+            return fn(*args, **kwargs)
+        except Exception as exc:
+            last_exc = exc
+            if attempt < max_retries:
+                wait = min(base_delay * (2 ** attempt), max_delay)
+                logger.warning(
+                    "Inference call failed (attempt %d/%d): %s — retrying in %.1fs.",
+                    attempt + 1, max_retries + 1, exc, wait,
+                )
+                time.sleep(wait)
+    raise last_exc  # type: ignore[misc]
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -64,21 +96,32 @@ def _build_dataset(examples: list[dict[str, Any]]):
 
 
 def _format_qa_example(ex: dict[str, Any]) -> str:
-    """Format a question/answer pair as training text."""
+    """Format a question/answer pair as training text.
+
+    Mirrors the TASK_PROMPT template (aligned with CyberSOCEval) so that
+    the SLM sees the same format at training and inference time.
+    The detonation report, question, and options are separated into
+    distinct readable sections rather than buried in a JSON blob.
+    """
     question_data = ex["question"]
     answer_data = ex["answer"]
 
-    input_json = json.dumps(question_data, indent=2)
+    report_json = json.dumps(question_data.get("detonation_report", {}), indent=2)
+    question_text = question_data.get("question", "")
+    options_text = "\n".join(question_data.get("options", []))
     response_json = json.dumps(answer_data)
 
     return (
-        f"You are given a Hybrid Analysis malware detonation report "
-        f"and a multiple-choice question.\n\n"
-        f"Your job is to select ALL correct answer options and ONLY "
-        f"the correct answer options.\n"
-        f"Base your answer only on evidence grounded in the detonation "
-        f"report and the question.\n\n"
-        f"[INPUT_JSON]\n{input_json}\n\n"
+        f"Given this detonation report: {report_json}.\n\n"
+        f"Answer the following multi-choice question. "
+        f"Select ALL correct answers — one or more options may be correct.\n\n"
+        f"Question: {question_text}\n\n"
+        f"Options:\n{options_text}\n\n"
+        f"You need to return the list of correct answers. "
+        f"Respond in a json with the following structure:\n"
+        f'{{\n    "correct_answers": string[] '
+        f"// The list of the letters corresponding to the correct answers, "
+        f"just the letters\n}}\n\n"
         f"### Response:\n{response_json}"
     )
 
@@ -101,17 +144,45 @@ def _format_instruction_example(ex: dict[str, Any]) -> str:
 
 
 def _curriculum_to_jsonl(examples: list[dict[str, Any]]) -> str:
-    """Convert curriculum examples to JSONL format for Vertex AI tuning."""
+    """Convert curriculum examples to JSONL format for TRL SFT training.
+
+    TRL SFT trainer expects chat-style messages or a single "text" field.
+    We use the chat messages format for better instruction following:
+    {"messages": [{"role": "user", "content": ...}, {"role": "assistant", "content": ...}]}
+    """
     lines = []
     for ex in examples:
         if "question" in ex and "answer" in ex:
-            text = _format_qa_example(ex)
+            question_data = ex["question"]
+            answer_data = ex["answer"]
+
+            report_json = json.dumps(question_data.get("detonation_report", {}), indent=2)
+            question_text = question_data.get("question", "")
+            options_text = "\n".join(question_data.get("options", []))
+            response_json = json.dumps(answer_data)
+
+            user_content = (
+                f"Given this detonation report: {report_json}.\n\n"
+                f"Answer the following multi-choice question. "
+                f"Select ALL correct answers — one or more options may be correct.\n\n"
+                f"Question: {question_text}\n\n"
+                f"Options:\n{options_text}\n\n"
+                f"Respond in JSON: {{\"correct_answers\": [\"A\", \"B\", ...]}}"
+            )
+            messages = [
+                {"role": "user", "content": user_content},
+                {"role": "assistant", "content": response_json},
+            ]
         else:
-            text = _format_instruction_example(ex)
-        # Vertex AI expects {"input_text": ..., "output_text": ...} or
-        # {"text_input": ..., "output": ...} depending on the model.
-        # Use the generic text format for open model tuning.
-        lines.append(json.dumps({"input_text": text}))
+            instruction = ex.get("instruction", "")
+            context = ex.get("input", "")
+            response = ex.get("output", "")
+            user_content = f"{instruction}\n\n{context}" if context else instruction
+            messages = [
+                {"role": "user", "content": user_content},
+                {"role": "assistant", "content": response},
+            ]
+        lines.append(json.dumps({"messages": messages}))
     return "\n".join(lines)
 
 
@@ -334,20 +405,50 @@ class StudentTrainer:
     # Inference
     # ------------------------------------------------------------------
 
-    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
-        """Run inference with the (possibly fine-tuned) student model."""
+    def generate(
+        self,
+        prompt: str,
+        max_new_tokens: int = 512,
+        json_schema: dict | None = None,
+    ) -> str:
+        """Run inference with the (possibly fine-tuned) student model.
+
+        Parameters
+        ----------
+        json_schema:
+            Optional JSON schema for guided decoding.  When provided and the
+            ``outlines`` library is available, token generation is constrained
+            to produce valid JSON matching the schema.
+        """
         import torch
 
         if self._model is None:
             self._load_model_and_tokenizer()
 
         inputs = self._tokenizer(prompt, return_tensors="pt").to(self._model.device)
+
+        generate_kwargs: dict[str, Any] = {
+            "max_new_tokens": max_new_tokens,
+            "do_sample": False,
+        }
+
+        # Guided decoding via outlines (if available and schema provided)
+        if json_schema is not None:
+            try:
+                from outlines.integrations.transformers import JSONPrefixAllowedTokens
+                prefix_allowed = JSONPrefixAllowedTokens(
+                    schema=json_schema,
+                    tokenizer_or_pipe=self._tokenizer,
+                )
+                generate_kwargs["prefix_allowed_tokens_fn"] = prefix_allowed
+                logger.debug("Guided decoding enabled (outlines).")
+            except ImportError:
+                logger.debug("outlines not installed; skipping guided decoding.")
+            except Exception as exc:
+                logger.debug("Guided decoding setup failed: %s; skipping.", exc)
+
         with torch.no_grad():
-            output_ids = self._model.generate(
-                **inputs,
-                max_new_tokens=max_new_tokens,
-                do_sample=False,
-            )
+            output_ids = self._model.generate(**inputs, **generate_kwargs)
         decoded = self._tokenizer.decode(output_ids[0], skip_special_tokens=True)
         return decoded[len(prompt):].strip()
 
@@ -410,8 +511,20 @@ class VertexAIStudentTrainer:
     # Maps HuggingFace model IDs to Vertex AI model identifiers
     _VERTEX_MODEL_MAP = {
         "meta-llama/Llama-3.1-8B-Instruct": "meta/llama-3.1-8b-instruct",
-        "google/gemma-3-4b-it": "google/gemma-3-4b-it",
+        "google/gemma-3-4b-it": "gemma-3-4b-it",
         "Qwen/Qwen2.5-7B-Instruct": "Qwen/Qwen2.5-7B-Instruct",
+    }
+
+    # Models that need a newer transformers version than what's in the
+    # HF DLC container (4.48). Gemma 3 requires 4.49+.
+    _NEEDS_TRANSFORMERS_UPGRADE = {
+        "google/gemma-3-4b-it",
+    }
+
+    # Models that are NOT available on the HF serverless Inference API
+    # and must use Vertex AI for base model inference (Round 1).
+    _HF_INFERENCE_UNSUPPORTED = {
+        "google/gemma-3-4b-it",
     }
 
     def __init__(
@@ -424,6 +537,8 @@ class VertexAIStudentTrainer:
         learning_rate: float = 2e-4,
         num_train_epochs: int = 3,
         lora_r: int = 16,
+        max_seq_length: int = 2048,
+        use_qlora_inference: bool = False,
     ) -> None:
         self.model_name_or_path = model_name_or_path
         self.project = project
@@ -433,12 +548,17 @@ class VertexAIStudentTrainer:
         self.learning_rate = learning_rate
         self.num_train_epochs = num_train_epochs
         self.lora_r = lora_r
+        self._max_seq_length = max_seq_length
+
+        self.use_qlora_inference = use_qlora_inference
 
         self._tuned_endpoint = None
         self._tuning_job_count = 0
+        self._adapter_gcs_path: str | None = None
 
-        # No base endpoint needed — Round 1 uses HuggingFace Inference API.
-        self._base_endpoint = None  # kept for cleanup_base_endpoint compat
+        # Base endpoint for models that need Vertex AI for Round 1 inference
+        # (e.g. Gemma, which is not on the HF serverless Inference API).
+        self._base_endpoint = None
 
     # ------------------------------------------------------------------
     # Factory
@@ -461,6 +581,8 @@ class VertexAIStudentTrainer:
             learning_rate=training_cfg.get("learning_rate", 2e-4),
             num_train_epochs=training_cfg.get("num_train_epochs", 3),
             lora_r=lora_cfg.get("r", 16),
+            max_seq_length=training_cfg.get("max_seq_length", 2048),
+            use_qlora_inference=student_cfg.get("use_qlora_inference", False),
         )
 
     # ------------------------------------------------------------------
@@ -502,8 +624,11 @@ class VertexAIStudentTrainer:
         vertex_model_id = self._VERTEX_MODEL_MAP.get(
             self.model_name_or_path, self.model_name_or_path
         )
+        # Include output_dir basename to namespace per-experiment
+        # (e.g. "gpt5.1__qwen2.5_7b" from the experiment label)
+        experiment_tag = Path(self.output_dir).parent.parent.name or "default"
         display_name = (
-            f"smala-{vertex_model_id.split('/')[-1]}-"
+            f"smala-{experiment_tag}-{vertex_model_id.split('/')[-1]}-"
             f"round{self._tuning_job_count}"
         )
 
@@ -512,22 +637,87 @@ class VertexAIStudentTrainer:
             vertex_model_id, self.num_train_epochs, self.lora_r,
         )
 
-        tuning_job = aiplatform.CustomTrainingJob(
+        # HuggingFace PyTorch DLC with TRL, PEFT, and Transformers
+        _HF_TRAINING_CONTAINER = (
+            "us-docker.pkg.dev/deeplearning-platform-release/gcr.io/"
+            "huggingface-pytorch-training-cu121.2-3.transformers.4-48"
+            ".ubuntu2204.py311"
+        )
+
+        adapter_output_dir = f"{self.staging_bucket}/adapters/{display_name}"
+
+        # Convert gs:// URIs to /gcs/ FUSE mount paths for the container.
+        # Vertex AI automatically mounts GCS at /gcs/ inside the container.
+        def _gcs_to_fuse(uri: str) -> str:
+            return uri.replace("gs://", "/gcs/", 1) if uri.startswith("gs://") else uri
+
+        fuse_train_path = _gcs_to_fuse(gcs_train_path)
+        fuse_output_dir = _gcs_to_fuse(adapter_output_dir)
+
+        # TRL CLI doesn't support local file paths via --dataset_name.
+        # Use a Python one-liner that loads the JSONL via datasets and
+        # runs SFT with TRL's Python API.
+        train_script = (
+            "import torch; "
+            "from datasets import load_dataset; "
+            "from transformers import AutoModelForCausalLM; "
+            "from trl import SFTConfig, SFTTrainer; "
+            "from peft import LoraConfig; "
+            f"dataset = load_dataset('json', data_files='{fuse_train_path}', split='train'); "
+            f"model = AutoModelForCausalLM.from_pretrained("
+            f"'{self.model_name_or_path}', "
+            "torch_dtype=torch.bfloat16, "
+            + ("attn_implementation='eager', "
+               if self.model_name_or_path in self._NEEDS_TRANSFORMERS_UPGRADE
+               else "")
+            + "device_map='auto'); "
+            f"peft_config = LoraConfig(r={self.lora_r}, lora_alpha={self.lora_r * 2}, "
+            f"lora_dropout=0.05, target_modules='all-linear', task_type='CAUSAL_LM'); "
+            f"sft_config = SFTConfig("
+            f"output_dir='{fuse_output_dir}', "
+            f"num_train_epochs={self.num_train_epochs}, "
+            f"learning_rate={self.learning_rate}, "
+            f"per_device_train_batch_size=1, "
+            f"gradient_accumulation_steps=8, "
+            f"max_seq_length={self._max_seq_length}, "
+            f"bf16=True, "
+            f"gradient_checkpointing=True, "
+            f"logging_steps=10, "
+            f"save_strategy='epoch', "
+            f"report_to='none'); "
+            f"trainer = SFTTrainer("
+            f"model=model, "
+            f"args=sft_config, "
+            f"train_dataset=dataset, "
+            f"peft_config=peft_config); "
+            f"trainer.train(); "
+            f"trainer.save_model()"
+        )
+
+        # Gemma 3 needs transformers 4.49+; prepend pip install if needed
+        # Gemma 3 needs transformers 4.51.3+; write script to file to avoid
+        # shell escaping issues with multiline Python in sh -c
+        if self.model_name_or_path in self._NEEDS_TRANSFORMERS_UPGRADE:
+            import base64
+            encoded = base64.b64encode(train_script.encode()).decode()
+            train_cmd = [
+                "sh", "-c",
+                "pip install -q 'transformers==4.51.3' flash-attn --no-build-isolation && "
+                f"echo {encoded} | base64 -d > /tmp/_train.py && "
+                "python /tmp/_train.py",
+            ]
+        else:
+            train_cmd = ["python", "-c", train_script]
+
+        tuning_job = aiplatform.CustomContainerTrainingJob(
             display_name=display_name,
-            container_uri=(
-                "us-docker.pkg.dev/vertex-ai/"
-                "vertex-vision-model-garden-dockers/"
-                "pytorch-peft-train:latest"
-            ),
-            model_serving_container_image_uri=(
-                "us-docker.pkg.dev/vertex-ai/"
-                "vertex-vision-model-garden-dockers/"
-                "pytorch-peft-serve:latest"
-            ),
+            container_uri=_HF_TRAINING_CONTAINER,
+            command=train_cmd,
+            staging_bucket=self.staging_bucket,
         )
 
         # Build environment variables for the training container.
-        # HF_TOKEN is required for gated models (e.g. Llama 3.1 8B Instruct).
+        # HF_TOKEN is required for gated models (e.g. Qwen 2.5 7B).
         env_vars = {}
         hf_token = os.environ.get("HF_TOKEN", "")
         if hf_token:
@@ -535,38 +725,33 @@ class VertexAIStudentTrainer:
 
         # Launch the training job
         model = tuning_job.run(
-            args=[
-                f"--model_id={self.model_name_or_path}",
-                f"--dataset_path={gcs_train_path}",
-                f"--output_dir={self.staging_bucket}/adapters/{display_name}",
-                f"--lora_rank={self.lora_r}",
-                f"--epochs={self.num_train_epochs}",
-                f"--learning_rate={self.learning_rate}",
-            ],
             replica_count=1,
-            machine_type="n1-standard-8",
+            machine_type="g2-standard-12",
             accelerator_type="NVIDIA_L4",
             accelerator_count=1,
-            model_display_name=display_name,
             environment_variables=env_vars if env_vars else None,
         )
 
-        logger.info("Tuning job complete: %s", model.resource_name)
+        logger.info("Tuning job complete: %s", display_name)
 
         # --- Step 3: Download adapter to local directory ---
         adapter_gcs_path = f"{self.staging_bucket}/adapters/{display_name}"
-        local_adapter_path = str(Path(self.output_dir) / "adapter")
-        self._download_from_gcs(adapter_gcs_path, local_adapter_path)
-        logger.info("Adapter downloaded to %s", local_adapter_path)
+        self._download_from_gcs(adapter_gcs_path, self.output_dir)
+        logger.info("Adapter downloaded to %s", self.output_dir)
 
-        # Store the model resource for inference
-        self._tuned_endpoint = model
+        # Store the GCS adapter path for inference in subsequent rounds
+        self._adapter_gcs_path = adapter_gcs_path
 
     # ------------------------------------------------------------------
     # Inference
     # ------------------------------------------------------------------
 
-    def _hf_inference(self, prompt: str, max_new_tokens: int) -> str:
+    def _hf_inference(
+        self,
+        prompt: str,
+        max_new_tokens: int,
+        json_schema: dict | None = None,
+    ) -> str:
         """Run inference via HuggingFace Inference API (serverless).
 
         Used for base model inference before any fine-tuning (Round 1).
@@ -579,12 +764,101 @@ class VertexAIStudentTrainer:
         logger.info(
             "Running HF Inference API for base model: %s", self.model_name_or_path
         )
-        response = client.text_generation(
-            prompt,
-            max_new_tokens=max_new_tokens,
+
+        extra_kwargs: dict[str, Any] = {}
+        if json_schema is not None:
+            extra_kwargs["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {"name": "answer", "schema": json_schema},
+            }
+
+        response = client.chat_completion(
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=max_new_tokens,
             temperature=0.7,
+            **extra_kwargs,
         )
-        return response
+        return response.choices[0].message.content
+
+    # Rate limiting for Google GenAI API (tokens per minute)
+    _GENAI_TPM_LIMIT = 15_000  # input tokens per minute
+    _genai_token_log: list[tuple[float, int]] = []  # (timestamp, token_count)
+
+    def _wait_for_genai_quota(self, estimated_tokens: int) -> None:
+        """Sleep if sending *estimated_tokens* would exceed the per-minute limit."""
+        now = time.time()
+        window_start = now - 60
+
+        # Prune entries older than 1 minute
+        self._genai_token_log = [
+            (ts, tc) for ts, tc in self._genai_token_log if ts > window_start
+        ]
+
+        tokens_in_window = sum(tc for _, tc in self._genai_token_log)
+
+        if tokens_in_window + estimated_tokens > self._GENAI_TPM_LIMIT:
+            # Wait until the oldest entry expires from the window
+            if self._genai_token_log:
+                oldest_ts = self._genai_token_log[0][0]
+                wait_seconds = oldest_ts - window_start + 1
+            else:
+                wait_seconds = 60
+            logger.info(
+                "GenAI rate limit: %d + %d > %d TPM. Waiting %.0fs.",
+                tokens_in_window, estimated_tokens, self._GENAI_TPM_LIMIT, wait_seconds,
+            )
+            time.sleep(wait_seconds)
+
+    def _vertex_ai_inference(
+        self,
+        prompt: str,
+        max_new_tokens: int,
+        json_schema: dict | None = None,
+    ) -> str:
+        """Run inference via Google GenAI API for base model.
+
+        Used for models not available on the HF serverless Inference API
+        (e.g. Gemma).  Calls the model through Google's generative AI API
+        which hosts Gemma natively — no endpoint deployment needed.
+
+        Includes rate limiting to stay within the per-minute token quota.
+        """
+        import google.generativeai as genai
+
+        api_key = os.environ.get("GOOGLE_API_KEY", "")
+        genai.configure(api_key=api_key)
+
+        vertex_model_id = self._VERTEX_MODEL_MAP.get(
+            self.model_name_or_path, self.model_name_or_path
+        )
+
+        # Estimate input tokens (~4 chars per token)
+        estimated_tokens = len(prompt) // 4
+        self._wait_for_genai_quota(estimated_tokens)
+
+        logger.info(
+            "Running Google GenAI inference for base model: %s (~%d tokens)",
+            vertex_model_id, estimated_tokens,
+        )
+
+        gen_config_kwargs: dict[str, Any] = {
+            "max_output_tokens": max_new_tokens,
+            "temperature": 0.7,
+        }
+        if json_schema is not None:
+            gen_config_kwargs["response_mime_type"] = "application/json"
+            gen_config_kwargs["response_schema"] = json_schema
+
+        model = genai.GenerativeModel(vertex_model_id)
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.GenerationConfig(**gen_config_kwargs),
+        )
+
+        # Log actual usage for rate tracking
+        self._genai_token_log.append((time.time(), estimated_tokens))
+
+        return response.text
 
     def _predict_endpoint(self, endpoint, prompt: str, max_new_tokens: int) -> str:
         """Run a prediction against a Vertex AI endpoint."""
@@ -593,37 +867,315 @@ class VertexAIStudentTrainer:
         )
         return response.predictions[0].get("generated_text", "")
 
-    def generate(self, prompt: str, max_new_tokens: int = 512) -> str:
+    def generate(
+        self,
+        prompt: str,
+        max_new_tokens: int = 512,
+        json_schema: dict | None = None,
+    ) -> str:
         """Run inference with the student model.
 
-        Tries the Vertex AI tuned endpoint first (available after at least
-        one training round).  Falls back to HuggingFace Inference API for
-        base model inference — this avoids Vertex AI endpoint provisioning
-        and is used on Round 1 before any fine-tuning has occurred.
+        After training (Rounds 2+), uses a Vertex AI CustomJob to load
+        the base model + LoRA adapter and run inference on a GPU.
+        For base model inference (Round 1), uses the HuggingFace Inference
+        API for supported models, or Google GenAI for unsupported ones.
+
+        Parameters
+        ----------
+        json_schema:
+            Optional JSON schema for guided decoding (passed to HF/GenAI).
         """
-        # Try the tuned endpoint first (available after training)
-        if self._tuned_endpoint is not None:
-            try:
-                from google.cloud import aiplatform
+        # Rounds 2+: use the fine-tuned adapter via a Vertex AI inference job.
+        # If this fails, raise immediately — do NOT fall back to base
+        # inference, as that would invalidate the distillation loop.
+        if self._adapter_gcs_path is not None:
+            return self._tuned_inference(prompt, max_new_tokens)
 
-                aiplatform.init(project=self.project, location=self.location)
-                endpoint = self._tuned_endpoint.deploy(
-                    machine_type="n1-standard-4",
-                    accelerator_type="NVIDIA_L4",
-                    accelerator_count=1,
-                )
-                result = self._predict_endpoint(endpoint, prompt, max_new_tokens)
-                endpoint.undeploy_all()
-                return result
-            except Exception as exc:
-                logger.warning(
-                    "Tuned endpoint inference failed, falling back to HF Inference API: %s",
-                    exc,
-                )
+        # Round 1: base model inference
+        # For models not on HF Inference API (e.g. Gemma), use a Vertex AI
+        # CustomJob — same as tuned inference but without the adapter.
+        if self.model_name_or_path in self._HF_INFERENCE_UNSUPPORTED:
+            return self._base_model_vertex_inference(prompt, max_new_tokens)
 
-        # Fallback: use HuggingFace Inference API for base model.
-        # No GPU provisioning needed — serverless and fast.
-        return self._hf_inference(prompt, max_new_tokens)
+        return _retry_with_backoff(
+            self._hf_inference, prompt, max_new_tokens,
+            json_schema=json_schema,
+        )
+
+    def _tuned_inference(self, prompt: str, max_new_tokens: int) -> str:
+        """Run tuned inference for a single prompt.
+
+        Delegates to generate_batch() with a single-item list.
+        """
+        results = self.generate_batch([prompt], max_new_tokens=max_new_tokens)
+        return results[0]
+
+    def _base_model_vertex_inference(self, prompt: str, max_new_tokens: int) -> str:
+        """Run base model inference for a single prompt via Vertex AI CustomJob.
+
+        Used for models not available on HF Inference API (e.g. Gemma).
+        Delegates to _batched_vertex_inference without an adapter.
+        """
+        results = self._batched_vertex_inference(
+            [prompt], max_new_tokens, adapter_path=None,
+        )
+        return results[0]
+
+    def generate_batch(
+        self,
+        prompts: list[str],
+        max_new_tokens: int = 128,
+    ) -> list[str]:
+        """Run batched inference with base model + LoRA adapter.
+
+        Spins up ONE Vertex AI CustomJob that loads the model + adapter
+        once, processes all prompts sequentially, and uploads results
+        to GCS as a single JSON file.
+
+        For Round 1 (no adapter), falls back to per-prompt base inference.
+
+        Parameters
+        ----------
+        prompts:
+            List of prompt strings to process.
+        max_new_tokens:
+            Maximum tokens to generate per prompt.
+
+        Returns
+        -------
+        list[str]
+            Generated responses, one per prompt (same order).
+        """
+        if not prompts:
+            return []
+
+        # Round 1: no adapter
+        if self._adapter_gcs_path is None:
+            if self.model_name_or_path in self._HF_INFERENCE_UNSUPPORTED:
+                # Gemma etc: use batched Vertex AI CustomJob (no adapter)
+                return self._batched_vertex_inference(
+                    prompts, max_new_tokens, adapter_path=None,
+                )
+            # HF-supported models: per-prompt API calls
+            results = []
+            for prompt in prompts:
+                results.append(self.generate(prompt, max_new_tokens=max_new_tokens))
+            return results
+
+        # Rounds 2+: batched tuned inference via a single CustomJob.
+        # If this fails, raise immediately — do NOT fall back to base
+        # inference, as that would invalidate the distillation loop.
+        return self._batched_vertex_inference(
+            prompts, max_new_tokens, adapter_path=self._adapter_gcs_path,
+        )
+
+    def _batched_vertex_inference(
+        self,
+        prompts: list[str],
+        max_new_tokens: int,
+        adapter_path: str | None = None,
+    ) -> list[str]:
+        """Run all prompts in a single Vertex AI CustomJob.
+
+        Works for both base model (adapter_path=None) and tuned model
+        (adapter_path=GCS path to adapter). One GPU container handles
+        all prompts sequentially — no per-prompt job overhead.
+
+        1. Upload prompts as JSONL to GCS
+        2. Spin up one GPU container with base model (+ adapter if given)
+        3. Process all prompts sequentially
+        4. Upload results as JSONL to GCS
+        5. Download and return results
+        """
+        from google.cloud import aiplatform, storage
+        import uuid
+
+        aiplatform.init(project=self.project, location=self.location)
+
+        _HF_TRAINING_CONTAINER = (
+            "us-docker.pkg.dev/deeplearning-platform-release/gcr.io/"
+            "huggingface-pytorch-training-cu121.2-3.transformers.4-48"
+            ".ubuntu2204.py311"
+        )
+
+        inference_id = uuid.uuid4().hex[:8]
+
+        # Upload prompts to GCS as JSONL
+        prompts_jsonl = "\n".join(
+            json.dumps({"index": i, "prompt": p})
+            for i, p in enumerate(prompts)
+        )
+        prompts_gcs_path = f"{self.staging_bucket}/inference/{inference_id}_prompts.jsonl"
+        self._upload_to_gcs(prompts_gcs_path, prompts_jsonl)
+
+        results_gcs_path = f"{self.staging_bucket}/inference/{inference_id}_results.jsonl"
+
+        def _gcs_to_fuse(uri: str) -> str:
+            return uri.replace("gs://", "/gcs/", 1) if uri.startswith("gs://") else uri
+
+        fuse_prompts_path = _gcs_to_fuse(prompts_gcs_path)
+
+        if adapter_path:
+            fuse_adapter_path = _gcs_to_fuse(adapter_path)
+            logger.info(
+                "Batched Vertex AI inference: %d prompts, adapter=%s",
+                len(prompts), adapter_path,
+            )
+        else:
+            logger.info(
+                "Batched Vertex AI inference: %d prompts, base model=%s",
+                len(prompts), self.model_name_or_path,
+            )
+
+        # Build the model loading section of the script
+        model_load_script = (
+            f"tokenizer = AutoTokenizer.from_pretrained('{self.model_name_or_path}')\n"
+        )
+
+        # Gemma 3 needs flash_attention_2 — SDPA and eager both fail on PyTorch 2.3
+        attn_arg = (
+            "    attn_implementation='flash_attention_2',\n"
+            if self.model_name_or_path in self._NEEDS_TRANSFORMERS_UPGRADE
+            else ""
+        )
+
+        if self.use_qlora_inference:
+            model_load_script += (
+                "from transformers import BitsAndBytesConfig\n"
+                "bnb_config = BitsAndBytesConfig(\n"
+                "    load_in_4bit=True,\n"
+                "    bnb_4bit_quant_type='nf4',\n"
+                "    bnb_4bit_compute_dtype=torch.bfloat16,\n"
+                ")\n"
+                f"model = AutoModelForCausalLM.from_pretrained(\n"
+                f"    '{self.model_name_or_path}',\n"
+                "    quantization_config=bnb_config,\n"
+                "    torch_dtype=torch.bfloat16,\n"
+                + attn_arg +
+                "    device_map='auto',\n"
+                ")\n"
+                "print('Base model loaded (4-bit QLoRA)')\n"
+            )
+        else:
+            model_load_script += (
+                f"model = AutoModelForCausalLM.from_pretrained(\n"
+                f"    '{self.model_name_or_path}',\n"
+                "    torch_dtype=torch.bfloat16,\n"
+                + attn_arg +
+                "    device_map='auto',\n"
+                ")\n"
+                "print('Base model loaded (bf16)')\n"
+            )
+
+        if adapter_path:
+            model_load_script += (
+                f"from peft import PeftModel\n"
+                f"model = PeftModel.from_pretrained(model, '{fuse_adapter_path}')\n"
+                f"print('Adapter loaded: {fuse_adapter_path}')\n"
+            )
+
+        model_load_script += "model.eval()\n"
+
+        inference_script = (
+            "import json, torch\n"
+            "from google.cloud import storage\n"
+            "from transformers import AutoModelForCausalLM, AutoTokenizer\n"
+            "\n"
+            + model_load_script
+            + "\n"
+            f"with open('{fuse_prompts_path}') as f:\n"
+            "    prompts = [json.loads(line) for line in f]\n"
+            "\n"
+            "results = []\n"
+            "for item in prompts:\n"
+            "    idx = item['index']\n"
+            "    prompt = item['prompt']\n"
+            "    inputs = tokenizer(prompt, return_tensors='pt').to(model.device)\n"
+            "    with torch.no_grad():\n"
+            f"        outputs = model.generate(**inputs, max_new_tokens={max_new_tokens}, do_sample=False)\n"
+            "    result = tokenizer.decode(outputs[0][inputs['input_ids'].shape[1]:], skip_special_tokens=True)\n"
+            "    results.append(json.dumps({'index': idx, 'result': result}))\n"
+            "    del inputs, outputs\n"
+            "    torch.cuda.empty_cache()\n"
+            "    print(f'Processed prompt {idx + 1}/{len(prompts)}')\n"
+            "\n"
+            "output = '\\n'.join(results)\n"
+            f"local_path = '/tmp/{inference_id}_results.jsonl'\n"
+            "with open(local_path, 'w') as f:\n"
+            "    f.write(output)\n"
+            "\n"
+            "client = storage.Client()\n"
+            f"parts = '{results_gcs_path}'.replace('gs://', '').split('/', 1)\n"
+            "client.bucket(parts[0]).blob(parts[1]).upload_from_filename(local_path)\n"
+            "print(f'Uploaded {len(results)} results')\n"
+        )
+
+        env_vars = {}
+        hf_token = os.environ.get("HF_TOKEN", "")
+        if hf_token:
+            env_vars["HF_TOKEN"] = hf_token
+
+        # Gemma 3 needs transformers 4.51.3+ and flash-attn (eager/SDPA
+        # both fail on PyTorch 2.3). Write script to file to avoid
+        # shell escaping issues with multiline Python in sh -c.
+        if self.model_name_or_path in self._NEEDS_TRANSFORMERS_UPGRADE:
+            import base64
+            encoded = base64.b64encode(inference_script.encode()).decode()
+            infer_cmd = [
+                "sh", "-c",
+                "pip install -q 'transformers==4.51.3' flash-attn --no-build-isolation && "
+                f"echo {encoded} | base64 -d > /tmp/_infer.py && "
+                "python /tmp/_infer.py",
+            ]
+        else:
+            infer_cmd = ["python", "-c", inference_script]
+
+        job = aiplatform.CustomContainerTrainingJob(
+            display_name=f"smala-inference-{inference_id}",
+            container_uri=_HF_TRAINING_CONTAINER,
+            command=infer_cmd,
+            staging_bucket=self.staging_bucket,
+        )
+
+        job.run(
+            replica_count=1,
+            machine_type="g2-standard-12",
+            accelerator_type="NVIDIA_L4",
+            accelerator_count=1,
+            environment_variables=env_vars if env_vars else None,
+        )
+
+        # Download results from GCS
+        parts = results_gcs_path.replace("gs://", "").split("/", 1)
+        client = storage.Client()
+        bucket = client.bucket(parts[0])
+        blob = bucket.blob(parts[1])
+        results_text = blob.download_as_text()
+
+        # Parse results and reorder by index
+        result_map: dict[int, str] = {}
+        for line in results_text.strip().split("\n"):
+            if line:
+                item = json.loads(line)
+                result_map[item["index"]] = item["result"]
+
+        ordered_results = [
+            result_map.get(i, "") for i in range(len(prompts))
+        ]
+
+        # Cleanup GCS artifacts
+        try:
+            bucket.blob(parts[1]).delete()
+            prompts_parts = prompts_gcs_path.replace("gs://", "").split("/", 1)
+            bucket.blob(prompts_parts[1]).delete()
+        except Exception:
+            pass
+
+        logger.info(
+            "Batched tuned inference complete: %d/%d results",
+            len(result_map), len(prompts),
+        )
+        return ordered_results
 
     def cleanup_base_endpoint(self) -> None:
         """Undeploy and clean up the base model endpoint.
@@ -644,14 +1196,45 @@ class VertexAIStudentTrainer:
     # ------------------------------------------------------------------
 
     def save(self, path: str | None = None) -> None:
-        """Save adapter metadata locally.
+        """Save adapter metadata and verify adapter weights exist locally.
 
-        The actual adapter weights are already downloaded from GCS
-        during :meth:`train`.  This writes a metadata file linking
-        the local path to the GCS source.
+        The actual adapter weights are downloaded from GCS during
+        :meth:`train`.  This writes a metadata file and verifies
+        the weights are present on disk.
         """
         save_path = path or self.output_dir
         os.makedirs(save_path, exist_ok=True)
+
+        # Check that adapter weight files were downloaded from GCS
+        adapter_files = list(Path(save_path).glob("*.safetensors")) + \
+                        list(Path(save_path).glob("*.bin"))
+        if adapter_files:
+            logger.info(
+                "Adapter weights verified: %d file(s) in %s",
+                len(adapter_files), save_path,
+            )
+        else:
+            logger.warning(
+                "No adapter weight files (.safetensors/.bin) found in %s — "
+                "GCS download may have failed. Attempting re-download.",
+                save_path,
+            )
+            # Re-attempt download from GCS
+            if self._tuning_job_count > 0:
+                try:
+                    vertex_model_id = self._VERTEX_MODEL_MAP.get(
+                        self.model_name_or_path, self.model_name_or_path
+                    )
+                    experiment_tag = Path(self.output_dir).parent.parent.name or "default"
+                    display_name = (
+                        f"smala-{experiment_tag}-{vertex_model_id.split('/')[-1]}-"
+                        f"round{self._tuning_job_count}"
+                    )
+                    adapter_gcs_path = f"{self.staging_bucket}/adapters/{display_name}"
+                    self._download_from_gcs(adapter_gcs_path, save_path)
+                    logger.info("Re-download complete to %s", save_path)
+                except Exception as exc:
+                    logger.error("Re-download failed: %s", exc)
 
         metadata = {
             "backend": "vertex_ai",
@@ -660,6 +1243,8 @@ class VertexAIStudentTrainer:
             "location": self.location,
             "staging_bucket": self.staging_bucket,
             "tuning_jobs_completed": self._tuning_job_count,
+            "adapter_files": [f.name for f in adapter_files],
+            "qlora_inference": self.use_qlora_inference,
         }
         with open(os.path.join(save_path, "vertex_ai_metadata.json"), "w") as fh:
             json.dump(metadata, fh, indent=2)
@@ -709,9 +1294,13 @@ class VertexAIStudentTrainer:
         for blob in blobs:
             # Preserve relative path structure
             relative_path = blob.name[len(prefix):].lstrip("/")
-            if not relative_path:
-                continue
+            if not relative_path or relative_path.endswith("/"):
+                continue  # skip directory markers
             local_path = os.path.join(local_dir, relative_path)
             os.makedirs(os.path.dirname(local_path), exist_ok=True)
-            blob.download_to_filename(local_path)
-            logger.debug("Downloaded %s → %s", blob.name, local_path)
+            try:
+                blob.download_to_filename(local_path)
+                logger.debug("Downloaded %s → %s", blob.name, local_path)
+            except Exception as exc:
+                # Skip transient/deleted blobs (e.g. GCS lists stale entries)
+                logger.warning("Skipping %s: %s", blob.name, exc)

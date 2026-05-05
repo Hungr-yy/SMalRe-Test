@@ -1,0 +1,237 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key includes 'H' (Credentials In Files / T1552.001) but the report evidence for this is the FTP credentials location string (recentservers.xml), which is more specifically covered by option D (FTP credentials via FileZilla recentservers.xml). Option H refers to generic 'credentials stored in files on the local system' which is a broader category. More critically, option 'C' (Dumping LSASS) is correctly excluded, but the answer key includes 'G' (Network Sniffing / T1040) which IS mapped in the MITRE ATT&CK section of the report. However, the question asks for behaviours 'directly evidenced by signatures or MITRE ATT&CK mappings observed during sandbox detonation' \u2014 T1040 is mapped but there is no specific signature evidence of active network sniffing during detonation. The answer key is debatable but the inclusion of 'H' as a separate answer from 'D' is problematic since both refer to the same underlying evidence (recentservers.xml = credentials in files). The answer key lists A, B, D, E, G, H \u2014 but D and H overlap significantly, and G (network sniffing) has no direct signature evidence in the report beyond the MITRE mapping. This makes the answer key factually questionable for a professional analyst."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks specifically which APIs were hooked by 'microsofthelp.exe' based on the Hook Detection signatures in the report. The report clearly shows: hooks-0 (Process32NextW@KERNEL32.DLL), hooks-2 (FindFirstFileW@KERNEL32.DLL), and hooks-5 (send@WS2_32.DLL). The correct answers A, C, E match exactly. Options B, D, F are plausible distractors not evidenced in the hook detection section. The question is specific, technical, directly answerable from the report, and not plagiarised from benchmark questions."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks for specific API calls providing direct evidence of process injection. The report contains: stream-34 (WriteProcessMemory@KERNEL32.DLL), stream-5 (RtlCreateUserThread@NTDLL.DLL), stream-129 (NtResumeThread@NTDLL.DLL), and stream-31 (OpenProcess@KERNEL32.DLL). These map to answers A, C, E, F respectively. GetVersionExW (B) and GetLocaleInfoW (D) and GetSystemTimeAsFileTime (G) are environment awareness APIs, not injection-related. The answer key A, C, E, F is correct and well-supported by the report evidence."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviours support a Defense Evasion classification for the Pykspa.Generic sample. The report clearly evidences: A (registry-10: Modifies UAC/LUA settings = T1112), C (static-6: high entropy .data section = T1027.009), D (string-64: APIs outside IAT = T1027.007 dynamic API resolution), G (T1070.006 Timestomp is mapped in MITRE ATT&CK). Options B (CreateToolhelp32Snapshot) is process discovery, E (volume info query) is system info discovery, F (mutant creation) is not a defense evasion indicator. The answer key A, C, D, G is correct and well-reasoned."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are directly evidenced for the Dropper.Generic.Dacic.3035 sample. The MITRE ATT&CK mappings include T1055.001 (DLL Injection), T1055.003 (Thread Execution Hijacking), T1055.011 (Extra Window Memory Injection), T1055.015 (ListPlanting). The report also shows: string-318 (FreeLibrary = DLL injection), api-264 (creates thread in self process = T1055.003), string-721 (EnumWindows = T1055.015 ListPlanting), and T1055.011 is mapped. Process Hollowing (B) and APC Injection (F) are NOT in the MITRE mappings. The answer key A, C, D, E is correct."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection and privilege escalation techniques are identified for the Trojan.Generic UPX-packed sample. The report evidences: A (string-309: OpenThread = T1055.003 Thread Execution Hijacking), C (string-318: LoadLibraryA = T1055.001 DLL Injection), D (string-306: OpenProcessToken + static-87: SetFileSecurityW = T1134.001 Token Impersonation), F (string-721: PostMessageA = T1055.015 ListPlanting). Process Hollowing (B) is not evidenced, APC Injection (E) is not evidenced. The answer key A, C, D, F is correct and well-supported."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which anti-recovery actions were executed based on the process tree. The process tree clearly shows: A (vssadmin.exe 'delete shadows /all /quiet'), C (WMIC.exe 'shadowcopy delete'), D (bcdedit.exe 'bootstatuspolicy ignoreallfailures'), E (bcdedit.exe 'recoveryenabled no'), F (wbadmin.exe 'delete catalog -quiet'). Option B (PowerShell disabling Defender) is not in the process tree. The answer key A, C, D, E, F is correct and directly evidenced by the process tree in the report."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about network behaviour of the WannaCry sample (CVE-2017-0147). The report evidences: A (network-0: contacts www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com = kill-switch domain), C (network-31/32: large number of ARP broadcast requests = network scanning), D (network-17: contacts 60+ hosts in 22+ networks), F (suricata-2: 'ET TROJAN Possible WannaCry DNS Lookup'). Option B (DoH) is not evidenced, E (only standard ports) is contradicted by network-7 (unusual ports), G (FTP exfiltration) is not evidenced. The answer key A, C, D, F is correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection sub-techniques are specifically attributed to the Trojan.Generic sample. The MITRE ATT&CK mappings include T1055.001, T1055.003, T1055.011, T1055.015, T1055.005 (Thread Local Storage). The report also shows api-264 (creates thread in self process = T1055.003), string-481 (explorer.exe reference = T1055), and the malicious signature api-0 (writes data to remote process). Process Hollowing (B), APC Injection (E), and Reflective DLL Loading (G) are NOT in the MITRE mappings. The answer key A, C, D, F, G is correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection techniques are directly evidenced for the Trojan.Ursnif sample. The report clearly shows: A (api-85: NtQueueApcThread = T1055.004 APC injection), C (api-264: creates thread in self process = T1055.003), D (T1055.001 DLL injection is in MITRE mappings), E (T1055.011 Extra Window Memory Injection is in MITRE mappings). Process Hollowing (B) is not evidenced, Reflective DLL Loading (F) is not evidenced. The answer key A, C, D, E is correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which evidence supports process injection for the Trojan.BrsecmonE sample. The report clearly shows: A (api-20: allocates virtual memory in remote process), B (api-0: writes 32 bytes to remote process), C (api-129: CreateProcessA in suspended mode), D (api-83: writes PE header to memory = T1055.002), F (target-269: svchost.exe connects to external IP after being spawned by mpvpepag.exe). Option E (RpcServerRegisterIf2) is an RPC registration call, not process injection evidence. Option G (GetProcAddress) is a general API lookup. The answer key A, B, C, D, F is correct."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about C2 network behaviour for the CVE-2017-0199 Excel sample. The report evidences: A (network-88: 'loooooooooooooooooooog.com' flagged as malicious domain), C (network-78/60: Base62 and Base64 strings in HTTP requests), D (network-38/54: HTTPS using TLSv1.2), F (network-22: browser User-Agent without launching browser). Option B (DoH) is not evidenced, E (only port 80) is contradicted by port 443 traffic. The answer key A, C, D, F is correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection techniques are evidenced for the Remcos RAT (RiskWare/NetSup) sample. The MITRE ATT&CK mappings include T1055.003 (Thread Execution Hijacking), T1055.001 (DLL Injection), T1055.011 (Extra Window Memory Injection), T1055.015 (ListPlanting). The report also shows api-264 (creates thread in self process = T1055.003), api-0 (writes data to remote process = T1055). Process Hollowing (B), APC Injection (D), Reflective DLL Loading (G) are NOT in the MITRE mappings. The answer key A, C, D, E, G is correct \u2014 wait, D is ListPlanting which IS in the mappings. Let me re-check: A=Thread Execution Hijacking (T1055.003 \u2713), C=DLL Injection (T1055.001 \u2713), D=APC Injection (T1055.004 \u2014 NOT in mappings), E=ListPlanting (T1055.015 \u2713), G=Remote process write (T1055 \u2713). The answer key lists A, C, D, E, G but D (APC Injection T1055.004) is NOT in the MITRE mappings for this sample. This is an error."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about defense evasion indicators for the low-confidence Visual Basic sample. The report evidences: A (static-6: high entropy .text section = T1027.009), C (T1027 and T1027.009 are both mapped in MITRE ATT&CK), E (static-157: Microsoft Linker compiler signature = T1027). Options B (process hollowing) and D (AMSI bypass) are not evidenced in the report. The answer key A, C, E is correct and well-supported."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about evasion behaviours for the um_unhooking sample with Borland Delphi signature. The report evidences: A (stream-87: GetTickCount for timing-based debugger detection), C (string-666: vmtoolsd.exe sandbox detection), D (string-659: NtQuerySystemInformation for system checks = T1497.001), E (stream-139: XOR instruction loops = T1027.005 Indicator Removal from Tools), G (string-553: Wow64RevertWow64FsRedirection = T1070), H (binary-71: high entropy sample). Option B (AMSI patching) is not evidenced, F (ETW patching) is not evidenced. The answer key A, C, D, E, G, H is correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which process injection techniques were observed for the Trojan.Generic VC8 sample. The MITRE ATT&CK mappings include T1055.003 (Thread Execution Hijacking), T1055.001 (DLL Injection), T1055.015 (ListPlanting), T1055.011 (Extra Window Memory Injection), T1055.005 (Thread Local Storage). The report also shows api-264 (creates thread in self process = T1055.003). Process Hollowing (B), APC Injection (D), and Reflective DLL Loading (G) are NOT in the MITRE mappings. The answer key A, C, E, F, H is correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The answer key lists A, C, D, E but option D is 'APC Injection (T1055.004)' which is NOT in the MITRE ATT&CK mappings for this sample (Trojan.BrsecmonE). The MITRE mappings include T1055.001, T1055.003, T1055.011, T1055.012 (Process Hollowing), T1055.002 (Portable Executable Injection), but NOT T1055.004. The correct answers should be A (Thread Execution Hijacking - T1055.003 \u2713), C (DLL Injection - T1055.001 \u2713), E (Extra Window Memory Injection - T1055.011 \u2713), and possibly B (Process Hollowing - T1055.012 \u2713 which IS in the mappings). The answer key is factually incorrect by including D (APC Injection) and excluding B (Process Hollowing) which is explicitly mapped."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks about C2 network behaviour for the Remcos.Generic sample. The report evidences: A (network-7: TCP traffic on port 2404 + suricata-2: 'ET MALWARE Remcos 3.x Unencrypted'), C (network-51: DNS query for 'liveos.zapto.org' + suricata-1: 'ET DYN_DNS DNS Query to DynDNS Domain'), D (network-23: TCP traffic on port 80 without HTTP header), F (network-24: 'Tries to identify its external IP address' via geoplugin.net). Option B (HTTPS only) is contradicted by unencrypted traffic on 2404, E (DGA) is not evidenced. The answer key A, C, D, F is correct."
+      },
+      {
+        "question_index": 18,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which credential access techniques are evidenced for the MSIL.Krypt.Generic stealer. The report evidences: A (string-405: Firefox key3.db reference = T1555.003), B (string-88: GetKeyboardState + string-556: [CTRL] keylogger strings = T1056.001), D (string-627: VAULT_ITEM_WIN7 = T1555.004 Windows Credential Manager), E (string-688/334: 'netsh wlan show profiles' command = T1552 unsecured credentials). Option C (LSASS dumping) is not evidenced, F (RDP brute-forcing) is not evidenced. The answer key A, B, D, E is correct and well-supported by the report."
+      }
+    ],
+    "summary": {
+      "total": 19,
+      "passed": 17,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 option B is wrong",
+          "Answer key includes B (Process Hollowing T1055.012) but this technique is NOT present in the infostealers detonation report's MITRE ATT&CK mappings",
+          "T1055.012 Process Hollowing does not appear anywhere in the first report's mitre_attcks array",
+          "Option F (Reflective DLL Injection T1055.001) is also listed as incorrect but T1055.001 is also absent from this report's MITRE mappings \u2014 however the answer key correctly excludes F, so that part is fine",
+          "The core error is including B in the correct answers when T1055.012 is not mapped in this report"
+        ],
+        "reasoning": "The answer key lists B (Process Hollowing T1055.012) as correct, but reviewing the first detonation report's mitre_attcks array, T1055.012 is not present. The infostealers report includes T1055.003 (Thread Execution Hijacking), T1055 (Process Injection), T1055.011 (Extra Window Memory Injection), and T1620 (Reflective Code Loading), but NOT T1055.012. Option B's claim that Process Hollowing is 'evidenced by an explicit MITRE ATT&CK mapping in the report' is factually false for this report. The answer key must be rejected as incorrect."
+      },
+      {
+        "question_index": 1,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key \u2014 option C is wrong",
+          "T1055.004 (APC Injection) is not present in the remcos report's MITRE ATT&CK mappings, so option C is correctly excluded",
+          "However option B's justification is partially problematic: the signature 'Creates a process in suspended mode' is attributed to remcos.exe calling CreateProcessW, which is mapped to T1055 (Process Injection) not specifically T1055.012 (Process Hollowing) in the signatures",
+          "The MITRE mapping for T1055.012 IS present in the remcos report's mitre_attcks array under both Privilege Escalation and Defense Evasion, so B is defensible",
+          "Option F (Reflective DLL Loading) is correctly excluded as there is no such signature in the remcos report",
+          "The answer key A, B, D, E, G appears correct: T1055.003 is mapped and evidenced by thread-in-self-process signature; T1055.012 is in MITRE mappings; T1055.001 is in MITRE mappings; T1055.011 is in MITRE mappings; T1055 write-to-remote-process signature is malicious-rated",
+          "On closer review the answer key appears factually supportable from the report \u2014 all five techniques are either explicitly in mitre_attcks or evidenced by signatures",
+          "However option C states APC Injection is 'evidenced by queued APC calls observed in the API call log' \u2014 this is false and correctly excluded",
+          "The question and answer key are actually correct upon careful re-examination",
+          "Re-evaluating: the question is well-formed and the answer key A, B, D, E, G is supported by the report evidence"
+        ],
+        "reasoning": "Upon careful review, the answer key for question 1 (A, B, D, E, G) is factually supportable from the remcos detonation report. T1055.003 is evidenced by the 'Creates a thread in a self process' signature; T1055.012 appears explicitly in the mitre_attcks array and is supported by the 'Creates a process in suspended mode' signature; T1055.001 and T1055.011 appear in mitre_attcks; T1055 is evidenced by the malicious-rated 'Writes data to a remote process' signature. Options C and F are correctly excluded. However, the question is being rejected because option B's explanatory text ('evidenced by remcos.exe calling CreateProcessW with a suspended process flag') is technically accurate per the signature data, but the signature maps to T1055 generically, not T1055.012 specifically. This creates an ambiguity that could mislead students. Additionally, the question is structurally very similar to question 0 (same topic, same format, same style of evidence-linking), raising concerns about question bank diversity. The primary rejection reason is the B option's attribution issue \u2014 the suspended process signature is mapped to T1055 in the report, not T1055.012, making the answer key's justification for B technically imprecise even if T1055.012 does appear in the MITRE mappings section. This is a factual accuracy issue sufficient for rejection."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 2
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This is a well-constructed hard-difficulty evasion techniques question that is directly grounded in the detonation report. The answer key (A, C, D, F) is correct: (A) PAGE_GUARD allocation is evidenced by signature 'api-1' ('Creates guarded memory regions'); (C) kernel debugger query is evidenced by signature 'api-10' ('Queries kernel debugger information'); (D) Zone.Identifier deletion is evidenced by signatures 'api-25' and 'api-42'; (F) extended sleep is evidenced by signature 'api-24' ('Tries to sleep for a long time (more than two minutes)'). Distractors B (shadow copy deletion) and E (ETW patching) have no evidence in the report. The question is not plagiarised from any benchmark item \u2014 it uses a novel multi-evidence reasoning format requiring cross-referencing specific signatures. Difficulty calibration as 'hard' is appropriate. Style and format are consistent with CyberSOCEval conventions."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This is a well-constructed medium-difficulty behavioral analysis question that asks students to distinguish malicious-level signatures from suspicious/informative ones \u2014 a genuine analytical skill. The answer key (B, C, D, E, G) is correct per the report: 'Writes data to a remote process' (threat_level: malicious, api-0), 'Creates a process in suspended mode' (threat_level: malicious, api-129), 'Hooks file system APIs' (threat_level: malicious, hooks-2), 'Uses network protocols on unusual ports' (threat_level: malicious, network-7), and 'Hooks internet related APIs' (threat_level: malicious, hooks-5) are all explicitly marked threat_level 2 (malicious). Distractors A ('Modifies auto-execute functionality') and F ('Sends traffic on typical HTTP outbound port without HTTP header') are correctly excluded \u2014 they are marked threat_level 1 (suspicious). The question is not plagiarised; no benchmark question asks students to filter by threat_level classification. Format and style are consistent with CyberSOCEval conventions."
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "passed": 2,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

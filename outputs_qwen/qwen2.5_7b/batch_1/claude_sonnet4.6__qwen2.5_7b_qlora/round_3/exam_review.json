@@ -1,0 +1,156 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators collectively support process injection in hash.exe. The detonation report confirms: (A) VirtualAllocEx/remote memory allocation observed ('Allocates virtual memory in a remote process'), (B) CreateToolhelp32Snapshot and Process32FirstW called, (C) CreateThread with handle -1 (self-process thread creation via T1055.003), (E) LoadLibraryA and GetProcAddress for dynamic API resolution, (F) PE header found in memory dumps (T1055). Option D (WinExec launching cmd.exe) is a process execution indicator, not a process injection primitive or setup step \u2014 correctly excluded. The answer key {A, B, C, E, F} is factually supported by the report. The question is original, technically precise, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which API calls and behavioral indicators support process injection in a .NET infostealer. The report confirms: (A) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (B) CreateToolhelp32Snapshot \u2014 called for process enumeration; (C) AdjustTokenPrivileges \u2014 SE_DEBUG_PRIVILEGE enabled; (D) IsWow64Process \u2014 called; (E) CreateThread in self-process (handle -1) \u2014 T1055.003 confirmed. Option F (GetWindowTextW) is an application window discovery API, not an injection primitive \u2014 correctly excluded. Answer key {A, B, C, D, E} is factually correct and well-supported by the report. Original question, no plagiarism detected."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question covers process injection indicators in a complex multi-process infostealer (QuasarRAT-like). The report confirms: (A) CreateProcessW in suspended mode (CREATE_SUSPENDED) \u2014 'Creates a process in suspended mode'; (B) WriteProcessMemory \u2014 32 bytes written to remote process; (C) CreateToolhelp32Snapshot \u2014 called; (D) IsWow64Process \u2014 called; (E) CreateThread in self-process (handle -1) \u2014 T1055.003; (G) PE header bytes written to remote process memory \u2014 T1055.002. Option F (EnumWindows) is application window discovery, not injection-related \u2014 correctly excluded. Answer key {A, B, C, D, E, G} is factually supported. Original, well-constructed question."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support DLL injection (T1055.001) in a Trojan.Downloader.Zlob sample. The report is static-only (no dynamic execution observed beyond signatures). The report confirms: (A) LoadLibraryA \u2014 string reference found; (B) CreateToolhelp32Snapshot \u2014 string reference found; (C) GetProcAddress \u2014 string reference found; (D) CreateThread \u2014 string reference found (used as injection code injection indicator per T1055); (F) WaitForSingleObject \u2014 string reference found (timing/synchronization). Option E (ExitProcess) and G (RegSetValueExA) are correctly excluded as unrelated to injection mechanics. Answer key {A, B, C, D, F} is factually supported by the static signatures. Original question."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in Sdbot.Generic. The report confirms: (A) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (B) VirtualAllocEx \u2014 'allocated memory in C:\\hash.exe'; (C) CreateToolhelp32Snapshot \u2014 called; (D) IsWow64Process \u2014 called; (E) CreateThread in self-process (handle -1) \u2014 T1055.003; (G) Process32FirstW \u2014 called by vxdmon.exe. Options F (InternetOpenA) and H (ShellExecuteA) are network/execution APIs unrelated to injection primitives \u2014 correctly excluded. Answer key {A, B, C, D, E, G} is factually supported. Original, well-constructed question."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors support process injection in Worm.Ludbaruma. The report confirms: (A) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (B) VirtualAllocEx \u2014 'allocated memory in C:\\hash.exe'; (C) CreateToolhelp32Snapshot / Process32FirstW \u2014 both called; (D) IsWow64Process \u2014 called; (E) CreateThread in self-process (handle -1) \u2014 T1055.003. Options F (GetForegroundWindow) and G (RpcServerRegisterIf2) are correctly excluded as unrelated to injection. Answer key {A, B, C, D, E} is factually supported. Original question."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors constitute Defense Evasion in Trojan.Ransom.Crysis. The report confirms: (A) File renaming \u2014 'renamed original file dotnet48.exe' (T1036 Masquerading); (C) High-entropy .rdata section \u2014 T1027.009; (D) Timestomping \u2014 T1070.006 is in the MITRE ATT&CK list; (F) Dropping PE executable into %ProgramData% with misleading filename \u2014 T1036 Match Legitimate Name or Location. Option B (querying volume information) is System Information Discovery, not Defense Evasion. Option E (reading active computer name) is Discovery. Option G (IsWow64Process) is Discovery/environment awareness. Answer key {A, C, D, F} is factually correct. Original question."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors constitute Defense Evasion in Trojan.Ransom (ransomware). The report confirms: (A) ThreadHideFromDebugger \u2014 T1622 Debugger Evasion; (C) High-entropy .text section \u2014 T1027.009 Embedded Payloads; (E) Dropping ransom note in AppData using masquerading \u2014 T1036 Masquerading; (G) Time-based and user-activity-based checks \u2014 T1497.003 and T1497.002. Option B (loading bcrypt.dll) is a cryptographic operation for encryption, not Defense Evasion per se. Option D (reading cryptographic machine GUID) is System Information Discovery. Option F (GetLogicalDriveStringsW) is System Information Discovery. Answer key {A, C, E, G} is factually correct and well-reasoned. Original question."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors constitute Defense Evasion in Ransom.Imps.Generic. The report confirms: (A) NTFS ADS check \u2014 T1564.004; (C) Dropping PE files with mismatched extensions (.tmp with PE headers) \u2014 T1036 Masquerade File Type; (E) Renaming original files \u2014 T1036 Masquerading; (H) Borland Delphi packer signature \u2014 T1027.002 Software Packing. Option B (GetSystemDefaultLangID) is System Language Discovery. Option D (GetKeyState) is Keylogging/Collection. Option F (IsWow64Process) is Discovery. Option G (opening files with deletion access rights) is Indicator Removal/File Deletion, which is Defense Evasion but the report shows this as T1070.004 \u2014 however the question asks specifically about the listed options and the answer key excludes G. This is a borderline case: T1070.004 (File Deletion) IS a Defense Evasion technique. However, the answer key {A, C, E, H} is still defensible as the primary Defense Evasion indicators. The question is original and factually grounded."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in a Remcos RAT sample (RiskWare/NetSup). The report confirms: (A) WriteProcessMemory \u2014 'wrote 1500 bytes to a remote process'; (B) CreateToolhelp32Snapshot \u2014 called by sibjs.exe; (C) IsWow64Process \u2014 called by hash.exe; (D) CreateThread in self-process (handle -1) \u2014 T1055.003. Option E (CryptAcquireContextW) is cryptographic, not injection-related. Option F (NtCreateNamedPipeFile) is lateral movement/IPC. Option G (PAGE_GUARD memory allocation) is anti-debugging, not injection. Answer key {A, B, C, D} is factually supported. Original question."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in a Remcos RAT dropper (Jalapeno.Generic). The report confirms: (A) CreateProcessA in suspended mode \u2014 'Creates a process in suspended mode'; (B) VirtualAllocEx \u2014 'allocated memory in C:\\hash.exe'; (C) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (D) PE header bytes written to memory \u2014 T1055.002; (E) CreateToolhelp32Snapshot \u2014 called; (F) IsWow64Process \u2014 called; (G) CreateThread in self-process (handle -1) \u2014 T1055.003; (I) Shellcode written to remote process \u2014 'Writes shellcode to a remote process'. Option H (WinHttpSendRequest by powershell.exe) is network communication, not injection. Answer key {A, B, C, D, E, F, G, I} is factually supported. Original, comprehensive question."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in a Remcos RAT sample (Jalapeno.Generic dropper). The report confirms: (A) VirtualAllocEx \u2014 'allocated memory in C:\\hash.exe' and 'Stable_Network.exe'; (B) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (C) CreateToolhelp32Snapshot \u2014 called; (D) IsWow64Process \u2014 called; (E) CreateThread in self-process (handle -1) \u2014 T1055.003; (G) Process32FirstW \u2014 called by Stable_Network.exe. Options F (WinHttpSendRequest) and H (GetAsyncKeyState) are network/keylogging APIs unrelated to injection. Answer key {A, B, C, D, E, G} is factually supported. Original question."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in Trojan.Ursnif (UM unhooking family). The report confirms: (A) NtQueueApcThread \u2014 'Queues an Asynchronous Procedure Call (APC) in a remote process'; (B) CreateThread with handle -1 \u2014 T1055.003; (D) GetProcAddress \u2014 dynamic API resolution supporting injection; (E) LoadLibrary \u2014 module loading for injection setup; (F) OpenProcess opening handle to local process \u2014 prerequisite for injection. Option C (GetLocaleInfoA) is locale/language discovery, not injection-related. Answer key {A, B, D, E, F} is factually supported. Original question."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators constitute Defense Evasion in a UM unhooking sample (low AV detection, suspicious verdict). The report confirms: (A) Timestomp \u2014 T1070.006 in MITRE list; (C) Software Packing \u2014 T1027.002 (VC8 packer signature); (D) User Activity Based Checks \u2014 T1497.002 in MITRE list; (F) Embedded Payloads \u2014 T1027.009 (high-entropy .text section); (G) Time Based Evasion \u2014 T1497.003 in MITRE list. Option B (Query Registry) is Discovery. Option E (loading dbghelp.dll) is Security Software Discovery (T1518.001), which is a Discovery tactic, not Defense Evasion. Answer key {A, C, D, F, G} is factually correct. Original question."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in Trojan.Injuke (UM unhooking family). The report confirms: (A) NtQueueApcThread \u2014 'Queues an Asynchronous Procedure Call (APC) in a remote process'; (B) CreateThread with handle -1 \u2014 T1055.003; (C) IsWow64Process \u2014 called; (E) CreateToolhelp32Snapshot \u2014 called (process enumeration for target selection); (F) GetProcAddress \u2014 dynamic API resolution. Option D (GetLocaleInfoA) is locale discovery, not injection-related. Option G (RtlGetNtProductType) is system information discovery. Answer key {A, B, C, E, F} is factually supported. Original question."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in Trojan.Dinwod (UPX-packed infostealer). The report confirms: (A) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (B) CreateToolhelp32Snapshot \u2014 called; (C) IsWow64Process \u2014 called; (D) CreateProcessA \u2014 called by 682088.exe to spawn child processes in the injection chain; (E) LoadLibrary \u2014 called for dynamic module loading supporting injection setup. Option F (RtlGetVersion) is system information discovery. Option G (FindFirstFileW) is file discovery. Option H (DLL Side-Loading failure) is a persistence/evasion indicator, not a direct injection primitive. Answer key {A, B, C, D, E} is factually supported. Original question."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators constitute Defense Evasion in a Remcos-family sample with very limited dynamic behavior (static-only analysis, no verdict). The report confirms: (A) High entropy in .text section \u2014 T1027.009 Embedded Payloads; (D) Microsoft Linker compiler signature \u2014 T1027 Obfuscated Files or Information. Option B (Application Layer Protocol) is Command and Control tactic, not Defense Evasion. Option C (99 VB source files) is a build artifact, not a Defense Evasion indicator. Option E (CrowdStrike low confidence detection) is an external system indicator, not a technique. Option F (Debug data directory) is a PE characteristic, not a Defense Evasion technique. Answer key {A, D} is factually correct and well-reasoned. Original question."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which indicators support process injection in a .NET infostealer (Trojan.Agent / njRAT variant). The report confirms: (A) WriteProcessMemory \u2014 'wrote 32 bytes to a remote process'; (B) CreateToolhelp32Snapshot \u2014 called; (C) IsWow64Process \u2014 called; (D) CreateThread in self-process (handle -1) \u2014 T1055.003; (E) SeDebugPrivilege adjustment \u2014 'adjusted SE_DEBUG_PRIVILEGE' enabling cross-process memory access. Option F (EnumWindows) is application window discovery. Option G (RtlGetVersion) is system information discovery. Answer key {A, B, C, D, E} is factually supported. Original question."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 18,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

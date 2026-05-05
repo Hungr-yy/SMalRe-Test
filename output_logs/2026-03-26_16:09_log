@@ -1,0 +1,33 @@
+2026-03-26 16:09:56,012 [INFO] experiments: Logging to output_logs/2026-03-26_16:09_log
+2026-03-26 16:09:56,030 [INFO] experiments: SMalA Experiment Matrix
+2026-03-26 16:09:56,030 [INFO] experiments: Teachers:    ['gpt5.1', 'gemini2.5pro', 'claude_sonnet4.6']
+2026-03-26 16:09:56,030 [INFO] experiments: Students:    ['gemma3_4b']
+2026-03-26 16:09:56,031 [INFO] experiments: Output:      outputs_gemma/gemma3_4b
+2026-03-26 16:09:56,031 [INFO] experiments: Experiments: 3 (1 batches)
+2026-03-26 16:09:56,031 [INFO] experiments: Rounds:      5 per experiment
+2026-03-26 16:09:56,031 [INFO] experiments: Parallel:    3 per batch
+2026-03-26 16:09:56,031 [INFO] experiments: Retries:     2 max
+2026-03-26 16:09:56,031 [INFO] experiments: 
+2026-03-26 16:09:56,031 [INFO] experiments: ======================================================================
+2026-03-26 16:09:56,031 [INFO] experiments: BATCH 1 / 1
+2026-03-26 16:09:56,031 [INFO] experiments: ======================================================================
+2026-03-26 16:09:56,031 [INFO] experiments: batch_1: running 3 experiments (max_parallel=3)
+2026-03-26 16:09:56,031 [INFO] experiments:   • gpt5.1__gemma3_4b_qlora
+2026-03-26 16:09:56,031 [INFO] experiments:   • gemini2.5pro__gemma3_4b_qlora
+2026-03-26 16:09:56,031 [INFO] experiments:   • claude_sonnet4.6__gemma3_4b_qlora
+2026-03-26 16:09:56,116 [INFO] experiments: Logging to output_logs/2026-03-26_16:09_log
+2026-03-26 16:27:23,944 [INFO] experiments: Batch 1 complete. 0/3 experiments succeeded.
+2026-03-26 16:27:23,944 [INFO] experiments: ======================================================================
+2026-03-26 16:27:23,944 [INFO] experiments: VERIFYING ARTIFACTS
+2026-03-26 16:27:23,944 [INFO] experiments: ======================================================================
+2026-03-26 16:27:23,944 [INFO] experiments: Tracker: 0 completed, 0 failed, 0 verified
+2026-03-26 16:27:23,944 [INFO] experiments: All experiments succeeded. No retries needed.
+2026-03-26 16:27:23,944 [INFO] experiments: All 9 experiments completed and verified successfully.
+2026-03-26 16:27:23,945 [INFO] experiments: Summary saved to outputs_gemma/gemma3_4b/experiment_summary.json
+2026-03-26 16:27:23,945 [INFO] experiments: 
+2026-03-26 16:27:23,945 [INFO] experiments: ====================================================================================================
+2026-03-26 16:27:23,945 [INFO] experiments: EXPERIMENT RESULTS COMPARISON
+2026-03-26 16:27:23,945 [INFO] experiments: ====================================================================================================
+2026-03-26 16:27:23,945 [INFO] experiments: Experiment                                Status    Accuracy    Prof.   Rounds    ParseErr  
+2026-03-26 16:27:23,945 [INFO] experiments: ----------------------------------------------------------------------------------------------------
+2026-03-26 16:27:23,945 [INFO] experiments: ====================================================================================================

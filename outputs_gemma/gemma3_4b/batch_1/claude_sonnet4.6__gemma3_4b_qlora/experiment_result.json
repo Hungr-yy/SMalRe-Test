@@ -1,0 +1,113 @@
+{
+  "teacher": "anthropic/claude-sonnet-4-6",
+  "student": "google/gemma-3-4b-it",
+  "best_accuracy": 0.6111111111111112,
+  "final_proficiency": "2",
+  "rounds_completed": 5,
+  "response_parsing_error_count": 0,
+  "total_questions_attempted": 90,
+  "qlora_inference": true,
+  "round_results": [
+    {
+      "round": 1,
+      "proficiency": 7,
+      "accuracy": 0.6111111111111112,
+      "avg_jaccard": 0.885978835978836,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 100,
+      "weaknesses": [
+        "um_unhooking",
+        "over-selection on behavioral analysis",
+        "under-selection on hard evasion questions",
+        "av_edr_killers",
+        "Network Indicator of Compromise Extraction",
+        "API Hooking and Credential Access",
+        "hard"
+      ]
+    },
+    {
+      "round": 2,
+      "proficiency": 5,
+      "accuracy": 0.1111111111111111,
+      "avg_jaccard": 0.6266534391534392,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 200,
+      "weaknesses": [
+        "Systematic over-selection / threat-level discrimination failure"
+      ]
+    },
+    {
+      "round": 3,
+      "proficiency": 2,
+      "accuracy": 0.0,
+      "avg_jaccard": 0.4386904761904761,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 300,
+      "weaknesses": [
+        "threat_level discrimination failure",
+        "over-selection / answer-count miscalibration",
+        "evidence-grounding failure",
+        "Behavioral Analysis",
+        "Process Injection Detection",
+        "hard",
+        "infostealers",
+        "killers",
+        "ransomware",
+        "remcos_rat",
+        "um_unhooking"
+      ]
+    },
+    {
+      "round": 4,
+      "proficiency": 3,
+      "accuracy": 0.05555555555555555,
+      "avg_jaccard": 0.6060846560846561,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 400,
+      "weaknesses": [
+        "threat-level field discrimination",
+        "over-selection / precision failure",
+        "hard",
+        "Threat Level Discrimination",
+        "um_unhooking",
+        "evidence-grounding failure: cannot look up threat_level field"
+      ]
+    },
+    {
+      "round": 5,
+      "proficiency": 2,
+      "accuracy": 0.0,
+      "avg_jaccard": 0.46461640211640215,
+      "parse_error_count": 0,
+      "parse_error_rate": 0.0,
+      "total_questions": 18,
+      "num_new_examples": 100,
+      "num_accumulated_examples": 500,
+      "weaknesses": [
+        "Threat-level field discrimination failure",
+        "Systematic over-selection",
+        "Threat Level Discrimination",
+        "hard",
+        "Evidence-grounding failure on structured report fields",
+        "um_unhooking",
+        "remcos"
+      ]
+    }
+  ],
+  "experiment": "claude_sonnet4.6__gemma3_4b_qlora",
+  "output_dir": "outputs_gemma/gemma3_4b/batch_1/claude_sonnet4.6__gemma3_4b_qlora",
+  "status": "completed",
+  "duration_seconds": 33769.5
+}

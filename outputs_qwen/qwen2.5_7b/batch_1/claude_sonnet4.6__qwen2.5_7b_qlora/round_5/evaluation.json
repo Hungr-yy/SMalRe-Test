@@ -1,0 +1,2574 @@
+{
+  "feedback": "The model demonstrates solid malware analysis capability with an exact match accuracy of 52.9% (9/17 questions) and a strong average Jaccard similarity of 0.838. Zero parse failures indicate reliable output formatting. The model performs best on questions requiring precise identification of Defense Evasion techniques, correctly matching gold answers on the majority of questions. However, it exhibits a consistent pattern of over-selection, adding extra options beyond the gold set in 7 out of 8 incorrect answers, with only 1 case of pure under-selection. The average predicted answer count (4.06) exceeds the average gold answer count (3.94) slightly, but the over-selection pattern is more nuanced: the model tends to include plausible-but-incorrect options rather than missing correct ones. Key weaknesses include: (1) Ransomware family questions show the worst performance (1/5 exact matches, 0.733 avg Jaccard), particularly in distinguishing which behaviors constitute Defense Evasion vs. Impact/Execution. The model incorrectly includes shadow copy deletion via WMIC (Impact/T1490), file renaming with double extensions (Impact), and writing PE headers to disk (Ingress Tool Transfer) as Defense Evasion. (2) Killers/EDR family shows mixed performance (2/4 exact matches), with the model failing to recognize file deletion (T1070.004) as Defense Evasion in one case, and over-including LoadLibrary and CreateThread calls as evasion in another. (3) Remcos family shows poor performance (1/3 exact matches), with the model incorrectly classifying writing PE file headers and targeting legacy systems as Defense Evasion techniques, and missing the registry Run key persistence technique that also constitutes Defense Evasion (T1547.001 mapped under Defense Evasion in the report). (4) The model struggles with boundary cases: behaviors like AdjustTokenPrivileges and proxy settings modification are sometimes correctly included, sometimes not, suggesting inconsistent ATT&CK mapping knowledge. Training should focus on: (a) distinguishing Impact vs. Defense Evasion for ransomware-specific behaviors (shadow copy deletion, file renaming); (b) correctly identifying when persistence mechanisms (Run keys) are also mapped as Defense Evasion in sandbox reports; (c) avoiding over-inclusion of Ingress Tool Transfer and Discovery behaviors as Defense Evasion; (d) medium-difficulty questions across all attack families to improve calibration.",
+  "proficiency": 7,
+  "metrics": {
+    "num_questions": 17,
+    "num_exact_matches": 9,
+    "exact_match_accuracy": 0.5294,
+    "avg_jaccard": 0.838,
+    "parse_error_rate": 0.0,
+    "macro_option_precision": 0.8824,
+    "macro_option_recall": 0.9118,
+    "avg_predicted_answer_count": 4.059,
+    "avg_gold_answer_count": 3.941,
+    "answer_count_bias": "over-selecting"
+  },
+  "strengths": [
+    "Perfect parse rate: all 17 model answers were correctly formatted and parseable",
+    "Strong performance on infostealers (3/4 exact matches, 0.917 avg Jaccard)",
+    "Strong performance on um_unhooking (3/4 exact matches, 0.917 avg Jaccard)",
+    "High macro recall (0.911) indicating the model rarely misses correct options",
+    "Correctly identifies obfuscation/packing, PAGE_GUARD memory allocation, APC injection, and registry tracing modifications as Defense Evasion across multiple question types",
+    "Consistent ability to distinguish Discovery behaviors (CreateToolhelp32Snapshot, registry reads for computer name/GUID) from Defense Evasion"
+  ],
+  "weaknesses": [
+    {
+      "area_type": "attack",
+      "area_name": "ransomware",
+      "description": "Model incorrectly includes ransomware-specific Impact behaviors (shadow copy deletion via WMIC, file renaming with double extensions) and Ingress Tool Transfer behaviors (writing PE headers, dropping executables) as Defense Evasion. Also incorrectly includes AdjustTokenPrivileges in Spora question where gold excludes it.",
+      "severity": "high",
+      "evidence_question_indices": [
+        6,
+        8,
+        14
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "over-selection of plausible distractors",
+      "description": "In 7 of 8 incorrect answers, the model adds extra options beyond the gold set. Common over-inclusions: writing PE file headers to disk (T1105, not Defense Evasion), AdjustTokenPrivileges when not in gold, LoadLibrary/CreateThread as evasion, targeting 32-bit compatibility as evasion, and ML detection threshold manipulation.",
+      "severity": "high",
+      "evidence_question_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "remcos_rat",
+      "description": "Model misclassifies writing PE file headers and 32-bit PE targeting as Defense Evasion (question 10), and fails to include registry Run key (T1547.001) as Defense Evasion in question 9 where it was mapped under Defense Evasion in the report.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        9,
+        10
+      ]
+    },
+    {
+      "area_type": "attack",
+      "area_name": "av_edr_killers",
+      "description": "Model missed file deletion/marking for deletion (T1070.004) as Defense Evasion in question 3, and failed to include AdjustTokenPrivileges (T1134) as Defense Evasion in question 4. Also over-included LoadLibrary and CreateThread in question 5.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "area_type": "topic",
+      "area_name": "ATT&CK tactic boundary disambiguation",
+      "description": "Model struggles to distinguish when behaviors like shadow copy deletion (T1490, Impact), ingress tool transfer (T1105), and service execution are NOT Defense Evasion, even when they appear in sandbox reports alongside Defense Evasion techniques.",
+      "severity": "medium",
+      "evidence_question_indices": [
+        6,
+        7,
+        8,
+        14
+      ]
+    },
+    {
+      "area_type": "reasoning_pattern",
+      "area_name": "under-selection of persistence-as-evasion",
+      "description": "In question 1 (infostealers), model missed registry Run key modification (T1547.001) which was mapped as Defense Evasion in the report. Model may not recognize that some persistence techniques are dual-tagged as Defense Evasion.",
+      "severity": "low",
+      "evidence_question_indices": [
+        1
+      ]
+    },
+    {
+      "area_type": "difficulty",
+      "area_name": "hard",
+      "description": "All questions are hard difficulty, making difficulty-specific analysis limited, but the 47% miss rate on hard questions suggests room for improvement on nuanced ATT&CK mappings.",
+      "severity": "low",
+      "evidence_question_indices": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        14
+      ]
+    }
+  ],
+  "breakdowns": {
+    "by_attack": {
+      "infostealers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.9167,
+        "parse_error_rate": 0.0
+      },
+      "remcos_rat": {
+        "num_questions": 3,
+        "exact_match_accuracy": 0.3333,
+        "avg_jaccard": 0.7222,
+        "parse_error_rate": 0.0
+      },
+      "ransomware": {
+        "num_questions": 5,
+        "exact_match_accuracy": 0.2,
+        "avg_jaccard": 0.7467,
+        "parse_error_rate": 0.0
+      },
+      "av_edr_killers": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.8542,
+        "parse_error_rate": 0.0
+      },
+      "um_unhooking": {
+        "num_questions": 4,
+        "exact_match_accuracy": 0.75,
+        "avg_jaccard": 0.9167,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_difficulty": {
+      "easy": {
+        "num_questions": 0,
+        "exact_match_accuracy": 0.0,
+        "avg_jaccard": 0.0,
+        "parse_error_rate": 0.0
+      },
+      "medium": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      },
+      "hard": {
+        "num_questions": 16,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.8281,
+        "parse_error_rate": 0.0
+      }
+    },
+    "by_topic": {
+      "Defense Evasion": {
+        "num_questions": 16,
+        "exact_match_accuracy": 0.5,
+        "avg_jaccard": 0.8281,
+        "parse_error_rate": 0.0
+      },
+      "Evasion Techniques": {
+        "num_questions": 1,
+        "exact_match_accuracy": 1.0,
+        "avg_jaccard": 1.0,
+        "parse_error_rate": 0.0
+      }
+    }
+  },
+  "dataset": [
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A sandbox detonation of a ransomware sample (vx_family: Ransom.Diavolo.Generic) shows the following process tree: hash.exe spawns cmd.exe, which executes WMIC.exe with 'shadowcopy where ID=... delete'. The sample also renames files with double extensions (e.g., document.docx.locked) and drops an executable with a .txt extension. Which of the following behaviors observed in this report should be classified as Defense Evasion techniques according to the MITRE ATT&CK framework?",
+        "options": [
+          "A. File Deletion (T1070.004) \u2014 the sample opens files with delete access rights",
+          "B. Inhibit System Recovery (T1490) \u2014 WMIC.exe deletes volume shadow copies",
+          "C. Double File Extension (T1036.007) \u2014 files are renamed with double extensions",
+          "D. Masquerade File Type (T1036.008) \u2014 executable dropped with .txt extension",
+          "E. Data Encrypted for Impact (T1486) \u2014 files are encrypted by the ransomware"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.HydraCrypt.Generic detonation, svchost.exe (dropped to %APPDATA%) spawns cmd.exe which runs: 'vssadmin delete shadows /all /quiet', 'wmic shadowcopy delete', 'bcdedit /set {default} recoveryenabled no', and 'wbadmin delete catalog -quiet'. The report maps 'Tries to suppress failures during boot' (target-6) to T1490 under the category 'Anti-Detection/Stealthyness'. Which of the following behaviors are correctly classified as Defense Evasion in this report?",
+        "options": [
+          "A. Match Legitimate Name or Location (T1036.005) \u2014 svchost.exe dropped to %APPDATA% instead of system32",
+          "B. Inhibit System Recovery (T1490) \u2014 bcdedit disabling recovery is an Impact technique, not Defense Evasion",
+          "C. File Deletion (T1070.004) \u2014 opening files with delete access rights",
+          "D. Disable or Modify Tools (T1562.001) \u2014 disabling Windows Task Manager via registry",
+          "E. Obfuscated Files or Information (T1027) \u2014 .NET packing detected"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.Diavolo.Generic sample renames over 100 files with double extensions (mapped to T1486 by the sandbox), drops a file 'nyjZw30AWbZ.txt' that is actually a DOS executable (T1036.008), and uses WMIC.exe to delete shadow copies (mapped to T1490). An analyst is asked which behaviors are Defense Evasion. Which answer set is correct?",
+        "options": [
+          "A. File renaming with double extensions (T1036.007) \u2014 Defense Evasion",
+          "B. Shadow copy deletion via WMIC (T1490) \u2014 Impact, NOT Defense Evasion",
+          "C. Dropping executable with .txt extension (T1036.008) \u2014 Defense Evasion",
+          "D. Data encryption (T1486) \u2014 Defense Evasion",
+          "E. File Deletion (T1070.004) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.Ransom.Spora.Generic detonation, the following behaviors are observed: (1) mshta.exe is launched to display a ransom note HTA file (mapped to T1218.005), (2) taskkill.exe terminates the original process, (3) the sample contacts blockcypher.com for Bitcoin address lookups (T1486 context), (4) AdjustTokenPrivileges is called by taskkill.exe (T1134), and (5) proxy settings are modified via registry (T1112). Which of these are Defense Evasion techniques as mapped in this report?",
+        "options": [
+          "A. Mshta (T1218.005) \u2014 System Binary Proxy Execution, Defense Evasion",
+          "B. AdjustTokenPrivileges by taskkill.exe (T1134) \u2014 Access Token Manipulation, Defense Evasion",
+          "C. Bitcoin address lookup via blockcypher.com \u2014 Command and Control, NOT Defense Evasion",
+          "D. Proxy settings modification (T1112) \u2014 Modify Registry, Defense Evasion",
+          "E. Ransom note display (T1491.001) \u2014 Internal Defacement, Impact NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample drops '085cda53603755dc.exe' to %TEMP%, which then marks the original hash.exe for deletion (T1070.004), modifies registry Run keys (T1547.001), and writes PE headers to disk (T1105). The sandbox also maps 'Safe Mode Boot' (T1562.009) to Defense Evasion. Which of the following are correctly identified as Defense Evasion in this report?",
+        "options": [
+          "A. Marking hash.exe for deletion (T1070.004) \u2014 File Deletion, Defense Evasion",
+          "B. Writing PE headers to disk (T1105) \u2014 Ingress Tool Transfer, Command and Control NOT Defense Evasion",
+          "C. Registry Run key modification (T1547.001) \u2014 Persistence AND Privilege Escalation, NOT Defense Evasion",
+          "D. Safe Mode Boot (T1562.009) \u2014 Disable or Modify Tools, Defense Evasion",
+          "E. Data Encrypted for Impact (T1486) \u2014 Impact, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla (Remcos) detonation shows: (1) hash.exe drops Webfrequency.exe to %APPDATA%\\Webdevelop\\ and sets a registry Run key (HKCU\\SOFTWARE\\...\\Run), (2) Webfrequency.exe writes PE headers to memory (T1055.002 \u2014 Portable Executable Injection), (3) Webfrequency.exe creates a process in suspended mode (T1055.012 \u2014 Process Hollowing), (4) the sample uses a valid-but-invalid certificate (T1553.002), and (5) RegAsm.exe opens files with delete access rights (T1070.004). Which behaviors are Defense Evasion as mapped in this report?",
+        "options": [
+          "A. Registry Run key modification (T1547.001) \u2014 Persistence, NOT Defense Evasion in this report",
+          "B. PE Injection writing PE headers to memory (T1055.002) \u2014 Defense Evasion",
+          "C. Process Hollowing via suspended process (T1055.012) \u2014 Defense Evasion",
+          "D. Code Signing with invalid certificate (T1553.002) \u2014 Defense Evasion",
+          "E. File Deletion via delete access rights (T1070.004) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Backdoor.Remcos detonation, the process tree shows: hash.exe \u2192 hash.exe \u2192 hab.exe \u2192 hab.exe \u2192 WScript.exe (install.vbs) \u2192 cmd.exe \u2192 remcos.exe. The sandbox reports: (1) hab.exe modifies Run key at HKCU\\SOFTWARE\\...\\Run (T1547.001), (2) hab.exe marks files for deletion (T1070.004), (3) hash.exe writes PE headers to disk (T1105), and (4) the sample uses Visual Basic scripting (T1059.005). Which of the following are Defense Evasion techniques as mapped in this report?",
+        "options": [
+          "A. Registry Run key modification (T1547.001) \u2014 mapped as Persistence AND Defense Evasion in this report",
+          "B. File marking for deletion by hab.exe (T1070.004) \u2014 Defense Evasion",
+          "C. Writing PE headers to disk (T1105) \u2014 Ingress Tool Transfer under Command and Control, NOT Defense Evasion",
+          "D. Visual Basic scripting (T1059.005) \u2014 Execution, NOT Defense Evasion",
+          "E. Proxy settings modification (T1112) \u2014 Modify Registry, Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A low-confidence Remcos sample (Win/grayware_confidence_70%) has only 8 signatures. The MITRE ATT&CK mappings include: T1027.009 (Embedded Payloads), T1027 (Obfuscated Files or Information), and T1071 (Application Layer Protocol). The PE is 32-bit (IMAGE_FILE_32BIT_MACHINE). Which of the following statements about this sample's Defense Evasion classification is correct?",
+        "options": [
+          "A. T1027.009 (Embedded Payloads) is a Defense Evasion technique",
+          "B. T1027 (Obfuscated Files or Information) is a Defense Evasion technique",
+          "C. T1071 (Application Layer Protocol) is a Defense Evasion technique",
+          "D. The 32-bit PE targeting (IMAGE_FILE_32BIT_MACHINE) is itself a Defense Evasion technique",
+          "E. The low AV detection rate (44%) indicates Defense Evasion success but is not itself a MITRE technique"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun (killers family) detonation shows: (1) hash.exe opens files with delete access rights (api-25, T1070.004), (2) hash.exe marks 'C:\\share\\D3_08\\New Folder.exe' for deletion (api-26, T1070.004), (3) fake system processes (WINLOGON.EXE, CSRSS.EXE) are created at %APPDATA%\\WINDOWS\\ (T1036.005), and (4) hooks are installed on FindFirstFileW and send@WS2_32.DLL (T1056.004). Which behaviors are Defense Evasion in this report?",
+        "options": [
+          "A. Opening files with delete access rights (T1070.004) \u2014 Defense Evasion",
+          "B. Marking files for deletion (T1070.004) \u2014 Defense Evasion",
+          "C. Creating fake system processes at non-system paths (T1036.005) \u2014 Defense Evasion",
+          "D. Hooking FindFirstFileW and send@WS2_32.DLL (T1056.004) \u2014 Credential Access and Collection, NOT Defense Evasion",
+          "E. Writing data to remote processes (T1055) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Malware.PfPk.Generic (killers) sample spawns explorer.exe from %COMMONPROGRAMFILES%\\Microsoft Shared\\. The sandbox reports: (1) AdjustTokenPrivileges called by explorer.exe (T1134), (2) Image File Execution Options injection via registry (T1546.012), (3) registry Run key modification (T1547.001), (4) LoadLibrary calls (T1129), and (5) CreateThread calls in self-process (T1055.003). Which of these are Defense Evasion as mapped in this report?",
+        "options": [
+          "A. AdjustTokenPrivileges (T1134) \u2014 Access Token Manipulation, Defense Evasion",
+          "B. Image File Execution Options injection (T1546.012) \u2014 Defense Evasion",
+          "C. Registry Run key modification (T1547.001) \u2014 Persistence, NOT Defense Evasion in this report",
+          "D. LoadLibrary calls (T1129) \u2014 Shared Modules, Execution NOT Defense Evasion",
+          "E. Thread Execution Hijacking in self-process (T1055.003) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Pykspa.Generic (killers family) sample modifies UAC/LUA settings (T1112), has AdjustTokenPrivileges called (T1134), and uses embedded payloads (T1027.009). The report also shows DLL side-loading failures (T1574.002) and Make and Impersonate Token (T1134.003). Which of the following are Defense Evasion techniques in this report?",
+        "options": [
+          "A. Modify Registry for UAC settings (T1112) \u2014 Defense Evasion",
+          "B. Access Token Manipulation (T1134) \u2014 Defense Evasion",
+          "C. Embedded Payloads (T1027.009) \u2014 Defense Evasion",
+          "D. DLL Side-Loading failures (T1574.002) \u2014 Persistence and Privilege Escalation, NOT Defense Evasion",
+          "E. Make and Impersonate Token (T1134.003) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A sandbox report for Ransom.HydraCrypt.Generic shows the following command executed by svchost.exe: '/C vssadmin delete shadows /all /quiet & wmic shadowcopy delete'. The sandbox maps this to T1490 (Inhibit System Recovery) under the 'System Destruction' category. Under which MITRE ATT&CK tactic does T1490 fall?",
+        "options": [
+          "A. Defense Evasion",
+          "B. Impact",
+          "C. Persistence",
+          "D. Execution",
+          "E. Collection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Ransom.HydraCrypt.Generic detonation maps the following signatures to Defense Evasion: (1) Reflective Code Loading (T1620), (2) Match Legitimate Name or Location (T1036.005) for svchost.exe at %APPDATA%, (3) System Binary Proxy Execution (T1218), (4) File and Directory Permissions Modification (T1222). The report also shows Ingress Tool Transfer (T1105) for dropping svchost.exe. Which of the following is NOT a Defense Evasion technique in this report?",
+        "options": [
+          "A. Reflective Code Loading (T1620)",
+          "B. Match Legitimate Name or Location (T1036.005)",
+          "C. System Binary Proxy Execution (T1218)",
+          "D. Ingress Tool Transfer (T1105)",
+          "E. File and Directory Permissions Modification (T1222)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILMamut infostealer detonation shows: (1) registry key modification at HKLM\\SOFTWARE\\MICROSOFT\\TRACING (mapped to T1112, 'Modifies file/console tracing settings'), (2) PAGE_GUARD memory allocation (T1562.001), (3) AdjustTokenPrivileges called (T1134), (4) registry Run key string found in memory ('Software\\Microsoft\\Windows\\CurrentVersion\\Run'), and (5) Execution Guardrails (T1480). The MITRE ATT&CK mapping for this sample includes T1547.001 only under Persistence. Which of the following are Defense Evasion in this report?",
+        "options": [
+          "A. Modifying TRACING registry keys (T1112) \u2014 Modify Registry, Defense Evasion",
+          "B. PAGE_GUARD memory allocation (T1562.001) \u2014 Disable or Modify Tools, Defense Evasion",
+          "C. AdjustTokenPrivileges (T1134) \u2014 Access Token Manipulation, Defense Evasion",
+          "D. Registry Run key string in memory (T1547.001) \u2014 Persistence only in this report, NOT Defense Evasion",
+          "E. Execution Guardrails (T1480) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.NetMail infostealer detonation shows: (1) hash.exe drops upNext.tmp (PE32 executable) mapped to T1105 (Ingress Tool Transfer) under Command and Control, (2) hash.exe renames itself (T1036 \u2014 Masquerading), (3) hooks are installed on FindFirstFileW and send@WS2_32.DLL (T1056.004 \u2014 Credential API Hooking), (4) File Deletion via delete access rights (T1070.004), and (5) Dynamic API Resolution (T1027.007). Which of these are Defense Evasion?",
+        "options": [
+          "A. Dropping upNext.tmp PE file (T1105) \u2014 Ingress Tool Transfer, Command and Control NOT Defense Evasion",
+          "B. File renaming/masquerading (T1036) \u2014 Defense Evasion",
+          "C. Credential API Hooking (T1056.004) \u2014 Credential Access and Collection, NOT Defense Evasion",
+          "D. File Deletion (T1070.004) \u2014 Defense Evasion",
+          "E. Dynamic API Resolution (T1027.007) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE (um_unhooking family) detonation shows: (1) sc.exe creates service 'xtblsmos' with auto-start (T1543.003), (2) netsh.exe adds a firewall rule allowing svchost.exe inbound (T1562.004), (3) rtmxemaq.exe writes PE headers to memory (T1055.002), (4) rtmxemaq.exe creates svchost.exe in suspended mode (T1055 \u2014 Process Injection), and (5) the sample uses NTFS File Attributes (T1564.004). Which are Defense Evasion?",
+        "options": [
+          "A. Service creation for persistence (T1543.003) \u2014 Persistence and Privilege Escalation, NOT Defense Evasion",
+          "B. Firewall rule modification (T1562.004) \u2014 Disable or Modify System Firewall, Defense Evasion",
+          "C. Writing PE headers to memory (T1055.002) \u2014 Portable Executable Injection, Defense Evasion",
+          "D. Process Injection via suspended process (T1055) \u2014 Defense Evasion",
+          "E. NTFS File Attributes (T1564.004) \u2014 Hide Artifacts, Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Fragtor.Generic (um_unhooking) sample uses NtQueueApcThread for APC injection (T1055.004) and calls AdjustTokenPrivileges. The report maps T1055.004 to both Privilege Escalation and Defense Evasion. The sample also has Disable or Modify Tools (T1562.001) and Token Impersonation/Theft (T1134.001). LoadLibrary and CreateThread-in-self-process (T1055.003) are also observed. Which of the following are Defense Evasion?",
+        "options": [
+          "A. APC Injection (T1055.004) \u2014 Defense Evasion",
+          "B. Disable or Modify Tools (T1562.001) \u2014 Defense Evasion",
+          "C. Token Impersonation/Theft (T1134.001) \u2014 Defense Evasion",
+          "D. LoadLibrary calls (T1129) \u2014 Shared Modules, Execution NOT Defense Evasion",
+          "E. Thread Execution Hijacking in self-process (T1055.003) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun (killers) detonation spawns 64 processes including fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE, SMSS.EXE) all running from %APPDATA%\\WINDOWS\\. The sandbox also shows: (1) Timestomp (T1070.006), (2) File and Directory Permissions Modification (T1222), (3) Code Signing Policy Modification (T1553.006), and (4) writing PE headers to disk (T1105). How many of these four behaviors are Defense Evasion?",
+        "options": [
+          "A. All four (T1070.006, T1222, T1553.006, T1105) are Defense Evasion",
+          "B. Three: T1070.006, T1222, T1553.006 are Defense Evasion; T1105 is Command and Control",
+          "C. Two: T1070.006 and T1222 are Defense Evasion; T1553.006 and T1105 are not",
+          "D. One: only T1553.006 is Defense Evasion",
+          "E. None of these four are Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Ransom.Spora.Generic sample contacts api.blockcypher.com for Bitcoin address validation and spawns mshta.exe to display a ransom note HTA. The sandbox maps: (1) Indicator Removal (T1070) to Defense Evasion, (2) Code Signing (T1553.002) to Defense Evasion, (3) Internal Defacement (T1491.001) to Impact, (4) Defacement (T1491) to Impact, and (5) Keylogging (T1056.001) to both Credential Access and Collection. An analyst must select only Defense Evasion techniques. Which answer is correct?",
+        "options": [
+          "A. T1070 (Indicator Removal) and T1553.002 (Code Signing) only",
+          "B. T1070, T1553.002, and T1491.001 (Internal Defacement)",
+          "C. T1070, T1553.002, T1491.001, and T1056.001 (Keylogging)",
+          "D. T1553.002 only",
+          "E. T1070, T1553.002, T1491, and T1491.001"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Win/malicious_confidence_100% infostealer (YARA match: win_njrat_g0) shows: (1) AdjustTokenPrivileges and SE_DEBUG_PRIVILEGE (T1134), (2) opens hash.exe:Zone.Identifier with delete access (T1070.004 \u2014 'Tries to hide tracks of having downloaded a file'), (3) writes 32 bytes to a remote process (T1055), (4) drops 'Geforce BeamMP.exe' (T1105), and (5) FTP credential strings found (T1552.001). Which behaviors are Defense Evasion?",
+        "options": [
+          "A. AdjustTokenPrivileges (T1134) \u2014 Access Token Manipulation, Defense Evasion",
+          "B. Hiding Zone.Identifier download tracks (T1070.004) \u2014 Defense Evasion",
+          "C. Writing to remote process (T1055) \u2014 Process Injection, Defense Evasion",
+          "D. Dropping Geforce BeamMP.exe (T1105) \u2014 Ingress Tool Transfer, Command and Control NOT Defense Evasion",
+          "E. FTP credential strings (T1552.001) \u2014 Credential Access, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Diavolo ransomware detonation report (vx_family: Ransom.Diavolo.Generic) shows several behaviors. Which of the following observed behaviors are correctly classified as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+        "options": [
+          "A. Renaming files with double extensions (e.g., file.docx.encrypted) \u2014 sandbox signature api-200 mapped to T1486",
+          "B. Dropping a file disguised as a text file but containing executable content \u2014 binary-28 mapped to T1036.008 (Masquerade File Type)",
+          "C. Deleting volume shadow copies via WMIC.exe \u2014 target-4 mapped to T1490 (Inhibit System Recovery)",
+          "D. Opening files with deletion access rights \u2014 api-25 mapped to T1070.004 (File Deletion)",
+          "E. Using double file extension on dropped files \u2014 T1036.007 listed under Defense Evasion in mitre_attcks"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the HydraCrypt ransomware detonation (vx_family: Ransom.HydraCrypt.Generic), the process tree shows svchost.exe spawning cmd.exe which runs 'vssadmin delete shadows /all /quiet' and 'bcdedit /set {default} recoveryenabled no'. Which MITRE ATT&CK tactic and technique correctly describes these two behaviors?",
+        "options": [
+          "A. Both are Defense Evasion \u2014 T1070.004 (File Deletion) because they remove recovery artifacts",
+          "B. Both are Impact \u2014 T1490 (Inhibit System Recovery) because they prevent system recovery after encryption",
+          "C. vssadmin is Impact (T1490) and bcdedit is Defense Evasion (T1562.001)",
+          "D. Both are Execution \u2014 T1059.003 (Windows Command Shell) because they are run via cmd.exe",
+          "E. vssadmin is Defense Evasion (T1070) and bcdedit is Persistence"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Spora ransomware detonation (vx_family: Trojan.Ransom.Spora.Generic) shows the following behaviors: (1) cmd.exe marks hash.exe for deletion via api-26, (2) mshta.exe is launched to open a .hta ransom note, (3) AdjustTokenPrivileges is called by taskkill.exe, and (4) proxy settings are modified via registry-27. Which of these are correctly mapped as Defense Evasion in the report's mitre_attcks list?",
+        "options": [
+          "A. Marking hash.exe for deletion \u2014 T1070.004 (File Deletion) under Defense Evasion",
+          "B. Launching mshta.exe \u2014 T1218.005 (Mshta) under Defense Evasion",
+          "C. AdjustTokenPrivileges called by taskkill.exe \u2014 T1134 (Access Token Manipulation) under Defense Evasion",
+          "D. Modifying proxy settings via registry \u2014 T1112 (Modify Registry) under Defense Evasion",
+          "E. Contacting blockcypher.com \u2014 T1071.001 (Web Protocols) under Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Diavolo ransomware report (vx_family: Ransom.Diavolo.Generic) contains signature api-200: 'Renames more than 100 files with extensions' mapped to T1486, and binary-28: 'Drops executable file with image/text extension' mapped to T1036.008. Which statement correctly distinguishes these two behaviors by tactic?",
+        "options": [
+          "A. Both are Defense Evasion because renaming files and masquerading file types both evade detection",
+          "B. api-200 (file renaming with double extensions) is Impact (T1486 \u2014 Data Encrypted for Impact); binary-28 (dropping executable with image extension) is Defense Evasion (T1036.008 \u2014 Masquerade File Type)",
+          "C. api-200 is Defense Evasion (T1036.007 \u2014 Double File Extension) and binary-28 is Impact",
+          "D. Both are Impact because they both affect file integrity during ransomware encryption",
+          "E. api-200 is Ingress Tool Transfer (T1105) and binary-28 is Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Zusy ransomware detonation (vx_family: Zusy.Generic), the dropped child process 085cda53603755dc.exe writes a PE file header to disk (api-43, T1105), modifies registry Run keys (registry-0, T1547.001), and marks hash.exe for deletion (api-26, T1070.004). Which of these behaviors are classified as Defense Evasion in the report's mitre_attcks list?",
+        "options": [
+          "A. Writing a PE file header to disk \u2014 T1105 (Ingress Tool Transfer) under Command and Control, NOT Defense Evasion",
+          "B. Modifying registry Run keys \u2014 T1547.001 (Registry Run Keys / Startup Folder) under Persistence and Privilege Escalation, NOT Defense Evasion",
+          "C. Marking hash.exe for deletion \u2014 T1070.004 (File Deletion) under Defense Evasion",
+          "D. Writing a PE file header to disk is Defense Evasion because it hides the payload",
+          "E. Modifying registry Run keys is Defense Evasion because it modifies the registry"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT detonation (vx_family: IL:Trojan.MSILZilla, family: remcos) shows these behaviors: (1) api-83: 'Writes PE header to memory' mapped to T1055.002, (2) api-134: 'Creates a system process in suspended mode' mapped to T1055.012, (3) registry-0: 'Modifies auto-execute functionality by setting/creating a value in the registry' mapped to T1547.001, (4) binary-75: 'Drops binary executable with unexpected extension' mapped to T1036.008. Which of these are correctly classified as Defense Evasion?",
+        "options": [
+          "A. Writing PE header to memory \u2014 T1055.002 (Portable Executable Injection) under Defense Evasion",
+          "B. Creating system process in suspended mode \u2014 T1055.012 (Process Hollowing) under Defense Evasion",
+          "C. Modifying registry Run key \u2014 T1547.001 under Defense Evasion (dual-tagged in this report)",
+          "D. Dropping binary with unexpected extension \u2014 T1036.008 (Masquerade File Type) under Defense Evasion",
+          "E. Writing PE header to disk (api-43) \u2014 T1105 (Ingress Tool Transfer) under Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Remcos RAT report (vx_family: Backdoor.Remcos), the following signatures are observed: registry-0 (HKCU\\SOFTWARE Run key modification, T1547.001), api-43 (writes PE file header to disk, T1105), and api-25/api-26 (file deletion, T1070.004). Which of these behaviors appear as Defense Evasion techniques in the report's mitre_attcks section?",
+        "options": [
+          "A. Registry Run key modification (T1547.001) \u2014 appears under Defense Evasion in the mitre_attcks list for this report",
+          "B. Writing PE file header to disk (T1105) \u2014 appears under Defense Evasion",
+          "C. File deletion via api-25/api-26 (T1070.004) \u2014 appears under Defense Evasion",
+          "D. Writing PE file header to disk (T1105) \u2014 appears under Command and Control, NOT Defense Evasion",
+          "E. Registry Run key modification \u2014 appears only under Persistence and Privilege Escalation, NOT Defense Evasion in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The low-confidence Remcos sample (vx_family: Win/grayware_confidence_70%, threat_score: 35) shows very few signatures: static-6 (high entropy, T1027.009) and static-157 (compiler/packer detection, T1027). The mitre_attcks list contains only T1027.009, T1027, and T1071. A student claims this sample also exhibits T1105 (Ingress Tool Transfer) as Defense Evasion. Is this correct?",
+        "options": [
+          "A. Yes \u2014 T1105 is always Defense Evasion when a PE file is written to disk",
+          "B. No \u2014 T1105 (Ingress Tool Transfer) is classified under Command and Control in ATT&CK, not Defense Evasion, and no T1105 indicator appears in this report",
+          "C. Yes \u2014 the high entropy section implies a downloaded payload, making T1105 applicable as Defense Evasion",
+          "D. No \u2014 T1105 does not appear in this report's mitre_attcks list at all; the only Defense Evasion techniques present are T1027 and T1027.009",
+          "E. Yes \u2014 T1071 (Application Layer Protocol) implies C2 download activity which maps to T1105 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun killer sample shows: api-25 'Opens file with deletion access rights' (T1070.004), api-26 'Marks file for deletion' (T1070.004), and target-33 'Creates a fake system process' (T1036.005). Which of these are correctly classified as Defense Evasion in the report's mitre_attcks?",
+        "options": [
+          "A. Opening file with deletion access rights (T1070.004) \u2014 Defense Evasion: File Deletion",
+          "B. Marking file for deletion (T1070.004) \u2014 Defense Evasion: File Deletion",
+          "C. Creating fake system process named WINLOGON.EXE at %APPDATA% (T1036.005) \u2014 Defense Evasion: Match Legitimate Name or Location",
+          "D. Hooks API calls (hooks-0, T1056.004) \u2014 Defense Evasion",
+          "E. Writes data to remote process (api-0, T1055) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Malware.PfPk.Generic killer sample (UPX compressed) shows: registry-64 'Modifies auto-execute functionality to enable the debugger hack' (T1546.012), registry-15 'Changes file extension appearance of the explorer' (T1546.001), and api-111 'AdjustTokenPrivileges' (T1134). The report also shows api-43 'Writes PE file header to disc' (T1105). Which behaviors are Defense Evasion in the mitre_attcks list?",
+        "options": [
+          "A. Image File Execution Options Injection via debugger hack (T1546.012) \u2014 Defense Evasion",
+          "B. Change Default File Association (T1546.001) \u2014 Defense Evasion",
+          "C. Access Token Manipulation via AdjustTokenPrivileges (T1134) \u2014 Defense Evasion",
+          "D. Writing PE file header to disk (T1105) \u2014 Defense Evasion",
+          "E. Writing PE file header to disk (T1105) \u2014 Command and Control (Ingress Tool Transfer), NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Pykspa killer sample (vx_family: Pykspa.Generic) shows: registry-10 'Modifies UAC/LUA settings' (T1112), api-111 'AdjustTokenPrivileges' (T1134), and static-6 'Section contains high entropy' (T1027.009). The mitre_attcks list includes T1134 under both Privilege Escalation and Defense Evasion. Which statement is correct about AdjustTokenPrivileges in this report?",
+        "options": [
+          "A. AdjustTokenPrivileges (T1134) appears ONLY under Privilege Escalation in this report, not Defense Evasion",
+          "B. AdjustTokenPrivileges (T1134) appears under BOTH Privilege Escalation AND Defense Evasion in this report's mitre_attcks list",
+          "C. AdjustTokenPrivileges is never Defense Evasion \u2014 it is always Privilege Escalation only",
+          "D. The UAC modification (T1112) is the only Defense Evasion technique in this report",
+          "E. AdjustTokenPrivileges should not be included as Defense Evasion because it only affects token privileges"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Trojan.BrsecmonE sample (um_unhooking family), the report shows: api-129 'Creates process in suspended mode' (T1055), api-83 'Writes PE header to memory' (T1055.002), netsh.exe modifying firewall rules (T1562.004), and api-43 'Writes PE file header to disc' (T1105). A student selects T1105 as a Defense Evasion technique. Is this correct based on the report?",
+        "options": [
+          "A. Yes \u2014 writing a PE file header to disk is always Defense Evasion because it conceals the payload",
+          "B. No \u2014 T1105 (Ingress Tool Transfer) is classified under Command and Control in this report's mitre_attcks, not Defense Evasion",
+          "C. Yes \u2014 T1105 appears under Defense Evasion in this report because the dropper hides the binary",
+          "D. No \u2014 T1105 does not appear in the mitre_attcks list for this report at all under any tactic",
+          "E. Yes \u2014 any file write operation during malware execution qualifies as Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The HydraCrypt ransomware report shows: registry-179 'Tries to map intranet network resources to internet zone' (T1562.001), registry-3 'Disables Windows Task Manager' (T1562.001), api-1 'Creates guarded memory regions with PAGE_GUARD' (T1562.001), and target-6 'Tries to suppress failures during boot via bcdedit' (T1490). Which of these are Defense Evasion techniques in the report?",
+        "options": [
+          "A. Mapping intranet resources to internet zone (T1562.001) \u2014 Defense Evasion: Disable or Modify Tools",
+          "B. Disabling Windows Task Manager (T1562.001) \u2014 Defense Evasion: Disable or Modify Tools",
+          "C. PAGE_GUARD memory allocation (T1562.001) \u2014 Defense Evasion: Disable or Modify Tools",
+          "D. Suppressing boot failures via bcdedit (T1490) \u2014 Defense Evasion: Indicator Removal",
+          "E. Suppressing boot failures via bcdedit (T1490) \u2014 Impact: Inhibit System Recovery, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILMamut infostealer report shows: registry-30 'Modifies file/console tracing settings' (T1112), api-1 'Creates guarded memory regions with PAGE_GUARD' (T1562.001), and string-232 'Dotnet file packed with confuser protection' (T1027.002). The report also shows string-120 containing 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'. Which of these behaviors are Defense Evasion?",
+        "options": [
+          "A. Modifying file/console tracing settings via registry (T1112 \u2014 Modify Registry) \u2014 Defense Evasion",
+          "B. PAGE_GUARD memory allocation (T1562.001 \u2014 Disable or Modify Tools) \u2014 Defense Evasion",
+          "C. ConfuserEx software packing (T1027.002 \u2014 Software Packing) \u2014 Defense Evasion",
+          "D. Registry Run key string reference (T1547.001) \u2014 Defense Evasion because it modifies the registry",
+          "E. Registry Run key string reference \u2014 this is a string in memory only; no actual Run key write is evidenced as Defense Evasion in the mitre_attcks list"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Trojan.NetMail infostealer (second sample, vx_family: Trojan.NetMail) shows registry-0 'Modifies auto-execute functionality by setting/creating a value in the registry' (T1547.001, suspicious-level). In the report's mitre_attcks list, T1547.001 appears under which tactics?",
+        "options": [
+          "A. Only Persistence",
+          "B. Only Defense Evasion",
+          "C. Persistence and Privilege Escalation only",
+          "D. Persistence, Privilege Escalation, and Defense Evasion",
+          "E. Persistence only, because Run key modification is never Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla Remcos sample shows: static-153 'Uses 32 bit executable PE', api-83 'Writes PE header to memory' (T1055.002), and api-43 'Writes a PE file header to disc' (T1105). A student claims both api-83 and api-43 are Defense Evasion. Evaluate this claim based on the report's mitre_attcks classification.",
+        "options": [
+          "A. Both are Defense Evasion \u2014 writing PE headers to memory and to disk both evade detection",
+          "B. api-83 (T1055.002 \u2014 Portable Executable Injection) is Defense Evasion; api-43 (T1105 \u2014 Ingress Tool Transfer) is Command and Control",
+          "C. api-43 is Defense Evasion because it writes a file; api-83 is Privilege Escalation only",
+          "D. Neither is Defense Evasion \u2014 both are Execution techniques",
+          "E. The 32-bit PE flag (static-153) makes both behaviors Defense Evasion by targeting legacy systems"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun killer sample spawns fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE) from %APPDATA%\\WINDOWS\\. The sandbox flags target-33 as T1036.005 (Match Legitimate Name or Location). Additionally, api-175 'Calls LoadLibrary' is mapped to T1129 (Shared Modules). A student includes LoadLibrary calls as a Defense Evasion technique. Is this correct?",
+        "options": [
+          "A. Yes \u2014 LoadLibrary is used to dynamically load evasion DLLs, making it Defense Evasion",
+          "B. No \u2014 LoadLibrary calls (api-175) are mapped to T1129 (Shared Modules) under Execution in this report, not Defense Evasion",
+          "C. Yes \u2014 any dynamic API resolution is Defense Evasion (T1027.007)",
+          "D. No \u2014 LoadLibrary is mapped to T1055.001 (DLL Injection) which is Defense Evasion",
+          "E. Yes \u2014 because the malware loads DLLs to avoid static import detection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Spora ransomware report (vx_family: Trojan.Ransom.Spora.Generic) shows mshta.exe executing a .hta ransom note file. The signature target-113 maps this to T1218.005 (Mshta) under Defense Evasion. The report also shows api-43 'Writes a PE file header to disc' mapped to T1105. Which statement correctly identifies which of these is Defense Evasion?",
+        "options": [
+          "A. Both T1218.005 and T1105 are Defense Evasion in this report",
+          "B. T1218.005 (Mshta execution) is Defense Evasion; T1105 (writing PE file header to disk) is Command and Control \u2014 Ingress Tool Transfer",
+          "C. T1105 is Defense Evasion because the PE file is written to evade detection; T1218.005 is Execution",
+          "D. Neither is Defense Evasion \u2014 both are Execution techniques",
+          "E. T1218.005 is Execution only; T1105 is both Defense Evasion and Command and Control"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample (um_unhooking family) installs a Windows service named 'xtblsmos' via sc.exe and modifies firewall rules via netsh.exe (T1562.004). The report's mitre_attcks shows T1562.004 under Defense Evasion. It also shows api-83 (T1055.002 \u2014 Portable Executable Injection) and api-129 (T1055 \u2014 Process Injection) under Defense Evasion. Which of the following are NOT Defense Evasion in this report?",
+        "options": [
+          "A. Firewall modification via netsh.exe (T1562.004) \u2014 this IS Defense Evasion",
+          "B. Service creation via sc.exe (T1543.003) \u2014 this is Persistence and Privilege Escalation, NOT Defense Evasion in this report",
+          "C. Writing PE header to memory (T1055.002) \u2014 this IS Defense Evasion",
+          "D. Service execution via sc.exe start (T1569.002) \u2014 this is Execution, NOT Defense Evasion",
+          "E. Ingress Tool Transfer (T1105 \u2014 writing PE to disk) \u2014 this is Command and Control, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Across the ransomware samples in this dataset, shadow copy deletion appears in multiple forms. In the Diavolo sample, WMIC.exe deletes shadow copies (target-4, T1490). In the HydraCrypt sample, both vssadmin.exe and WMIC.exe delete shadow copies (target-4 and target-80, T1490), and wbadmin.exe deletes the backup catalog (target-80, T1490). A student classifies all shadow copy deletion behaviors as Defense Evasion because they remove forensic evidence. Which answer correctly evaluates this?",
+        "options": [
+          "A. The student is correct \u2014 deleting shadow copies removes evidence, which is Indicator Removal (T1070), a Defense Evasion technique",
+          "B. The student is incorrect \u2014 shadow copy deletion is classified as T1490 (Inhibit System Recovery) under Impact in ATT&CK, not Defense Evasion, as confirmed by the report mappings",
+          "C. The student is partially correct \u2014 vssadmin deletion is Defense Evasion but WMIC deletion is Impact",
+          "D. The student is correct because T1490 is a sub-technique of T1070 (Indicator Removal)",
+          "E. The student is incorrect \u2014 shadow copy deletion is Execution because it uses cmd.exe and WMIC"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Diavolo ransomware sample (vx_family: Ransom.Diavolo.Generic) exhibits several behaviors during detonation. Which of the following behaviors observed in this report are correctly classified as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+        "options": [
+          "A. Renaming files with double extensions (e.g., file.docx.alcatel-lucent) observed via the 'Renames many files with double extensions' signature mapped to T1486",
+          "B. Dropping an executable with an image/text extension (T1036.008 - Masquerade File Type)",
+          "C. Deleting volume shadow copies via WMIC.exe (T1490 - Inhibit System Recovery)",
+          "D. Obfuscated Files or Information (T1027) evidenced by the matched compiler/packer signature and high-entropy section",
+          "E. File Deletion (T1070.004) evidenced by opening files with delete access rights",
+          "F. Double File Extension (T1036.007) as a masquerading sub-technique mapped under Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the HydraCrypt ransomware detonation (vx_family: Ransom.HydraCrypt.Generic), the process tree shows svchost.exe (dropped to %APPDATA%) spawning cmd.exe which runs vssadmin, WMIC, bcdedit, and wbadmin. Which of the following MITRE ATT&CK techniques from this report are mapped to the Impact tactic rather than Defense Evasion? Select ALL that apply.",
+        "options": [
+          "A. T1490 (Inhibit System Recovery) \u2014 vssadmin delete shadows /all /quiet and wbadmin delete catalog",
+          "B. T1070.004 (File Deletion) \u2014 opening files with delete access rights",
+          "C. T1562.001 (Disable or Modify Tools) \u2014 disabling Windows Task Manager via registry",
+          "D. T1486 (Data Encrypted for Impact) \u2014 file encryption behavior",
+          "E. T1036.005 (Match Legitimate Name or Location) \u2014 svchost.exe dropped to %APPDATA%",
+          "F. T1491.001 (Internal Defacement) \u2014 ransom note drop detected"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Spora ransomware detonation (vx_family: Trojan.Ransom.Spora.Generic) includes the signature 'Modifies proxy settings' (registry-27, T1112) and 'Marks file for deletion' (api-26, T1070.004). The report also shows AdjustTokenPrivileges called by taskkill.exe (api-111, T1134). Which of the following are correctly identified as Defense Evasion techniques in this specific detonation report?",
+        "options": [
+          "A. T1070.004 (File Deletion) \u2014 cmd.exe marks C:\\hash.exe for deletion",
+          "B. T1218.005 (Mshta) \u2014 mshta.exe process execution detected",
+          "C. T1134 (Access Token Manipulation) \u2014 AdjustTokenPrivileges called by taskkill.exe",
+          "D. T1490 (Inhibit System Recovery) \u2014 shadow copy deletion via vssadmin or WMIC",
+          "E. T1027 (Obfuscated Files or Information) \u2014 high-entropy .rdata section and MASM32 compiler signature",
+          "F. T1105 (Ingress Tool Transfer) \u2014 dropping HTA ransom note file"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Zusy/ransomware sample (vx_family: Zusy.Generic), the detonation shows 085cda53603755dc.exe marking C:\\hash.exe for deletion (T1070.004), writing PE headers to disk (api-43, T1105), and modifying registry Run keys (registry-0, T1547.001). Which of the following statements correctly assigns the MITRE tactic for each behavior?",
+        "options": [
+          "A. Writing PE headers to disk (api-43) is Ingress Tool Transfer (T1105) under Command and Control \u2014 NOT Defense Evasion",
+          "B. Marking C:\\hash.exe for deletion (api-26, T1070.004) is Defense Evasion",
+          "C. Modifying registry Run keys (T1547.001) is classified as Defense Evasion in this report",
+          "D. T1562.009 (Safe Mode Boot) is an Impact technique in this report",
+          "E. Writing PE headers to disk (api-43, T1105) is a Defense Evasion technique",
+          "F. T1547.001 (Registry Run Keys) is classified as Persistence and Privilege Escalation in this report, not Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Diavolo ransomware detonation (vx_family: Ransom.Diavolo.Generic) shows WMIC.exe spawned multiple times with 'shadowcopy where ID=... delete' commands. The sandbox maps this to T1490 (Inhibit System Recovery) under the Impact tactic. An analyst reviewing Defense Evasion techniques in this report should include which of the following? Select ALL correctly classified Defense Evasion techniques.",
+        "options": [
+          "A. T1036 (Masquerading) \u2014 file renamed to disguise type",
+          "B. T1490 (Inhibit System Recovery) \u2014 WMIC shadow copy deletion",
+          "C. T1070.004 (File Deletion) \u2014 opening dotnet.au3 with delete access rights",
+          "D. T1027 (Obfuscated Files or Information) \u2014 high-entropy section and compiler signature",
+          "E. T1036.007 (Double File Extension) \u2014 files renamed with double extensions",
+          "F. T1036.008 (Masquerade File Type) \u2014 executable dropped with text extension"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (vx_family: Backdoor.Remcos, _family: remcos) shows the following behaviors: registry-0 creates HKCU\\Software\\...\\Run key (T1547.001), api-43 writes PE headers to disk (T1105), api-25/api-26 open/mark files for deletion (T1070.004), and registry-27 modifies proxy settings (T1112). Which of these behaviors are mapped as Defense Evasion in the detonation report? Select ALL that apply.",
+        "options": [
+          "A. T1070.004 (File Deletion) \u2014 hab.exe opens and marks files for deletion",
+          "B. T1547.001 (Registry Run Keys) \u2014 creating HKCU Run key for persistence",
+          "C. T1112 (Modify Registry) \u2014 modifying proxy settings via registry",
+          "D. T1105 (Ingress Tool Transfer) \u2014 writing PE file header to disk (api-43)",
+          "E. T1036 (Masquerading) \u2014 remcos.exe dropped to %APPDATA%\\remcos\\",
+          "F. T1027.009 (Embedded Payloads) \u2014 high-entropy section detected"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla sample (_family: remcos) uses RegAsm.exe for process hollowing (T1055.012) and writes PE headers to memory (api-83, T1055.002). The report also shows 'Writes a PE file header to disc' (api-43, T1105) and 'Drops binary executable file with unexpected extension' (binary-75, T1036.008). Which of the following are Defense Evasion techniques in this report? Select ALL that apply.",
+        "options": [
+          "A. T1055.012 (Process Hollowing) \u2014 creating system process in suspended mode for injection",
+          "B. T1105 (Ingress Tool Transfer) \u2014 writing PE file header to disk (api-43)",
+          "C. T1036.008 (Masquerade File Type) \u2014 dropping executable with .bin extension",
+          "D. T1055.002 (Portable Executable Injection) \u2014 writing PE header bytes to remote process memory",
+          "E. T1547.001 (Registry Run Keys) \u2014 hash.exe sets HKCU\\Software\\...\\Run value",
+          "F. T1562.001 (Disable or Modify Tools) \u2014 mapping intranet to internet zone in registry"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The low-detection Remcos sample (vx_family: Win/grayware_confidence_70%, _family: remcos) has very few signatures. The MITRE ATT&CK mappings in its report include T1027 (Obfuscated Files or Information), T1027.009 (Embedded Payloads), and T1071 (Application Layer Protocol). Which of the following correctly describes what IS and IS NOT a Defense Evasion technique in this specific report?",
+        "options": [
+          "A. T1027 (Obfuscated Files or Information) is Defense Evasion \u2014 correct, mapped under Defense Evasion",
+          "B. T1071 (Application Layer Protocol) is Defense Evasion \u2014 incorrect, it is Command and Control",
+          "C. T1027.009 (Embedded Payloads) is Defense Evasion \u2014 correct, mapped under Defense Evasion",
+          "D. The 32-bit PE targeting (IMAGE_FILE_32BIT_MACHINE) is a Defense Evasion technique in this report",
+          "E. High-entropy .text section (T1027.009) is Defense Evasion",
+          "F. The static-153 signature ('Uses 32 bit executable PE') is mapped as Defense Evasion in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun sample (_family: killers) exhibits a large process tree with fake system processes (WINLOGON.EXE, CSRSS.EXE, LSASS.EXE at %APPDATA%\\WINDOWS\\). The signature api-25 'Opens file with deletion access rights' (T1070.004) and api-26 'Marks file for deletion' (T1070.004) are both present. Which of the following are correctly classified as Defense Evasion in this report? Select ALL that apply.",
+        "options": [
+          "A. T1036.005 (Match Legitimate Name or Location) \u2014 fake system processes running from %APPDATA%",
+          "B. T1070.004 (File Deletion) \u2014 marking files for deletion and opening with delete access rights",
+          "C. T1056.004 (Credential API Hooking) \u2014 hooking FindFirstFileW and send@WS2_32.DLL",
+          "D. T1055 (Process Injection) \u2014 writing data to remote processes and allocating virtual memory",
+          "E. T1105 (Ingress Tool Transfer) \u2014 writing PE file headers to disk",
+          "F. T1070.006 (Timestomp) \u2014 FileTimeToLocalFileTime API call mapped to T1070.006"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Malware.PfPk.Generic sample (_family: killers) shows explorer.exe (injected child process) performing several actions: modifying IFEO registry key (T1546.012), changing file extension appearance (T1546.001), reading AV-related registry keys (T1518.001), and AdjustTokenPrivileges (api-111, T1134). Which of the following behaviors are mapped as Defense Evasion in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. T1134 (Access Token Manipulation) \u2014 AdjustTokenPrivileges called by explorer.exe",
+          "B. T1070.004 (File Deletion) \u2014 opening qdcrwv.txt with delete access rights",
+          "C. T1518.001 (Security Software Discovery) \u2014 reading AV engine registry keys",
+          "D. T1546.012 (Image File Execution Options Injection) \u2014 modifying IFEO registry key",
+          "E. T1546.001 (Change Default File Association) \u2014 changing file extension appearance",
+          "F. T1105 (Ingress Tool Transfer) \u2014 writing PE file headers to disk"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Pykspa.Generic sample (_family: killers) modifies UAC/LUA settings via registry (T1112), has AdjustTokenPrivileges called (api-111, T1134), and shows DLL injection indicators. The report maps T1112 (Modify Registry) under Defense Evasion. Which of the following behaviors in this report are NOT Defense Evasion techniques?",
+        "options": [
+          "A. T1134 (Access Token Manipulation) \u2014 AdjustTokenPrivileges is Defense Evasion in this report",
+          "B. T1112 (Modify Registry) \u2014 UAC modification is Defense Evasion",
+          "C. T1027.002 (Software Packing) \u2014 Microsoft Visual C++ 7.0 compiler detection",
+          "D. T1021 (Remote Services) \u2014 lateral movement via remote services",
+          "E. T1529 (System Shutdown/Reboot) \u2014 Impact tactic, not Defense Evasion",
+          "F. T1055.001 (Dynamic-link Library Injection) \u2014 Defense Evasion in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE sample (_family: um_unhooking) installs a service named 'xtblsmos' via sc.exe and uses netsh.exe to add a firewall rule for svchost.exe. The report maps T1562.004 (Disable or Modify System Firewall) under Defense Evasion. Which of the following additional behaviors in this report are also Defense Evasion techniques? Select ALL that apply.",
+        "options": [
+          "A. T1055.002 (Portable Executable Injection) \u2014 rtmxemaq.exe writes PE header bytes to remote process",
+          "B. T1569.002 (Service Execution) \u2014 sc.exe starts the xtblsmos service",
+          "C. T1070.004 (File Deletion) \u2014 cmd.exe opens files with delete access rights",
+          "D. T1055.012 (Process Hollowing) \u2014 mapped under Defense Evasion in this report",
+          "E. T1105 (Ingress Tool Transfer) \u2014 writing PE file header to disk (api-43)",
+          "F. T1562.004 (Disable or Modify System Firewall) \u2014 netsh.exe adds firewall allow rule"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILMamut sample (_family: infostealers) is packed with ConfuserEx and shows registry-30 'Modifies file/console tracing settings' (T1112, malicious threat level). The report also includes AdjustTokenPrivileges (api-111, T1134) and PAGE_GUARD memory allocation (api-1, T1562.001). Which of the following are Defense Evasion techniques in this specific detonation report? Select ALL that apply.",
+        "options": [
+          "A. T1112 (Modify Registry) \u2014 modifying HKLM\\SOFTWARE\\MICROSOFT\\TRACING registry keys",
+          "B. T1562.001 (Disable or Modify Tools) \u2014 PAGE_GUARD memory allocation as anti-debugging",
+          "C. T1134 (Access Token Manipulation) \u2014 AdjustTokenPrivileges and SeDebugPrivilege",
+          "D. T1539 (Steal Web Session Cookie) \u2014 credential access, not Defense Evasion",
+          "E. T1027.002 (Software Packing) \u2014 ConfuserEx obfuscation detected",
+          "F. T1480 (Execution Guardrails) \u2014 execution guardrail indicators present"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.NetMail infostealer sample (_family: infostealers) shows the following signatures: api-43 'Writes a PE file header to disc' (T1105), registry-0 'Modifies auto-execute functionality' (T1547.001), api-25 'Opens file with deletion access rights' (T1070.004), and hooks-2 'Hooks file system APIs' (T1056.004). Which of these are Defense Evasion techniques according to this detonation report's MITRE mappings?",
+        "options": [
+          "A. T1070.004 (File Deletion) \u2014 opening hash.exe with delete access rights",
+          "B. T1105 (Ingress Tool Transfer) \u2014 writing PE file header to disk is Command and Control, not Defense Evasion",
+          "C. T1547.001 (Registry Run Keys) \u2014 mapped as Persistence and Privilege Escalation, not Defense Evasion in this report",
+          "D. T1056.004 (Credential API Hooking) \u2014 hooking file system APIs is Credential Access and Collection",
+          "E. T1036 (Masquerading) \u2014 dropping upNext.exe to %LOCALAPPDATA%",
+          "F. T1070.006 (Timestomp) \u2014 Defense Evasion technique present in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "The Win/malicious_confidence_100% sample (_family: infostealers, YARA match: win_njrat_g0) opens C:\\hash.exe:Zone.Identifier with delete access rights (api-42, T1070.004) and writes data to a remote process (api-0, T1055). The report maps T1070.004 under Defense Evasion. Which tactic does T1070.004 (File Deletion / hiding download tracks) belong to in this report?",
+        "options": [
+          "A. Impact \u2014 file deletion is always an Impact technique",
+          "B. Defense Evasion \u2014 T1070.004 is mapped under Defense Evasion in this report",
+          "C. Execution \u2014 deleting files is part of execution cleanup",
+          "D. Collection \u2014 removing evidence of collected data",
+          "E. Persistence \u2014 deleting files to prevent re-infection",
+          "F. Discovery \u2014 file deletion is used for discovery purposes"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A student analyst reviews the HydraCrypt ransomware report and must identify Defense Evasion techniques. The report contains: T1036.005 (Match Legitimate Name or Location) for svchost.exe at %APPDATA%, T1562.001 (Disable or Modify Tools) for disabling Task Manager, T1490 (Inhibit System Recovery) for vssadmin/bcdedit/wbadmin, and T1070.004 (File Deletion). Which behaviors should the analyst EXCLUDE from a Defense Evasion list because they belong to a different tactic?",
+        "options": [
+          "A. T1490 (Inhibit System Recovery) \u2014 this is Impact, not Defense Evasion",
+          "B. T1036.005 (Match Legitimate Name or Location) \u2014 this is Defense Evasion",
+          "C. T1562.001 (Disable or Modify Tools) \u2014 this is Defense Evasion",
+          "D. T1491.001 (Internal Defacement) \u2014 this is Impact, not Defense Evasion",
+          "E. T1070.004 (File Deletion) \u2014 this is Defense Evasion in this report",
+          "F. T1055 (Process Injection) \u2014 this is Defense Evasion in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Backdoor.Remcos sample (_family: remcos) shows registry-0 'Modifies auto-execute functionality' creating HKCU\\Software\\...\\Run (T1547.001), api-43 'Writes a PE file header to disc' (T1105), and api-25/api-26 for file deletion (T1070.004). In this report, T1547.001 is mapped under Persistence AND Privilege Escalation, but NOT Defense Evasion. Which of the following correctly identifies the tactic assignments for behaviors in this report?",
+        "options": [
+          "A. T1547.001 (Registry Run Keys) is Defense Evasion in this report \u2014 FALSE, it is Persistence/Privilege Escalation only",
+          "B. T1070.004 (File Deletion) is Defense Evasion in this report \u2014 TRUE",
+          "C. T1105 (Ingress Tool Transfer) is Defense Evasion in this report \u2014 FALSE, it is Command and Control",
+          "D. T1027.009 (Embedded Payloads) is Defense Evasion in this report \u2014 TRUE",
+          "E. T1036 (Masquerading) is Defense Evasion in this report \u2014 TRUE, dropping remcos.exe to %APPDATA%\\remcos\\",
+          "F. T1562.001 (Disable or Modify Tools) is Defense Evasion in this report \u2014 TRUE, intranet-to-internet zone mapping"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun sample (_family: killers) has LoadLibrary calls (api-175, T1129 - Shared Modules) and CreateThread in self-process (api-264, T1055.003). The report maps T1055.003 under Defense Evasion. An analyst must decide which of the following API behaviors in this report constitute Defense Evasion vs. other tactics. Select ALL that are Defense Evasion in this report.",
+        "options": [
+          "A. T1055.003 (Thread Execution Hijacking) \u2014 creating thread in self-process, mapped as Defense Evasion",
+          "B. T1129 (Shared Modules) \u2014 LoadLibrary calls, mapped as Execution not Defense Evasion",
+          "C. T1055 (Process Injection) \u2014 writing data to remote process, mapped as Defense Evasion",
+          "D. T1056.004 (Credential API Hooking) \u2014 hooking Process32NextW and send@WS2_32.DLL",
+          "E. T1070.004 (File Deletion) \u2014 marking files for deletion, mapped as Defense Evasion",
+          "F. T1057 (Process Discovery) \u2014 CreateToolhelp32Snapshot, mapped as Discovery not Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy ransomware sample (_family: ransomware) drops 085cda53603755dc.exe to %TEMP% which then marks C:\\hash.exe for deletion (T1070.004), creates a Run key (T1547.001), and writes PE headers to disk (api-43, T1105). A student must determine which of these are Defense Evasion. Which answer correctly classifies ALL three behaviors?",
+        "options": [
+          "A. T1070.004 = Defense Evasion; T1547.001 = Persistence only; T1105 = Command and Control (not Defense Evasion)",
+          "B. T1070.004 = Defense Evasion; T1547.001 = Defense Evasion; T1105 = Defense Evasion",
+          "C. T1070.004 = Impact; T1547.001 = Persistence only; T1105 = Defense Evasion",
+          "D. T1070.004 = Defense Evasion; T1547.001 = Persistence and Privilege Escalation; T1105 = Ingress Tool Transfer under Command and Control",
+          "E. T1070.004 = Collection; T1547.001 = Defense Evasion; T1105 = Execution",
+          "F. All three are Defense Evasion techniques in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "um_unhooking",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Fragtor.Generic sample (_family: um_unhooking) calls NtQueueApcThread (api-85, T1055.004 - Asynchronous Procedure Call) and creates a thread in self-process (api-264, T1055.003). The report also shows T1562.001 (Disable or Modify Tools) and T1622 (Debugger Evasion). Which of the following are Defense Evasion techniques in this detonation report? Select ALL that apply.",
+        "options": [
+          "A. T1055.004 (Asynchronous Procedure Call) \u2014 NtQueueApcThread mapped as Defense Evasion",
+          "B. T1055.003 (Thread Execution Hijacking) \u2014 creating thread in self-process, Defense Evasion",
+          "C. T1562.001 (Disable or Modify Tools) \u2014 Defense Evasion",
+          "D. T1622 (Debugger Evasion) \u2014 Defense Evasion",
+          "E. T1486 (Data Encrypted for Impact) \u2014 Impact tactic, not Defense Evasion",
+          "F. T1129 (Shared Modules) \u2014 Execution tactic, not Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Diavolo ransomware detonation report (vx_family: Ransom.Diavolo.Generic) shows several behaviors. Which of the following observed behaviors are correctly classified as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+        "options": [
+          "A. File renaming with double extensions (api-200: renames more than 100 files with extensions), mapped as T1486 Data Encrypted for Impact",
+          "B. Dropping a file with an image/text extension (binary-28: drops executable with .txt extension), mapped as T1036.008 Masquerade File Type",
+          "C. Deleting volume shadow copies via WMIC.exe (target-4: WMIC shadowcopy delete), mapped as T1490 Inhibit System Recovery",
+          "D. Opening files with deletion access rights (api-25: opens file with delete access), mapped as T1070.004 File Deletion",
+          "E. Renaming files via api-162 (Renames files), mapped as T1036 Masquerading"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the HydraCrypt ransomware detonation (vx_family: Ransom.HydraCrypt.Generic), the process tree shows svchost.exe spawning cmd.exe which runs 'vssadmin delete shadows /all /quiet' and 'wmic shadowcopy delete', and another cmd.exe running 'bcdedit /set {default} recoveryenabled no'. Which of the following MITRE ATT&CK mappings for these specific behaviors are CORRECT?",
+        "options": [
+          "A. vssadmin delete shadows \u2192 T1490 Inhibit System Recovery (Impact tactic)",
+          "B. vssadmin delete shadows \u2192 T1562.001 Disable or Modify Tools (Defense Evasion tactic)",
+          "C. bcdedit /set recoveryenabled no \u2192 T1490 Inhibit System Recovery (Impact tactic)",
+          "D. bcdedit /set recoveryenabled no \u2192 T1070 Indicator Removal (Defense Evasion tactic)",
+          "E. wmic shadowcopy delete \u2192 T1490 Inhibit System Recovery (Impact tactic)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Spora ransomware detonation (vx_family: Trojan.Ransom.Spora.Generic) includes the following sandbox signatures. Which options represent behaviors that are correctly mapped as Defense Evasion techniques (NOT Impact or other tactics)?",
+        "options": [
+          "A. api-26: Marks file for deletion (cmd.exe marked C:\\hash.exe for deletion) \u2192 T1070.004 File Deletion",
+          "B. target-9: Terminates other processes using taskkill \u2192 T1489 Service Stop (Impact)",
+          "C. registry-27: Modifies proxy settings \u2192 T1112 Modify Registry",
+          "D. api-200: Renames many files with double extensions \u2192 T1486 Data Encrypted for Impact",
+          "E. target-113: mshta.exe process execution detected \u2192 T1218.005 Mshta (Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the Diavolo ransomware report (vx_family: Ransom.Diavolo.Generic), an analyst must identify which sandbox signatures correspond to Defense Evasion. Which of the following should NOT be classified as Defense Evasion?",
+        "options": [
+          "A. binary-28: Drops executable file with image/text extension \u2192 T1036.008 (Defense Evasion)",
+          "B. target-4: Deletes volume snapshots via WMIC.exe \u2192 T1490 (Impact)",
+          "C. api-162: Renames files \u2192 T1036 (Defense Evasion)",
+          "D. binary-22: Extracted file with known ransomware suffix \u2192 T1491.001 (Impact)",
+          "E. api-25: Opens file with deletion access rights \u2192 T1070.004 (Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the HydraCrypt ransomware sandbox report, the following signatures are observed: (1) target-6: 'Tries to suppress failures during boot - bcdedit.exe', (2) registry-3: 'Disables Windows Task Manager', (3) api-1: 'Creates guarded memory regions (PAGE_GUARD)', (4) target-33: 'Creates a fake system process - svchost.exe at non-system path'. Which of these are correctly mapped as Defense Evasion techniques?",
+        "options": [
+          "A. target-6 (bcdedit suppressing boot failures) \u2192 T1490 Inhibit System Recovery (Impact tactic, NOT Defense Evasion)",
+          "B. registry-3 (disables Task Manager) \u2192 T1562.001 Disable or Modify Tools (Defense Evasion)",
+          "C. api-1 (PAGE_GUARD memory allocation) \u2192 T1562.001 Disable or Modify Tools (Defense Evasion)",
+          "D. target-33 (fake svchost.exe at non-system path) \u2192 T1036.005 Match Legitimate Name or Location (Defense Evasion)",
+          "E. target-80 (deletes backup catalog via wbadmin) \u2192 T1490 Inhibit System Recovery (Impact tactic, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT detonation (vx_family: IL:Trojan.MSILZilla, process tree: hash.exe \u2192 Webfrequency.exe \u2192 RegAsm.exe) includes these sandbox signatures. Which are correctly classified as Defense Evasion techniques?",
+        "options": [
+          "A. api-83: 'Writes PE header to memory' by Webfrequency.exe \u2192 T1055.002 Portable Executable Injection (Defense Evasion)",
+          "B. api-43: 'Writes a PE file header to disc' by hash.exe \u2192 T1105 Ingress Tool Transfer (Command and Control, NOT Defense Evasion)",
+          "C. registry-0: 'Modifies auto-execute functionality by setting/creating a value in the registry' (HKCU\\Software\\...Run) \u2192 T1547.001 Registry Run Keys (also mapped as Defense Evasion in this report)",
+          "D. binary-75: 'Drops binary executable with unexpected extension' \u2192 T1036.008 Masquerade File Type (Defense Evasion)",
+          "E. api-49: 'Opens many files with write access' \u2192 T1491.001 Internal Defacement (Impact, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Remcos RAT detonation (vx_family: Backdoor.Remcos, process chain: hash.exe \u2192 hab.exe \u2192 WScript.exe \u2192 cmd.exe \u2192 remcos.exe), the sandbox flags registry-0 as 'Modifies auto-execute functionality by setting/creating a value in the registry' (HKCU\\Software\\...\\Run). How should this be classified under MITRE ATT&CK, and is it also a Defense Evasion technique in this report?",
+        "options": [
+          "A. It maps only to T1547.001 Registry Run Keys / Startup Folder under Persistence tactic",
+          "B. It maps to T1547.001 under both Persistence AND Privilege Escalation, but NOT Defense Evasion",
+          "C. It maps to T1547.001 under Persistence and Privilege Escalation; in some sandbox reports this technique is also tagged under Defense Evasion when the run key is used to maintain stealth",
+          "D. It maps to T1112 Modify Registry under Defense Evasion only",
+          "E. It maps to T1070 Indicator Removal under Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Remcos RAT sample (vx_family: Backdoor.Remcos) shows these sandbox signatures. Which options represent behaviors that are INCORRECTLY classified as Defense Evasion if included in that category?",
+        "options": [
+          "A. api-43: 'Writes a PE file header to disc' \u2192 T1105 Ingress Tool Transfer (this is Command and Control / C2, NOT Defense Evasion)",
+          "B. api-83: 'Writes PE header to memory' by hab.exe \u2192 T1055.002 Portable Executable Injection (this IS Defense Evasion)",
+          "C. static-153: 'Uses 32 bit executable PE' \u2192 targeting 32-bit compatibility is NOT a Defense Evasion technique",
+          "D. api-26: 'Marks file for deletion' \u2192 T1070.004 File Deletion (this IS Defense Evasion)",
+          "E. binary-1: 'Drops executable files' \u2192 T1105 Ingress Tool Transfer (this is Command and Control, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The AV/EDR Killer sample (vx_family: Trojan.Regrun, process tree with fake system processes: WINLOGON.EXE at %APPDATA%\\WINDOWS\\, CSRSS.EXE, LSASS.EXE at non-system paths) shows several sandbox signatures. Which of the following are correctly mapped as Defense Evasion techniques?",
+        "options": [
+          "A. api-25: 'Opens file with deletion access rights' \u2192 T1070.004 File Deletion (Defense Evasion)",
+          "B. api-26: 'Marks file for deletion' \u2192 T1070.004 File Deletion (Defense Evasion)",
+          "C. target-33: 'Creates a fake system process' (WINLOGON.EXE at non-system path) \u2192 T1036.005 Match Legitimate Name or Location (Defense Evasion)",
+          "D. api-0: 'Writes data to a remote process' \u2192 T1055 Process Injection (Defense Evasion)",
+          "E. hooks-2: 'Hooks file system APIs' (FindFirstFileW in WINLOGON.EXE) \u2192 T1056.004 Credential API Hooking (Credential Access, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The AV/EDR Killer sample (vx_family: Malware.PfPk.Generic, UPX compressed, spawns explorer.exe at %COMMONPROGRAMFILES%\\Microsoft Shared\\) shows these sandbox signatures. Which behaviors are correctly classified as Defense Evasion?",
+        "options": [
+          "A. registry-64: 'Modifies auto-execute functionality to enable the debugger hack' (Image File Execution Options) \u2192 T1546.012 Image File Execution Options Injection (Defense Evasion)",
+          "B. registry-15: 'Changes file extension appearance of the explorer' \u2192 T1546.001 Change Default File Association (Defense Evasion)",
+          "C. api-111: 'Calls AdjustTokenPrivileges' by explorer.exe \u2192 T1134 Access Token Manipulation (Defense Evasion)",
+          "D. api-43: 'Writes a PE file header to disc' by explorer.exe \u2192 T1105 Ingress Tool Transfer (Command and Control, NOT Defense Evasion)",
+          "E. registry-32: 'Reads Antivirus engine related registry keys' \u2192 T1518.001 Security Software Discovery (Discovery, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The AV/EDR Killer sample (vx_family: Pykspa.Generic, 11MB PE32) shows api-111 ('Calls AdjustTokenPrivileges') and registry-10 ('Modifies the UAC/LUA settings'). Which MITRE ATT&CK mappings are correct for these two behaviors in the context of Defense Evasion?",
+        "options": [
+          "A. AdjustTokenPrivileges \u2192 T1134 Access Token Manipulation (Defense Evasion)",
+          "B. AdjustTokenPrivileges \u2192 T1055 Process Injection (Defense Evasion)",
+          "C. Modifies UAC/LUA settings (registry-10) \u2192 T1112 Modify Registry (Defense Evasion)",
+          "D. Modifies UAC/LUA settings (registry-10) \u2192 T1548 Abuse Elevation Control Mechanism (Defense Evasion)",
+          "E. AdjustTokenPrivileges \u2192 T1106 Native API (Execution, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the AV/EDR Killer detonation (vx_family: Trojan.BrsecmonE), the process tree shows hash.exe creating a service 'xtblsmos' via sc.exe and running netsh.exe to add a firewall rule. Which sandbox signatures from this report are correctly mapped as Defense Evasion?",
+        "options": [
+          "A. target-15 / target-186: 'Modifies firewall settings' via netsh.exe \u2192 T1562.004 Disable or Modify System Firewall (Defense Evasion)",
+          "B. target-303: 'Starts service using SC.exe' \u2192 T1569.002 Service Execution (Execution, NOT Defense Evasion)",
+          "C. api-83: 'Writes PE header to memory' by rtmxemaq.exe \u2192 T1055.002 Portable Executable Injection (Defense Evasion)",
+          "D. api-129: 'Creates a process in suspended mode' by rtmxemaq.exe \u2192 T1055 Process Injection (Defense Evasion)",
+          "E. api-43: 'Writes a PE file header to disc' by hash.exe \u2192 T1105 Ingress Tool Transfer (Command and Control, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A junior analyst is reviewing the Spora ransomware detonation report and must determine how many behaviors from the following list should be classified as Defense Evasion (not Impact, not Discovery, not Command and Control). How many of the following five behaviors are Defense Evasion? (A) api-26 marks file for deletion T1070.004, (B) api-46 checks for bitcoin files T1083, (C) registry-27 modifies proxy settings T1112, (D) target-9 terminates processes via taskkill T1489, (E) target-113 mshta.exe execution T1218.005",
+        "options": [
+          "A. 1 behavior is Defense Evasion",
+          "B. 2 behaviors are Defense Evasion",
+          "C. 3 behaviors are Defense Evasion",
+          "D. 4 behaviors are Defense Evasion",
+          "E. 5 behaviors are Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The infostealer sample (vx_family: Trojan.NetMail, process tree: hash.exe \u2192 upNext.exe) shows registry-0 ('Modifies auto-execute functionality by setting/creating a value in the registry' at HKCU\\Software\\...\\Run, mapped as T1547.001). In this sandbox report, T1547.001 Registry Run Keys / Startup Folder is tagged under which MITRE ATT&CK tactic(s)?",
+        "options": [
+          "A. Persistence only",
+          "B. Persistence and Privilege Escalation only",
+          "C. Persistence, Privilege Escalation, and Defense Evasion",
+          "D. Defense Evasion only",
+          "E. Persistence and Defense Evasion only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The infostealer sample (vx_family: IL:Trojan.MSILMamut, .NET assembly) shows these sandbox signatures. Which of the following are correctly classified as Defense Evasion under MITRE ATT&CK as tagged in this report?",
+        "options": [
+          "A. registry-30: 'Modifies file/console tracing settings' (HKLM\\SOFTWARE\\MICROSOFT\\TRACING) \u2192 T1112 Modify Registry (Defense Evasion)",
+          "B. api-1: 'Creates guarded memory regions (PAGE_GUARD)' \u2192 T1562.001 Disable or Modify Tools (Defense Evasion)",
+          "C. api-103: 'CreateToolhelp32Snapshot' \u2192 T1057 Process Discovery (Discovery, NOT Defense Evasion)",
+          "D. string-615: 'GetExecutingAssembly' \u2192 T1620 Reflective Code Loading (Defense Evasion)",
+          "E. network-60: 'HTTP requests contain Base64 strings' \u2192 T1132 Data Encoding (Command and Control, NOT Defense Evasion)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Examining the Zusy/ransomware sample (vx_family: Zusy.Generic, process tree: hash.exe \u2192 085cda53603755dc.exe), the sandbox reports api-43 ('Writes a PE file header to disc', mapped T1105) and api-26 ('Marks file for deletion', mapped T1070.004). Which statement correctly distinguishes their tactic assignments?",
+        "options": [
+          "A. Both api-43 and api-26 are Defense Evasion techniques",
+          "B. api-43 (writing PE header to disk) is Ingress Tool Transfer under Command and Control; api-26 (marks file for deletion) is File Deletion under Defense Evasion",
+          "C. api-43 is Defense Evasion (T1105); api-26 is Impact (T1490)",
+          "D. Both are Impact techniques related to ransomware file operations",
+          "E. api-43 is Execution; api-26 is Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The low-detection Remcos sample (vx_family: Win/grayware_confidence_70%, threat_score: 35, only 8 signatures) has very limited behavioral data. The MITRE ATT&CK mappings in this report include T1027.009 Embedded Payloads, T1027 Obfuscated Files or Information, and T1071 Application Layer Protocol. Which of the following conclusions is most accurate about classifying Defense Evasion for this sample?",
+        "options": [
+          "A. T1027.009 and T1027 are both Defense Evasion techniques; T1071 is Command and Control",
+          "B. All three (T1027.009, T1027, T1071) are Defense Evasion techniques",
+          "C. T1071 is Defense Evasion because it hides C2 traffic; T1027 is Execution",
+          "D. None of the three are Defense Evasion; they are all Discovery techniques",
+          "E. T1027 is Defense Evasion; T1027.009 is Impact; T1071 is Execution"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The AV/EDR Killer (vx_family: Malware.PfPk.Generic, UPX compressed) shows api-175 ('LoadLibrary') and api-264 ('Creates a thread in a self process', T1055.003). An analyst considers including LoadLibrary calls as Defense Evasion. Which statement is most accurate?",
+        "options": [
+          "A. LoadLibrary (api-175) is mapped as T1129 Shared Modules under Execution, NOT Defense Evasion; CreateThread in self-process (api-264) maps to T1055.003 Thread Execution Hijacking which IS Defense Evasion",
+          "B. Both LoadLibrary and CreateThread are Defense Evasion techniques",
+          "C. LoadLibrary is Defense Evasion (T1055.001 DLL Injection); CreateThread is Execution",
+          "D. LoadLibrary is Discovery; CreateThread is Persistence",
+          "E. Both LoadLibrary and CreateThread are Execution techniques only"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The infostealer (vx_family: Trojan.Dinwod, UPX compressed, spawns a chain of randomly named executables) shows api-0 ('Writes data to a remote process', T1055) and binary-1 ('Drops executable files', T1105). Which of the following correctly identifies their tactic assignments in this report?",
+        "options": [
+          "A. api-0 (writes to remote process) \u2192 T1055 Process Injection under both Defense Evasion and Privilege Escalation; binary-1 (drops executables) \u2192 T1105 Ingress Tool Transfer under Command and Control",
+          "B. api-0 \u2192 Defense Evasion only; binary-1 \u2192 Defense Evasion only",
+          "C. api-0 \u2192 Execution; binary-1 \u2192 Persistence",
+          "D. Both api-0 and binary-1 are Defense Evasion techniques",
+          "E. api-0 \u2192 Impact; binary-1 \u2192 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "An analyst reviews the Diavolo ransomware report and must select ALL behaviors that belong to the Defense Evasion tactic. The candidate behaviors are: (1) T1036.007 Double File Extension from 'renames more than 100 files with extensions', (2) T1070.004 File Deletion from 'opens file with deletion access rights', (3) T1490 Inhibit System Recovery from 'deletes volume snapshots via WMIC', (4) T1027.005 Indicator Removal from Tools from 'static-6 section high entropy', (5) T1036 Masquerading from 'api-162 renames files'. How many of these five are correctly Defense Evasion?",
+        "options": [
+          "A. 2 (only T1070.004 and T1036)",
+          "B. 3 (T1036.007, T1070.004, and T1036)",
+          "C. 4 (T1036.007, T1070.004, T1027.005, and T1036)",
+          "D. 5 (all of the above)",
+          "E. 1 (only T1070.004)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "A sandbox detonation of a ransomware sample (Ransom.Diavolo.Generic) shows the following process tree: hash.exe spawns multiple cmd.exe processes, each launching WMIC.exe with 'shadowcopy where ID=... delete' command lines. The sample also renames more than 100 files with double extensions and drops a file with a known ransomware suffix. Additionally, signatures show: file deletion access rights opened (T1070.004), obfuscated files (T1027), timestomping (T1070.006), double file extension renaming (T1036.007), masquerade file type (T1036.008), and indicator removal (T1070). Which of the following behaviors observed in this detonation report are correctly classified as Defense Evasion techniques?",
+        "options": [
+          "A. Timestomping (T1070.006) \u2014 modifying file timestamps to hide malicious activity",
+          "B. Shadow copy deletion via WMIC.exe (T1490) \u2014 deleting volume snapshots to prevent recovery",
+          "C. Double file extension renaming (T1036.007) \u2014 masquerading encrypted files as legitimate types",
+          "D. File deletion / opening files with delete access rights (T1070.004) \u2014 removing indicators of compromise",
+          "E. Renaming more than 100 files with ransomware extensions (T1486) \u2014 encrypting files for impact",
+          "F. Obfuscated Files or Information (T1027) \u2014 using obfuscation to evade detection"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "F"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The following detonation report is for a ransomware sample (Ransom.Diavolo.Generic) that spawns WMIC.exe to delete shadow copies. Which of the following behaviors observed in this report are correctly classified as Defense Evasion techniques under MITRE ATT&CK? Select ALL that apply.",
+        "options": [
+          "A. Renaming files with double extensions (api-200: renames more than 100 files with extensions)",
+          "B. Dropping executable files with image/text extension (binary-28: drops executable with .txt extension, T1036.008)",
+          "C. Deleting volume snapshots via WMIC.exe shadowcopy delete (target-4, T1490)",
+          "D. Opening files with deletion access rights to remove indicators (api-25, T1070.004)",
+          "E. Using a custom-named executable PE section (static-80: section named '5xsnjk5u', T1027)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This detonation report is for a ransomware sample (Ransom.HydraCrypt.Generic) that runs vssadmin.exe, WMIC.exe, bcdedit.exe, and wbadmin.exe as child processes. Which behaviors from this report belong to the Impact tactic (NOT Defense Evasion) in MITRE ATT&CK?",
+        "options": [
+          "A. Deleting volume snapshots using vssadmin delete shadows /all /quiet (target-4, T1490)",
+          "B. Deleting backup catalog using wbadmin delete catalog -quiet (target-80, T1490)",
+          "C. Suppressing boot failures using bcdedit /set {default} recoveryenabled no (target-6, T1490)",
+          "D. Disabling Windows Task Manager via registry modification (registry-3, T1562.001)",
+          "E. Creating guarded memory regions with PAGE_GUARD to avoid memory dumping (api-1, T1562.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Spora ransomware sample in this report, which of the following observed behaviors are correctly mapped to Defense Evasion in the MITRE ATT&CK framework as reported by the sandbox? Select ALL that apply.",
+        "options": [
+          "A. Marking hash.exe for deletion after execution (api-26, T1070.004)",
+          "B. Using mshta.exe to execute an HTA ransom note file (target-113, T1218.005)",
+          "C. Contacting the blockcypher.com domain for Bitcoin address lookup (network-88)",
+          "D. Modifying proxy settings via registry deletion (registry-27, T1112)",
+          "E. Renaming files with double extensions indicating ransomware encryption"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Ransom.Diavolo.Generic detonation report, the sandbox maps several behaviors to the Defense Evasion tactic. Which of the following are correctly tagged as Defense Evasion (NOT Impact or Ingress Tool Transfer) in this report?",
+        "options": [
+          "A. Double file extension masquerading (T1036.007, Defense Evasion)",
+          "B. Dropping a DOS executable disguised with an image/text extension (T1036.008, Defense Evasion)",
+          "C. Deleting volume shadow copies via WMIC.exe (T1490, Impact)",
+          "D. Timestomping via FileTimeToLocalFileTime API call (T1070.006, Defense Evasion)",
+          "E. Dropping executable files to disk (binary-1, T1105, Command and Control)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Zusy.Generic ransomware sample drops a PE file to %TEMP% and marks the original for deletion. Which of the following behaviors from this report are correctly classified as Defense Evasion, and which are NOT?",
+        "options": [
+          "A. Marking hash.exe for deletion (api-26, T1070.004) \u2014 Defense Evasion",
+          "B. Writing a PE file header to disk (api-43, T1105) \u2014 Defense Evasion",
+          "C. Modifying registry Run key for persistence (registry-0, T1547.001) \u2014 Defense Evasion",
+          "D. Software packing with UPX detected statically (static-7, T1027.002) \u2014 Defense Evasion",
+          "E. Spawning child process 085cda53603755dc.exe via CreateProcessW (api-128) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This detonation report covers a Remcos RAT sample (IL:Trojan.MSILZilla) that uses process hollowing via RegAsm.exe. Which of the following behaviors observed in this report are correctly classified as Defense Evasion techniques?",
+        "options": [
+          "A. Writing PE header bytes to memory in a remote process (api-83, T1055.002)",
+          "B. Creating a process in suspended mode for process injection (api-129, T1055)",
+          "C. Dropping Webfrequency.exe with an unexpected .bin extension (binary-75, T1036.008)",
+          "D. Writing a PE file header to disk (api-43, T1105)",
+          "E. Modifying registry Run key to establish persistence (registry-0, T1547.001)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "In the Backdoor.Remcos detonation report (Visual Basic dropper with remcos.exe payload), which of the following behaviors are correctly mapped to Defense Evasion in the sandbox MITRE ATT&CK output? Select ALL that apply.",
+        "options": [
+          "A. Modifying registry Run key (registry-0: HKCU\\SOFTWARE\\...\\Run, T1547.001) \u2014 also tagged Defense Evasion in this report",
+          "B. Writing a PE file header to disk (api-43, T1105) \u2014 Ingress Tool Transfer, NOT Defense Evasion",
+          "C. Marking files for deletion after execution (api-26, T1070.004)",
+          "D. Mapping intranet resources to internet zone via registry (registry-179, T1562.001)",
+          "E. Dropping hab.exe to %TEMP% (binary-33, T1105) \u2014 Ingress Tool Transfer, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The low-detection Remcos sample (Win/grayware_confidence_70%) in this report has very few signatures. Based solely on what the sandbox reports, which MITRE ATT&CK techniques are tagged as Defense Evasion for this sample?",
+        "options": [
+          "A. T1027 \u2014 Obfuscated Files or Information (static-157: Microsoft Linker compiler signature)",
+          "B. T1027.009 \u2014 Embedded Payloads (static-6: high entropy section)",
+          "C. T1071 \u2014 Application Layer Protocol (network traffic)",
+          "D. T1055 \u2014 Process Injection",
+          "E. T1547.001 \u2014 Registry Run Keys / Startup Folder"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "This AV/EDR killer sample (Trojan.Regrun) spawns fake system processes (WINLOGON.EXE, CSRSS.EXE, SERVICES.EXE, LSASS.EXE) from %APPDATA%\\WINDOWS\\. Which of the following behaviors from this report are correctly classified as Defense Evasion?",
+        "options": [
+          "A. Creating fake system processes at non-system paths (target-33, T1036.005)",
+          "B. Hooking file system APIs FindFirstFileW in WINLOGON.EXE (hooks-2, T1056.004) \u2014 mapped to Credential Access/Collection, NOT Defense Evasion",
+          "C. Opening files with deletion access rights (api-25, T1070.004)",
+          "D. Marking files for deletion (api-26, T1070.004)",
+          "E. Writes data to a remote process via process injection (api-0, T1055)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Pykspa.Generic killer sample modifies UAC settings and has no network activity. Which of the following behaviors from this report are correctly mapped as Defense Evasion in the sandbox ATT&CK output? Select ALL that apply.",
+        "options": [
+          "A. Modifying UAC/LUA settings via registry (registry-10, T1112)",
+          "B. AdjustTokenPrivileges API call (api-111, T1134) \u2014 also tagged Defense Evasion in this report",
+          "C. Section with high entropy (static-6, T1027.009)",
+          "D. Input file contains API references not in IAT (string-64, T1106) \u2014 tagged as Execution",
+          "E. Software packing detected (static-18, T1027.002)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Malware.PfPk.Generic killer sample uses IFEO injection and modifies file associations. Which behaviors from this detonation report are correctly classified as Defense Evasion (NOT Persistence or Privilege Escalation exclusively)?",
+        "options": [
+          "A. Modifying Image File Execution Options via registry (registry-64, T1546.012) \u2014 tagged Defense Evasion",
+          "B. Changing file extension appearance of the explorer (registry-15, T1546.001) \u2014 tagged Defense Evasion",
+          "C. Saving executable in registry (registry-113, T1547) \u2014 tagged as suspicious Persistence",
+          "D. AdjustTokenPrivileges called by explorer.exe (api-111, T1134) \u2014 tagged Defense Evasion",
+          "E. Dropping executable files (binary-1, T1105) \u2014 Ingress Tool Transfer, NOT Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "medium",
+        "detonation_report": {},
+        "question": "A ransomware sample drops a ransom note and renames files with double extensions. An analyst reviews the sandbox report and must decide which behaviors are Defense Evasion vs. Impact. Which of the following is correctly classified as Impact (T1490 \u2014 Inhibit System Recovery) rather than Defense Evasion?",
+        "options": [
+          "A. WMIC.exe deleting shadow copies by ID (target-4, T1490)",
+          "B. Renaming files with double extensions (api-200, T1486)",
+          "C. Dropping executable with .txt extension (binary-28, T1036.008)",
+          "D. Opening files with deletion access rights (api-25, T1070.004)",
+          "E. Timestomping via FileTimeToLocalFileTime (api-223, T1070.006)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The HydraCrypt ransomware sample modifies proxy settings and maps intranet resources to internet zone. Reviewing the sandbox signatures, which behaviors are tagged as Defense Evasion (T1562.001 \u2014 Disable or Modify Tools) specifically?",
+        "options": [
+          "A. Mapping intranet network resources to internet zone via registry (registry-179, T1562.001)",
+          "B. Disabling Windows Task Manager via registry (registry-3, T1562.001)",
+          "C. Creating guarded memory regions with PAGE_GUARD (api-1, T1562.001)",
+          "D. Deleting volume snapshots via vssadmin (target-4, T1490)",
+          "E. Deleting backup catalog via wbadmin (target-80, T1490)"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "infostealers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.NetMail infostealer (second infostealer sample) drops upNext.exe and hooks file system APIs. Which of the following behaviors from this report are correctly classified as Defense Evasion in the MITRE ATT&CK sandbox output? Select ALL that apply.",
+        "options": [
+          "A. Opening hash.exe with delete access rights (api-25, T1070.004)",
+          "B. Timestomping file timestamps (T1070.006) \u2014 present in mitre_attcks",
+          "C. Writing a PE file header to disk (api-43, T1105) \u2014 Ingress Tool Transfer",
+          "D. Masquerade file type by dropping upNext.exe to %LOCALAPPDATA% (binary-37, T1036)",
+          "E. Registry Run key modification (registry-0, T1547.001) \u2014 also tagged Defense Evasion in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.BrsecmonE killer sample creates a Windows service named 'xtblsmos' and uses netsh.exe to modify firewall rules. Which of the following behaviors from this report are correctly classified as Defense Evasion?",
+        "options": [
+          "A. Disabling or modifying the system firewall via netsh advfirewall (target-15, T1562.004)",
+          "B. Writing PE header bytes to memory via Portable Executable Injection (api-83, T1055.002)",
+          "C. Starting the xtblsmos service via sc.exe start (target-303, T1569.002) \u2014 Execution tactic",
+          "D. Mapping intranet resources to internet zone via registry (registry-179, T1562.001)",
+          "E. Dropping rtmxemaq.exe to %TEMP% and moving to system32 (binary-33, T1105) \u2014 Ingress Tool Transfer"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "remcos_rat",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The IL:Trojan.MSILZilla Remcos sample uses RegAsm.exe for process hollowing. An analyst must identify which behaviors are Defense Evasion and which are Command and Control (Ingress Tool Transfer). Which of the following are NOT Defense Evasion?",
+        "options": [
+          "A. Writing a PE file header to disk (api-43, T1105) \u2014 Ingress Tool Transfer",
+          "B. Dropping Webfrequency.exe as an executable file (binary-1, T1105) \u2014 Ingress Tool Transfer",
+          "C. Hiding tracks of downloaded file via Zone.Identifier deletion (api-42, T1070.004) \u2014 Defense Evasion",
+          "D. Process hollowing: creating RegAsm.exe in suspended mode (api-134, T1055.012) \u2014 Defense Evasion",
+          "E. Signing with an invalid certificate (certificate-1, T1553.002) \u2014 Defense Evasion"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "Reviewing the Spora ransomware detonation report, an analyst must determine which behaviors are Defense Evasion vs. other tactics. The report shows AdjustTokenPrivileges called by taskkill.exe. Which statement about this behavior is correct?",
+        "options": [
+          "A. AdjustTokenPrivileges (api-111) is tagged as T1134 (Access Token Manipulation) under Defense Evasion in this report",
+          "B. AdjustTokenPrivileges is tagged as Discovery in this report",
+          "C. AdjustTokenPrivileges is not present in the Spora report signatures",
+          "D. AdjustTokenPrivileges is tagged as Privilege Escalation only, not Defense Evasion",
+          "E. AdjustTokenPrivileges is tagged as T1562.001 in this report"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "ransomware",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "For the Ransom.HydraCrypt.Generic sample, an analyst must distinguish between Defense Evasion and Impact behaviors. The sample runs both vssadmin and bcdedit. Which of the following correctly identifies the tactic assignment for each behavior?",
+        "options": [
+          "A. vssadmin delete shadows \u2192 T1490 Impact; bcdedit /set recoveryenabled no \u2192 T1490 Impact; PAGE_GUARD memory allocation \u2192 T1562.001 Defense Evasion",
+          "B. vssadmin delete shadows \u2192 T1070.004 Defense Evasion; bcdedit /set recoveryenabled no \u2192 T1070 Defense Evasion",
+          "C. vssadmin delete shadows \u2192 T1490 Impact; bcdedit \u2192 T1562.001 Defense Evasion; PAGE_GUARD \u2192 T1490 Impact",
+          "D. All three behaviors are Defense Evasion",
+          "E. vssadmin \u2192 T1490 Impact; bcdedit \u2192 T1490 Impact; PAGE_GUARD \u2192 T1490 Impact"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    },
+    {
+      "question": {
+        "sha256": "hash",
+        "attack": "av_edr_killers",
+        "topic": "Defense Evasion",
+        "difficulty": "hard",
+        "detonation_report": {},
+        "question": "The Trojan.Regrun killer sample (Visual Basic, 64 processes) creates fake system processes and hooks APIs. How many distinct Defense Evasion techniques are tagged in the MITRE ATT&CK output for this sample? Select the option that correctly lists only the Defense Evasion technique IDs present.",
+        "options": [
+          "A. T1112, T1222, T1055.001, T1134.001, T1055.015, T1564.003, T1055, T1055.011, T1553.006, T1622, T1036.005, T1027, T1574.002, T1070.006, T1070.004, T1027.005, T1134, T1497.003, T1036, T1036.008, T1480, T1140",
+          "B. T1112, T1055.001, T1134.001, T1055.015, T1564.003, T1055, T1055.011, T1622, T1036.005, T1027, T1574.002, T1070.006, T1070.004, T1027.005, T1134, T1497.003, T1036, T1036.008, T1480, T1140",
+          "C. T1112, T1222, T1055.001, T1134.001, T1055.015, T1564.003, T1055, T1055.011, T1553.006, T1622, T1036.005, T1027, T1574.002, T1070.006, T1070.004, T1027.005, T1134, T1497.003, T1036, T1036.008, T1480, T1140, T1490",
+          "D. T1112, T1055.001, T1134.001, T1055.015, T1564.003, T1055, T1055.011, T1622, T1036.005, T1027, T1574.002, T1070.006, T1070.004, T1027.005, T1134, T1497.003, T1036, T1036.008, T1480, T1140, T1105",
+          "E. T1112, T1222, T1055.001, T1134.001, T1055.015, T1564.003, T1055, T1055.011, T1553.006, T1622, T1036.005, T1027, T1574.002, T1070.006, T1070.004, T1027.005, T1134, T1497.003, T1036, T1036.008, T1480, T1140, T1547.001"
+        ]
+      },
+      "answer": {
+        "correct_answers": [
+          "A"
+        ]
+      }
+    }
+  ]
+}

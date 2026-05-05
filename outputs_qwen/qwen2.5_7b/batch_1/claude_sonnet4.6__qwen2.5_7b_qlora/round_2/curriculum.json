@@ -1,0 +1,2579 @@
+[
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (167965 bytes) performs process injection. Which of the following API calls observed in the detonation report serve as supporting indicators for its injection capability? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 writes 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 takes a snapshot of running processes",
+        "C. IsWow64Process \u2014 determines if a process is running under WOW64",
+        "D. CreateThread in self-process (handle -1) \u2014 creates a thread within the current process",
+        "E. Process32FirstW \u2014 enumerates processes from a system snapshot",
+        "F. RegSetValueExW \u2014 sets a registry value"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.BrsecmonE detonation (11804160 bytes, um_unhooking family), which API calls and behavioral indicators collectively support classification of process injection activity? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by hash.exe to snapshot processes",
+        "C. IsWow64Process \u2014 called by hash.exe to determine WOW64 status",
+        "D. CreateThread in self-process (handle -1) \u2014 hash.exe creates a thread in process '-1'",
+        "E. dqczsfku.exe creates a process in suspended mode (CreateProcessA with suspended flag)",
+        "F. netsh.exe advfirewall command \u2014 modifies firewall settings"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Fugrafa.Generic sample (1028096 bytes, um_unhooking family) exhibits process injection behaviour. Examining all available API call and signature evidence, which of the following are valid injection-supporting indicators? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by hash.exe",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 hash.exe creates a thread in process '-1'",
+        "E. VirtualAllocEx / memory allocation in remote process \u2014 'hash.exe' allocated memory in 'C:\\hash.exe'",
+        "F. GetLogicalDriveStringsW \u2014 enumerates logical drives",
+        "G. AdjustTokenPrivileges \u2014 adjusts SE_DEBUG_PRIVILEGE"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The RiskWare[RemoteAdmin]/NetSup.gen sample (6227120 bytes, remcos family) shows process injection evidence. Which of the following API calls observed in the report are injection-supporting indicators? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 1500 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by sibjs.exe",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 hash.exe creates a thread in process '-1'",
+        "E. CryptAcquireContextW \u2014 acquires a cryptographic context",
+        "F. FileTimeToLocalFileTime \u2014 queries file time"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The BScope.Backdoor sample (1448960 bytes, remcos family) shows several API calls. Which of the following are valid indicators specifically supporting process injection or injection setup? Select ALL that apply.",
+      "options": [
+        "A. IsWow64Process \u2014 called by hash.exe to determine WOW64 architecture",
+        "B. EnumWindows \u2014 enumerates active windows",
+        "C. OpenMutexW \u2014 opens a named mutex object",
+        "D. GetKeyState \u2014 used for keylogging",
+        "E. CreateCompatibleBitmap \u2014 used for screenshots",
+        "F. OpenProcess \u2014 opens a handle to a process (imported API)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The BScope.Backdoor sample (1448960 bytes, remcos family) includes several behaviors. Which of the following constitute defense evasion techniques as classified in MITRE ATT&CK? Select ALL that apply.",
+      "options": [
+        "A. Software packing detected \u2014 BobSoft Mini Delphi packer signature (T1027.002)",
+        "B. Time-based evasion \u2014 QueryPerformanceCounter / GetTickCount usage (T1497.003)",
+        "C. Dynamic API resolution \u2014 GetProcAddress and LoadLibrary usage (T1027.007)",
+        "D. Embedded payloads \u2014 high entropy section detected (T1027.009)",
+        "E. EnumWindows \u2014 enumerates active windows for application window discovery",
+        "F. GetKeyState \u2014 keylogging API call"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) exhibits multiple behaviors. Which of the following are correctly classified as Defense Evasion techniques rather than Discovery or other categories? Select ALL that apply.",
+      "options": [
+        "A. Reflective code loading \u2014 CLR loader DLL loaded, GetExecutingAssembly string present (T1620)",
+        "B. Match legitimate name or location \u2014 svchost.exe running from %APPDATA% (T1036.005)",
+        "C. Disable or Modify Tools \u2014 PAGE_GUARD memory allocation to prevent memory dumping (T1562.001)",
+        "D. Reading the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY",
+        "E. System checks \u2014 RDTSCP trick detected for VM detection (T1497.001)",
+        "F. Querying kernel debugger information via NtQuerySystemInformation"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) shows various behaviors. Which of the following are Defense Evasion techniques and NOT Discovery or Credential Access behaviors? Select ALL that apply.",
+      "options": [
+        "A. Match legitimate name or location \u2014 svchost.exe dropped to %APPDATA% (T1036.005)",
+        "B. Reflective code loading \u2014 CLR loader and GetExecutingAssembly present (T1620)",
+        "C. System checks \u2014 time-based evasion, sleeping for over 1.5 billion milliseconds (T1497.003)",
+        "D. Reading the cryptographic machine GUID from registry (T1082 \u2014 System Information Discovery)",
+        "E. Disable or Modify Tools \u2014 PAGE_GUARD memory allocation (T1562.001)",
+        "F. Reading installed applications from HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS (T1518 \u2014 Software Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) spawns several child processes. Which of the following command lines represent anti-recovery techniques targeting system restore capabilities? Select ALL that apply.",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet \u2014 deletes volume shadow copies",
+        "B. wmic shadowcopy delete \u2014 deletes shadow copies via WMI",
+        "C. bcdedit /set {default} recoveryenabled no \u2014 disables recovery",
+        "D. bcdedit /set {default} bootstatuspolicy ignoreallfailures \u2014 suppresses boot failures",
+        "E. wbadmin delete catalog -quiet \u2014 deletes backup catalog",
+        "F. svchost.exe dropped to %APPDATA% \u2014 masquerades as system process"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) contains numerous behavioral indicators. An analyst must determine which belong specifically to the Defense Evasion tactic. Which of the following are correctly classified as Defense Evasion and NOT as Discovery, Credential Access, or Impact? Select ALL that apply.",
+      "options": [
+        "A. Timestomp \u2014 SetFileTime API reference indicating file timestamp manipulation (T1070.006)",
+        "B. Reflective code loading \u2014 CLR loader and GetExecutingAssembly present (T1620)",
+        "C. Match legitimate name or location \u2014 svchost.exe at %APPDATA% path (T1036.005)",
+        "D. Disable or Modify Tools \u2014 PAGE_GUARD memory allocation anti-debugging (T1562.001)",
+        "E. Reading the cryptographic machine GUID from registry",
+        "F. Querying kernel debugger information (vssadmin.exe queries NtQuerySystemInformation for debugger)",
+        "G. System Binary Proxy Execution \u2014 WMIC.exe used for shadow copy deletion (T1218)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.Generic (PICUS sample, 757760 bytes, um_unhooking family) detonation shows limited signatures. Which of the following observed indicators are consistent with process injection reconnaissance or setup? Select ALL that apply.",
+      "options": [
+        "A. Opens the Kernel Security Device Driver (KsecDD) \u2014 potential for kernel-level interaction",
+        "B. Reads terminal service related keys (RDP related registry keys)",
+        "C. CRC mismatch in PE header \u2014 indicator of obfuscation or tampering (T1027)",
+        "D. Tries to hide a procedure lookup using single characters \u2014 dynamic API resolution evasion",
+        "E. High entropy section (.monor) \u2014 packed or encrypted content",
+        "F. GetStartupInfoA import \u2014 retrieves STARTUPINFO structure"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Malware.SF.Generic sample (72544 bytes, infostealers family) injects into microsofthelp.exe. Which of the following API calls and signatures are injection-supporting indicators observed in the detonation report? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by microsofthelp.exe",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 microsofthelp.exe creates thread in process '-1'",
+        "E. Hooks API calls \u2014 FindNextFileW hooked in microsofthelp.exe",
+        "F. InternetOpenA \u2014 called by microsofthelp.exe for network connectivity"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Zusy.Generic sample (6775507 bytes, infostealers family) has a multi-stage process tree. Which API calls in the detonation report are supporting indicators for process injection activity? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. VirtualAllocEx \u2014 'xyzuqi.exe' allocated memory in '%TEMP%\\xyzuqi.exe'",
+        "C. CreateToolhelp32Snapshot \u2014 called by hash.exe",
+        "D. IsWow64Process \u2014 called by hash.exe",
+        "E. CreateThread in self-process (handle -1) \u2014 hash.exe creates thread in process '-1'",
+        "F. CopyFileW \u2014 bauqs.exe copies itself to another location",
+        "G. EnumWindows \u2014 muniw.exe enumerates active windows"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Lazy.Generic infostealer sample (17818630 bytes) contains many behavioral indicators. Which of the following are correctly classified as Defense Evasion techniques? Select ALL that apply.",
+      "options": [
+        "A. UPX packing \u2014 software packing detected (T1027.002)",
+        "B. Timestomp \u2014 GetSystemTimeAsFileTime reference for file time retrieval (T1070.006)",
+        "C. User activity-based checks \u2014 long string indicator for sandbox detection (T1497.002)",
+        "D. Time-based evasion \u2014 QueryPerformanceCounter reference (T1497.003)",
+        "E. Dynamic API resolution \u2014 GetProcAddress and LoadLibraryA in import section (T1027.007)",
+        "F. System information discovery \u2014 GetVersionExW API reference (T1082)",
+        "G. Execution guardrails \u2014 indicator combinations showing guardrail usage (T1480)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "G"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The RiskWare[RemoteAdmin]/NetSup.gen sample (6227120 bytes, remcos family) shows defense evasion activity. Which of the following behaviors are Defense Evasion techniques and NOT Discovery or other categories? Select ALL that apply.",
+      "options": [
+        "A. Code signing \u2014 sample signed with a valid certificate (T1553.002)",
+        "B. Indicator removal from tools \u2014 XOR instruction loops detected (T1027.005)",
+        "C. Reflective code loading \u2014 System.Reflection.LoadFrom observed in dotnet code (T1620)",
+        "D. Reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY",
+        "E. Time-based evasion \u2014 FileTimeToLocalFileTime called by Sibuia.exe (T1070.006)",
+        "F. Reads the active computer name from registry (T1082)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) injects into a svchost.exe process. Which of the following API calls and signatures from the detonation report are injection-supporting indicators? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. VirtualAllocEx \u2014 'hash.exe' allocated memory in 'C:\\hash.exe'",
+        "C. CreateToolhelp32Snapshot \u2014 called by hash.exe",
+        "D. IsWow64Process \u2014 called by hash.exe",
+        "E. CreateThread in self-process (handle -1) \u2014 hash.exe creates thread in process '-1'",
+        "F. AdjustTokenPrivileges \u2014 enables SE_DEBUG_PRIVILEGE",
+        "G. Disables Windows Task Manager via registry"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dropper.Generic.Dacic.3035 sample (491520 bytes, killers family) shows process injection evidence. Which of the following API calls observed in the detonation report are supporting indicators for injection activity? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by hash.exe (confirmed by both string and API call signatures)",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 hash.exe creates thread in process '-1'",
+        "E. EnumWindows \u2014 string reference to EnumWindows for ListPlanting (T1055.015)",
+        "F. NtShutdownSystem \u2014 ability to shutdown the operating system"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic sample (782403 bytes, killers family) contains defense evasion behaviors. Which of the following are correctly classified as Defense Evasion techniques based on the detonation report? Select ALL that apply.",
+      "options": [
+        "A. UPX packing \u2014 software packing detected, entrypoint in UPX0 section (T1027.002)",
+        "B. Timestomp \u2014 timestamp in PE header is very old (Thu Jan 1 1970) (T1070.006)",
+        "C. Clear Windows Event Logs \u2014 T1070.001 mapped in MITRE ATT&CK for this sample",
+        "D. Disable or Modify Tools \u2014 T1562.001 mapped for this sample",
+        "E. Reads VMWare-specific registry artifacts \u2014 T1012 (Query Registry, Discovery)",
+        "F. CreateThread in self-process (handle -1) \u2014 thread execution hijacking (T1055.003)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE sample (11804160 bytes, um_unhooking family) uses multiple injection techniques including process hollowing. From the detonation report, which of the following are confirmed injection-supporting indicators \u2014 including both core injection primitives AND reconnaissance APIs? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by hash.exe",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 hash.exe creates thread in process '-1'",
+        "E. dqczsfku.exe writes PE header bytes to memory (T1055.002 \u2014 PE Injection)",
+        "F. dqczsfku.exe creates a process in suspended mode (CreateProcessA with suspended flag)",
+        "G. netsh.exe modifies firewall rules to allow svchost.exe inbound connections"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The GenPack:Generic.Malware.SF sample (47842 bytes, infostealers family) injects into a microsofthelp.exe process. Which of the following API calls and signatures from the detonation report collectively constitute the complete set of injection-supporting indicators? Select ALL that apply.",
+      "options": [
+        "A. WriteProcessMemory \u2014 'hash.exe' wrote 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot \u2014 called by microsofthelp.exe",
+        "C. IsWow64Process \u2014 called by hash.exe",
+        "D. CreateThread in self-process (handle -1) \u2014 microsofthelp.exe creates thread in process '-1'",
+        "E. InternetOpenA \u2014 microsofthelp.exe calls InternetOpenA for C2 communication",
+        "F. Possibly tries to evade analysis by sleeping many times \u2014 microsofthelp.exe slept 525 times",
+        "G. Marks file for deletion \u2014 microsofthelp.exe marks C:\\hash.exe for deletion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (167965 bytes) exhibits several process injection indicators. Which of the following API calls or behaviours observed in this detonation report constitute supporting evidence for process injection activity?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. VirtualAllocEx allocating memory in the host process",
+        "C. CreateToolhelp32Snapshot called to enumerate running processes",
+        "D. IsWow64Process called to determine 32/64-bit architecture",
+        "E. CreateThread with handle -1 (self-process thread creation)",
+        "F. RegQueryValueExW querying registry keys"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Fugrafa.Generic sample (1028096 bytes, um_unhooking family), which of the following API calls observed in the detonation report serve as reconnaissance or setup indicators that support a process injection workflow?",
+      "options": [
+        "A. CreateToolhelp32Snapshot used to snapshot running processes",
+        "B. IsWow64Process used to check 32/64-bit process status",
+        "C. CreateThread with process handle -1 (self-process)",
+        "D. GetLocaleInfoW retrieving locale information",
+        "E. WriteProcessMemory writing 32 bytes to a remote process",
+        "F. FindFirstFileW searching directory for files"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE sample (11804160 bytes) spawns dqczsfku.exe which then creates svchost.exe. Examining the detonation report, which of the following indicators collectively demonstrate a complete process injection chain including reconnaissance, allocation, payload delivery, and execution?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe to enumerate processes",
+        "B. IsWow64Process called to determine architecture of target process",
+        "C. WriteProcessMemory writing 32 bytes to a remote process",
+        "D. CreateProcessA called in suspended mode by dqczsfku.exe",
+        "E. PE header bytes written to virtual address space (PE injection indicator)",
+        "F. GetLocaleInfoW retrieving default language settings",
+        "G. svchost.exe connecting to external IP on port 443"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Zusy.Generic infostealer sample (6775507 bytes) shows process injection activity. Which of the following API calls or behaviours from the detonation report are valid indicators supporting process injection, as opposed to general RAT functionality?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. VirtualAllocEx allocating memory in xyzuqi.exe",
+        "C. CreateToolhelp32Snapshot enumerating processes",
+        "D. IsWow64Process checking 32/64-bit status",
+        "E. EnumWindows enumerating active windows",
+        "F. OpenMutexW opening a named mutex object"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The RiskWare[RemoteAdmin]/NetSup.gen sample (6227120 bytes, remcos family) demonstrates injection-supporting behaviour. Which of the following from the detonation report are legitimate injection-supporting indicators rather than general RAT capabilities?",
+      "options": [
+        "A. WriteProcessMemory writing 1500 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot called by sibjs.exe",
+        "C. IsWow64Process called by hash.exe",
+        "D. CreateThread with handle -1 in self-process",
+        "E. EnumWindows called to enumerate active windows",
+        "F. CryptAcquireContextW acquiring a cryptographic context"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) employs multiple defense evasion techniques. Based strictly on the detonation report signatures and MITRE ATT&CK mappings, which of the following behaviours constitute defense evasion rather than discovery or ransomware impact?",
+      "options": [
+        "A. Spawning svchost.exe from %APPDATA% (T1036.005 - Match Legitimate Name or Location)",
+        "B. Allocating memory with PAGE_GUARD access (T1562.001 - Disable or Modify Tools)",
+        "C. Deleting volume shadow copies via vssadmin.exe (T1490 - Inhibit System Recovery)",
+        "D. Thread execution hijacking via CreateThread handle -1 (T1055.003)",
+        "E. Reading cryptographic machine GUID from registry (T1082 - System Information Discovery)",
+        "F. bcdedit /set recoveryenabled no suppressing boot failures (T1490)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) exhibits both defense evasion and discovery behaviours. Which of the following observed indicators are correctly classified as defense evasion (not discovery or impact)?",
+      "options": [
+        "A. Reflective code loading via GetExecutingAssembly (T1620)",
+        "B. Thread execution hijacking with CreateThread handle -1 (T1055.003)",
+        "C. Reading the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY (T1082)",
+        "D. Match Legitimate Name or Location by spawning svchost.exe from %APPDATA% (T1036.005)",
+        "E. Disabling Windows Task Manager via registry modification (T1562.001)",
+        "F. Deleting backup catalog via wbadmin.exe (T1490)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The WannaCryptor sample (3514368 bytes) contains both defense evasion and cryptographic indicators. A student must distinguish which behaviours are defense evasion versus other categories. Which of the following from the detonation report are correctly classified as defense evasion techniques?",
+      "options": [
+        "A. SetFileTime called to modify file timestamps (T1070.006 - Timestomp)",
+        "B. YARA AES encryption signature match on process memory (T1027 - Obfuscated Files)",
+        "C. Software packing detected via compiler signature (T1027.002)",
+        "D. LoadLibraryA used for DLL injection (T1055.001)",
+        "E. CryptDecrypt API call for decryption operations (T1140 - Deobfuscate/Decode)",
+        "F. GetComputerNameW retrieving the NetBIOS computer name (T1082)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) executes several anti-recovery commands via child processes. Which of the following process command lines observed in the detonation report directly inhibit system recovery (T1490)?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet",
+        "B. wmic shadowcopy delete",
+        "C. bcdedit /set {default} recoveryenabled no",
+        "D. wbadmin delete catalog -quiet",
+        "E. cmd.exe /C mkdir %WINDIR%\\system32\\vrzjqkmq\\",
+        "F. bcdedit /set {default} bootstatuspolicy ignoreallfailures"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Both the Ransom.Small.Generic (27648 bytes) and Ransom.HydraCrypt.Generic (26624 bytes) samples execute anti-recovery operations. A student must identify which specific indicators from the detonation report of the HydraCrypt sample constitute recovery inhibition versus other impact categories. Which are correctly classified as T1490 (Inhibit System Recovery)?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet executed via cmd.exe",
+        "B. wbadmin delete catalog -quiet executed via cmd.exe",
+        "C. bcdedit /set {default} bootstatuspolicy ignoreallfailures",
+        "D. Disabling Windows Task Manager via HKCU registry key (T1562.001)",
+        "E. Dropping read_it.txt ransom note file (T1491.001)",
+        "F. bcdedit /set {default} recoveryenabled no"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.Generic sample (757760 bytes, um_unhooking family) has limited sandbox signatures. Which of the following from the detonation report provide the strongest evidence of process injection preparation and execution?",
+      "options": [
+        "A. Attempts to hide procedure lookup using single characters (stream-36)",
+        "B. Reads terminal service related registry keys (T1076)",
+        "C. Opens the Kernel Security Device Driver KsecDD",
+        "D. CRC value in PE header does not match actual value (T1027)",
+        "E. Reads configuration files (.ini files)",
+        "F. Sample identified as malicious by antivirus engines"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE sample (11804160 bytes) uses several defense evasion techniques. Based on the detonation report, which behaviours are correctly classified as defense evasion rather than discovery or lateral movement?",
+      "options": [
+        "A. Writing PE header bytes to remote process memory (T1055.002 - Portable Executable Injection)",
+        "B. netsh.exe adding firewall rule to allow svchost.exe inbound (T1562.004 - Disable or Modify System Firewall)",
+        "C. Querying SystemProcessInformation via NtQuerySystemInformation (T1057 - Process Discovery)",
+        "D. Loading dbghelp.dll module (T1518.001 - Security Software Discovery)",
+        "E. Creating process in suspended mode via CreateProcessA (T1055 - Process Injection)",
+        "F. GetAdaptersInfo retrieving network adapter information (T1016)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Malware.SF.Generic infostealer sample (72544 bytes) drops microsofthelp.exe and exhibits injection behaviour. Which of the following API calls and behaviours from the detonation report are injection-supporting indicators, including reconnaissance APIs?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot called by microsofthelp.exe",
+        "C. IsWow64Process called by hash.exe",
+        "D. CreateThread with handle -1 in microsofthelp.exe (self-process)",
+        "E. InternetOpenA called by microsofthelp.exe for C2 communication",
+        "F. FindFirstFileW searching for files"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Zusy.Generic sample (6775507 bytes) spawns bauqs.exe which spawns xyzuqi.exe. The detonation report notes 'spawned processes likely due to injection'. Which of the following API calls observed in this report constitute the complete injection primitive set (both reconnaissance and execution)?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory writing 32 bytes to a remote process",
+        "D. VirtualAllocEx allocating memory in xyzuqi.exe",
+        "E. EnumWindows called by muniw.exe",
+        "F. GetForegroundWindow called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dropper.Generic.Dacic.3035 sample (491520 bytes, killers family) exhibits process injection behaviour. Which of the following from the detonation report are injection-supporting indicators including both core primitives and reconnaissance APIs?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot called by hash.exe",
+        "C. IsWow64Process called by hash.exe",
+        "D. CreateThread with handle -1 (self-process thread creation)",
+        "E. EnumWindows referenced in file/memory strings",
+        "F. GetVolumeInformationA retrieving volume information"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic sample (782403 bytes, killers family) uses several defense evasion techniques. Based on the detonation report MITRE ATT&CK mappings, which of the following are correctly classified as defense evasion?",
+      "options": [
+        "A. UPX software packing detected in PE sections (T1027.002)",
+        "B. Timestomp via SetFileTime API (T1070.006)",
+        "C. Reading VMWare registry artifacts for sandbox detection (T1497 - Virtualization/Sandbox Evasion)",
+        "D. CreateThread with handle -1 for self-process injection (T1055.003)",
+        "E. Process32FirstW enumerating process snapshot (T1057 - Process Discovery)",
+        "F. Timestamp in PE header is very old (T1027 - Obfuscated Files)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The WannaCry DLL sample (5267459 bytes, CVE-2017-0147) has a sparse signature set. Based on the detonation report, which of the following observed behaviours constitute defense evasion techniques rather than network-based impact or discovery?",
+      "options": [
+        "A. rundll32.exe patching bytes at a virtual address (hooks-8, T1055)",
+        "B. Querying internet cache settings to hide footprints in index.dat (registry-29)",
+        "C. Modifying proxy settings via HKCU registry (T1112)",
+        "D. Reading cryptographic machine GUID from registry (T1082 - System Information Discovery)",
+        "E. Contacting 60 or more hosts across 22 networks (network scanning)",
+        "F. Dropping tasksche.exe to Windows system directory (T1036)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The BScope.Backdoor sample (1448960 bytes, remcos family) uses several evasion techniques. Based on the detonation report, which of the following behaviours are correctly classified as defense evasion rather than discovery or credential access?",
+      "options": [
+        "A. Software packing detected via BobSoft Mini Delphi compiler signature (T1027.002)",
+        "B. PE file contains zero-size sections BSS and .tls (T1027 - Obfuscated Files)",
+        "C. GetKeyState called for keylogging (T1056.001 - Keylogging)",
+        "D. Embedded payloads indicator via high-entropy CODE section (T1027.009)",
+        "E. EnumWindows called to enumerate active windows (T1010 - Application Window Discovery)",
+        "F. Dynamic API resolution via GetProcAddress and LoadLibrary (T1027.007)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The GenPack:Generic.Malware.SF sample (47842 bytes) drops microsofthelp.exe and injects into it. The detonation report contains both injection primitives and reconnaissance APIs. Which of the following constitute the COMPLETE set of injection-supporting indicators present in this report?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot called by microsofthelp.exe",
+        "C. IsWow64Process called by hash.exe",
+        "D. CreateThread with handle -1 in microsofthelp.exe",
+        "E. GetVersionExA called by microsofthelp.exe (OS version check)",
+        "F. RtlGetVersion called by hash.exe",
+        "G. InternetOpenA called for C2 communication"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Fugrafa.Generic sample (1028096 bytes) is classified as um_unhooking and contains a rich set of injection indicators. A student must identify ALL injection-supporting indicators present in the detonation report \u2014 including core primitives, reconnaissance APIs, and self-process thread creation \u2014 while excluding unrelated behaviours. Which options are correct?",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. CreateToolhelp32Snapshot called to enumerate processes",
+        "C. IsWow64Process called to determine 32/64-bit status",
+        "D. CreateThread with handle -1 (self-process thread creation, T1055.003)",
+        "E. Opens file with deletion access rights on hash.exe:Zone.Identifier (T1070.004)",
+        "F. GetLogicalDriveStringsW determining valid logical drives",
+        "G. AdjustTokenPrivileges enabling SE_DEBUG_PRIVILEGE"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma detonation report shows several API calls related to process injection setup. Which of the following APIs observed in this report serve as supporting indicators for process injection reconnaissance and thread-based injection?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. Process32FirstW called by hash.exe",
+        "D. WriteProcessMemory called by hash.exe",
+        "E. CreateThread in self-process (handle -1) observed for hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Fugrafa.Generic (um_unhooking) detonation report, which API calls collectively indicate that the malware is performing process injection reconnaissance before injecting code?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread in self-process (handle -1) observed for hash.exe",
+        "D. GetLocaleInfoW called by hash.exe",
+        "E. WriteProcessMemory (Writes data to a remote process) observed for hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The BrsecmonE (um_unhooking) sample creates a suspended process via dqczsfku.exe and injects a PE into svchost.exe. Which of the following sandbox signatures and API observations together constitute the complete evidence set for this injection chain?",
+      "options": [
+        "A. CreateProcessA called in suspended mode by dqczsfku.exe",
+        "B. WriteProcessMemory (Writes data to a remote process) observed for hash.exe",
+        "C. PE header written to memory by dqczsfku.exe (api-83: Writes PE header to memory)",
+        "D. CreateToolhelp32Snapshot called by hash.exe",
+        "E. IsWow64Process called by hash.exe",
+        "F. Windows system process (svchost.exe) connects to network (target-269)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the Worm.Ludbaruma sample, which of the following API calls are correctly classified as process injection reconnaissance indicators (as opposed to general process execution indicators)?",
+      "options": [
+        "A. CreateToolhelp32Snapshot \u2014 enumerates running processes to identify injection targets",
+        "B. IsWow64Process \u2014 determines if target process is 32-bit under WOW64, needed for correct shellcode architecture",
+        "C. Process32FirstW \u2014 walks the process snapshot to enumerate candidate targets",
+        "D. CreateProcessW \u2014 spawns a new child process (execution, not reconnaissance)",
+        "E. CreateDirectoryW \u2014 creates a staging directory (persistence, not injection)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Remcos RAT (RiskWare/NetSup) detonation report shows WriteProcessMemory writing 1500 bytes to a remote process. Which additional API observations from the same report serve as injection-supporting indicators alongside this write primitive?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by sibjs.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread in self-process (handle -1) observed for hash.exe",
+        "D. EnumWindows called by hash.exe",
+        "E. OpenMutexW called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the BScope.Backdoor (Remcos RAT) detonation report, which of the following observed behaviors are valid indicators of process injection activity? Select all that apply.",
+      "options": [
+        "A. WriteProcessMemory writing 32 bytes to a remote process",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread in self-process (handle -1) not present in this report",
+        "D. EnumWindows called by hash.exe \u2014 used for window enumeration (RAT capability, not injection)",
+        "E. OpenMutexW called by hash.exe \u2014 mutex check for single-instance (not injection)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Small.Generic detonation report, which of the following observed behaviors are correctly classified as Defense Evasion techniques (T1036/T1562/T1070 family) rather than Discovery or Credential Access?",
+      "options": [
+        "A. svchost.exe running from %APPDATA% instead of System32 (Match Legitimate Name or Location, T1036.005)",
+        "B. PAGE_GUARD memory allocation to prevent memory dumping (Disable or Modify Tools, T1562.001)",
+        "C. CreateToolhelp32Snapshot enumerating processes (Process Discovery, T1057 \u2014 not defense evasion)",
+        "D. Sleeping for 1,566,804,069 milliseconds to evade sandbox timeout (Time Based Evasion, T1497.003)",
+        "E. Accessing browser credential files (Credentials from Password Stores, T1555 \u2014 not defense evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic detonation report includes several behaviors. Which of the following are Defense Evasion indicators as opposed to Discovery or Impact indicators?",
+      "options": [
+        "A. svchost.exe spawned from %APPDATA% \u2014 masquerading as a legitimate system process (T1036.005)",
+        "B. Disabling Windows Task Manager via registry (T1562.001)",
+        "C. vssadmin delete shadows \u2014 inhibiting system recovery (T1490 \u2014 Impact, not Defense Evasion)",
+        "D. PAGE_GUARD memory allocation to block memory dumping (T1562.001)",
+        "E. Reads the cryptographic machine GUID from registry (T1082 \u2014 Discovery, not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Examining the Trojan.Ransom.WannaCryptor (mssecsvc.exe) detonation report, which of the following sandbox observations are correctly mapped to Defense Evasion rather than Discovery or Command and Control?",
+      "options": [
+        "A. Hooks/patches the running process (rundll32.exe wrote bytes to virtual address) \u2014 T1055 Process Injection as Defense Evasion",
+        "B. Queries the internet cache settings \u2014 T1012 Query Registry (Discovery, not Defense Evasion)",
+        "C. Reads the cryptographic machine GUID \u2014 T1082 System Information Discovery (not Defense Evasion)",
+        "D. Modifies proxy settings via registry SETVAL \u2014 T1112 Modify Registry as Defense Evasion",
+        "E. SetFileTime API reference \u2014 Timestomp T1070.006 as Defense Evasion",
+        "F. ARP broadcast requests to find network devices \u2014 T1018 Remote System Discovery (not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic detonation report shows a process tree including vssadmin.exe, WMIC.exe, bcdedit.exe, and wbadmin.exe. Which of the following command-line executions observed in this report are anti-recovery techniques mapped to T1490?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet \u2014 deletes volume shadow copies",
+        "B. wmic shadowcopy delete \u2014 deletes shadow copies via WMI",
+        "C. bcdedit /set {default} recoveryenabled no \u2014 disables Windows Recovery",
+        "D. wbadmin delete catalog -quiet \u2014 deletes the backup catalog",
+        "E. bcdedit /set {default} bootstatuspolicy ignoreallfailures \u2014 suppresses boot failures"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "In the Ransom.HydraCrypt.Generic report, which of the following observed behaviors constitute Inhibit System Recovery (T1490) techniques specifically, and which should be excluded because they belong to other tactic categories?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet \u2014 T1490 (correct: inhibits recovery)",
+        "B. wbadmin delete catalog -quiet \u2014 T1490 (correct: inhibits recovery)",
+        "C. bcdedit /set {default} recoveryenabled no \u2014 T1490 (correct: inhibits recovery)",
+        "D. Disabling Windows Task Manager via registry \u2014 T1562.001 (Defense Evasion, NOT T1490)",
+        "E. Opening files with deletion access rights \u2014 T1070.004 (Indicator Removal, NOT T1490)",
+        "F. bcdedit /set {default} bootstatuspolicy ignoreallfailures \u2014 T1490 (correct: suppresses boot failure visibility)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Fugrafa.Generic (um_unhooking) report shows a single-process detonation. Which of the following API calls observed in this report collectively indicate that the malware is preparing for process injection by performing architecture and process enumeration?",
+      "options": [
+        "A. IsWow64Process \u2014 determines WOW64 status of the current/target process",
+        "B. CreateToolhelp32Snapshot \u2014 creates a snapshot of running processes for target selection",
+        "C. CreateThread in self-process (handle -1) \u2014 injects thread into own process space as staging step",
+        "D. WriteProcessMemory \u2014 writes payload into a remote process (confirmed in report as api-0)",
+        "E. GetLocaleInfoW \u2014 retrieves locale information (Discovery, not injection setup)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The CVE-2017-0199 Excel detonation (Remcos family) does not show direct injection primitives, but the RiskWare/NetSup Remcos sample does. For the RiskWare/NetSup sample, which of the following are correctly identified as injection-supporting reconnaissance APIs versus general RAT functionality APIs?",
+      "options": [
+        "A. CreateToolhelp32Snapshot \u2014 injection reconnaissance (correct)",
+        "B. IsWow64Process \u2014 injection reconnaissance for architecture awareness (correct)",
+        "C. EnumWindows \u2014 window enumeration for RAT screen/keylog targeting (RAT capability, not injection setup)",
+        "D. OpenMutexW \u2014 single-instance check (not injection setup)",
+        "E. CreateThread in self-process (handle -1) \u2014 injection staging (correct)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dropper.Generic.Dacic (killers family) detonation report includes timestomping, token impersonation, and process injection. Which of the following observed behaviors are Defense Evasion techniques and NOT Privilege Escalation or Discovery?",
+      "options": [
+        "A. SetFileTime API reference \u2014 Timestomp (T1070.006, Defense Evasion)",
+        "B. IsWow64Process called by hash.exe \u2014 Process Discovery (T1057, not Defense Evasion)",
+        "C. Token Impersonation/Theft (T1134.001) \u2014 dual-tagged as both Defense Evasion and Privilege Escalation; valid as Defense Evasion",
+        "D. VirtualFree referenced \u2014 injection capability (T1055, Defense Evasion)",
+        "E. CreateToolhelp32Snapshot \u2014 Process Discovery (T1057, not Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic (killers family) detonation report includes several defense evasion indicators. Which of the following are correctly classified as Defense Evasion rather than Discovery or Persistence?",
+      "options": [
+        "A. Timestomp (T1070.006) \u2014 SetFileTime-related behavior",
+        "B. Clear Windows Event Logs (T1070.001) \u2014 indicator removal",
+        "C. Reads VMware registry keys \u2014 T1012 Query Registry (Discovery, not Defense Evasion)",
+        "D. AppInit DLLs registry modification \u2014 T1546.010 (Persistence/Privilege Escalation, not Defense Evasion)",
+        "E. UPX packing detected \u2014 Software Packing (T1027.002, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample shows WriteProcessMemory, VirtualAllocEx, CreateToolhelp32Snapshot, IsWow64Process, Process32FirstW, and CreateThread (handle -1). An analyst must select ALL indicators that collectively constitute the process injection evidence chain. Which options are correct?",
+      "options": [
+        "A. WriteProcessMemory \u2014 writes payload bytes to remote process memory",
+        "B. VirtualAllocEx (Allocates virtual memory in a remote process) \u2014 allocates space in target process",
+        "C. CreateToolhelp32Snapshot \u2014 enumerates processes to select injection target",
+        "D. IsWow64Process \u2014 checks architecture of target for correct payload delivery",
+        "E. Process32FirstW \u2014 walks process snapshot to identify specific target PID",
+        "F. CreateThread in self-process (handle -1) \u2014 thread creation in own process as injection staging"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.Ransom.WannaCryptor (PE32 executable, 3.5MB) detonation report includes a YARA AES match and several behavioral indicators. Which of the following are Defense Evasion indicators and which are NOT?",
+      "options": [
+        "A. SetFileTime API reference \u2014 Timestomp (T1070.006, Defense Evasion \u2014 correct)",
+        "B. YARA AES encryption match \u2014 indicates encryption capability (T1027 obfuscation context, but primarily Impact/encryption \u2014 NOT a Defense Evasion indicator in this report)",
+        "C. UPX packing detected \u2014 Software Packing (T1027.002, Defense Evasion \u2014 correct)",
+        "D. LoadLibraryA reference for DLL injection \u2014 T1055.001 (Defense Evasion \u2014 correct)",
+        "E. VirtualFree reference \u2014 injection capability (T1055, Defense Evasion \u2014 correct)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the BrsecmonE (um_unhooking) sample, the injected svchost.exe connects to external IPs. Which of the following API calls and sandbox signatures from the report are injection-supporting reconnaissance indicators that precede the actual injection?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe \u2014 process enumeration for target selection",
+        "B. IsWow64Process called by hash.exe \u2014 architecture check before payload delivery",
+        "C. CreateThread in self-process (handle -1) called by hash.exe \u2014 staging thread in own process",
+        "D. ShellExecuteA called by hash.exe \u2014 application execution (not injection reconnaissance)",
+        "E. NtCreateNamedPipeFile called by svchost.exe \u2014 named pipe for lateral movement (not injection recon)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Small.Generic detonation, the injected svchost.exe reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY. How should this behavior be classified, and which tactic does it NOT belong to?",
+      "options": [
+        "A. It is System Information Discovery (T1082) \u2014 the GUID is used to fingerprint the machine, not to evade defenses",
+        "B. It is Defense Evasion \u2014 the GUID is used to timestomp files (incorrect classification)",
+        "C. It is an Execution Guardrail (T1480) \u2014 used to check environment before executing payload (plausible but not the primary classification in this report)",
+        "D. It is Credential Access \u2014 the GUID is a credential (incorrect classification)",
+        "E. It belongs to Discovery tactic, not Defense Evasion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Across the three Remcos RAT samples in the dataset (RiskWare/NetSup, BScope.Backdoor, CVE-2017-0199), which of the following statements correctly describe the injection-supporting reconnaissance APIs that should be included as correct answers when asked about Remcos injection indicators?",
+      "options": [
+        "A. CreateToolhelp32Snapshot is a correct injection-supporting indicator in the RiskWare/NetSup sample (sibjs.exe calls it)",
+        "B. IsWow64Process is a correct injection-supporting indicator in the RiskWare/NetSup sample (hash.exe calls it)",
+        "C. EnumWindows is an injection-supporting indicator \u2014 INCORRECT; it is a window enumeration API used for RAT targeting, not injection setup",
+        "D. OpenMutexW is an injection-supporting indicator \u2014 INCORRECT; it is a single-instance mutex check, not injection setup",
+        "E. CreateThread in self-process (handle -1) is a correct injection-supporting indicator in the RiskWare/NetSup sample (hash.exe creates it)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma sample (167965 bytes) exhibits process injection behaviour. Which of the following API calls observed in the detonation report serve as supporting indicators for the injection sequence, beyond the core WriteProcessMemory primitive?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. Process32FirstW called by hash.exe",
+        "D. CreateThread with handle -1 (self-process) called by hash.exe",
+        "E. RpcServerRegisterIf2 called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE sample (11804160 bytes, um_unhooking family) shows process injection via dqczsfku.exe. Which API calls or behaviours in the sandbox report are valid supporting reconnaissance indicators that precede or accompany the injection?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread with handle -1 (self-process) called by hash.exe",
+        "D. NtCreateNamedPipeFile called by svchost.exe",
+        "E. RtlGetVersion called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Fugrafa.Generic sample (1028096 bytes, um_unhooking family) demonstrates process injection. The sandbox logs multiple API calls. Select ALL indicators that constitute valid process injection supporting evidence \u2014 including both reconnaissance APIs and thread-creation primitives \u2014 as observed in this report.",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread with handle -1 (self-process) called by hash.exe",
+        "D. WriteProcessMemory (inferred from 'Writes data to a remote process' signature)",
+        "E. GetLocaleInfoW called by hash.exe",
+        "F. VirtualAllocEx (inferred from 'Allocates virtual memory in a remote process' signature)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.Generic (Remcos RAT, 6227120 bytes) sample injects into a remote process. Which of the following API calls or sandbox observations are valid injection-supporting indicators specifically tied to the injection workflow, as evidenced in the detonation report?",
+      "options": [
+        "A. WriteProcessMemory ('Writes data to a remote process' \u2014 hash.exe wrote 1500 bytes to Sibuia.exe)",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateToolhelp32Snapshot called by sibjs.exe",
+        "D. CreateThread with handle -1 (self-process) called by hash.exe",
+        "E. EnumWindows called by hash.exe",
+        "F. OpenMutexW called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "For the BScope.Backdoor (Remcos RAT, 1448960 bytes) sample, the sandbox report shows several API calls. Which of the following are correctly classified as process injection supporting indicators rather than general RAT capabilities?",
+      "options": [
+        "A. IsWow64Process called by hash.exe",
+        "B. CreateThread with handle -1 (self-process) \u2014 inferred from process injection MITRE mapping T1055.003",
+        "C. EnumWindows called by hash.exe",
+        "D. OpenMutexW called by hash.exe",
+        "E. GetKeyState called by hash.exe (keylogging)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE (um_unhooking, 11804160 bytes) sample performs several defense evasion actions. Which of the following behaviours observed in the detonation report are correctly classified as Defense Evasion techniques (NOT Discovery or Reconnaissance)?",
+      "options": [
+        "A. Timestomping via FileTimeToLocalFileTime (T1070.006)",
+        "B. Disabling system firewall via netsh.exe advfirewall (T1562.004)",
+        "C. Writing PE header to memory for process hollowing (T1055.002)",
+        "D. Querying volume information of C:\\ (T1082 \u2014 System Information Discovery)",
+        "E. Reads the cryptographic machine GUID from registry (T1082 \u2014 Discovery)",
+        "F. Token Impersonation/Theft via AdjustTokenPrivileges (T1134.001)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) performs multiple actions. Which of the following are correctly classified as Defense Evasion techniques rather than Discovery or Impact techniques?",
+      "options": [
+        "A. Creating guarded memory regions with PAGE_GUARD (T1562.001 \u2014 Disable or Modify Tools)",
+        "B. Spawning svchost.exe from %APPDATA% as a fake system process (T1036.005 \u2014 Masquerading)",
+        "C. Deleting volume shadow copies via vssadmin.exe (T1490 \u2014 Inhibit System Recovery)",
+        "D. Sleeping for 1566804069 milliseconds (T1497.003 \u2014 Time Based Evasion)",
+        "E. Querying volume information of C:\\hash.exe (T1082 \u2014 System Information Discovery)",
+        "F. Reflective code loading via GetExecutingAssembly (T1620)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) shows multiple behaviours. Which of the following are correctly classified as Defense Evasion rather than Discovery or Impact?",
+      "options": [
+        "A. Reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY (T1082 \u2014 Discovery, NOT Defense Evasion)",
+        "B. Creating guarded memory regions with PAGE_GUARD (T1562.001 \u2014 Defense Evasion)",
+        "C. Fake svchost.exe spawned from %APPDATA% (T1036.005 \u2014 Masquerading, Defense Evasion)",
+        "D. Sleeping for 1566804069 milliseconds (T1497.003 \u2014 Time Based Evasion, Defense Evasion)",
+        "E. Deleting backup catalog via wbadmin.exe (T1490 \u2014 Impact)",
+        "F. Disabling Windows Task Manager via registry (T1562.001 \u2014 Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic sample (26624 bytes) executes multiple anti-recovery commands via child processes. Which of the following observed child process command lines or behaviours constitute Inhibit System Recovery (T1490) actions?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet",
+        "B. wmic shadowcopy delete",
+        "C. bcdedit /set {default} recoveryenabled no",
+        "D. wbadmin delete catalog -quiet",
+        "E. hash.exe opened files with deletion access rights (T1070.004 \u2014 Indicator Removal, NOT recovery inhibition)",
+        "F. bcdedit /set {default} bootstatuspolicy ignoreallfailures"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.Small.Generic sample (27648 bytes) spawns multiple child processes. Which of the following process command lines observed in the process tree are correctly classified as anti-recovery actions (T1490 \u2014 Inhibit System Recovery)?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet",
+        "B. bcdedit /set {default} bootstatuspolicy ignoreallfailures",
+        "C. wbadmin delete catalog -quiet",
+        "D. hash.exe opened C:\\Users\\%OSUSER%\\AppData\\Roaming with deletion access rights",
+        "E. wmic shadowcopy delete"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The WannaCryptor sample (3514368 bytes) shows several informative signatures. Which of the following are correctly classified as Defense Evasion techniques rather than Cryptographic/Impact indicators?",
+      "options": [
+        "A. SetFileTime API reference (T1070.006 \u2014 Timestomping)",
+        "B. YARA AES encryption match (T1027 \u2014 Obfuscated Files or Information \u2014 this is a cryptographic indicator, not defense evasion by itself)",
+        "C. LoadLibraryA reference mapped to T1055.001 (Dynamic-link Library Injection)",
+        "D. VirtualFree reference mapped to T1055 (Process Injection)",
+        "E. WaitForSingleObject reference mapped to T1497.003 (Time Based Evasion)",
+        "F. RDTSCP instruction artifact (T1497 \u2014 Virtualization/Sandbox Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The PICUS sample (757760 bytes, um_unhooking family) has limited sandbox signatures. Which of the following observations from the detonation report are valid process injection supporting indicators?",
+      "options": [
+        "A. Opens the Kernel Security Device Driver (KsecDD) \u2014 \\Device\\KsecDD",
+        "B. Reads terminal service related keys (RDP related) from HKLM\\SYSTEM\\CONTROLSET001",
+        "C. MITRE mapping includes T1055 (Process Injection) under Privilege Escalation",
+        "D. Tries to hide a procedure lookup using single characters (stream-36)",
+        "E. CRC value in PE header does not match actual value (static-0)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The CVE-2017-0199 Excel sample (1252864 bytes, Remcos RAT family) has a different infection vector. Examining the detonation report carefully, which of the following indicators are correctly identified as process injection supporting indicators versus general RAT/network capabilities?",
+      "options": [
+        "A. EXCEL.EXE called InternetConnectW to server link.emcdn.ru (C2 communication, NOT injection indicator)",
+        "B. EXCEL.EXE called LookupAccountSidW (T1033 \u2014 Discovery, NOT injection indicator)",
+        "C. No CreateToolhelp32Snapshot or WriteProcessMemory observed in this report \u2014 injection indicators are absent",
+        "D. EXCEL.EXE writes to LNK file (T1547.009 \u2014 Persistence, NOT injection indicator)",
+        "E. Suricata alert for CVE-2017-0199 exploit (Initial Access, NOT injection indicator)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Malware.SF.Generic infostealer sample (72544 bytes) injects into microsofthelp.exe. Which of the following API calls observed in the detonation report are valid injection-supporting reconnaissance or setup indicators?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by microsofthelp.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread with handle -1 called by microsofthelp.exe (self-process thread creation)",
+        "D. InternetOpenA called by microsofthelp.exe (C2 communication, not injection indicator)",
+        "E. FindFirstFileW called by hash.exe (file discovery, not injection indicator)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The GenPack:Generic.Malware.SF infostealer sample (47842 bytes) spawns microsofthelp.exe and performs injection. Which of the following API calls or signatures from the detonation report are correctly identified as process injection supporting indicators?",
+      "options": [
+        "A. IsWow64Process called by hash.exe",
+        "B. CreateToolhelp32Snapshot called by microsofthelp.exe",
+        "C. CreateThread with handle -1 called by microsofthelp.exe (T1055.003 \u2014 Thread Execution Hijacking)",
+        "D. InternetOpenA called by microsofthelp.exe",
+        "E. Sleep called multiple times by microsofthelp.exe (time-based evasion, not injection indicator)",
+        "F. WriteProcessMemory ('Writes data to a remote process' \u2014 hash.exe wrote 32 bytes)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dropper.Generic.Dacic sample (491520 bytes, killers family) shows process injection behaviour. Which of the following API calls or signatures from the detonation report are valid injection-supporting indicators that an analyst should select?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. CreateThread with handle -1 (self-process) called by hash.exe (T1055.003)",
+        "D. WriteProcessMemory ('Writes data to a remote process' \u2014 hash.exe wrote 32 bytes)",
+        "E. EnumWindows string reference (T1055.015 \u2014 ListPlanting)",
+        "F. GetAdaptersInfo string reference (T1016 \u2014 Network Configuration Discovery)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic sample (782403 bytes, killers family) performs several defense evasion actions. Which of the following observed behaviours are correctly classified as Defense Evasion (NOT Discovery) based on the detonation report?",
+      "options": [
+        "A. Reads VMware registry artifacts from HKLM\\SOFTWARE\\VMWARE, INC.\\VMWARE (T1012 \u2014 Query Registry, Discovery)",
+        "B. Timestomping \u2014 T1070.006 (Defense Evasion)",
+        "C. Clear Windows Event Logs \u2014 T1070.001 (Defense Evasion)",
+        "D. CreateThread with handle -1 (T1055.003 \u2014 Thread Execution Hijacking, Defense Evasion)",
+        "E. Process32FirstW called by hash.exe (T1057 \u2014 Process Discovery)",
+        "F. AppInit DLLs persistence (T1546.010 \u2014 mapped to Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "infostealers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Zusy.Generic infostealer sample (6775507 bytes) performs injection resulting in bauqs.exe spawning 'likely due to injection'. Which of the following API calls from the detonation report are valid injection-supporting indicators \u2014 including reconnaissance and memory primitives?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory ('Writes data to a remote process' \u2014 hash.exe wrote 32 bytes to bauqs.exe)",
+        "D. VirtualAllocEx ('Allocates virtual memory in a remote process' \u2014 xyzuqi.exe allocated memory)",
+        "E. EnumWindows called by muniw.exe (Application Window Discovery, not injection indicator)",
+        "F. CreateThread with handle -1 (self-process) called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The WannaCry DLL sample (5267459 bytes, CVE-2017-0147) has limited sandbox signatures compared to the full ransomware payload. Which of the following observed behaviours are correctly classified as Defense Evasion rather than Network/Impact?",
+      "options": [
+        "A. Reads the cryptographic machine GUID from HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY (T1082 \u2014 System Information Discovery, NOT Defense Evasion)",
+        "B. Installs hooks/patches the running process \u2014 rundll32.exe wrote bytes to virtual address (T1056.004 \u2014 Credential API Hooking, also Defense Evasion context)",
+        "C. Queries internet cache settings (T1070 \u2014 Indicator Removal context)",
+        "D. Contacts www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com (kill-switch domain \u2014 C2/Network, NOT Defense Evasion)",
+        "E. Modifies proxy settings via HKCU registry (T1112 \u2014 Modify Registry, Defense Evasion)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Across the two um_unhooking samples in the dataset (Trojan.BrsecmonE at 11804160 bytes and Fugrafa.Generic at 1028096 bytes), an analyst must identify the complete set of injection-supporting indicators. Which of the following API calls or signatures appear as injection-supporting indicators in BOTH samples?",
+      "options": [
+        "A. CreateToolhelp32Snapshot",
+        "B. IsWow64Process",
+        "C. CreateThread with handle -1 (self-process thread creation)",
+        "D. WriteProcessMemory (Writes data to a remote process)",
+        "E. NtCreateNamedPipeFile",
+        "F. Process32FirstW"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma detonation report shows several API calls related to process injection setup. Which of the following APIs observed in this report serve as supporting indicators for process injection activity?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory (Writes data to a remote process) called by hash.exe",
+        "D. Process32FirstW called by hash.exe",
+        "E. CreateThread called in self process (handle -1) by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Trojan.BrsecmonE (um_unhooking) detonation report, which of the following API calls or behaviors specifically support the conclusion that process injection was performed or prepared?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory (Writes data to a remote process) called by hash.exe",
+        "D. CreateThread in self process (handle -1) called by hash.exe",
+        "E. RpcServerRegisterIf2 called by netsh.exe",
+        "F. PE header written to memory by dqczsfku.exe (api-83)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The Fugrafa.Generic (um_unhooking) detonation report contains multiple indicators relevant to process injection. Select ALL API calls and behavioral indicators that together constitute the complete injection evidence set for this sample.",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory (Writes data to a remote process) called by hash.exe",
+        "D. CreateThread in self process (handle -1) called by hash.exe",
+        "E. AdjustTokenPrivileges called by hash.exe",
+        "F. Reads ntdll.dll from disk (api-243)",
+        "G. GetLogicalDriveStringsW called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Zusy.Generic (infostealers/RAT) detonation report shows injection-related activity. Which of the following APIs from this report are supporting indicators specifically for process injection setup and reconnaissance, rather than general RAT capability?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory (Writes data to a remote process) called by hash.exe",
+        "D. EnumWindows called by muniw.exe",
+        "E. CreateThread in self process (handle -1) called by hash.exe",
+        "F. OpenMutexW called by muniw.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the BScope.Backdoor (remcos_rat) detonation report, which APIs are injection-supporting reconnaissance indicators as opposed to general RAT or collection capabilities?",
+      "options": [
+        "A. IsWow64Process called by hash.exe",
+        "B. EnumWindows called by hash.exe",
+        "C. GetKeyState called by hash.exe (keylogging)",
+        "D. OpenMutexW called by hash.exe",
+        "E. CreateCompatibleBitmap called by hash.exe (screenshot)",
+        "F. GetActiveWindow called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE (um_unhooking) report shows process injection via process hollowing. Which of the following sandbox signatures specifically indicate process hollowing or PE injection preparation?",
+      "options": [
+        "A. api-83: Writes PE header to memory by dqczsfku.exe",
+        "B. api-129: Creates a process in suspended mode by dqczsfku.exe",
+        "C. api-0: Writes data to a remote process by hash.exe",
+        "D. api-264: Creates a thread in self process (handle -1) by hash.exe",
+        "E. target-269: Windows system process (svchost.exe) connects to network",
+        "F. module-16: Loads debugger/analysis tool module (dbghelp)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Small.Generic detonation report, which of the following observed behaviors constitute defense evasion techniques specifically, as opposed to discovery or credential access activities?",
+      "options": [
+        "A. Creates a fake system process: svchost.exe running from %APPDATA% (T1036.005)",
+        "B. Tries to suppress boot failures via bcdedit (T1490)",
+        "C. Allocates memory with PAGE_GUARD (anti-debugging, T1562.001)",
+        "D. Reads cryptographic machine GUID from registry",
+        "E. Accesses browser credential files",
+        "F. Spawned processes likely due to injection (T1055)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Ransom.HydraCrypt.Generic detonation report contains many behavioral indicators. Which of the following are correctly classified as defense evasion techniques rather than discovery or impact?",
+      "options": [
+        "A. Match Legitimate Name or Location: svchost.exe at %APPDATA% (T1036.005)",
+        "B. Tries to suppress boot failures via bcdedit (T1490 - Inhibit System Recovery)",
+        "C. Reflective Code Loading via GetExecutingAssembly (T1620)",
+        "D. Reads cryptographic machine GUID (T1082 - System Information Discovery)",
+        "E. Disables Windows Task Manager via registry (T1562.001)",
+        "F. Deletes volume shadow copies via vssadmin (T1490)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The WannaCryptor (Trojan.Ransom.WannaCryptor) detonation report includes several signatures. An analyst must distinguish defense evasion behaviors from other tactic categories. Which of the following observed indicators belong ONLY to the Defense Evasion tactic, not to Discovery or Impact?",
+      "options": [
+        "A. Timestomp: SetFileTime API reference (T1070.006)",
+        "B. Software Packing: UPX/MPRESS packer detected (T1027.002)",
+        "C. RDTSCP instruction for VM detection (T1497 - Virtualization/Sandbox Evasion)",
+        "D. YARA AES encryption match (T1027 - Obfuscated Files or Information)",
+        "E. Deletes volume shadow copies via vssadmin (T1490)",
+        "F. Dynamic API Resolution via GetProcAddress/LoadLibraryA (T1027.007)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Anti-Recovery Techniques",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "Both the Ransom.Small.Generic and Ransom.HydraCrypt.Generic samples execute anti-recovery commands. Which of the following process command lines observed in these reports are anti-recovery techniques (T1490 - Inhibit System Recovery)?",
+      "options": [
+        "A. vssadmin delete shadows /all /quiet",
+        "B. bcdedit /set {default} recoveryenabled no",
+        "C. wbadmin delete catalog -quiet",
+        "D. wmic shadowcopy delete",
+        "E. bcdedit /set {default} bootstatuspolicy ignoreallfailures",
+        "F. cmd.exe /c \"%TEMP%\\_vslite.bat\""
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the Ransom.Small.Generic detonation report, the model must distinguish which behaviors are defense evasion versus discovery. The report shows reading the cryptographic machine GUID (HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOGRAPHY). How should this be classified?",
+      "options": [
+        "A. Defense Evasion (T1070) - it removes indicators",
+        "B. Discovery (T1082 - System Information Discovery) - it reads system identity information",
+        "C. Defense Evasion (T1480 - Execution Guardrails) - it gates execution",
+        "D. Credential Access (T1555) - it accesses cryptographic material",
+        "E. Both Discovery and Defense Evasion equally"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma detonation report shows a chain of APIs used before and during process injection. Which combination of APIs represents the complete reconnaissance-to-injection sequence observed in this report?",
+      "options": [
+        "A. CreateToolhelp32Snapshot \u2192 Process32FirstW \u2192 WriteProcessMemory \u2192 VirtualAllocEx",
+        "B. IsWow64Process \u2192 CreateToolhelp32Snapshot \u2192 Process32FirstW \u2192 WriteProcessMemory (remote)",
+        "C. GetVersionExA \u2192 RtlGetVersion \u2192 CreateCompatibleBitmap \u2192 WriteProcessMemory",
+        "D. CreateThread (handle -1) \u2192 WriteProcessMemory \u2192 VirtualAllocEx",
+        "E. IsWow64Process \u2192 CreateToolhelp32Snapshot \u2192 CreateThread (handle -1) \u2192 WriteProcessMemory"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "B",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The NetSup/Remcos RAT (RiskWare[RemoteAdmin]/NetSup.gen) detonation report shows process injection. Which of the following APIs from this report are injection-supporting indicators rather than general installer or C2 behaviors?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by sibjs.exe",
+        "B. IsWow64Process called by hash.exe",
+        "C. WriteProcessMemory (Writes data to a remote process, 1500 bytes) called by hash.exe",
+        "D. CreateThread in self process (handle -1) called by hash.exe",
+        "E. CryptAcquireContextW called by sibjs.exe",
+        "F. NtCreateNamedPipeFile called by hash.exe"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Dropper.Generic.Dacic (killers) detonation report shows process injection setup. Which of the following APIs from this report are supporting indicators for process injection reconnaissance and preparation?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe (api-103)",
+        "B. IsWow64Process called by hash.exe (api-146)",
+        "C. WriteProcessMemory (Writes data to a remote process) called by hash.exe (api-0)",
+        "D. CreateThread in self process (handle -1) called by hash.exe (api-264)",
+        "E. EnumWindows string reference in binary (string-721)",
+        "F. GetCursorPos imported (static-132 sandbox detection)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Trojan.BrsecmonE (um_unhooking) detonation report includes defense evasion techniques. Which of the following observed behaviors are correctly classified as defense evasion rather than discovery or persistence?",
+      "options": [
+        "A. Timestomp: FileTimeToLocalFileTime called by Sibuia.exe (T1070.006)",
+        "B. Disable or Modify System Firewall via netsh.exe advfirewall (T1562.004)",
+        "C. Reads the registry for installed applications (T1518 - Software Discovery)",
+        "D. Creates a service named vrzjqkmq (T1543.003 - Persistence)",
+        "E. Writes PE header to memory by dqczsfku.exe (T1055.002 - Portable Executable Injection)",
+        "F. Modifies proxy settings via registry (T1112)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "E",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Sdbot.Generic (killers) detonation report shows process injection indicators. Which of the following APIs or behaviors from this report support process injection activity, including both core primitives and reconnaissance APIs?",
+      "options": [
+        "A. CreateToolhelp32Snapshot called by hash.exe (api-103)",
+        "B. IsWow64Process called by hash.exe (api-146)",
+        "C. Process32FirstW called by hash.exe (api-104)",
+        "D. CreateThread in self process (handle -1) called by hash.exe (api-264)",
+        "E. Reads VMWare registry keys (registry-56)",
+        "F. DeleteService API imported (static-188)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware",
+      "topic": "Defense Evasion",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "In the WannaCryptor DLL (CVE-2017-0147) detonation report, the sandbox recorded several behaviors. Which of the following are defense evasion indicators rather than network-based lateral movement or persistence indicators?",
+      "options": [
+        "A. Installs hooks/patches the running process (hooks-8, rundll32.exe)",
+        "B. Reads cryptographic machine GUID (registry-1, mssecsvc.exe)",
+        "C. Modifies proxy settings (registry-27, mssecsvc.exe)",
+        "D. Drops executable to Windows system directory (binary-7)",
+        "E. ARP broadcast requests for network device lookup (network-32)",
+        "F. Queries sensitive IE security settings (registry-36)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos_rat",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "The CVE-2017-0199 (Excel/Remcos) detonation report shows a document-based attack. Given the limited process tree (only EXCEL.EXE), which of the following indicators from this report constitute the complete set of process injection or code execution evidence observable in this sandbox run?",
+      "options": [
+        "A. Suricata alert: ET EXPLOIT SUSPICIOUS Possible CVE-2017-0199",
+        "B. Installs/creates LNK shortcut file (T1547.009)",
+        "C. GETs files from a webserver (network-16, malicious GET request)",
+        "D. Contacts malicious domain loooooooooooooooooooog.com",
+        "E. Uses browser-related user-agent without launching browser (network-22)",
+        "F. Exploitation for Client Execution (T1203) implied by CVE-2017-0199 trigger"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "C",
+        "D",
+        "F"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "av_edr_killers",
+      "topic": "Process Injection Detection",
+      "difficulty": "medium",
+      "detonation_report": {},
+      "question": "The Worm.Ludbaruma (killers) detonation report shows process injection alongside worm behavior. An analyst reviewing injection evidence should include which of the following as injection-supporting indicators from this report?",
+      "options": [
+        "A. WriteProcessMemory: hash.exe wrote 32 bytes to a remote process (api-0)",
+        "B. VirtualAllocEx: hash.exe allocated memory in C:\\hash.exe (api-20)",
+        "C. CreateToolhelp32Snapshot called by hash.exe (api-103)",
+        "D. IsWow64Process called by hash.exe (api-146)",
+        "E. Process32FirstW called by hash.exe (api-104)",
+        "F. Disables Command Prompt via registry (registry-21)",
+        "G. Creates fake system processes (WINLOGON.EXE, CSRSS.EXE at %APPDATA%)"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "um_unhooking",
+      "topic": "Process Injection Detection",
+      "difficulty": "hard",
+      "detonation_report": {},
+      "question": "Across the um_unhooking family samples in this dataset (Trojan.BrsecmonE and Fugrafa.Generic), which APIs appear consistently as injection-supporting reconnaissance indicators that a model should always include when identifying process injection evidence in this family?",
+      "options": [
+        "A. CreateToolhelp32Snapshot",
+        "B. IsWow64Process",
+        "C. WriteProcessMemory (remote write)",
+        "D. CreateThread in self process (handle -1)",
+        "E. EnumWindows",
+        "F. GetKeyState",
+        "G. RtlGetVersion"
+      ]
+    },
+    "answer": {
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  }
+]

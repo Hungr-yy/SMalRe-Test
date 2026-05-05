@@ -1,0 +1,3882 @@
+[
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "T1056, T1113, T1562.004",
+      "topic": "identify_malware_family",
+      "difficulty": "Medium",
+      "detonation_report": {
+        "size": 95244,
+        "type": "PE32 executable (GUI) Intel 80386 Mono/.Net assembly, for MS Windows",
+        "submit_name": "hash",
+        "sha256": "hash",
+        "av_detect": 89,
+        "vx_family": "Trojan[Backdoor]/MSIL.Bladabindi",
+        "threat_score": 100,
+        "threat_level": 2,
+        "verdict": "malicious",
+        "certificates_validation_message": "No signature was present in the subject. (0x800b0100)",
+        "total_processes": 2,
+        "total_signatures": 164,
+        "processes": [
+          {
+            "uid": "00000000-00005756",
+            "name": "hash.exe",
+            "normalized_path": "C:\\hash.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00005928",
+            "parentuid": "00000000-00005756",
+            "name": "netsh.exe",
+            "normalized_path": "%WINDIR%\\system32\\netsh.exe",
+            "command_line": "netsh firewall add allowedprogram \"C:\\hash.exe\" \"hash.exe\" ENABLE",
+            "sha256": "hash"
+          }
+        ],
+        "mitre_attcks": [
+          {
+            "tactic": "Credential Access",
+            "technique": "Keylogging",
+            "attck_id": "T1056.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Disable or Modify System Firewall",
+            "attck_id": "T1562.004"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Screen Capture",
+            "attck_id": "T1113"
+          }
+        ],
+        "signatures": [
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Pattern Matching",
+            "identifier": "yara-0",
+            "type": 13,
+            "relevance": 9,
+            "name": "YARA signature match",
+            "description": "YARA signature \"win_exe_njRAT\" matched file \"sampl",
+            "origin": "YARA Signature"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-40",
+            "type": 6,
+            "relevance": 10,
+            "name": "Calls an API typically used for keylogging",
+            "description": "\"hash.exe\" called \"GetAsyncKeyState\" (UID: 0000000",
+            "origin": "API Call",
+            "attck_id": "T1056.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1056/001"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "stream-72",
+            "type": 1,
+            "relevance": 3,
+            "name": "Contains ability to capture the screen",
+            "description": "System.Drawing.Graphics::CopyFromScreen(System.Int",
+            "origin": "Hybrid Analysis Technology",
+            "attck_id": "T1113",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1113"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "System Security",
+            "identifier": "target-15",
+            "type": 9,
+            "relevance": 8,
+            "name": "Modifies firewall settings",
+            "description": "Process \"netsh.exe\" with commandline \"netsh firewa",
+            "origin": "Monitored Target",
+            "attck_id": "T1562.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1562/004"
+          }
+        ],
+        "_family": "infostealers"
+      },
+      "question": "Based on the provided detonation report, which of the following malware categories accurately describe the sample's primary capabilities? Select ALL that apply.",
+      "options": [
+        "A. Remote Access Trojan (RAT)",
+        "B. Ransomware",
+        "C. Infostealer",
+        "D. EDR/AV Killer"
+      ]
+    },
+    "answer": {
+      "correct_options": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "Defense Evasion",
+      "topic": "Evasion Technique Identification",
+      "difficulty": "Medium",
+      "detonation_report": {
+        "size": 163903,
+        "type": "PE32 executable (GUI) Intel 80386, for MS Windows",
+        "submit_name": "hash",
+        "sha256": "hash",
+        "av_detect": 94,
+        "vx_family": "Trojan.Regrun",
+        "threat_score": 85,
+        "threat_level": 2,
+        "verdict": "malicious",
+        "certificates_validation_message": "No signature was present in the subject. (0x800b0100)",
+        "total_processes": 64,
+        "total_signatures": 134,
+        "file_metadata": {
+          "file_compositions": [
+            "1 .BAS (Pseudo-Code) Files compiled with C2.EXE 6.0 (Visual Basic 6) (build: 8169)",
+            "7 .BAS Files compiled with C2.EXE 5.0 (Visual Basic 6) (build: 8041)",
+            "1 .ASM Files assembled with MASM 6.13 (Visual Studio 6 SP1) (build: 7299)"
+          ],
+          "imported_objects": [],
+          "file_analysis": [
+            "File contains Visual Basic code",
+            "File contains assembly code",
+            "File is the product of a small codebase (9 files)"
+          ],
+          "total_file_compositions_imports": 0
+        },
+        "processes": [
+          {
+            "uid": "00000000-00005816",
+            "name": "hash.exe",
+            "normalized_path": "C:\\hash.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00005972",
+            "parentuid": "00000000-00005816",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003264",
+            "parentuid": "00000000-00005972",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00005852",
+            "parentuid": "00000000-00005972",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00006072",
+            "parentuid": "00000000-00005972",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003964",
+            "parentuid": "00000000-00005972",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003836",
+            "parentuid": "00000000-00005972",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002380",
+            "parentuid": "00000000-00003836",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004300",
+            "parentuid": "00000000-00003836",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00000944",
+            "parentuid": "00000000-00003836",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003640",
+            "parentuid": "00000000-00003836",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001620",
+            "parentuid": "00000000-00003836",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003672",
+            "parentuid": "00000000-00003836",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002228",
+            "parentuid": "00000000-00003836",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003392",
+            "parentuid": "00000000-00003836",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00005088",
+            "parentuid": "00000000-00003836",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004088",
+            "parentuid": "00000000-00005972",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004308",
+            "parentuid": "00000000-00005972",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00000304",
+            "parentuid": "00000000-00004308",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002964",
+            "parentuid": "00000000-00004308",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001312",
+            "parentuid": "00000000-00004308",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003696",
+            "parentuid": "00000000-00004308",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003188",
+            "parentuid": "00000000-00004308",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003064",
+            "parentuid": "00000000-00004308",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004216",
+            "parentuid": "00000000-00004308",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00006136",
+            "parentuid": "00000000-00005816",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004124",
+            "parentuid": "00000000-00006136",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002428",
+            "parentuid": "00000000-00006136",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003628",
+            "parentuid": "00000000-00006136",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003916",
+            "parentuid": "00000000-00006136",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003976",
+            "parentuid": "00000000-00006136",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003000",
+            "parentuid": "00000000-00006136",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002272",
+            "parentuid": "00000000-00006136",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004272",
+            "parentuid": "00000000-00005816",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004340",
+            "parentuid": "00000000-00004272",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002164",
+            "parentuid": "00000000-00004272",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004068",
+            "parentuid": "00000000-00004272",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003756",
+            "parentuid": "00000000-00004272",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00006120",
+            "parentuid": "00000000-00004272",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002060",
+            "parentuid": "00000000-00004272",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001772",
+            "parentuid": "00000000-00004272",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004132",
+            "parentuid": "00000000-00005816",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003360",
+            "parentuid": "00000000-00004132",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003668",
+            "parentuid": "00000000-00004132",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001440",
+            "parentuid": "00000000-00004132",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003856",
+            "parentuid": "00000000-00004132",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002628",
+            "parentuid": "00000000-00004132",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003224",
+            "parentuid": "00000000-00004132",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003120",
+            "parentuid": "00000000-00004132",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003016",
+            "parentuid": "00000000-00005816",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003096",
+            "parentuid": "00000000-00005816",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002496",
+            "parentuid": "00000000-00003096",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003460",
+            "parentuid": "00000000-00003096",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004060",
+            "parentuid": "00000000-00003096",
+            "name": "WINLOGON.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\WINLOGON.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00003164",
+            "parentuid": "00000000-00003096",
+            "name": "CSRSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\CSRSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004808",
+            "parentuid": "00000000-00003096",
+            "name": "SERVICES.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SERVICES.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00004200",
+            "parentuid": "00000000-00003096",
+            "name": "LSASS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\LSASS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001464",
+            "parentuid": "00000000-00003096",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00000928",
+            "parentuid": "00000000-00003096",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00005148",
+            "parentuid": "00000000-00003096",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00006140",
+            "parentuid": "00000000-00005816",
+            "name": "SMSS.EXE",
+            "normalized_path": "%APPDATA%\\WINDOWS\\SMSS.EXE",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001852",
+            "parentuid": "00000000-00005816",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00002892",
+            "parentuid": "00000000-00001852",
+            "name": "D3_08.exe",
+            "normalized_path": "%WINDIR%\\D3_08.exe",
+            "sha256": "hash"
+          },
+          {
+            "uid": "00000000-00001192",
+            "parentuid": "00000000-00005816",
+            "name": "IExplorer.exe",
+            "normalized_path": "%WINDIR%\\system32\\IExplorer.exe",
+            "sha256": "hash"
+          }
+        ],
+        "mitre_attcks": [
+          {
+            "tactic": "Initial Access",
+            "technique": "Drive-by Compromise",
+            "attck_id": "T1189"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Native API",
+            "attck_id": "T1106"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Shared Modules",
+            "attck_id": "T1129"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Inter-Process Communication",
+            "attck_id": "T1559"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Service Execution",
+            "attck_id": "T1569.002"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Kernel Modules and Extensions",
+            "attck_id": "T1547.006"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Windows Service",
+            "attck_id": "T1543.003"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Registry Run Keys / Startup Folder",
+            "attck_id": "T1547.001"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Boot or Logon Autostart Execution",
+            "attck_id": "T1547"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Token Impersonation/Theft",
+            "attck_id": "T1134.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Kernel Modules and Extensions",
+            "attck_id": "T1547.006"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Windows Service",
+            "attck_id": "T1543.003"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Process Injection",
+            "attck_id": "T1055"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Registry Run Keys / Startup Folder",
+            "attck_id": "T1547.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "ListPlanting",
+            "attck_id": "T1055.015"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Boot or Logon Autostart Execution",
+            "attck_id": "T1547"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Access Token Manipulation",
+            "attck_id": "T1134"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Modify Registry",
+            "attck_id": "T1112"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "File and Directory Permissions Modification",
+            "attck_id": "T1222"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Token Impersonation/Theft",
+            "attck_id": "T1134.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Process Injection",
+            "attck_id": "T1055"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Match Legitimate Name or Location",
+            "attck_id": "T1036.005"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Obfuscated Files or Information",
+            "attck_id": "T1027"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "ListPlanting",
+            "attck_id": "T1055.015"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Hidden Window",
+            "attck_id": "T1564.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Debugger Evasion",
+            "attck_id": "T1622"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Timestomp",
+            "attck_id": "T1070.006"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "File Deletion",
+            "attck_id": "T1070.004"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Indicator Removal from Tools",
+            "attck_id": "T1027.005"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Access Token Manipulation",
+            "attck_id": "T1134"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Masquerading",
+            "attck_id": "T1036"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Masquerade File Type",
+            "attck_id": "T1036.008"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Execution Guardrails",
+            "attck_id": "T1480"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Deobfuscate/Decode Files or Information",
+            "attck_id": "T1140"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Credential API Hooking",
+            "attck_id": "T1056.004"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "File and Directory Discovery",
+            "attck_id": "T1083"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Application Window Discovery",
+            "attck_id": "T1010"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Information Discovery",
+            "attck_id": "T1082"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Query Registry",
+            "attck_id": "T1012"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Remote System Discovery",
+            "attck_id": "T1018"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Process Discovery",
+            "attck_id": "T1057"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Location Discovery",
+            "attck_id": "T1614"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Owner/User Discovery",
+            "attck_id": "T1033"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Debugger Evasion",
+            "attck_id": "T1622"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Peripheral Device Discovery",
+            "attck_id": "T1120"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Language Discovery",
+            "attck_id": "T1614.001"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Local Data Staging",
+            "attck_id": "T1074.001"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Screen Capture",
+            "attck_id": "T1113"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Data from Local System",
+            "attck_id": "T1005"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Credential API Hooking",
+            "attck_id": "T1056.004"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Application Layer Protocol",
+            "attck_id": "T1071"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Ingress Tool Transfer",
+            "attck_id": "T1105"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Symmetric Cryptography",
+            "attck_id": "T1573.001"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "Service Stop",
+            "attck_id": "T1489"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "System Shutdown/Reboot",
+            "attck_id": "T1529"
+          }
+        ],
+        "network_mode": "default",
+        "signatures": [
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-123",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to copy file from one location to another",
+            "description": "\"hash.exe\" called \"CopyFileA\" to copy C:\\\\hash.exe",
+            "origin": "API Call",
+            "attck_id": "T1005",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1005"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "module-0",
+            "type": 10,
+            "name": "Loads the visual basic runtime environment",
+            "description": "\"hash.exe\" loaded module \"%WINDIR%\\System32\\msvbvm",
+            "origin": "Loaded Module",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-153",
+            "name": "Uses 32 bit executable PE",
+            "description": "\"hash\" has flags like  IMAGE_FILE_32BIT_MACHINE\n I",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-96",
+            "name": "PE file entrypoint instructions",
+            "description": "\"hash\" file has an entrypoint instructions - \"push",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-70",
+            "type": 6,
+            "relevance": 10,
+            "name": "Scanning for window names",
+            "description": "\"hash.exe\" searching for class \"RegEdit_RegEdit\"\n ",
+            "origin": "API Call",
+            "attck_id": "T1010",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1010"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-7",
+            "type": 6,
+            "relevance": 1,
+            "name": "Loads modules at runtime",
+            "description": "\"hash.exe\" loaded module \"API-MS-WIN-CORE-SYNCH-L1",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-175",
+            "type": 6,
+            "relevance": 1,
+            "name": "Calls an API typically used to load libraries",
+            "description": "\"hash.exe\" called \"LoadLibrary\" with a parameter a",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-22",
+            "type": 6,
+            "relevance": 1,
+            "name": "Fails to load modules at runtime",
+            "description": "\"hash.exe\" failed to load missing module \"api-ms-w",
+            "origin": "API Call",
+            "attck_id": "T1574.002",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1574/002"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "module-10",
+            "type": 10,
+            "name": "Loads the RPC (Remote Procedure Call) module DLL",
+            "description": "\"hash.exe\" loaded module \"%WINDIR%\\System32\\rpcrt4",
+            "origin": "Loaded Module",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "target-103",
+            "type": 9,
+            "relevance": 3,
+            "name": "Spawns new processes that are not known child processes",
+            "description": "Spawned process \"D3_08.exe\" (UID: 00000000-0000597",
+            "origin": "Monitored Target",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "target-67",
+            "type": 9,
+            "relevance": 10,
+            "name": "Process launched with changed environment",
+            "description": "Process \"D3_08.exe\" (UID: 00000000-00005972) was l",
+            "origin": "Monitored Target",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "target-25",
+            "type": 9,
+            "relevance": 3,
+            "name": "Spawns new processes",
+            "description": "Spawned process \"D3_08.exe\" (UID: 00000000-0000597",
+            "origin": "Monitored Target",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-157",
+            "name": "Matched Compiler/Packer signature (DIE)",
+            "description": "\"hash\" was detected as \"Microsoft Visual Basic\"  a",
+            "origin": "Static Parser",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-176",
+            "type": 6,
+            "relevance": 1,
+            "name": "Calls an API typically used to retrieve function addresses",
+            "description": "details too long to display",
+            "origin": "API Call",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-8",
+            "type": 6,
+            "relevance": 1,
+            "name": "Looks up procedures from modules (excluding apphelp.dll, kernel32.dll, user32.dll, gdi32.dll, ole32.dll, comctl32.dll, uxtheme.dll, oleaut32.dll, version.dll, msctfime.ime)",
+            "description": "\"15001600c03eb86a@ADVAPI32.dll\"\n \"0e000f00703fb86a",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-122",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to create a directory",
+            "description": "\"hash.exe\" called \"CreateDirectoryW\" with paramete",
+            "origin": "API Call",
+            "attck_id": "T1074.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1074/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-128",
+            "type": 6,
+            "relevance": 5,
+            "name": "Calls an API typically used to create a process",
+            "description": "\"hash.exe\" called \"CreateProcessW\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-80",
+            "relevance": 1,
+            "name": "PE file contains executable sections",
+            "description": "\"hash\" has an executable section named \".text\"\n \"s",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-95",
+            "name": "PE file contains writable sections",
+            "description": "\"hash\" has an writable section named \".data\"\n \"ser",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Unusual Characteristics",
+            "identifier": "binary-37",
+            "type": 8,
+            "relevance": 3,
+            "name": "Drops files inside appdata directory",
+            "description": "Dropped file: \"services.exe\"  - Location: [%LOCALA",
+            "origin": "Binary File",
+            "attck_id": "T1036",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1036"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-126",
+            "type": 6,
+            "relevance": 3,
+            "name": "Tries to access non-existent files (executable)",
+            "description": "\"hash.exe\" trying to access non-existent file \"C:\\",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-243",
+            "type": 6,
+            "relevance": 1,
+            "name": "Reads files",
+            "description": "\"hash.exe\" reads file \"c:\\users\\desktop.ini\"\n \"has",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-16",
+            "type": 6,
+            "relevance": 1,
+            "name": "Connects to LPC ports",
+            "description": "\"hash.exe\" connecting to \"\\ThemeApiPort\"\n \"D3_08.e",
+            "origin": "API Call",
+            "attck_id": "T1559",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1559"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-55",
+            "type": 6,
+            "relevance": 7,
+            "name": "Touches files in the Windows directory",
+            "description": "\"hash.exe\" touched file \"C:\\Windows\\AppPatch\\sysma",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-235",
+            "type": 6,
+            "relevance": 1,
+            "name": "Queries basic information of the specified process",
+            "description": "\"hash.exe\" queries basic process information of th",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-263",
+            "type": 6,
+            "relevance": 1,
+            "name": "Touches files",
+            "description": "\"hash.exe\" trying to touch file \"C:\\MSVBVM60.DLL\"\n",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-161",
+            "type": 6,
+            "relevance": 3,
+            "name": "Tries to access non-existent files (non-executable)",
+            "description": "\"hash.exe\" trying to access non-existent file \"C:\\",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-242",
+            "type": 6,
+            "relevance": 1,
+            "name": "Writes files",
+            "description": "\"hash.exe\" writes file \"c:\\users\\hapubws\\appdata\\l",
+            "origin": "API Call"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "binary-0",
+            "type": 8,
+            "relevance": 3,
+            "name": "Dropped files",
+            "description": "\"services.exe\" has type \"PE32 executable (GUI) Int",
+            "origin": "Binary File",
+            "attck_id": "T1105",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1105"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "api-139",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to load a resource in memory",
+            "description": "\"hash.exe\" called \"LoadResource with parameter {'h",
+            "origin": "API Call",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-222",
+            "type": 6,
+            "relevance": 2,
+            "name": "Calls an API typically used to retrieve OS information",
+            "description": "\"hash.exe\" called \"GetVersionExA\" with parameter h",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-147",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to retrieve local language",
+            "description": "\"hash.exe\" called \"GetLocaleInfoW\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1614",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1614"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-124",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to get product type",
+            "description": "\"hash.exe\" called \"RtlGetNtProductType\" with param",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-142",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API possibly used to retrieve a handle to the foreground window",
+            "description": "\"hash.exe\" called \"GetForegroundWindow\" (UID: 0000",
+            "origin": "API Call",
+            "attck_id": "T1010",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1010"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-151",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to get active windows title",
+            "description": "\"hash.exe\" called \"GetWindowTextA\" (UID: 00000000-",
+            "origin": "API Call",
+            "attck_id": "T1010",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1010"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-125",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to get system version information",
+            "description": "\"hash.exe\" called \"RtlGetVersion\" with parameter h",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-149",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to retrieve default language settings",
+            "description": "\"hash.exe\" called \"GetSystemDefaultLangID\" (UID: 0",
+            "origin": "API Call",
+            "attck_id": "T1614.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1614/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-146",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to determine if process is running under WOW64",
+            "description": "\"hash.exe\" called \"IsWow64Process\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-105",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API possibly used to take screenshots",
+            "description": "\"hash.exe\" called \"CreateCompatibleBitmap\" with pa",
+            "origin": "API Call",
+            "attck_id": "T1113",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1113"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-102",
+            "type": 6,
+            "relevance": 5,
+            "name": "Calls an API typically used for searching a directory for files",
+            "description": "\"hash.exe\" called \"FindFirstFileA\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-108",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to retrieve information about the current system",
+            "description": "\"hash.exe\" called \"GetNativeSystemInfo\" with param",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-103",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used for taking snapshot of the specified processes",
+            "description": "\"hash.exe\" called \"CreateToolhelp32Snapshot\" with ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "System Security",
+            "identifier": "api-37",
+            "type": 6,
+            "relevance": 10,
+            "name": "Opens the Kernel Security Device Driver (KsecDD) of Windows",
+            "description": "\"hash.exe\" opened \"\\Device\\KsecDD\"\n \"D3_08.exe\" op",
+            "origin": "API Call"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "General",
+            "identifier": "api-6",
+            "type": 6,
+            "relevance": 4,
+            "name": "Reads configuration files (.ini files)",
+            "description": "\"hash.exe\" reads file \"C:\\Users\\desktop.ini\"\n \"has",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Installation/Persistence",
+            "identifier": "api-43",
+            "type": 6,
+            "relevance": 10,
+            "name": "Writes a PE file header to disc",
+            "description": "\"hash.exe\" wrote 65536 bytes starting with PE head",
+            "origin": "API Call",
+            "attck_id": "T1105",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1105"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Installation/Persistence",
+            "identifier": "binary-1",
+            "type": 8,
+            "relevance": 10,
+            "name": "Drops executable files",
+            "description": "\"services.exe\" has type \"PE32 executable (GUI) Int",
+            "origin": "Binary File",
+            "attck_id": "T1105",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1105"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Environment Awareness",
+            "identifier": "api-223",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to query local/system time as file time",
+            "description": "\"hash.exe\" called \"FileTimeToLocalFileTime\" with p",
+            "origin": "API Call",
+            "attck_id": "T1070.006",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1070/006"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-104",
+            "type": 6,
+            "relevance": 5,
+            "name": "Calls an API typically used to enumerate process encountered in a system snapshot",
+            "description": "\"hash.exe\" called \"Process32FirstW with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Security",
+            "identifier": "hooks-0",
+            "type": 11,
+            "relevance": 10,
+            "name": "Hooks API calls",
+            "description": "\"FindFirstFileA@KERNEL32.DLL\" in \"D3_08.exe\"\n \"Ope",
+            "origin": "Hook Detection",
+            "attck_id": "T1056.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1056/004"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Security",
+            "identifier": "api-284",
+            "type": 6,
+            "relevance": 1,
+            "name": "Opens a handle to the specified local process",
+            "description": "\"hash.exe\" opens a process \"C:\\hash.exe\" (UID: 000",
+            "origin": "API Call",
+            "attck_id": "T1489",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1489"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Destruction",
+            "identifier": "api-25",
+            "type": 6,
+            "relevance": 7,
+            "name": "Opens file with deletion access rights",
+            "description": "\"hash.exe\" opened \"C:\\Users\\%OSUSER%\\Local Setting",
+            "origin": "API Call",
+            "attck_id": "T1070.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1070/004"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Destruction",
+            "identifier": "api-26",
+            "type": 6,
+            "relevance": 10,
+            "name": "Marks file for deletion",
+            "description": "\"hash.exe\" marked \"C:\\share\\D3_08\\New Folder.exe\" ",
+            "origin": "API Call",
+            "attck_id": "T1070.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1070/004"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Unusual Characteristics",
+            "identifier": "api-31",
+            "type": 6,
+            "relevance": 9,
+            "name": "Tries to access unusual system drive letters",
+            "description": "\"hash.exe\" touched \"K:\"\n \"hash.exe\" touched \"L:\"\n ",
+            "origin": "API Call",
+            "attck_id": "T1120",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1120"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Unusual Characteristics",
+            "identifier": "target-14",
+            "type": 9,
+            "relevance": 8,
+            "name": "Spawns a lot of processes",
+            "description": "Spawned process \"hash.exe\" (UID: 00000000-00005816",
+            "origin": "Monitored Target",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Installation/Persistence",
+            "identifier": "api-0",
+            "type": 6,
+            "relevance": 6,
+            "name": "Writes data to a remote process",
+            "description": "\"hash.exe\" wrote 32 bytes to a remote process \"C:\\",
+            "origin": "API Call",
+            "attck_id": "T1055",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1055"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Installation/Persistence",
+            "identifier": "api-20",
+            "type": 6,
+            "relevance": 7,
+            "name": "Allocates virtual memory in a remote process",
+            "description": "\"hash.exe\" allocated memory in \"C:\\hash.exe\"\n \"D3_",
+            "origin": "API Call",
+            "attck_id": "T1055",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1055"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "target-33",
+            "type": 9,
+            "relevance": 10,
+            "name": "Creates a fake system process",
+            "description": "Process \"WINLOGON.EXE\" at non-system pathway \"%APP",
+            "origin": "Monitored Target",
+            "attck_id": "T1036.005",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1036/005"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "hooks-2",
+            "type": 11,
+            "relevance": 10,
+            "name": "Hooks file system APIs",
+            "description": "\"FindFirstFileA@KERNEL32.DLL\" in \"D3_08.exe\"\n \"Fin",
+            "origin": "Hook Detection",
+            "attck_id": "T1056.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1056/004"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "hooks-5",
+            "type": 11,
+            "relevance": 10,
+            "name": "Hooks internet related APIs",
+            "description": "\"send@WS2_32.DLL\" in \"D3_08.exe\"\n \"send@WS2_32.DLL",
+            "origin": "Hook Detection",
+            "attck_id": "T1056.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1056/004"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "External Systems",
+            "identifier": "avtest-8",
+            "type": 12,
+            "relevance": 10,
+            "name": "Sample detected by CrowdStrike Static Analysis and ML with relatively high confidence",
+            "description": "CrowdStrike Static Analysis and ML (QuickScan) yie",
+            "origin": "External System"
+          }
+        ],
+        "_family": "killers"
+      },
+      "question": "Based on the provided process list and signatures, which of the following defense evasion techniques are demonstrably used by this malware?",
+      "options": [
+        "A. Masquerading as legitimate system processes by executing them from a non-standard directory.",
+        "B. Injecting code or data into remote processes.",
+        "C. Deleting Volume Shadow Copies using vssadmin.exe to hinder system recovery.",
+        "D. Bypassing the Antimalware Scan Interface (AMSI) to run malicious scripts in memory."
+      ]
+    },
+    "answer": {
+      "correct_options": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "ransomware_behaviour_analysis",
+      "topic": "Ransomware Behaviour Analysis",
+      "difficulty": "Medium",
+      "detonation_report": {
+        "size": 151040,
+        "type": "PE32 executable (GUI) Intel 80386, for MS Windows",
+        "submit_name": "hash",
+        "sha256": "hash",
+        "av_detect": 93,
+        "vx_family": "Trojan.Generic",
+        "threat_score": 100,
+        "threat_level": 2,
+        "verdict": "malicious",
+        "certificates_validation_message": "No signature was present in the subject. (0x800b0100)",
+        "total_processes": 1,
+        "total_signatures": 97,
+        "processes": [
+          {
+            "uid": "00000000-00002940",
+            "name": "hash.exe",
+            "normalized_path": "C:\\hash.exe",
+            "sha256": "hash"
+          }
+        ],
+        "mitre_attcks": [
+          {
+            "tactic": "Execution",
+            "technique": "Windows Management Instrumentation",
+            "attck_id": "T1047"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Native API",
+            "attck_id": "T1106"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Windows Command Shell",
+            "attck_id": "T1059.003"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Inter-Process Communication",
+            "attck_id": "T1559"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Service Execution",
+            "attck_id": "T1569.002"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Shared Modules",
+            "attck_id": "T1129"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Component Object Model Hijacking",
+            "attck_id": "T1546.015"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Thread Execution Hijacking",
+            "attck_id": "T1055.003"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Component Object Model Hijacking",
+            "attck_id": "T1546.015"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Virtualization/Sandbox Evasion",
+            "attck_id": "T1497"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Thread Execution Hijacking",
+            "attck_id": "T1055.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Masquerading",
+            "attck_id": "T1036"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "User Activity Based Checks",
+            "attck_id": "T1497.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Obfuscated Files or Information",
+            "attck_id": "T1027"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Embedded Payloads",
+            "attck_id": "T1027.009"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Software Packing",
+            "attck_id": "T1027.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "File Deletion",
+            "attck_id": "T1070.004"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Modify Registry",
+            "attck_id": "T1112"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Deobfuscate/Decode Files or Information",
+            "attck_id": "T1140"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Execution Guardrails",
+            "attck_id": "T1480"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "File and Directory Discovery",
+            "attck_id": "T1083"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Location Discovery",
+            "attck_id": "T1614"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Virtualization/Sandbox Evasion",
+            "attck_id": "T1497"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Process Discovery",
+            "attck_id": "T1057"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Information Discovery",
+            "attck_id": "T1082"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Query Registry",
+            "attck_id": "T1012"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "User Activity Based Checks",
+            "attck_id": "T1497.002"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Service Discovery",
+            "attck_id": "T1007"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Owner/User Discovery",
+            "attck_id": "T1033"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Software Discovery",
+            "attck_id": "T1518"
+          },
+          {
+            "tactic": "Lateral Movement",
+            "technique": "Remote Services",
+            "attck_id": "T1021"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Screen Capture",
+            "attck_id": "T1113"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Data from Local System",
+            "attck_id": "T1005"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Local Data Staging",
+            "attck_id": "T1074.001"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Data from Information Repositories",
+            "attck_id": "T1213"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Application Layer Protocol",
+            "attck_id": "T1071"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Proxy",
+            "attck_id": "T1090"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Ingress Tool Transfer",
+            "attck_id": "T1105"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Symmetric Cryptography",
+            "attck_id": "T1573.001"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "Data Encrypted for Impact",
+            "attck_id": "T1486"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "Internal Defacement",
+            "attck_id": "T1491.001"
+          }
+        ],
+        "network_mode": "default",
+        "signatures": [
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "string-319",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to set/get the last-error code for a calling thread (API string)",
+            "description": "Found reference to API \"GetLastError\" (Indicator: ",
+            "origin": "File/Memory",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "string-101",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to execute Windows APIs",
+            "description": "Found reference to API (Indicator: \"GetLastError\";",
+            "origin": "File/Memory",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-267",
+            "type": 6,
+            "relevance": 1,
+            "name": "Writes files in a temp directory",
+            "description": "\"hash.exe\" writes to a file \"C:\\Users\\%OSUSER%\\App",
+            "origin": "API Call",
+            "attck_id": "T1005",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1005"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "string-206",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to retrieve the command-line string for the current process (API string)",
+            "description": "Found reference to API \"GetCommandLineW\" (Indicato",
+            "origin": "File/Memory",
+            "attck_id": "T1059.003",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1059/003"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "module-9",
+            "type": 10,
+            "name": "Loads the Bcrypt module DLL",
+            "description": "\"hash.exe\" loaded module \"%WINDIR%\\System32\\bcrypt",
+            "origin": "Loaded Module",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "mutant-0",
+            "type": 4,
+            "relevance": 3,
+            "name": "Creates mutants",
+            "description": "\"\\Sessions\\1\\BaseNamedObjects\\Global\\hash\"\n \"Globa",
+            "origin": "Created Mutant"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "registry-72",
+            "type": 3,
+            "relevance": 3,
+            "name": "Overview of unique CLSIDs touched in registry",
+            "description": "\"hash.exe\" touched \"Windows Management and Instrum",
+            "origin": "Registry Access",
+            "attck_id": "T1546.015",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1546/015"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "string-625",
+            "type": 2,
+            "relevance": 1,
+            "name": "References Windows filepaths for DLLs (possible dropped files)",
+            "description": "Observed system executable string:\"%WINDIR%\\System",
+            "origin": "File/Memory",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "string-16",
+            "type": 2,
+            "relevance": 2,
+            "name": "Contains SQL queries",
+            "description": "\"SELECT * FROM Win32_ShadowCopy\" (Source: 00000000",
+            "origin": "File/Memory",
+            "attck_id": "T1213",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1213"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-153",
+            "name": "Uses 32 bit executable PE",
+            "description": "\"hash\" has flags like  IMAGE_FILE_32BIT_MACHINE\n I",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-96",
+            "name": "PE file entrypoint instructions",
+            "description": "\"hash\" file has an entrypoint instructions - \"nop\t",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-4",
+            "type": 6,
+            "relevance": 1,
+            "name": "Creates a writable file in a temporary directory",
+            "description": "\"hash.exe\" created file \"C:\\Users\\%OSUSER%\\AppData",
+            "origin": "API Call",
+            "attck_id": "T1074.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1074/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-7",
+            "type": 6,
+            "relevance": 1,
+            "name": "Loads modules at runtime",
+            "description": "\"hash.exe\" loaded module \"API-MS-WIN-CORE-SYNCH-L1",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-176",
+            "type": 6,
+            "relevance": 1,
+            "name": "Calls an API typically used to retrieve function addresses",
+            "description": "\"hash.exe\" called \"GetProcAddress\" with a paramete",
+            "origin": "API Call",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-175",
+            "type": 6,
+            "relevance": 1,
+            "name": "Calls an API typically used to load libraries",
+            "description": "\"hash.exe\" called \"LoadLibrary\" with a parameter a",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-8",
+            "type": 6,
+            "relevance": 1,
+            "name": "Looks up procedures from modules (excluding apphelp.dll, kernel32.dll, user32.dll, gdi32.dll, ole32.dll, comctl32.dll, uxtheme.dll, oleaut32.dll, version.dll, msctfime.ime)",
+            "description": "\"0700080078f92200@ntdll.dll\"\n \"1300140054f44876@RP",
+            "origin": "API Call",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-22",
+            "type": 6,
+            "relevance": 1,
+            "name": "Fails to load modules at runtime",
+            "description": "\"hash.exe\" failed to load missing module \"api-ms-w",
+            "origin": "API Call",
+            "attck_id": "T1574.002",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1574/002"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "api-248",
+            "type": 6,
+            "relevance": 2,
+            "name": "Tries to open documents files",
+            "description": "\"hash.exe\" opens a file %USERPROFILE%\\Downloads\\0Y",
+            "origin": "API Call",
+            "attck_id": "T1005",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1005"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "module-10",
+            "type": 10,
+            "name": "Loads the RPC (Remote Procedure Call) module DLL",
+            "description": "\"hash.exe\" loaded module \"%WINDIR%\\System32\\rpcrt4",
+            "origin": "Loaded Module",
+            "attck_id": "T1129",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1129"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "registry-25",
+            "type": 3,
+            "relevance": 3,
+            "name": "Reads information about supported languages",
+            "description": "\"hash.exe\" (Path: \"HKLM\\SYSTEM\\CONTROLSET001\\CONTR",
+            "origin": "Registry Access",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-157",
+            "name": "Matched Compiler/Packer signature (DIE)",
+            "description": "\"hash\" was detected as \"Microsoft Linker\"  and nam",
+            "origin": "Static Parser",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-154",
+            "name": "File contains dynamic base/NX flags",
+            "description": "\"hash\" has flags like  IMAGE_DLLCHARACTERISTICS_TE",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-80",
+            "relevance": 1,
+            "name": "PE file contains executable sections",
+            "description": "\"hash\" has an executable section named \".text\"\n \"h",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-95",
+            "name": "PE file contains writable sections",
+            "description": "\"hash\" has an writable section named \".data\"\n \"has",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "static-146",
+            "name": "PE file contains Debug data directory",
+            "description": "\"hash\" has Debug data directory \"IMAGE_DIRECTORY_E",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Pattern Matching",
+            "identifier": "yara-103",
+            "type": 13,
+            "relevance": 5,
+            "name": "YARA signature match - AES encryption",
+            "description": "YARA signature for AES encryption matched on file ",
+            "origin": "YARA Signature",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Unusual Characteristics",
+            "identifier": "string-455",
+            "type": 2,
+            "relevance": 3,
+            "name": "Contains reference to multiple windows system processes",
+            "description": "Found strings \"smss.exe,csrss.exe,lsass.exe,winini",
+            "origin": "File/Memory",
+            "attck_id": "T1569.002",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1569/002"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-264",
+            "type": 6,
+            "relevance": 3,
+            "name": "Creates a thread in a self process",
+            "description": "\"hash.exe\" creates a thread in process \"-1\" (Handl",
+            "origin": "API Call",
+            "attck_id": "T1055.003",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1055/003"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-126",
+            "type": 6,
+            "relevance": 3,
+            "name": "Tries to access non-existent files (executable)",
+            "description": "\"hash.exe\" trying to access non-existent file \"C:\\",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-243",
+            "type": 6,
+            "relevance": 1,
+            "name": "Reads files",
+            "description": "\"hash.exe\" reads file \"c:\\users\\%osuser%\\favorites",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-159",
+            "type": 6,
+            "relevance": 1,
+            "name": "Writes log files",
+            "description": "\"hash.exe\" writes a file \"C:\\Users\\%OSUSER%\\AppDat",
+            "origin": "API Call",
+            "attck_id": "T1074.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1074/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "registry-177",
+            "type": 3,
+            "relevance": 1,
+            "name": "Opens registry keys",
+            "description": "\"hash.exe\" (Access type: \"OPEN\"; Path: \"HKLM\\SYSTE",
+            "origin": "Registry Access",
+            "attck_id": "T1012",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1012"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-16",
+            "type": 6,
+            "relevance": 1,
+            "name": "Connects to LPC ports",
+            "description": "\"hash.exe\" connecting to \"\\ThemeApiPort\"",
+            "origin": "API Call",
+            "attck_id": "T1559",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1559"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-263",
+            "type": 6,
+            "relevance": 1,
+            "name": "Touches files",
+            "description": "\"hash.exe\" trying to touch file \"\\FileSystem\\Filte",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-161",
+            "type": 6,
+            "relevance": 3,
+            "name": "Tries to access non-existent files (non-executable)",
+            "description": "\"hash.exe\" trying to access non-existent file \"C:\\",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "api-242",
+            "type": 6,
+            "relevance": 1,
+            "name": "Writes files",
+            "description": "\"hash.exe\" writes file \"c:\\users\\%osuser%\\favorite",
+            "origin": "API Call"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "registry-172",
+            "type": 3,
+            "relevance": 1,
+            "name": "Queries registry keys",
+            "description": "\"hash.exe\" (Access type: \"QUERYVAL\"; Path: \"HKLM\\S",
+            "origin": "Registry Access",
+            "attck_id": "T1012",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1012"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "binary-0",
+            "type": 8,
+            "relevance": 3,
+            "name": "Dropped files",
+            "description": "\"3OYkmrLQx.README.txt\" has type \"ASCII text with C",
+            "origin": "Binary File",
+            "attck_id": "T1105",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1105"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistence",
+            "identifier": "summary-29",
+            "type": 15,
+            "relevance": 1,
+            "name": "Shows ability to use execution guardrails",
+            "description": "The analysis shows indicators which can be used as",
+            "origin": "Indicator Combinations",
+            "attck_id": "T1480",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1480"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "string-318",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to load/free library (API string)",
+            "description": "Found reference to API \"FreeLibrary\" (Indicator: \"",
+            "origin": "File/Memory",
+            "attck_id": "T1055.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1055/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "api-162",
+            "type": 6,
+            "relevance": 1,
+            "name": "Renames files",
+            "description": "\"hash.exe\" renamed original file\"C:\\$Recycle.Bin\\S",
+            "origin": "API Call",
+            "attck_id": "T1036",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1036"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "string-201",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to query system locale (API string)",
+            "description": "Found reference to API \"GetLocaleInfoW\" (Indicator",
+            "origin": "File/Memory",
+            "attck_id": "T1614",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1614"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "string-666",
+            "type": 2,
+            "relevance": 1,
+            "name": "Able to identify sandbox environment running process",
+            "description": "Found string \"VGAuthService.exe\" (Indicator: \"VGAu",
+            "origin": "File/Memory",
+            "attck_id": "T1497",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1497"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "string-450",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to determine if process is running under WOW64 (API string)",
+            "description": "Found reference to API \"14953217949,1924,3147,,IsW",
+            "origin": "File/Memory",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-222",
+            "type": 6,
+            "relevance": 2,
+            "name": "Calls an API typically used to retrieve OS information",
+            "description": "\"hash.exe\" called \"GetVersionExA\" with parameter h",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "string-661",
+            "type": 2,
+            "relevance": 1,
+            "name": "Able to identify virtual environment by using user activity (API string)",
+            "description": "Found string \"GetCommandLineW\" (Indicator: \"GetCom",
+            "origin": "File/Memory",
+            "attck_id": "T1497.002",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1497/002"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-144",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to open an existing named mutex object",
+            "description": "\"hash.exe\" called \"OpenMutexW\" with parameter \"Glo",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "registry-78",
+            "type": 3,
+            "relevance": 1,
+            "name": "Contains ability to read software policies",
+            "description": "\"hash.exe\" (Path: \"HKLM\\SOFTWARE\\POLICIES\\MICROSOF",
+            "origin": "Registry Access",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "string-433",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to execute a WMI query",
+            "description": "Found string \"SELECT * FROM Win32_ShadowCopy\" (Ind",
+            "origin": "File/Memory",
+            "attck_id": "T1047",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1047"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-146",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to determine if process is running under WOW64",
+            "description": "\"hash.exe\" called \"IsWow64Process\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-125",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to get system version information",
+            "description": "\"hash.exe\" called \"RtlGetVersion\" with parameter h",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-124",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to get product type",
+            "description": "\"hash.exe\" called \"RtlGetNtProductType\" with param",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "registry-35",
+            "type": 3,
+            "relevance": 5,
+            "name": "Reads the active computer name",
+            "description": "\"hash.exe\" (Path: \"HKLM\\SYSTEM\\CONTROLSET001\\CONTR",
+            "origin": "Registry Access",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "api-148",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to retrieve account information for specified SID",
+            "description": "\"hash.exe\" called \"LookupAccountSidW\" with param N",
+            "origin": "API Call",
+            "attck_id": "T1033",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1033"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "registry-55",
+            "type": 3,
+            "relevance": 10,
+            "name": "Reads the registry for installed applications",
+            "description": "\"hash.exe\" (Path: \"HKCU\\SOFTWARE\\MICROSOFT\\WINDOWS",
+            "origin": "Registry Access",
+            "attck_id": "T1518",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1518"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Environment Awareness",
+            "identifier": "registry-1",
+            "type": 3,
+            "relevance": 5,
+            "name": "Reads the cryptographic machine GUID",
+            "description": "\"hash.exe\" (Path: \"HKLM\\SOFTWARE\\MICROSOFT\\CRYPTOG",
+            "origin": "Registry Access",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-207",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to retrieve file and directory information (API string)",
+            "description": "Found reference to API \"GetFileAttributesW\" (Indic",
+            "origin": "File/Memory",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-78",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to capture screen (API string)",
+            "description": "Found reference to API \"BitBlt\" (Indicator: \"BitBl",
+            "origin": "File/Memory",
+            "attck_id": "T1113",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1113"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-507",
+            "type": 2,
+            "relevance": 1,
+            "name": "References to WMI query strings used for information discovery",
+            "description": "Found string \"SELECT * FROM Win32_ShadowCopy\" (Ind",
+            "origin": "File/Memory",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-102",
+            "type": 6,
+            "relevance": 5,
+            "name": "Calls an API typically used for searching a directory for files",
+            "description": "\"hash.exe\" called \"FindFirstFileW\" with parameter ",
+            "origin": "API Call",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-85",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to enumerate process and/or its information (API string)",
+            "description": "Found reference to API \"GetModuleHandleA\" (Indicat",
+            "origin": "File/Memory",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-427",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to retrieve a module handle (API string)",
+            "description": "Found reference to API \"GetModuleHandleA\" (Indicat",
+            "origin": "File/Memory",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-108",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to retrieve information about the current system",
+            "description": "\"hash.exe\" called \"GetNativeSystemInfo\" with param",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-317",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to retrieve address of exported function from a DLL (API string)",
+            "description": "Found reference to API \"GetProcAddress\" (Indicator",
+            "origin": "File/Memory",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-131",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to retrieve the specified system metric or system configuration setting (API string)",
+            "description": "Found reference to API \"11327148873,3660,111,,GetS",
+            "origin": "File/Memory",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "string-83",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains ability to enumerate files on disk (API string)",
+            "description": "Found reference to API \"83472950333,2752,3117,,Fin",
+            "origin": "File/Memory",
+            "attck_id": "T1083",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1083"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-103",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used for taking snapshot of the specified processes",
+            "description": "\"hash.exe\" called \"CreateToolhelp32Snapshot\" with ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "static-88",
+            "relevance": 1,
+            "name": "Imports GetCommandLine API",
+            "description": "Observed import api \"GetCommandLineA\" which can \"R",
+            "origin": "Static Parser",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Network Related",
+            "identifier": "string-3",
+            "type": 2,
+            "relevance": 3,
+            "name": "Found potential URL in binary/memory",
+            "description": "Pattern match: \"https://www.torproject.org/write\"\n",
+            "origin": "File/Memory",
+            "attck_id": "T1071",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1071"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Network Related",
+            "identifier": "api-219",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used to register an interface (RPC)",
+            "description": "\"hash.exe\" called \"RpcServerRegisterIf2\" (UID: 000",
+            "origin": "API Call",
+            "attck_id": "T1021",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1021"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Network Related",
+            "identifier": "memorydump-2",
+            "type": 20,
+            "relevance": 1,
+            "name": "Found potential URLs in memory dumps",
+            "description": "Found URL \"https://www.torproject.org/\" - Source: ",
+            "origin": "Memory Dumps",
+            "attck_id": "T1071",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1071"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Network Related",
+            "identifier": "string-14",
+            "type": 2,
+            "name": "Found potential IP address in binary/memory",
+            "description": "\"<IPv4>\"",
+            "origin": "File/Memory",
+            "attck_id": "T1071",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1071"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Cryptographic Related",
+            "identifier": "binary-71",
+            "type": 8,
+            "relevance": 1,
+            "name": "Sample file has high entropy (likely encrypted/compressed content)",
+            "description": "Sample file \"sample.bin\" has high entropy 7.209604",
+            "origin": "Binary File",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Cryptographic Related",
+            "identifier": "summary-32",
+            "type": 15,
+            "relevance": 1,
+            "name": "Shows ability to deobfuscate/decode files or information",
+            "description": "The analysis shows use of encryption and can be us",
+            "origin": "Indicator Combinations",
+            "attck_id": "T1140",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1140"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Cryptographic Related",
+            "identifier": "summary-28",
+            "type": 15,
+            "relevance": 1,
+            "name": "Shows ability to obfuscate file or information",
+            "description": "The analysis contains indicators for cyrpto or dat",
+            "origin": "Indicator Combinations",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Cryptographic Related",
+            "identifier": "summary-31",
+            "type": 15,
+            "relevance": 1,
+            "name": "Shows ability to use encryption for command and control traffic",
+            "description": "The analysis shows use of encryption\n use of http/",
+            "origin": "Indicator Combinations",
+            "attck_id": "T1573.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1573/001"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "System Security",
+            "identifier": "registry-173",
+            "type": 3,
+            "relevance": 1,
+            "name": "Queries services related registry keys",
+            "description": "\"hash.exe\" (Access type: \"QUERYVAL\"; Path: \"HKLM\\S",
+            "origin": "Registry Access",
+            "attck_id": "T1007",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1007"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Remote Access Related",
+            "identifier": "string-531",
+            "type": 2,
+            "relevance": 1,
+            "name": "Contains references to RPC protocol sequence strings",
+            "description": "Found string \"B+ncalrpc:[Ob\" (Indicator: \"ncalrpc\"",
+            "origin": "File/Memory",
+            "attck_id": "T1090",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1090"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Unusual Characteristics",
+            "identifier": "static-0",
+            "relevance": 10,
+            "name": "CRC value set in PE header does not match actual value",
+            "description": "\"hash\" claimed CRC 179995 while the actual is CRC ",
+            "origin": "Static Parser",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Unusual Characteristics",
+            "identifier": "static-1",
+            "relevance": 1,
+            "name": "Imports suspicious APIs",
+            "description": "GetModuleHandleA\n GetCommandLineW\n GetCommandLineA",
+            "origin": "Static Parser",
+            "attck_id": "T1106",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1106"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Anti-Detection/Stealthyness",
+            "identifier": "api-9",
+            "type": 6,
+            "relevance": 4,
+            "name": "Queries process information",
+            "description": "\"hash.exe\" queried SystemProcessInformation at 000",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Anti-Reverse Engineering",
+            "identifier": "static-6",
+            "relevance": 1,
+            "name": "Section contains high entropy",
+            "description": "\"hash\" has section name .text with entropy \"6.6135",
+            "origin": "Static Parser",
+            "attck_id": "T1027.009",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027/009"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Environment Awareness",
+            "identifier": "api-47",
+            "type": 6,
+            "relevance": 10,
+            "name": "Possibly tries to evade analysis by sleeping many times",
+            "description": "\"hash.exe\" (Thread ID: 2948) slept \"525\" times (th",
+            "origin": "API Call",
+            "attck_id": "T1497.003",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1497/003"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-170",
+            "type": 6,
+            "relevance": 5,
+            "name": "Calls an API typically used to retrieve the current status of the specified service",
+            "description": "\"hash.exe\" called \"QueryServiceStatusEx\" with para",
+            "origin": "API Call",
+            "attck_id": "T1007",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1007"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-109",
+            "type": 6,
+            "relevance": 10,
+            "name": "Calls an API typically used to determine the valid logical drives on the computer",
+            "description": "\"hash.exe\" called \"GetLogicalDriveStringsW\" with p",
+            "origin": "API Call",
+            "attck_id": "T1082",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1082"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Ransomware/Banking",
+            "identifier": "binary-10",
+            "type": 8,
+            "relevance": 5,
+            "name": "The input sample dropped very many files",
+            "description": "The input sample dropped 704 files (often an indic",
+            "origin": "Binary File",
+            "attck_id": "T1491.001",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1491/001"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Security",
+            "identifier": "registry-136",
+            "type": 3,
+            "relevance": 3,
+            "name": "Writes registry keys",
+            "description": "\"hash.exe\" (Access type: \"SETVAL\"; Path: \"HKLM\\SOF",
+            "origin": "Registry Access",
+            "attck_id": "T1112",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1112"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Destruction",
+            "identifier": "api-26",
+            "type": 6,
+            "relevance": 10,
+            "name": "Marks file for deletion",
+            "description": "\"hash.exe\" marked \"C:\\$Recycle.Bin\\S-1-5-21-209235",
+            "origin": "API Call",
+            "attck_id": "T1070.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1070/004"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "System Destruction",
+            "identifier": "api-25",
+            "type": 6,
+            "relevance": 7,
+            "name": "Opens file with deletion access rights",
+            "description": "\"hash.exe\" opened \"C:\\$Recycle.Bin\\S-1-5-21-209235",
+            "origin": "API Call",
+            "attck_id": "T1070.004",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1070/004"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Remote Access Related",
+            "identifier": "string-30",
+            "type": 2,
+            "relevance": 3,
+            "name": "Contains references to WMI/WMIC",
+            "description": "Found string \"wmiprvse.exe\" (Indicator: \"wmiprvse.",
+            "origin": "File/Memory",
+            "attck_id": "T1047",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1047"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-96",
+            "type": 6,
+            "relevance": 10,
+            "name": "Tries to steal browser sensitive information (file access)",
+            "description": "\"hash.exe\" trying to open a file \"\\Device\\Harddisk",
+            "origin": "API Call",
+            "attck_id": "T1005",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1005"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "External Systems",
+            "identifier": "avtest-8",
+            "type": 12,
+            "relevance": 10,
+            "name": "Sample detected by CrowdStrike Static Analysis and ML with relatively high confidence",
+            "description": "CrowdStrike Static Analysis and ML (QuickScan) yie",
+            "origin": "External System"
+          }
+        ],
+        "_family": "ransomware"
+      },
+      "question": "What evidence from the report strongly indicates that this malware is a ransomware variant?",
+      "options": [
+        "A. The malware drops a file named `*.README.txt`, a common naming convention for ransom notes.",
+        "B. A WMI query is used to discover `Win32_ShadowCopy` instances, a common precursor to deleting backups.",
+        "C. The malware attempts to access and steal sensitive browser data.",
+        "D. The malware's behavior is mapped to the MITRE ATT&CK technique T1486 (Data Encrypted for Impact)."
+      ]
+    },
+    "answer": {
+      "correct_options": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "hash",
+      "attack": "remcos",
+      "topic": "identify_malware_family",
+      "difficulty": "Medium",
+      "detonation_report": {
+        "size": 8681984,
+        "type": "PE32 executable (GUI) Intel 80386, for MS Windows",
+        "submit_name": "hash",
+        "sha256": "hash",
+        "av_detect": 74,
+        "vx_family": "Trojan.Generic",
+        "threat_score": 100,
+        "threat_level": 2,
+        "verdict": "malicious",
+        "certificates_validation_message": "No signature was present in the subject. (0x800b0100)",
+        "total_processes": 1,
+        "total_signatures": 227,
+        "processes": [
+          {
+            "uid": "00000000-00004928",
+            "name": "hash.exe",
+            "normalized_path": "C:\\hash.exe",
+            "sha256": "hash",
+            "av_label": "ABRisk.GCQR",
+            "av_matched": 7,
+            "av_total": 22
+          }
+        ],
+        "mitre_attcks": [
+          {
+            "tactic": "Resource Development",
+            "technique": "Digital Certificates",
+            "attck_id": "T1588.004"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Native API",
+            "attck_id": "T1106"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Windows Command Shell",
+            "attck_id": "T1059.003"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Inter-Process Communication",
+            "attck_id": "T1559"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Shared Modules",
+            "attck_id": "T1129"
+          },
+          {
+            "tactic": "Execution",
+            "technique": "Service Execution",
+            "attck_id": "T1569.002"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Account Manipulation",
+            "attck_id": "T1098"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Windows Service",
+            "attck_id": "T1543.003"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Create or Modify System Process",
+            "attck_id": "T1543"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Office Application Startup",
+            "attck_id": "T1137"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Boot or Logon Autostart Execution",
+            "attck_id": "T1547"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "Registry Run Keys / Startup Folder",
+            "attck_id": "T1547.001"
+          },
+          {
+            "tactic": "Persistence",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Thread Execution Hijacking",
+            "attck_id": "T1055.003"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Account Manipulation",
+            "attck_id": "T1098"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Windows Service",
+            "attck_id": "T1543.003"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Process Injection",
+            "attck_id": "T1055"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Create or Modify System Process",
+            "attck_id": "T1543"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Token Impersonation/Theft",
+            "attck_id": "T1134.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Asynchronous Procedure Call",
+            "attck_id": "T1055.004"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Process Doppelg\u00e4nging",
+            "attck_id": "T1055.013"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Process Hollowing",
+            "attck_id": "T1055.012"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "ListPlanting",
+            "attck_id": "T1055.015"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Boot or Logon Autostart Execution",
+            "attck_id": "T1547"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Access Token Manipulation",
+            "attck_id": "T1134"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Bypass User Account Control",
+            "attck_id": "T1548.002"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "Registry Run Keys / Startup Folder",
+            "attck_id": "T1547.001"
+          },
+          {
+            "tactic": "Privilege Escalation",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Modify Registry",
+            "attck_id": "T1112"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Thread Execution Hijacking",
+            "attck_id": "T1055.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Debugger Evasion",
+            "attck_id": "T1622"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Dynamic-link Library Injection",
+            "attck_id": "T1055.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Timestomp",
+            "attck_id": "T1070.006"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Obfuscated Files or Information",
+            "attck_id": "T1027"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "File and Directory Permissions Modification",
+            "attck_id": "T1222"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Process Injection",
+            "attck_id": "T1055"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Token Impersonation/Theft",
+            "attck_id": "T1134.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Asynchronous Procedure Call",
+            "attck_id": "T1055.004"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Process Doppelg\u00e4nging",
+            "attck_id": "T1055.013"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Hidden Window",
+            "attck_id": "T1564.003"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Process Hollowing",
+            "attck_id": "T1055.012"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "User Activity Based Checks",
+            "attck_id": "T1497.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "ListPlanting",
+            "attck_id": "T1055.015"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "File Deletion",
+            "attck_id": "T1070.004"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Extra Window Memory Injection",
+            "attck_id": "T1055.011"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Hide Artifacts",
+            "attck_id": "T1564"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "System Checks",
+            "attck_id": "T1497.001"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Access Token Manipulation",
+            "attck_id": "T1134"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Software Packing",
+            "attck_id": "T1027.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Embedded Payloads",
+            "attck_id": "T1027.009"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "NTFS File Attributes",
+            "attck_id": "T1564.004"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Bypass User Account Control",
+            "attck_id": "T1548.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Virtualization/Sandbox Evasion",
+            "attck_id": "T1497"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Direct Volume Access",
+            "attck_id": "T1006"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "DLL Side-Loading",
+            "attck_id": "T1574.002"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Dynamic API Resolution",
+            "attck_id": "T1027.007"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Indicator Removal from Tools",
+            "attck_id": "T1027.005"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Deobfuscate/Decode Files or Information",
+            "attck_id": "T1140"
+          },
+          {
+            "tactic": "Defense Evasion",
+            "technique": "Execution Guardrails",
+            "attck_id": "T1480"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Credentials from Web Browsers",
+            "attck_id": "T1555.003"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Keylogging",
+            "attck_id": "T1056.001"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Credentials from Password Stores",
+            "attck_id": "T1555"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Steal Web Session Cookie",
+            "attck_id": "T1539"
+          },
+          {
+            "tactic": "Credential Access",
+            "technique": "Input Capture",
+            "attck_id": "T1056"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "File and Directory Discovery",
+            "attck_id": "T1083"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Information Discovery",
+            "attck_id": "T1082"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Location Discovery",
+            "attck_id": "T1614"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Debugger Evasion",
+            "attck_id": "T1622"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Application Window Discovery",
+            "attck_id": "T1010"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Query Registry",
+            "attck_id": "T1012"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Process Discovery",
+            "attck_id": "T1057"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Time Based Evasion",
+            "attck_id": "T1497.003"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Language Discovery",
+            "attck_id": "T1614.001"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Time Discovery",
+            "attck_id": "T1124"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "User Activity Based Checks",
+            "attck_id": "T1497.002"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Security Software Discovery",
+            "attck_id": "T1518.001"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Network Connections Discovery",
+            "attck_id": "T1049"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Network Share Discovery",
+            "attck_id": "T1135"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Checks",
+            "attck_id": "T1497.001"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Owner/User Discovery",
+            "attck_id": "T1033"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Network Configuration Discovery",
+            "attck_id": "T1016"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "Virtualization/Sandbox Evasion",
+            "attck_id": "T1497"
+          },
+          {
+            "tactic": "Discovery",
+            "technique": "System Service Discovery",
+            "attck_id": "T1007"
+          },
+          {
+            "tactic": "Lateral Movement",
+            "technique": "Lateral Tool Transfer",
+            "attck_id": "T1570"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Screen Capture",
+            "attck_id": "T1113"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Local Data Staging",
+            "attck_id": "T1074.001"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Clipboard Data",
+            "attck_id": "T1115"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Keylogging",
+            "attck_id": "T1056.001"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Archive via Library",
+            "attck_id": "T1560.002"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Data from Information Repositories",
+            "attck_id": "T1213"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Archive Collected Data",
+            "attck_id": "T1560"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Input Capture",
+            "attck_id": "T1056"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Data from Local System",
+            "attck_id": "T1005"
+          },
+          {
+            "tactic": "Collection",
+            "technique": "Automated Collection",
+            "attck_id": "T1119"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Application Layer Protocol",
+            "attck_id": "T1071"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Ingress Tool Transfer",
+            "attck_id": "T1105"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Encrypted Channel",
+            "attck_id": "T1573"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Web Protocols",
+            "attck_id": "T1071.001"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Non-Standard Port",
+            "attck_id": "T1571"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Symmetric Cryptography",
+            "attck_id": "T1573.001"
+          },
+          {
+            "tactic": "Command and Control",
+            "technique": "Asymmetric Cryptography",
+            "attck_id": "T1573.002"
+          },
+          {
+            "tactic": "Exfiltration",
+            "technique": "Scheduled Transfer",
+            "attck_id": "T1029"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "System Shutdown/Reboot",
+            "attck_id": "T1529"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "Service Stop",
+            "attck_id": "T1489"
+          },
+          {
+            "tactic": "Impact",
+            "technique": "Data Encrypted for Impact",
+            "attck_id": "T1486"
+          }
+        ],
+        "network_mode": "default",
+        "signatures": [
+          {
+            "threat_level_human": "informative",
+            "category": "General",
+            "identifier": "module-9",
+            "type": 10,
+            "name": "Loads the Bcrypt module DLL",
+            "description": "\"hash.exe\" loaded module \"%WINDIR%\\System32\\bcrypt",
+            "origin": "Loaded Module",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Pattern Matching",
+            "identifier": "yara-103",
+            "type": 13,
+            "relevance": 5,
+            "name": "YARA signature match - AES encryption",
+            "description": "YARA signature for AES encryption matched on proce",
+            "origin": "YARA Signature",
+            "attck_id": "T1027",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1027"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Spyware/Information Retrieval",
+            "identifier": "api-103",
+            "type": 6,
+            "relevance": 3,
+            "name": "Calls an API typically used for taking snapshot of the specified processes",
+            "description": "\"hash.exe\" called \"CreateToolhelp32Snapshot\" with ",
+            "origin": "API Call",
+            "attck_id": "T1057",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1057"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Network Related",
+            "identifier": "network-7",
+            "type": 7,
+            "relevance": 7,
+            "name": "Uses network protocols on unusual ports",
+            "description": "TCP traffic to <IPv4> on port 55377",
+            "origin": "Network Traffic",
+            "attck_id": "T1571",
+            "attck_id_wiki": "https://attack.mitre.org/techniques/T1571"
+          }
+        ],
+        "_family": "remcos"
+      },
+      "question": "Based on the observed behaviors and indicators in the detonation report, which of the following malware categories accurately describe the sample's primary functions? Select ALL that apply.",
+      "options": [
+        "A. RAT (Remote Access Trojan)",
+        "B. Ransomware",
+        "C. Infostealer",
+        "D. AV/EDR Killer"
+      ]
+    },
+    "answer": {
+      "correct_options": [
+        "A",
+        "C"
+      ]
+    }
+  },
+  {
+    "question": {
+      "sha256": "e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6ed71935a2e7548f2facc0",
+      "attack": "um_unhooking",
+      "topic": "evasion_technique_identification",
+      "difficulty": "Medium",
+      "detonation_report": {
+        "size": 757760,
+        "type": "PE32 executable (GUI) Intel 80386, for MS Windows",
+        "submit_name": "PICUS_e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6ed71935a2e7548f2facc0.exe",
+        "sha256": "hash",
+        "av_detect": 83,
+        "vx_family": "Trojan.Generic",
+        "threat_score": 62,
+        "threat_level": 2,
+        "verdict": "malicious",
+        "total_processes": 1,
+        "total_signatures": 12,
+        "file_metadata": {
+          "file_compositions": [
+            "1 .RES Files linked with CVTRES.EXE 5.00 (Visual Studio 5) (build: 1720)",
+            "10 .CPP Files compiled with CL.EXE 12.00 (Visual Studio 6) (build: 8168)"
+          ],
+          "imported_objects": [
+            "5 .OBJ Files (COFF) linked with LINK.EXE 6.00 (Visual Studio 6) (build: 8168)",
+            "11   .C Files compiled with CL.EXE 12.00 (Visual Studio 6) (build: 8168)",
+            "1 .ASM Files assembled with MASM 6.13 (Visual Studio 6 SP1) (build: 7299)",
+            "4 .OBJ Files (COFF) linked with LINK.EXE 5.12 (Visual Studio 5 SP2) (build: 8034)"
+          ],
+          "file_analysis": [
+            "File contains C++ code",
+            "File is the product of a small codebase (10 files)"
+          ],
+          "total_file_compositions_imports": 342
+        },
+        "processes": [
+          {
+            "uid": "00044311-00002956",
+            "name": "PICUS_e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6ed71935a2e7548f2facc0.exe",
+            "normalized_path": "C:\\PICUS_e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6ed71935a2e7548f2facc0.exe",
+            "sha256": "hash",
+            "av_label": "Trojan.TXGH",
+            "av_matched": 3,
+            "av_total": 14
+          }
+        ],
+        "mitre_attcks": [
+          {
+            "tactic": "Persistence",
+            "technique": "Kernel Modules and Extensions",
+            "attck_id": "T1215"
+          },
+          {
+            "tactic": "Lateral Movement",
+            "technique": "Remote Desktop Protocol",
+            "attck_id": "T1076"
+          },
+          {
+            "tactic": "Exfiltration",
+            "technique": "Data Compressed",
+            "attck_id": "T1002"
+          }
+        ],
+        "network_mode": "default",
+        "signatures": [
+          {
+            "threat_level_human": "informative",
+            "category": "Unusual Characteristics",
+            "identifier": "static-18",
+            "relevance": 10,
+            "name": "Matched Compiler/Packer signature",
+            "description": "\"PICUS_e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6",
+            "origin": "Static Parser",
+            "attck_id": "T1002",
+            "attck_id_wiki": "https://attack.mitre.org/wiki/Technique/T1002"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistance",
+            "identifier": "api-16",
+            "type": 6,
+            "relevance": 1,
+            "name": "Connects to LPC ports",
+            "description": "\"<Input Sample>\" connecting to \"\\ThemeApiPort\"",
+            "origin": "API Call"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "Installation/Persistance",
+            "identifier": "api-55",
+            "type": 6,
+            "relevance": 7,
+            "name": "Touches files in the Windows directory",
+            "description": "\"<Input Sample>\" touched file \"%WINDIR%\\System32\\e",
+            "origin": "API Call"
+          },
+          {
+            "threat_level_human": "informative",
+            "category": "System Security",
+            "identifier": "api-37",
+            "type": 6,
+            "relevance": 10,
+            "name": "Opens the Kernel Security Device Driver (KsecDD) of Windows",
+            "description": "\"<Input Sample>\" opened \"\\Device\\KsecDD\"",
+            "origin": "API Call",
+            "attck_id": "T1215",
+            "attck_id_wiki": "https://attack.mitre.org/wiki/Technique/T1215"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Unusual Characteristics",
+            "identifier": "static-1",
+            "relevance": 1,
+            "name": "Imports suspicious APIs",
+            "description": "GetStartupInfoA\n GetProcAddress\n GetModuleHandleA\n",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Unusual Characteristics",
+            "identifier": "static-0",
+            "relevance": 10,
+            "name": "CRC value set in PE header does not match actual value",
+            "description": "\"PICUS_e7d3181ef643d77bb33fe328d1ea58f512b4f27c8e6",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Anti-Reverse Engineering",
+            "identifier": "static-6",
+            "relevance": 10,
+            "name": "PE file has unusual entropy sections",
+            "description": ".monor with unusual entropies 7.70282429977",
+            "origin": "Static Parser"
+          },
+          {
+            "threat_level": 1,
+            "threat_level_human": "suspicious",
+            "category": "Remote Access Related",
+            "identifier": "registry-61",
+            "type": 3,
+            "relevance": 10,
+            "name": "Reads terminal service related keys (often RDP related)",
+            "description": "\"<Input Sample>\" (Path: \"HKLM\\SYSTEM\\CONTROLSET001",
+            "origin": "Registry Access",
+            "attck_id": "T1076",
+            "capec_id": "CAPEC-555",
+            "attck_id_wiki": "https://attack.mitre.org/wiki/Technique/T1076"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "Unusual Characteristics",
+            "identifier": "stream-36",
+            "type": 1,
+            "relevance": 9,
+            "name": "Tries to hide a procedure lookup using single characters",
+            "description": "Found a lot of single characters ('2','2','V','i',",
+            "origin": "Hybrid Analysis Technology"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "External Systems",
+            "identifier": "avtest-5",
+            "type": 12,
+            "relevance": 5,
+            "name": "Sample was identified as malicious by a trusted Antivirus engine",
+            "description": "No specific details available",
+            "origin": "External System"
+          },
+          {
+            "threat_level": 2,
+            "threat_level_human": "malicious",
+            "category": "External Systems",
+            "identifier": "avtest-0",
+            "type": 12,
+            "relevance": 8,
+            "name": "Sample was identified as malicious by at least one Antivirus engine",
+            "description": "3/14 Antivirus vendors marked sample as malicious ",
+            "origin": "External System"
+          }
+        ],
+        "_family": "um_unhooking"
+      },
+      "question": "Based on the provided detonation report, which of the following techniques does the malware likely employ to evade analysis and detection?",
+      "options": [
+        "A. Hiding API function names through string obfuscation.",
+        "B. Packing or encrypting executable sections to hinder static analysis.",
+        "C. Injecting code into a legitimate remote process like svchost.exe.",
+        "D. Deleting Volume Shadow Copies to prevent system recovery."
+      ]
+    },
+    "answer": {
+      "correct_options": [
+        "A",
+        "B"
+      ]
+    }
+  }
+]

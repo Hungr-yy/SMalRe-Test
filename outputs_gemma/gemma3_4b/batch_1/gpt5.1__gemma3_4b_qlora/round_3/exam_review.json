@@ -1,0 +1,224 @@
+[
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key"
+        ],
+        "reasoning": "The question asks which MITRE ATT&CK techniques are DIRECTLY evidenced. Option A (T1055.001 via CreateRemoteThread/WriteProcessMemory) is well-evidenced in the report \u2014 the report explicitly shows CreateRemoteThread and WriteProcessMemory API strings, and the 'Contains ability to create a remote thread' and 'Contains ability to write to a remote process' signatures are present. The answer key excludes A but includes B, C, D, E. However, A is arguably the most directly evidenced technique. Option B (T1055.011 via shell_traywnd) is evidenced by the string-4 signature referencing 'shell_traywnd'. Option C (T1497 via VBoxService.exe and VMware trick) is directly evidenced. Option D (T1113 via BitBlt) is directly evidenced. Option E (T1547 via registry auto-execute strings) is directly evidenced. The exclusion of A from the answer key is incorrect \u2014 T1055.001 is directly evidenced by CreateRemoteThread and WriteProcessMemory API strings and stream signatures. The answer key should include A, B, C, D, E or at minimum A. This makes the answer key factually wrong."
+      },
+      {
+        "question_index": 1,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which C2 techniques are directly supported by observed network and cryptographic behaviors, excluding local data encryption for impact. The report shows: HTTP GET requests to t.me (T1071.001 - A), HTTPS traffic using TLS (T1573.001 - B), DNS queries to t.me (T1071.004 - D), and WebClient.DownloadString/bidirectional communication (T1102.002 - E). Option C (T1486 - Data Encrypted for Impact) is correctly excluded as it relates to local encryption, not network behavior. The answer key [A, B, D, E] is factually correct and well-supported by the report. Question is original, well-formed, and meets CyberSOCEval standards."
+      },
+      {
+        "question_index": 2,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which options describe process injection behaviors explicitly evidenced vs generic execution/discovery. Option A (VirtualAllocEx/WriteProcessMemory pattern) is directly evidenced by 'Allocates virtual memory in a remote process' (api-20, malicious) and 'Contains ability to write to a remote process' (stream-34). Option C (PE header in memory) is evidenced by 'Found PE header in memory' (memorydump-8). Options B, D, E are correctly excluded: B is wrong because creating a thread in self-process is not remote thread injection; D is wrong because CreateToolhelp32Snapshot/Process32FirstW are discovery, not DLL injection; E is wrong because LoadLibrary/GetProcAddress alone don't prove DLL injection into a separate process. Answer key [A, C] is factually correct. Original question, good discriminative power."
+      },
+      {
+        "question_index": 3,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors explicitly weaken security controls vs generic discovery. Option A (modifying proxy settings) is directly evidenced by 'Modifies proxy settings' (registry-27, suspicious). Option D (checking for installed antivirus) is directly evidenced by 'Tries to check installed antivirus' (api-127, suspicious). Option B (querying installed applications) is generic discovery (T1518), not defense evasion. Option C (creating/modifying Windows services) is persistence, not defense evasion per se. Option E (reading OS version) is generic discovery. Answer key [A, D] is factually correct and well-reasoned. Original question."
+      },
+      {
+        "question_index": 4,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors provide direct evidence of defense evasion vs generic discovery/execution. Option A (high-entropy sections and dropped files) is directly evidenced by static-6 (high entropy), binary-60 (dropped file high entropy), and static-18 (packer signature). Option D (sandbox checks) is evidenced by stream-39 (code branch after environment-aware API), string-661 (user activity check), and T1497 mappings. Option E (writing data to remote process) is directly evidenced by api-0 (malicious, writes data to remote process). Option B (CreateToolhelp32Snapshot/SystemProcessInformation) is process discovery, not defense evasion. Option C (opening KsecDD) is ambiguous but not a defense evasion technique per se. Answer key [A, D, E] is factually correct."
+      },
+      {
+        "question_index": 5,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are explicitly used for defense evasion vs generic discovery. Option A (WaitForSingleObject time-based evasion) is directly evidenced by string-226 (T1497.003) and the T1497.003 mapping. Option C (SetFileAttributesA to hide/protect files) is evidenced by string-426 (T1222) and the T1222 mapping. Option E (LoadLibraryA + embedded PE resources for injection) is evidenced by YARA signatures for embedded PE (yara-26, yara-140), string-318 (T1055.001), and string-92 (T1055). Options B and D are generic discovery. Answer key [A, C, E] is factually correct."
+      },
+      {
+        "question_index": 6,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors are explicitly used for defense evasion vs generic discovery. Option B (marking C:\\hash.exe for deletion) is directly evidenced by api-26 (marks file for deletion, suspicious) and api-25 (opens file with deletion access rights). Option D (packed/obfuscated code with high entropy and unusual section names) is evidenced by static-60 (unusual section name .eh_fram), static-18 (packer signature MinGW), static-6 (high entropy). Options A (auto-start registry) is persistence, not evasion. Option C (OS version queries) is generic discovery. Option E (service enumeration) is generic discovery. Answer key [B, D] is factually correct."
+      },
+      {
+        "question_index": 7,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which anti-recovery/impact behaviors are explicitly evidenced. Option A (vssadmin delete shadows) is directly evidenced by target-4 (malicious, 'Deletes volume snapshots'). Option C (data encrypted for impact via high-entropy dropped files and AES YARA) is evidenced by yara-0 (dharma_ransomware YARA match), binary-60 (dropped file high entropy), and T1486 mapping. Option E (marking files for deletion) is evidenced by api-26 (marks file for deletion) and api-25 (opens file with deletion access rights). Option B (bcdedit /set recoveryenabled no) is NOT evidenced in this report \u2014 there is no bcdedit process or signature. Option D (diskpart clean) is not evidenced. Answer key [A, C, E] is factually correct."
+      },
+      {
+        "question_index": 8,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors directly indicate inhibiting system recovery. Option A (vssadmin delete shadows) is directly evidenced by target-4 (malicious). Option C (wbadmin delete catalog) is directly evidenced by target-80 (malicious, 'Deletes backup catalog'). Option E (bcdedit /set recoveryenabled no) is directly evidenced by the process list showing bcdedit.exe with command line 'bcdedit /set {default} recoveryenabled no' and target-6 ('Tries to suppress failures during boot'). Option B (AdjustTokenPrivileges for debugging) is privilege escalation, not system recovery inhibition. Option D (GetVersionExA/RtlGetVersion) is generic discovery. Answer key [A, C, E] is factually correct."
+      },
+      {
+        "question_index": 9,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which C2 techniques are directly supported by observed network activity. Option A (T1071.001 HTTP) is evidenced by network-2 (GETs files), network-62 (HTTP GET/POST), api-199 (InternetOpenA), api-143 (HttpOpenRequestW). Option C (T1573 Encrypted Channel) is evidenced by network-38 (HTTPS), network-54 (TLS). Option D (T1132 Data Encoding) is evidenced by network-78 (Base62 strings) and network-60 (Base64 strings). Option E (T1071.004 DNS) is evidenced by network-51 (DNS queries). Option B (T1105 over SMB) is not evidenced \u2014 the report shows HTTP/HTTPS ingress tool transfer, not SMB. Option F (T1090 Proxy) is not evidenced. Answer key [A, C, D, E] is factually correct."
+      },
+      {
+        "question_index": 10,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which specific process injection sub-techniques are directly evidenced. Option A (T1055.002 PE Injection) is directly evidenced by api-83 (malicious, 'Writes PE header to memory', attck_id T1055.002). Option B (T1055.012 Process Hollowing) is directly evidenced by api-134 (malicious, 'Creates a system process in suspended mode', attck_id T1055.012). Option C (T1055.001 DLL Injection) is listed in MITRE mappings but the specific evidence is LoadLibrary calls which alone don't prove DLL injection into a remote process \u2014 the report doesn't show explicit remote LoadLibrary injection. Option D (T1055.003 APC) is evidenced by api-264 (creates thread in self process) but this is self-injection, not APC into remote. Option E (T1055.011 EWM) is in the MITRE list but not directly evidenced by specific signatures. Answer key [A, B] is factually correct and well-supported."
+      },
+      {
+        "question_index": 11,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which specific process injection techniques are directly evidenced. Option A (T1055 generic via WriteProcessMemory) is evidenced by api-0 (malicious, 'Writes data to a remote process'). Option B (T1055.004 APC injection) is directly evidenced by api-85 ('Queues an Asynchronous Procedure Call (APC) in a remote process', attck_id T1055.004). Option C (T1055.003 thread execution hijacking within same process) is evidenced by api-264 ('Creates a thread in a self process', attck_id T1055.003). Option D (T1055.012 process hollowing) is not evidenced \u2014 no suspended process creation signature. Option E (T1055.011 EWM) is in MITRE list but no specific EWM signature. Option F (T1055.001 DLL injection) is in MITRE list but LoadLibrary alone doesn't prove remote DLL injection. Answer key [A, B, C] is factually correct."
+      },
+      {
+        "question_index": 12,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which evasion techniques are explicitly evidenced. Option A (long sleep delays) is directly evidenced by api-24 (suspicious, 'Tries to sleep for a long time', T1497.003). Option B (user-activity and time-based checks) is evidenced by T1497.002 and T1497.003 mappings and the corresponding signatures. Option C (disabling/modifying security tools) is evidenced by T1562.001 mapping and registry-179 ('Tries to map intranet network resources to internet zone', T1562.001). Option E (high-entropy packed code) is evidenced by static-6 (high entropy), static-18 (packer signature), static-92 (unusual entropy resources). Option D (encrypting local documents) is not evidenced \u2014 T1486 is in the MITRE list but no ransomware encryption signatures are present. Option F (modifying boot configuration) is not evidenced. Answer key [A, B, C, E] is factually correct."
+      },
+      {
+        "question_index": 13,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which defense evasion behaviors are explicitly evidenced vs generic discovery. Option A (Zone.Identifier removal) is directly evidenced by api-42 (malicious, 'Tries to hide tracks of having downloaded a file from the internet', T1070.004) and api-25 (opens Zone.Identifier with delete access). Option C (long sleep duration) is evidenced by api-24 (suspicious, 'Tries to sleep for a long time', T1497.003). Option E (VMware anti-VM trick) is directly evidenced by binary-8 (malicious, 'The input sample contains a known anti-VM trick'). Options B, D, F are generic discovery behaviors. Answer key [A, C, E] is factually correct."
+      },
+      {
+        "question_index": 14,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors support classifying the sample as focused on user-mode unhooking/EDR evasion vs generic discovery or impact. Option A (packed/obfuscated code) is evidenced by static-6 (high entropy), static-18 (packer signature), static-92 (unusual entropy resources), static-60 (unusual section name). Option B (process injection sub-techniques: APC, thread hijacking, EWM) is evidenced by api-85 (APC injection, T1055.004), api-264 (thread in self process, T1055.003), and the MITRE mappings for T1055.011. Option C (data encrypted for impact/ransomware) is not evidenced \u2014 T1486 is in the MITRE list but no ransomware encryption signatures are present. Option D is incorrect framing. Option E (service-stop targeting backup/recovery) is not evidenced. Answer key [A, B] is factually correct."
+      },
+      {
+        "question_index": 15,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are directly evidenced. Option A (T1055 via writing to remote process) is directly evidenced by api-0 (malicious, 'Writes data to a remote process'). Option C (T1027 via UPX packing and high-entropy sections) is directly evidenced by static-7 (UPX packing), static-6 (high entropy), static-18 (UPX packer signature). Option D (T1083 via directory searches and touching Windows files) is evidenced by api-102 (FindFirstFileW), api-55 (touches files in Windows directory), api-263 (touches files). Option B (T1055.001 via generic LoadLibrary) is not directly proven \u2014 LoadLibrary alone doesn't prove DLL injection into a remote process. Option E (T1562 service stop) is in the MITRE list but no specific service-stopping signatures are present in the signatures section. Answer key [A, C, D] is factually correct."
+      },
+      {
+        "question_index": 16,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which behaviors provide direct evidence of process injection vs generic process creation or module loading. Option A (hash.exe writes data to remote process) is directly evidenced by api-0 (malicious, 'Writes data to a remote process', T1055). Option C (vnhnhxx.exe allocates virtual memory in another process) is directly evidenced by api-20 (malicious, 'Allocates virtual memory in a remote process', T1055). Option B (CreateProcessA) is process creation, not injection. Option D (LoadLibrary) is module loading, not injection. Option E (UPX packing) is obfuscation, not injection. Answer key [A, C] is factually correct."
+      },
+      {
+        "question_index": 17,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "The question asks which MITRE techniques are directly evidenced. Option A (T1055 via writing to remote process) is directly evidenced by api-0 (malicious, 'Writes data to a remote process'). Option C (T1027.002 via UPX packing) is directly evidenced by static-7 (UPX packing), static-18 (UPX packer signature). Option D (T1489 Service Stop) is in the MITRE list. However, examining the signatures, there are no specific service-stop signatures in the signatures section of this report. The T1489 mapping appears in mitre_attcks but without direct signature evidence. This is borderline \u2014 the MITRE mapping is present but no behavioral signature directly evidences it. Option B (T1055.001 via LoadLibrary) is not directly proven. Option E (T1119 Automated Collection) is in MITRE list but no specific collection signatures. The answer key [A, C, D] \u2014 D is questionable since T1489 has no direct signature evidence in this report. However, since T1489 is explicitly listed in the mitre_attcks section and the question asks about 'directly evidenced by the sample's behavior as shown by the listed signatures and ATT&CK mappings', and the MITRE mapping is listed, this could be considered acceptable. Flagging for minor concern about D."
+      }
+    ],
+    "summary": {
+      "total": 18,
+      "passed": 17,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "incorrect_answer_key",
+          "distractor_validity"
+        ],
+        "reasoning": "Option E is incorrectly excluded from the answer key. The report does NOT show explicit invocation of cmd.exe with command-line arguments in the process tree \u2014 the report shows only one process (hash.exe) with no child processes. However, T1059.003 (Windows Command Shell) IS listed in the mitre_attcks array of the detonation report, and the signature for GetCommandLineA maps to T1059.003. The question stem asks for techniques 'directly evidenced by the sample's observed APIs, strings, and signatures,' and GetCommandLineA is present in the signatures with attck_id T1059.003. The option E description is misleading ('explicit invocation of cmd.exe with command-line arguments observed in the process tree') \u2014 this specific evidence is NOT in the report (no cmd.exe process spawned), making E a poorly constructed distractor that is partially correct (T1059.003 is in the MITRE list) but the stated evidence is wrong. More critically, the answer key omits E but the technique IS mapped in the report, creating an ambiguous and potentially incorrect answer key. Additionally, the question conflates static string evidence with dynamic behavioral evidence without clear distinction. The answer key should either include E (since T1059.003 is in the mitre_attcks list) or the option description needs to accurately reflect the actual evidence. As written, the answer key is inconsistent with the report data."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "reject",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [
+          "Incorrect answer key: Option C (T1497.002 - User Activity Based Checks) is listed as correct, but the evidence in the report is only a static string reference to 'GetCommandLineA' flagged as T1497.002 \u2014 this is a weak static indicator, not a confirmed behavioral execution of user activity checks. More critically, the report does NOT show confirmed behavioral execution of T1497.002 at runtime.",
+          "Answer key omits T1497.001 nuance: The YARA signature match for 'References common sandbox DLLs' (T1497.001) and the binary-level 'known anti-VM trick' (VMware trick, T1497) are present, but T1497.001 is listed in the MITRE mappings as 'System Checks' \u2014 however, the report maps the VMware trick to T1497 (parent), not T1497.001 specifically. The answer key marks D (T1497.001) as correct, but the YARA signature maps to T1497.001 while the binary artifact maps to T1497. This is defensible but borderline.",
+          "Answer key marks A (T1055.001 - DLL Injection via CreateRemoteThread) as correct. The report does show CreateRemoteThread and WriteProcessMemory API string references and stream indicators, and T1055.001 is explicitly listed in the MITRE ATT&CK mappings. This is correct.",
+          "Answer key marks F (T1055.011 - Extra Window Memory Injection via shell_traywnd) as correct. The report explicitly contains the string 'shell_traywnd' mapped to T1055.011 and T1055.011 is in the MITRE mappings. This is correct.",
+          "Answer key marks C (T1497.002) as correct. The only evidence is a static string indicator 'GetCommandLineA' mapped to T1497.002. This is a static string match, not a confirmed behavioral execution. A professional analyst would consider this weak/ambiguous evidence. The MITRE mapping does list T1497.002 in the report's mitre_attcks array, which makes it technically defensible, but the option text says 'using APIs/logic to detect lack of user interaction or scripted execution' which overstates what GetCommandLineA does. This creates a misleading distractor-vs-correct-answer ambiguity.",
+          "Option B (T1055.012 - Process Hollowing) is correctly excluded \u2014 no evidence in the report.",
+          "Option E (T1055.004 - APC Injection) is correctly excluded \u2014 no evidence in the report.",
+          "The primary issue is that Option C's answer key inclusion is factually questionable: the option description ('detect lack of user interaction or scripted execution in a VM/sandbox') does not match what GetCommandLineA does, making the correct answer misleading. A professional analyst would likely reject C as correct based on the option's description even though T1497.002 appears in the MITRE mapping. This constitutes a factual validity failure in the answer key relative to the option text."
+        ],
+        "reasoning": "The answer key is partially incorrect. Option C (T1497.002) is marked correct, but the option's description ('using APIs/logic to detect lack of user interaction or scripted execution in a VM/sandbox') does not accurately describe the evidence in the report (a static string reference to GetCommandLineA). The mismatch between the option text and the actual evidence makes the answer key misleading and factually invalid from a professional analyst's perspective. While T1497.002 appears in the MITRE ATT&CK mapping section of the report, the option's explanatory text mischaracterizes the technique's implementation, creating an incorrect answer key relative to the option as written. This constitutes a factual validity failure requiring rejection."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 0,
+      "flagged": 0,
+      "rejected": 1
+    }
+  },
+  {
+    "reviews": [
+      {
+        "question_index": 0,
+        "verdict": "pass",
+        "plagiarism_detected": false,
+        "similar_benchmark_question": null,
+        "issues": [],
+        "reasoning": "This question is original and not plagiarised from any benchmark question. The topic \u2014 distinguishing sandbox/VM evasion techniques from generic system discovery \u2014 is genuinely novel relative to the benchmark set, which does not contain a question with this specific discriminative framing. The answer key (A, C, E) is factually correct and well-supported by the detonation report: (A) is supported by the signature 'Able to identify sandbox environment running process' with the string 'VBoxService.exe' (T1497); (C) is supported by the Borland Delphi packer detection, unusual entropy resources, high-entropy sections, and the Software Packing signature (T1027.002/T1027.009); (E) is supported by the explicit malicious-level signature 'The input sample contains a known anti-VM trick' referencing 'VMware trick' (T1497). The distractors are well-chosen: (B) FindFirstFileA/GetFileAttributesA map to File and Directory Discovery (T1083), not sandbox evasion; (D) reading the computer name is System Information Discovery (T1082); (F) RtlGetVersion is environment awareness/system info discovery (T1082), not sandbox evasion. All distractors are plausible but clearly distinguishable by a professional analyst. The question is technically precise, multi-select, and consistent with CyberSOCEval conventions. Difficulty calibration as 'Medium' is appropriate given the nuanced distinction required."
+      }
+    ],
+    "summary": {
+      "total": 1,
+      "passed": 1,
+      "flagged": 0,
+      "rejected": 0
+    }
+  }
+]

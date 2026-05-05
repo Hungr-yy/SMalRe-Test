@@ -1,0 +1,76 @@
+{
+  "total_experiments": 3,
+  "completed": 3,
+  "failed": 0,
+  "verified": 3,
+  "retries_used": 0,
+  "permanently_failed": [],
+  "total_duration_seconds": 44416.0,
+  "experiments": [
+    {
+      "experiment": "claude_sonnet4.6__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.7777777777777778,
+      "final_proficiency": "7",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 86,
+      "qlora_inference": true,
+      "duration_seconds": 16176.9,
+      "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora"
+    },
+    {
+      "experiment": "gemini2.5pro__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.5,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90,
+      "qlora_inference": true,
+      "duration_seconds": 15488.8,
+      "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora"
+    },
+    {
+      "experiment": "gpt5.1__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.6111111111111112,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 86,
+      "qlora_inference": true,
+      "duration_seconds": 12750.3,
+      "output_dir": "outputs_qwen/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora"
+    }
+  ],
+  "comparison_table": [
+    {
+      "experiment": "claude_sonnet4.6__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.7777777777777778,
+      "final_proficiency": "7",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 86
+    },
+    {
+      "experiment": "gemini2.5pro__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.5,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 90
+    },
+    {
+      "experiment": "gpt5.1__qwen2.5_7b_qlora",
+      "status": "completed",
+      "best_accuracy": 0.6111111111111112,
+      "final_proficiency": "6",
+      "rounds_completed": 5,
+      "response_parsing_error_count": 0,
+      "total_questions_attempted": 86
+    }
+  ]
+}

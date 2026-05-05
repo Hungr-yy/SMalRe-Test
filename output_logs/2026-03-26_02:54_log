@@ -1,0 +1,53 @@
+2026-03-26 02:54:20,741 [INFO] experiments: Logging to output_logs/2026-03-26_02:54_log
+2026-03-26 02:54:20,760 [INFO] experiments: SMalA Experiment Matrix
+2026-03-26 02:54:20,760 [INFO] experiments: Teachers:    ['gpt5.1', 'claude_sonnet4.6']
+2026-03-26 02:54:20,760 [INFO] experiments: Students:    ['qwen2.5_7b']
+2026-03-26 02:54:20,760 [INFO] experiments: Output:      outputs/qwen2.5_7b
+2026-03-26 02:54:20,760 [INFO] experiments: Experiments: 2 (1 batches)
+2026-03-26 02:54:20,760 [INFO] experiments: Rounds:      5 per experiment
+2026-03-26 02:54:20,760 [INFO] experiments: Parallel:    3 per batch
+2026-03-26 02:54:20,760 [INFO] experiments: Retries:     2 max
+2026-03-26 02:54:20,760 [INFO] experiments: 
+2026-03-26 02:54:20,760 [INFO] experiments: Loaded tracker: 3 experiments (0 completed, 3 failed)
+2026-03-26 02:54:20,760 [INFO] experiments: ======================================================================
+2026-03-26 02:54:20,760 [INFO] experiments: BATCH 1 / 1
+2026-03-26 02:54:20,760 [INFO] experiments: ======================================================================
+2026-03-26 02:54:20,760 [INFO] experiments: batch_1: running 2 experiments (max_parallel=3)
+2026-03-26 02:54:20,761 [INFO] experiments:   • gpt5.1__qwen2.5_7b_qlora
+2026-03-26 02:54:20,761 [INFO] experiments:   • claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-26 02:54:20,842 [INFO] experiments: Logging to output_logs/2026-03-26_02:54_log
+2026-03-26 07:02:40,021 [INFO] experiments: Batch 1 complete. 2/2 experiments succeeded.
+2026-03-26 07:02:40,021 [INFO] experiments: ======================================================================
+2026-03-26 07:02:40,021 [INFO] experiments: VERIFYING ARTIFACTS
+2026-03-26 07:02:40,021 [INFO] experiments: ======================================================================
+2026-03-26 07:02:40,021 [INFO] experiments: Tracker: 0 completed, 3 failed, 0 verified
+2026-03-26 07:02:40,021 [INFO] experiments: ======================================================================
+2026-03-26 07:02:40,021 [INFO] experiments: RETRY 1 / 2  (3 failed experiments)
+2026-03-26 07:02:40,021 [INFO] experiments: Retrying: ['gpt5.1__qwen2.5_7b', 'claude_sonnet4.6__qwen2.5_7b', 'gemini2.5pro__qwen2.5_7b']
+2026-03-26 07:02:40,021 [INFO] experiments: ======================================================================
+2026-03-26 07:02:40,022 [INFO] experiments: retry_1: running 3 experiments (max_parallel=3)
+2026-03-26 07:02:40,022 [INFO] experiments:   • gpt5.1__qwen2.5_7b_qlora
+2026-03-26 07:02:40,022 [INFO] experiments:   • claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-26 07:02:40,022 [INFO] experiments:   • gemini2.5pro__qwen2.5_7b_qlora
+2026-03-26 07:10:06,277 [INFO] experiments: Retry 1 complete. 0/3 experiments recovered.
+2026-03-26 07:10:06,277 [INFO] experiments: ======================================================================
+2026-03-26 07:10:06,277 [INFO] experiments: RETRY 2 / 2  (3 failed experiments)
+2026-03-26 07:10:06,277 [INFO] experiments: Retrying: ['gpt5.1__qwen2.5_7b', 'claude_sonnet4.6__qwen2.5_7b', 'gemini2.5pro__qwen2.5_7b']
+2026-03-26 07:10:06,277 [INFO] experiments: ======================================================================
+2026-03-26 07:10:06,277 [INFO] experiments: retry_2: running 3 experiments (max_parallel=3)
+2026-03-26 07:10:06,277 [INFO] experiments:   • gpt5.1__qwen2.5_7b_qlora
+2026-03-26 07:10:06,277 [INFO] experiments:   • claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-26 07:10:06,277 [INFO] experiments:   • gemini2.5pro__qwen2.5_7b_qlora
+2026-03-26 07:19:41,973 [INFO] experiments: Retry 2 complete. 0/3 experiments recovered.
+2026-03-26 07:19:41,973 [ERROR] experiments: PERMANENTLY FAILED experiments (after 2 retries): ['gpt5.1__qwen2.5_7b', 'claude_sonnet4.6__qwen2.5_7b', 'gemini2.5pro__qwen2.5_7b']
+2026-03-26 07:19:41,974 [INFO] experiments: Summary saved to outputs/qwen2.5_7b/experiment_summary.json
+2026-03-26 07:19:41,974 [INFO] experiments: 
+2026-03-26 07:19:41,974 [INFO] experiments: ====================================================================================================
+2026-03-26 07:19:41,974 [INFO] experiments: EXPERIMENT RESULTS COMPARISON
+2026-03-26 07:19:41,974 [INFO] experiments: ====================================================================================================
+2026-03-26 07:19:41,974 [INFO] experiments: Experiment                                Status    Accuracy    Prof.   Rounds    ParseErr  
+2026-03-26 07:19:41,974 [INFO] experiments: ----------------------------------------------------------------------------------------------------
+2026-03-26 07:19:41,974 [INFO] experiments: gpt5.1__qwen2.5_7b                        failed    0.0000      N/A     0         0         
+2026-03-26 07:19:41,974 [INFO] experiments: claude_sonnet4.6__qwen2.5_7b              completed  0.0000      4       5         0/90      
+2026-03-26 07:19:41,974 [INFO] experiments: gemini2.5pro__qwen2.5_7b                  failed    0.0000      N/A     0         0         
+2026-03-26 07:19:41,974 [INFO] experiments: ====================================================================================================

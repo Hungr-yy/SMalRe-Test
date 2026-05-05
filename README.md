@@ -6,10 +6,10 @@
 
 ## Overview
 
-SMalA implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-4o, Gemini 2.5 Pro, or Claude Sonnet 4.6) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3.1 8B Instruct, Gemma 3 4B, or Qwen 2.5 7B Instruct).
+SMalA implements an automated, iterative **teacher-student knowledge distillation** pipeline that trains a lightweight SLM to reverse engineer malware. A powerful "teacher" LLM (e.g., GPT-5.1, Gemini 2.5 Pro, or Claude Sonnet 4.6) generates exams, evaluates student responses, and produces a tailored synthetic curriculum that is used to fine-tune a compact "student" SLM (e.g., Llama 3.1 8B Instruct, Gemma 3 4B, or Qwen 2.5 7B Instruct).
 
 ```
-Teacher LLM (GPT-4o / Gemini 2.5 Pro / Claude Sonnet 4.6)
+Teacher LLM (GPT-5.1 / Gemini 2.5 Pro / Claude Sonnet 4.6)
        │
        ▼  1. Generate exam from malware detonation report
        │
@@ -69,7 +69,7 @@ SMalA/
 
 | Role    | Provider  | Model                                    |
 |---------|-----------|------------------------------------------|
-| Teacher | OpenAI    | GPT-4o                                   |
+| Teacher | OpenAI    | GPT-5.1                                   |
 | Teacher | Google    | Gemini 2.5 Pro                           |
 | Teacher | Anthropic | Claude Sonnet 4.6                        |
 | Student | Meta      | Llama 3.1 8B Instruct                    |
@@ -172,7 +172,7 @@ This runs one teacher-student pair as defined in `model_config.yaml`. The orches
 3. Evaluate answers and identify weaknesses
 4. Produce a targeted synthetic curriculum
 5. Fine-tune the student via Vertex AI (LoRA)
-6. Repeat until the benchmark target accuracy is reached
+6. Repeat for all 5 rounds (or until `--target-accuracy` threshold is reached)
 
 ### 5. Run the full 3×3 experiment matrix
 
@@ -184,9 +184,9 @@ This runs all 9 teacher-student combinations across 3 sequential batches (3 expe
 
 | Batch | Experiment 1       | Experiment 2            | Experiment 3             |
 |-------|--------------------|-------------------------|--------------------------|
-| 1     | GPT-4o → Llama 3.1 | Gemini 2.5 Pro → Gemma 3 | Claude Sonnet 4.6 → Qwen 2.5 |
-| 2     | GPT-4o → Gemma 3   | Gemini 2.5 Pro → Qwen 2.5 | Claude Sonnet 4.6 → Llama 3.1 |
-| 3     | GPT-4o → Qwen 2.5  | Gemini 2.5 Pro → Llama 3.1 | Claude Sonnet 4.6 → Gemma 3 |
+| 1     | GPT-5.1 → Llama 3.1 | Gemini 2.5 Pro → Gemma 3 | Claude Sonnet 4.6 → Qwen 2.5 |
+| 2     | GPT-5.1 → Gemma 3   | Gemini 2.5 Pro → Qwen 2.5 | Claude Sonnet 4.6 → Llama 3.1 |
+| 3     | GPT-5.1 → Qwen 2.5  | Gemini 2.5 Pro → Llama 3.1 | Claude Sonnet 4.6 → Gemma 3 |
 
 Each experiment saves adapters and results to `outputs/batch_N/<teacher>__<student>/`. A summary comparison table is saved to `outputs/experiment_summary.json`.
 
@@ -261,12 +261,12 @@ The Vertex AI backend uses GPU-accelerated cloud instances. Key cost drivers:
 | Resource | When | Machine | Approx. cost |
 |----------|------|---------|-------------|
 | **Base model endpoint** | Round 1 inference (before any fine-tuning) | `g2-standard-8` + L4 GPU | ~$1–2/hr |
-| **Fine-tuning job** | Each training round | `n1-standard-8` + L4 GPU | ~$1–2/hr |
+| **Fine-tuning job** | Each training round | `g2-standard-8` + L4 GPU | ~$1–2/hr |
 | **GCS storage** | Training data + adapter checkpoints | Standard storage | Negligible |
 
 The base model endpoint is deployed once per experiment, reused for all Round 1 inference calls, then automatically cleaned up after the first training round completes. Fine-tuning jobs run for the duration of training only.
 
-For the full 3×3 matrix (9 experiments, up to 5 rounds each), expect roughly **$30–80 in Vertex AI compute costs** depending on how many rounds run before early stopping.
+For the full 3×3 matrix (9 experiments, 5 rounds each), expect roughly **$30–80 in Vertex AI compute costs**. By default all 5 rounds run (no early stopping). To enable early stopping, pass `--target-accuracy 0.80`.
 
 ---
 
@@ -294,9 +294,11 @@ python -m pytest tests/test_fault_tolerance.py -v
 
 ## Context Window Management
 
-Hybrid Analysis sandbox reports often exceed 128k tokens. `data_filter.py` implements the CyberSOCEval truncation strategy (hash removal, signature description trimming to 50 chars, MITRE ATT&CK condensing to tactic/technique/attck_id only), reducing every report to under 20k tokens with negligible impact on model performance.
+Hybrid Analysis sandbox reports often exceed 128k tokens. `data_filter.py` implements the CyberSOCEval truncation strategy (hash removal, signature description trimming to 50 chars, MITRE ATT&CK condensing to tactic/technique/attck_id only), reducing report size while preserving all signatures, processes, extracted files, and their cross-references.
 
-Following CyberSOCEval's one-report-per-question paradigm, each exam question is grounded in exactly one detonation report. This guarantees every teacher API call fits within all context windows (GPT-4o 128k, Claude 200k, Gemini 1M) without dropping any reports.
+Student SLM inference uses QLoRA (4-bit quantized base weights) to fit full untruncated reports within L4 GPU VRAM (24GB). This preserves data integrity — no signatures are removed, no MITRE entries are orphaned, and all cross-references between signatures, processes, and extracted files remain intact.
+
+Following CyberSOCEval's one-report-per-question paradigm, each exam question is grounded in exactly one detonation report. This guarantees every teacher API call fits within all context windows (GPT-5.1 400k, Claude 200k, Gemini 1M) without dropping any reports.
 
 ---
 

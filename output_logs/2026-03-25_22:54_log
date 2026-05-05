@@ -1,0 +1,774 @@
+2026-03-25 22:54:53,133 [INFO] experiments: SMalA Experiment Matrix
+2026-03-25 22:54:53,133 [INFO] experiments: Teachers:    ['gpt5.1', 'gemini2.5pro', 'claude_sonnet4.6']
+2026-03-25 22:54:53,133 [INFO] experiments: Students:    ['qwen2.5_7b']
+2026-03-25 22:54:53,133 [INFO] experiments: Output:      outputs/qwen2.5_7b
+2026-03-25 22:54:53,133 [INFO] experiments: Experiments: 3 (1 batches)
+2026-03-25 22:54:53,133 [INFO] experiments: Rounds:      5 per experiment
+2026-03-25 22:54:53,133 [INFO] experiments: Parallel:    3 per batch
+2026-03-25 22:54:53,133 [INFO] experiments: Retries:     2 max
+2026-03-25 22:54:53,133 [INFO] experiments: 
+2026-03-25 22:54:53,133 [INFO] experiments: Loaded tracker: 3 experiments (0 completed, 3 failed)
+2026-03-25 22:54:53,133 [INFO] experiments: ======================================================================
+2026-03-25 22:54:53,133 [INFO] experiments: BATCH 1 / 1
+2026-03-25 22:54:53,133 [INFO] experiments: ======================================================================
+2026-03-25 22:54:53,133 [INFO] experiments: batch_1: running 3 experiments (max_parallel=3)
+2026-03-25 22:54:53,133 [INFO] experiments:   • gpt5.1__qwen2.5_7b_qlora
+2026-03-25 22:54:53,133 [INFO] experiments:   • gemini2.5pro__qwen2.5_7b_qlora
+2026-03-25 22:54:53,133 [INFO] experiments:   • claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-25 22:54:53,232 [gpt5.1__qwen2.5_7b_qlora] experiments: Starting experiment: gpt5.1__qwen2.5_7b_qlora
+2026-03-25 22:54:53,233 [gemini2.5pro__qwen2.5_7b_qlora] experiments: Starting experiment: gemini2.5pro__qwen2.5_7b_qlora
+2026-03-25 22:54:53,235 [claude_sonnet4.6__qwen2.5_7b_qlora] experiments: Starting experiment: claude_sonnet4.6__qwen2.5_7b_qlora
+2026-03-25 22:54:53,836 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Teacher: anthropic/claude-sonnet-4-6
+2026-03-25 22:54:53,837 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Student: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:54:53,837 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Loaded task definitions from prompt_templates/malware_analysis_task.json
+/home/hungryy/Documents/GitHub/SMalA-Test/teacher_engine.py:42: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai  # type: ignore
+2026-03-25 22:54:53,871 [gemini2.5pro__qwen2.5_7b_qlora] main: Teacher: google/gemini-2.5-pro
+2026-03-25 22:54:53,872 [gemini2.5pro__qwen2.5_7b_qlora] main: Student: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:54:53,872 [gemini2.5pro__qwen2.5_7b_qlora] main: Loaded task definitions from prompt_templates/malware_analysis_task.json
+2026-03-25 22:54:53,940 [gpt5.1__qwen2.5_7b_qlora] main: Teacher: openai/gpt-5.1
+2026-03-25 22:54:53,940 [gpt5.1__qwen2.5_7b_qlora] main: Student: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:54:53,941 [gpt5.1__qwen2.5_7b_qlora] main: Loaded task definitions from prompt_templates/malware_analysis_task.json
+2026-03-25 22:54:54,499 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Loaded 176 reports from hybrid-analysis
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Loaded 609 benchmark questions for review
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam reviewer initialised (model=claude-sonnet-4-6)
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [anthropic/claude-sonnet-4-6 → Qwen/Qwen2.5-7B-Instruct] Round 1 / 5
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,501 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=N/A) …
+2026-03-25 22:54:54,503 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Loaded 609 few-shot examples from hybrid-analysis/questions.json
+2026-03-25 22:54:54,538 [gemini2.5pro__qwen2.5_7b_qlora] main: Loaded 176 reports from hybrid-analysis
+2026-03-25 22:54:54,540 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Loaded 609 benchmark questions for review
+2026-03-25 22:54:54,540 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam reviewer initialised (model=claude-sonnet-4-6)
+2026-03-25 22:54:54,541 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,541 [gemini2.5pro__qwen2.5_7b_qlora] main: [google/gemini-2.5-pro → Qwen/Qwen2.5-7B-Instruct] Round 1 / 5
+2026-03-25 22:54:54,541 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,541 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=N/A) …
+2026-03-25 22:54:54,543 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Loaded 609 few-shot examples from hybrid-analysis/questions.json
+2026-03-25 22:54:54,625 [gpt5.1__qwen2.5_7b_qlora] main: Loaded 176 reports from hybrid-analysis
+2026-03-25 22:54:54,627 [gpt5.1__qwen2.5_7b_qlora] exam_reviewer: Loaded 609 benchmark questions for review
+2026-03-25 22:54:54,627 [gpt5.1__qwen2.5_7b_qlora] main: Exam reviewer initialised (model=claude-sonnet-4-6)
+2026-03-25 22:54:54,627 [gpt5.1__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,627 [gpt5.1__qwen2.5_7b_qlora] main: [openai/gpt-5.1 → Qwen/Qwen2.5-7B-Instruct] Round 1 / 5
+2026-03-25 22:54:54,627 [gpt5.1__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 22:54:54,628 [gpt5.1__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=N/A) …
+2026-03-25 22:54:54,629 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Loaded 609 few-shot examples from hybrid-analysis/questions.json
+2026-03-25 22:55:00,427 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:02,109 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:05,397 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:09,424 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:10,647 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:15,990 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:21,095 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:22,567 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:26,108 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:31,715 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:32,150 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:37,285 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:40,643 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:41,367 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:45,847 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:55:48,427 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:55:57,357 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:09,519 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:12,705 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:15,469 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:16,083 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:20,713 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:22,532 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:25,769 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:30,466 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:30,688 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:36,387 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:40,924 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:42,030 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:47,795 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:50,795 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:56:56,106 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:56:56,125 [gpt5.1__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-25 22:56:56,125 [gpt5.1__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-25 22:56:58,066 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:57:05,541 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:57:13,557 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:57:21,850 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:57:21,876 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-25 22:57:21,876 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-25 22:58:31,559 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:58:31,582 [gpt5.1__qwen2.5_7b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-25 22:58:31,583 [gpt5.1__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-25 22:58:31,583 [gpt5.1__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-25 22:58:31,583 [gpt5.1__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-25 22:58:31,589 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:32,954 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:32,954 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:34,068 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:34,069 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:34,936 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:34,939 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:36,164 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:36,165 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:37,171 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:37,172 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:38,930 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:38,931 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:39,851 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:39,851 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:40,822 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:40,822 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:41,848 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:41,849 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:42,933 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:42,934 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:43,859 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:43,860 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:45,246 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:45,246 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:46,061 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:46,061 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:47,533 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:47,533 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:48,314 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:48,315 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:49,442 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:49,442 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:50,913 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:50,914 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 22:58:52,243 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 22:58:52,261 [gpt5.1__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.83  |  Jaccard: 0.95  |  Parse errors: 0/18 (0%)
+2026-03-25 22:58:52,261 [gpt5.1__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-25 22:59:34,959 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:59:34,961 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 17 passed, 1 flagged, 1 rejected (out of 18)
+2026-03-25 22:59:34,961 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Rejected question 1: The question asks which process injection techniques are evidenced by specific API calls or signatures. The answer key includes [A, C, D, F]. Option A (DLL Injection via CreateRemoteThread and WriteProcessMemory targeting explorer.exe) is supported: the report shows CreateRemoteThread capability (string-79), WriteProcessMemory capability (stream-34, string-92), and explorer.exe reference (string-481). Option C (Thread Execution Hijacking via VirtualAllocEx) is supported: VirtualAllocEx is present (string-439) and is used for remote memory allocation. Option D (Extra Window Memory Injection via 'shell_traywnd') is supported: string-4 explicitly mentions 'shell_traywnd (Taskbar window class may be used for injection)' mapped to T1055.011. Option F (ListPlanting via FindWindowA) is supported: string-721 references FindWindowA mapped to T1055.015. However, Option B (Process Hollowing via NtUnmapViewOfSection and ZwWriteVirtualMemory) is NOT evidenced in the report — there is no mention of NtUnmapViewOfSection or ZwWriteVirtualMemory. The answer key does not include B, so that is fine. Option E (APC Injection via QueueUserAPC) — the report does NOT contain QueueUserAPC; it contains NtQueueApcThread (api-85) which IS in the report. But E is not in the answer key. Re-examining: the answer key [A, C, D, F] — Option C states 'Thread Execution Hijacking via VirtualAllocEx used for remote memory allocation.' VirtualAllocEx is present (string-439 mapped to T1055.003). This is defensible. Option F states 'ListPlanting via FindWindowA to enumerate and interact with window components' — string-721 maps FindWindowA to T1055.015. This is defensible. The answer key appears correct on review. However, Option A says 'targeting explorer.exe' — the report shows explorer.exe reference (string-481) and CreateRemoteThread (stream-5) and WriteProcessMemory (stream-34), but there is no explicit evidence that the injection targets explorer.exe specifically. The report only shows the string reference to explorer.exe, not that injection was directed at it. This makes Option A partially unsupported. Given this ambiguity in Option A being included in the answer key without definitive evidence of explorer.exe being the injection target, this is a factual concern. Flagging as reject due to the answer key including Option A which overstates what the report shows (the report shows the capability and the string reference, but not that explorer.exe was the actual injection target).
+2026-03-25 22:59:34,961 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Flagged question 12 (kept): The question asks which API calls or behavioural indicators provide direct evidence of process injection. Answer key [B, C, E, G] is correct for what is included: B — hash.exe wrote 32 bytes to remote process (api-0, malicious) is confirmed. C — hab.exe allocated virtual memory in remote process (api-20, malicious) is confirmed. E — hash.exe creates thread in process -1 (api-264, T1055.003) is confirmed. G — spawned processes flagged as 'likely due to injection' (target-413) is confirmed. Option A (CreateProcessW = process creation, not injection) is correctly excluded. Option D (GetVersionExA = OS info, not injection) is correctly excluded. Option F (FindFirstFileA = file search, not injection) is correctly excluded. The answer key is factually correct. Minor flag: the question is well-constructed and answerable from the report.
+2026-03-25 22:59:34,961 [claude_sonnet4.6__qwen2.5_7b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-25 22:59:42,223 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:59:42,224 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Regenerated question 1
+2026-03-25 22:59:42,224 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 2/5 (1 regenerated questions) …
+2026-03-25 22:59:57,443 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 22:59:57,444 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 1 rejected (out of 1)
+2026-03-25 22:59:57,444 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Rejected question 1: The answer key is internally inconsistent. The question draws a distinction between runtime/dynamic evidence and static string references, but applies this distinction unevenly across options A, C, E, and F. VirtualAllocEx (F) has a static string signature entry ('Contains ability to modify process memory (API string)') which is the same evidence tier as OpenProcess (E, 'Contains ability to retrieve/open a process (API string)' + stream entry). Meanwhile, WriteProcessMemory (A) and CreateRemoteThread (C) have dedicated Hybrid Analysis Technology stream entries that clearly represent runtime observation. OpenProcess (E) has a stream entry ('Contains ability to retrieve/open a process') but so does VirtualAllocEx implicitly through the injection chain. A professional analyst would either include both E and F or exclude both, making the answer key as written factually incorrect. The question must be rejected.
+2026-03-25 22:59:57,444 [claude_sonnet4.6__qwen2.5_7b_qlora] main: 1/18 questions rejected; regenerating failed ones …
+2026-03-25 23:00:06,175 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:00:06,176 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Regenerated question 1
+2026-03-25 23:00:06,176 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 3/5 (1 regenerated questions) …
+2026-03-25 23:00:16,620 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:00:16,621 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 1 passed, 0 flagged, 0 rejected (out of 1)
+2026-03-25 23:00:16,621 [claude_sonnet4.6__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-25 23:00:16,622 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-25 23:00:16,622 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-25 23:00:16,629 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:18,073 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:18,073 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:19,383 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:19,384 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:21,263 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:21,263 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:22,476 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:22,477 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:23,992 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:23,992 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:24,744 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:25,616 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:25,617 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:27,371 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:27,372 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:28,423 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:28,424 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:30,137 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:30,138 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:31,495 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:31,496 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:32,286 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:32,287 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:33,825 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:33,826 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:35,558 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:35,558 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:37,208 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:37,209 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:38,225 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:38,230 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:39,538 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:39,538 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:41,195 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:41,195 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:00:42,468 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:00:42,489 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.56  |  Jaccard: 0.87  |  Parse errors: 0/18 (0%)
+2026-03-25 23:00:42,489 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-25 23:01:45,101 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:01:45,103 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 19 valid (19/100 total)
+2026-03-25 23:01:45,659 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:02:09,164 [gemini2.5pro__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-25 23:02:09,164 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-25 23:03:01,586 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:01,587 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 19 valid (38/100 total)
+2026-03-25 23:03:24,918 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:03:24,939 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-25 23:03:24,940 [gemini2.5pro__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-25 23:03:24,940 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-25 23:03:24,940 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-25 23:03:24,946 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:26,682 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:26,683 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:27,985 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:27,985 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:29,706 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:29,706 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:31,337 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:31,338 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:32,444 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:32,444 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:33,508 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:33,508 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:34,586 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:34,587 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:35,429 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:35,430 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:36,645 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:36,646 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:37,875 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:37,876 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:38,758 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:38,758 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:39,679 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:39,680 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:41,210 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:41,210 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:41,915 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:41,915 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:42,797 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:42,798 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:44,297 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:44,298 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:45,698 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:45,699 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Running HF Inference API for base model: Qwen/Qwen2.5-7B-Instruct
+2026-03-25 23:03:46,866 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://router.huggingface.co/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:03:46,886 [gemini2.5pro__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.67  |  Jaccard: 0.87  |  Parse errors: 0/18 (0%)
+2026-03-25 23:03:46,886 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-25 23:03:50,742 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:03:50,743 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-25 23:03:54,941 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:03:54,941 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-25 23:03:54,941 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-25 23:04:10,449 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:04:10,450 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 18 valid (56/100 total)
+2026-03-25 23:05:43,393 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:05:43,403 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (21/100 total)
+2026-03-25 23:05:59,430 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:05:59,431 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 19 valid (75/100 total)
+2026-03-25 23:06:45,847 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-25 23:06:52,987 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-25 23:06:52,987 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-25 23:07:25,943 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:07:25,944 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 19 valid (94/100 total)
+2026-03-25 23:07:25,944 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 6 examples short. Generating 1 additional batches.
+2026-03-25 23:07:44,524 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:07:44,525 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (41/100 total)
+2026-03-25 23:08:04,180 [gpt5.1__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:08:04,180 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 6 valid (100/100 total)
+2026-03-25 23:08:04,180 [gpt5.1__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-25 23:08:04,183 [gpt5.1__qwen2.5_7b_qlora] main: Proficiency: 8  |  Accuracy: 0.83  |  Jaccard: 0.95  |  Parse errors: 0
+2026-03-25 23:08:04,183 [gpt5.1__qwen2.5_7b_qlora] main: Top weaknesses: ['Over-selection of plausible but non-gold options', 'Fine-grained ATT&CK mapping for process injection', 'EDR/AV evasion technique coverage']
+2026-03-25 23:08:04,183 [gpt5.1__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-25 23:08:04,184 [gpt5.1__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-25 23:08:10,521 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-25 23:08:10,521 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-25 23:08:47,294 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (21/100 total)
+2026-03-25 23:09:47,092 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:09:47,093 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (61/100 total)
+2026-03-25 23:10:28,999 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (41/100 total)
+2026-03-25 23:11:40,705 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (61/100 total)
+2026-03-25 23:11:48,437 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:11:48,438 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-25 23:11:48,438 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+2026-03-25 23:12:52,027 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-25 23:12:52,027 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+2026-03-25 23:13:58,708 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:13:58,709 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-25 23:13:58,709 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-25 23:13:58,712 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.56  |  Jaccard: 0.87  |  Parse errors: 0
+2026-03-25 23:13:58,712 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Top weaknesses: ['ransomware', 'Ransomware Behaviour Analysis', 'Cryptographic Capabilities', 'Masquerading and Defense Evasion', 'Credential Access']
+2026-03-25 23:13:58,712 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-25 23:13:58,714 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-25 23:14:03,760 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-25 23:14:03,760 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-25 23:14:05,630 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-25 23:14:05,630 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-25 23:14:05,633 [gemini2.5pro__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.67  |  Jaccard: 0.87  |  Parse errors: 0
+2026-03-25 23:14:05,633 [gemini2.5pro__qwen2.5_7b_qlora] main: Top weaknesses: ['Evasion Technique Identification', 'MITRE ATT&CK Mapping', 'Process Injection Detection', 'Evidence-Grounding Failure']
+2026-03-25 23:14:05,633 [gemini2.5pro__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 100 accumulated total
+2026-03-25 23:14:05,635 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 100 accumulated examples …
+2026-03-25 23:14:10,261 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Uploaded 100 training examples to gs://smala/training_data/curriculum_1.jsonl
+2026-03-25 23:14:10,261 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2407208360567898112 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-25 23:16:21,979 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gpt5.1__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3292165687346200576 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-25 23:20:48,393 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/6480714223524511744 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-25 23:20:53,846 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-25 23:22:50,055 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:22:50,055 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:22:50,056 [gpt5.1__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:22:50,056 [gpt5.1__qwen2.5_7b_qlora] main: New best accuracy 0.8333; adapter at outputs/qwen2.5_7b/batch_1/gpt5.1__qwen2.5_7b_qlora/best_adapter
+2026-03-25 23:22:50,056 [gpt5.1__qwen2.5_7b_qlora] main: Target accuracy 0.80 reached (0.8333). Stopping.
+2026-03-25 23:22:50,056 [gpt5.1__qwen2.5_7b_qlora] main: Distillation loop complete. Best accuracy: 0.8333
+2026-03-25 23:22:50,066 [gpt5.1__qwen2.5_7b_qlora] experiments: Experiment gpt5.1__qwen2.5_7b_qlora finished in 1676.8s — status: completed
+2026-03-25 23:31:35,807 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] main: New best accuracy 0.5556; adapter at outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/best_adapter
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [anthropic/claude-sonnet-4-6 → Qwen/Qwen2.5-7B-Instruct] Round 2 / 5
+2026-03-25 23:31:35,808 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 23:31:35,809 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-25 23:31:45,063 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:31:54,481 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:01,034 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:11,167 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:19,669 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:32:19,670 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:32:19,670 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_1/adapter
+2026-03-25 23:32:19,670 [gemini2.5pro__qwen2.5_7b_qlora] main: New best accuracy 0.6667; adapter at outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/best_adapter
+2026-03-25 23:32:19,671 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 23:32:19,671 [gemini2.5pro__qwen2.5_7b_qlora] main: [google/gemini-2.5-pro → Qwen/Qwen2.5-7B-Instruct] Round 2 / 5
+2026-03-25 23:32:19,671 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-25 23:32:19,671 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-25 23:32:21,232 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:29,232 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:38,874 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:32:50,482 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:02,802 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:08,863 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:24,773 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:34,533 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:47,583 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:33:54,681 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:34:02,830 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:34:17,668 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:34:29,084 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:34:39,376 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:34:39,397 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-25 23:34:39,398 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-25 23:35:51,455 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:35:51,457 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 17 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-25 23:35:51,458 [claude_sonnet4.6__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-25 23:35:51,459 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-25 23:35:51,459 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-25 23:35:55,048 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+2026-03-25 23:40:30,327 [gemini2.5pro__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-25 23:40:30,327 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-25 23:41:41,268 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:41:41,269 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 16 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-25 23:41:41,269 [gemini2.5pro__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-25 23:41:41,269 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-25 23:41:41,269 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-25 23:41:45,167 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1688884220002304000 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-25 23:46:40,311 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-25 23:46:40,333 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.33  |  Jaccard: 0.78  |  Parse errors: 0/18 (0%)
+2026-03-25 23:46:40,333 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-25 23:47:39,500 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:49:21,151 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:49:21,152 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3994727229215997952 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-25 23:50:59,567 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-25 23:50:59,587 [gemini2.5pro__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.61  |  Jaccard: 0.85  |  Parse errors: 0/18 (0%)
+2026-03-25 23:50:59,587 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-25 23:51:12,457 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:51:12,458 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-25 23:53:09,362 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:53:09,364 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-25 23:54:14,527 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-25 23:55:11,052 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:55:11,053 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-25 23:55:28,610 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-25 23:56:43,826 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-25 23:56:55,087 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-25 23:56:55,088 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-25 23:56:55,088 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-25 23:56:55,090 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.33  |  Jaccard: 0.78  |  Parse errors: 0
+2026-03-25 23:56:55,090 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Top weaknesses: ['Sandbox and VM Evasion Techniques', 'Ransomware Behaviour Analysis', 'Masquerading and Defense Evasion', 'Over-selection / False Positive', 'Hard questions']
+2026-03-25 23:56:55,090 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 200 accumulated total
+2026-03-25 23:56:55,092 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 200 accumulated examples …
+2026-03-25 23:56:58,429 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Uploaded 200 training examples to gs://smala/training_data/curriculum_2.jsonl
+2026-03-25 23:56:58,429 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-25 23:57:49,052 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-25 23:59:37,093 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-25 23:59:37,093 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-25 23:59:37,095 [gemini2.5pro__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.61  |  Jaccard: 0.85  |  Parse errors: 0
+2026-03-25 23:59:37,095 [gemini2.5pro__qwen2.5_7b_qlora] main: Top weaknesses: ['Evasion Technique Identification', 'um_unhooking', 'Over-selection', 'Semantic Confusion']
+2026-03-25 23:59:37,095 [gemini2.5pro__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 200 accumulated total
+2026-03-25 23:59:37,097 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 200 accumulated examples …
+2026-03-25 23:59:40,484 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Uploaded 200 training examples to gs://smala/training_data/curriculum_2.jsonl
+2026-03-25 23:59:40,484 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/5842328976344743936 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:07:11,402 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round2
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7814905613133021184 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:08:20,821 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round2
+2026-03-26 00:15:02,215 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:15:02,215 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:15:02,215 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:15:02,216 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 00:15:02,216 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [anthropic/claude-sonnet-4-6 → Qwen/Qwen2.5-7B-Instruct] Round 3 / 5
+2026-03-26 00:15:02,216 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 00:15:02,216 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-26 00:15:10,206 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:20,684 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:26,175 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:36,817 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:44,573 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:50,494 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:15:56,645 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:04,689 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:11,342 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:16,343 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:26,696 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:31,885 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:39,307 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:45,996 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:16:45,996 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:16:45,997 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_2/adapter
+2026-03-26 00:16:45,997 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 00:16:45,997 [gemini2.5pro__qwen2.5_7b_qlora] main: [google/gemini-2.5-pro → Qwen/Qwen2.5-7B-Instruct] Round 3 / 5
+2026-03-26 00:16:45,997 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 00:16:45,997 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-26 00:16:46,827 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:16:56,489 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:17:05,282 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:17:14,924 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:17:22,342 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:17:22,362 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 00:17:22,362 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 00:19:00,431 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:19:00,432 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 00:19:00,432 [claude_sonnet4.6__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 00:19:00,433 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 00:19:00,433 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 00:19:03,980 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round2
+2026-03-26 00:24:55,910 [gemini2.5pro__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 00:24:55,911 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 00:25:50,361 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:25:50,362 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 13 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 00:25:50,362 [gemini2.5pro__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 00:25:50,363 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 00:25:50,363 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 00:25:53,748 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round2
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/4662385873973673984 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:30:18,697 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 00:30:18,715 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.17  |  Jaccard: 0.81  |  Parse errors: 0/18 (0%)
+2026-03-26 00:30:18,715 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 00:31:05,764 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:32:51,140 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:32:51,142 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:32:57,205 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:32:57,205 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:32:57,205 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 1 valid (1/100 total)
+2026-03-26 00:34:38,506 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:34:38,508 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:34:42,346 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:34:42,347 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:34:42,347 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 1 valid (2/100 total)
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2519798351252160512 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:35:38,538 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 00:35:38,560 [gemini2.5pro__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.61  |  Jaccard: 0.87  |  Parse errors: 0/18 (0%)
+2026-03-26 00:35:38,560 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 00:36:26,383 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:36:26,385 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:36:32,023 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:36:32,024 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:36:32,024 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 1 valid (3/100 total)
+2026-03-26 00:38:11,858 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:38:11,859 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (23/100 total)
+2026-03-26 00:38:26,706 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 00:39:48,017 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 00:39:55,387 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:39:55,388 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:40:00,519 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:40:00,519 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:40:00,520 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 1 valid (24/100 total)
+2026-03-26 00:40:00,520 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 76 examples short. Generating 4 additional batches.
+2026-03-26 00:41:43,830 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:41:43,831 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:41:48,524 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:41:48,525 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:41:48,525 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 1 valid (25/100 total)
+2026-03-26 00:41:52,401 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 00:43:19,995 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 19 valid (79/100 total)
+2026-03-26 00:43:29,426 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:43:29,428 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:43:33,801 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:43:33,802 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:43:33,802 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 7: 1 valid (26/100 total)
+2026-03-26 00:44:40,776 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (99/100 total)
+2026-03-26 00:44:40,776 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 1 examples short. Generating 1 additional batches.
+2026-03-26 00:45:17,330 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 1 valid (100/100 total)
+2026-03-26 00:45:17,330 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 00:45:17,332 [gemini2.5pro__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.61  |  Jaccard: 0.87  |  Parse errors: 0
+2026-03-26 00:45:17,332 [gemini2.5pro__qwen2.5_7b_qlora] main: Top weaknesses: ['Over-selection', 'remcos_rat', 'Semantic Confusion']
+2026-03-26 00:45:17,332 [gemini2.5pro__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 300 accumulated total
+2026-03-26 00:45:17,334 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 300 accumulated examples …
+2026-03-26 00:45:20,798 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Uploaded 300 training examples to gs://smala/training_data/curriculum_3.jsonl
+2026-03-26 00:45:20,798 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-26 00:45:30,847 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:45:30,848 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:45:35,146 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:45:35,147 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:45:35,147 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 8: 1 valid (27/100 total)
+2026-03-26 00:47:31,269 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:47:31,271 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 00:47:35,891 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 00:47:35,892 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 00:47:35,893 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 9: 1 valid (28/100 total)
+2026-03-26 00:47:35,893 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 28/100 examples
+2026-03-26 00:47:35,894 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Proficiency: 6  |  Accuracy: 0.17  |  Jaccard: 0.81  |  Parse errors: 0
+2026-03-26 00:47:35,894 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Top weaknesses: ['under-selection of Execution Guardrails (T1480)', 'under-selection of User Activity Based Checks (T1497.002)', 'um_unhooking', 'under-selection of Security Software Discovery (T1518.001)', 'over-selection of Software Packing and DLL Injection as sandbox evasion']
+2026-03-26 00:47:35,894 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Curriculum: 28 new examples, 228 accumulated total
+2026-03-26 00:47:35,894 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 228 accumulated examples …
+2026-03-26 00:47:39,309 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Uploaded 228 training examples to gs://smala/training_data/curriculum_3.jsonl
+2026-03-26 00:47:39,309 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/4112946719434473472 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:56:34,482 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round3
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/9062402709914648576 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 00:57:53,457 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round3
+2026-03-26 01:06:15,396 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:06:15,396 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:06:15,397 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:06:15,397 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:06:15,397 [gemini2.5pro__qwen2.5_7b_qlora] main: [google/gemini-2.5-pro → Qwen/Qwen2.5-7B-Instruct] Round 4 / 5
+2026-03-26 01:06:15,397 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:06:15,397 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-26 01:07:55,168 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_3/adapter
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [anthropic/claude-sonnet-4-6 → Qwen/Qwen2.5-7B-Instruct] Round 4 / 5
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:07:55,169 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=6) …
+2026-03-26 01:08:04,946 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:08:13,694 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:08:23,028 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:08:32,521 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:08:42,800 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:08:55,092 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:05,106 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:17,182 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:26,703 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:37,211 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:43,997 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:09:52,298 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:01,820 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:09,968 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:19,053 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:30,602 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:39,052 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:53,767 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:10:53,787 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 01:10:53,787 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 01:12:43,923 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:12:43,924 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 01:12:43,925 [claude_sonnet4.6__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 01:12:43,925 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 01:12:43,925 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 01:12:47,293 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round3
+2026-03-26 01:13:23,763 [gemini2.5pro__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 01:13:23,763 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 01:14:35,127 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:14:35,129 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 15 passed, 0 flagged, 2 rejected (out of 18)
+2026-03-26 01:14:35,130 [gemini2.5pro__qwen2.5_7b_qlora] main: Rejected question 1: The answer key claims E (Stopping Services) is correct, but the detonation report does not contain evidence of the malware stopping security services. The report shows UPX packing (A - correct), process injection via WriteProcessMemory (B - correct), and spawning many processes. Option E (Service Stop T1489) appears in the MITRE ATT&CK mapping but there are no signatures confirming active service stopping behavior. The answer key should be [A, B] at most. Since the answer key includes an unsupported answer (E), this must be rejected.
+2026-03-26 01:14:35,130 [gemini2.5pro__qwen2.5_7b_qlora] main: Rejected question 4: The answer key claims [A, C, D] are correct. The report clearly shows: A (Process Injection - T1055, WriteProcessMemory malicious signature) is correct. C (Sandbox Evasion - VMware trick detected as malicious, RtlGetVersion, IsWow64Process) is correct. D (Timestomp - T1070.006 in MITRE, GetSystemTimeAsFileTime API string) is present but only as an API string indicator, not a confirmed active behavior. However, B (Disabling Security Tools) is NOT in the answer key but the report shows 'Modifies the UAC/LUA settings' as a malicious signature (T1112) which is a form of disabling security. More critically, E (Stopping Services - T1489) is in the MITRE mapping but not confirmed by signatures. The answer key omits B which has stronger evidence than D. The answer key is inconsistent with the evidence and should be rejected.
+2026-03-26 01:14:35,130 [gemini2.5pro__qwen2.5_7b_qlora] main: 2/18 questions rejected; regenerating failed ones …
+2026-03-26 01:14:56,432 [gemini2.5pro__qwen2.5_7b_qlora] main: Regenerated question 1
+2026-03-26 01:15:17,665 [gemini2.5pro__qwen2.5_7b_qlora] main: Regenerated question 4
+2026-03-26 01:15:17,665 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 2/5 (2 regenerated questions) …
+2026-03-26 01:15:32,885 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:15:32,886 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 2 passed, 0 flagged, 0 rejected (out of 2)
+2026-03-26 01:15:32,886 [gemini2.5pro__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 01:15:32,887 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 01:15:32,887 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 01:15:36,640 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round3
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/1159711263786270720 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 01:22:33,965 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 01:22:33,983 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.61  |  Jaccard: 0.90  |  Parse errors: 0/18 (0%)
+2026-03-26 01:22:33,983 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 01:24:23,198 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:24:23,201 [claude_sonnet4.6__qwen2.5_7b_qlora] json_repair: Reconstructed JSON from field-level regex extraction.
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3212226793960374272 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 01:25:22,400 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 01:25:22,419 [gemini2.5pro__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.11  |  Jaccard: 0.66  |  Parse errors: 0/18 (0%)
+2026-03-26 01:25:22,419 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 01:26:30,206 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:26:30,207 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 01:28:06,531 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 01:28:26,114 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:28:26,115 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 01:28:31,038 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:28:31,039 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 01:28:31,039 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 1 valid (21/100 total)
+2026-03-26 01:29:56,806 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 01:30:45,479 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:30:45,483 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 01:30:49,426 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:30:49,427 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 01:30:49,427 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 1 valid (22/100 total)
+2026-03-26 01:31:27,739 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 01:32:25,118 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:32:25,120 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (42/100 total)
+2026-03-26 01:33:16,124 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (80/100 total)
+2026-03-26 01:34:08,801 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:34:08,802 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (62/100 total)
+2026-03-26 01:34:08,803 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 38 examples short. Generating 2 additional batches.
+2026-03-26 01:34:57,577 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (100/100 total)
+2026-03-26 01:34:57,577 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 01:34:57,579 [gemini2.5pro__qwen2.5_7b_qlora] main: Proficiency: 3  |  Accuracy: 0.11  |  Jaccard: 0.66  |  Parse errors: 0
+2026-03-26 01:34:57,579 [gemini2.5pro__qwen2.5_7b_qlora] main: Top weaknesses: ['Over-selection', 'Answer-count miscalibration', 'Evasion Technique Identification', 'Hard']
+2026-03-26 01:34:57,579 [gemini2.5pro__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 400 accumulated total
+2026-03-26 01:34:57,582 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 400 accumulated examples …
+2026-03-26 01:35:01,066 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Uploaded 400 training examples to gs://smala/training_data/curriculum_4.jsonl
+2026-03-26 01:35:01,066 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-26 01:36:14,910 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:36:14,911 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 20 valid (82/100 total)
+2026-03-26 01:38:26,695 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:38:26,697 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 01:38:31,610 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:38:31,611 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 01:38:31,611 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 7: 1 valid (83/100 total)
+2026-03-26 01:38:31,611 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 83/100 examples
+2026-03-26 01:38:31,614 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Proficiency: 7  |  Accuracy: 0.61  |  Jaccard: 0.90  |  Parse errors: 0
+2026-03-26 01:38:31,614 [claude_sonnet4.6__qwen2.5_7b_qlora] main: MALFORMED WEAKNESSES (Round 4): 'weaknesses' field is dict instead of a list. Weakness diagnosis is lost — the next round's exam will not target specific weak areas. Check outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_4/evaluation.json.
+2026-03-26 01:38:31,614 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Curriculum: 83 new examples, 311 accumulated total
+2026-03-26 01:38:31,615 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 311 accumulated examples …
+2026-03-26 01:38:35,296 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Uploaded 311 training examples to gs://smala/training_data/curriculum_4.jsonl
+2026-03-26 01:38:35,296 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/748757797788712960 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 01:47:44,435 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round4
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/3029831009051869184 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 01:51:43,806 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round4
+2026-03-26 01:55:11,338 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] main: [google/gemini-2.5-pro → Qwen/Qwen2.5-7B-Instruct] Round 5 / 5
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:55:11,339 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=3) …
+2026-03-26 01:59:32,543 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:59:32,543 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:59:32,543 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_4/adapter
+2026-03-26 01:59:32,544 [claude_sonnet4.6__qwen2.5_7b_qlora] main: New best accuracy 0.6111; adapter at outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/best_adapter
+2026-03-26 01:59:32,544 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:59:32,544 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [anthropic/claude-sonnet-4-6 → Qwen/Qwen2.5-7B-Instruct] Round 5 / 5
+2026-03-26 01:59:32,544 [claude_sonnet4.6__qwen2.5_7b_qlora] main: ============================================================
+2026-03-26 01:59:32,544 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1] Generating 18 questions (1 per report, proficiency=7) …
+2026-03-26 01:59:45,948 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 01:59:57,864 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:00:07,287 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:00:19,323 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:00:31,657 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:00:42,100 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:00:52,131 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:06,071 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:16,202 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:27,585 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:35,450 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:44,464 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:01:52,348 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:01,746 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:11,821 [gemini2.5pro__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 02:02:11,821 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 02:02:13,244 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:26,550 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:38,425 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:48,062 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:02:48,080 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Generated 18 exam questions
+2026-03-26 02:02:48,080 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 1b] Review attempt 1/5 (all 18 questions) …
+2026-03-26 02:03:14,781 [gemini2.5pro__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:03:14,782 [gemini2.5pro__qwen2.5_7b_qlora] exam_reviewer: Exam review: 18 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 02:03:14,782 [gemini2.5pro__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 02:03:14,783 [gemini2.5pro__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 02:03:14,783 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 02:03:18,284 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round4
+2026-03-26 02:04:43,593 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:04:43,610 [claude_sonnet4.6__qwen2.5_7b_qlora] json_repair: Reconstructed JSON from field-level regex extraction.
+2026-03-26 02:04:43,610 [claude_sonnet4.6__qwen2.5_7b_qlora] exam_reviewer: Exam review: 0 passed, 0 flagged, 0 rejected (out of 18)
+2026-03-26 02:04:43,610 [claude_sonnet4.6__qwen2.5_7b_qlora] main: All 18 questions passed review.
+2026-03-26 02:04:43,610 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Exam ready: 18 questions
+2026-03-26 02:04:43,610 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 2] Student attempting exam …
+2026-03-26 02:04:47,310 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference: 18 prompts, adapter=gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round4
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2388068062151573504 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 02:12:32,835 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 02:12:32,853 [gemini2.5pro__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.56  |  Jaccard: 0.87  |  Parse errors: 0/18 (0%)
+2026-03-26 02:12:32,854 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/2741600632900157440 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 02:13:29,037 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Batched tuned inference complete: 18/18 results
+2026-03-26 02:13:29,054 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Client metrics] Accuracy: 0.11  |  Jaccard: 0.67  |  Parse errors: 0/18 (0%)
+2026-03-26 02:13:29,054 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 3] Teacher evaluating + generating curriculum …
+2026-03-26 02:15:10,653 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:15:10,656 [claude_sonnet4.6__qwen2.5_7b_qlora] json_repair: Reconstructed JSON from field-level regex extraction.
+2026-03-26 02:15:25,922 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 02:16:38,427 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 20 valid (40/100 total)
+2026-03-26 02:17:01,154 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:17:01,155 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 1: 20 valid (20/100 total)
+2026-03-26 02:18:17,038 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 20 valid (60/100 total)
+2026-03-26 02:18:57,233 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:18:57,235 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:19:01,883 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:19:01,884 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:19:01,884 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 2: 1 valid (21/100 total)
+2026-03-26 02:19:36,485 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:19:44,280 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:19:44,280 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 1 valid (61/100 total)
+2026-03-26 02:20:53,688 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:20:53,690 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:20:58,620 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:20:58,621 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:20:58,621 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 3: 1 valid (22/100 total)
+2026-03-26 02:21:27,002 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 20 valid (81/100 total)
+2026-03-26 02:21:27,002 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 19 examples short. Generating 1 additional batches.
+2026-03-26 02:22:47,499 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:22:47,500 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 4: 20 valid (42/100 total)
+2026-03-26 02:23:08,799 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 19 valid (100/100 total)
+2026-03-26 02:23:08,799 [gemini2.5pro__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 100/100 examples
+2026-03-26 02:23:08,802 [gemini2.5pro__qwen2.5_7b_qlora] main: Proficiency: 6  |  Accuracy: 0.56  |  Jaccard: 0.87  |  Parse errors: 0
+2026-03-26 02:23:08,802 [gemini2.5pro__qwen2.5_7b_qlora] main: Top weaknesses: ['Over-selection', 'Hard', 'um_unhooking', 'infostealers', 'Under-selection']
+2026-03-26 02:23:08,802 [gemini2.5pro__qwen2.5_7b_qlora] main: Curriculum: 100 new examples, 500 accumulated total
+2026-03-26 02:23:08,805 [gemini2.5pro__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 500 accumulated examples …
+2026-03-26 02:23:12,223 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Uploaded 500 training examples to gs://smala/training_data/curriculum_5.jsonl
+2026-03-26 02:23:12,223 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+2026-03-26 02:24:35,837 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:24:35,839 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:24:40,419 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:24:40,420 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:24:40,420 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum batch 5: 1 valid (43/100 total)
+2026-03-26 02:24:40,420 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum deficit: 57 examples short. Generating 3 additional batches.
+2026-03-26 02:26:28,166 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:26:28,167 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:26:34,079 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:26:34,080 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:26:34,080 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 6: 1 valid (44/100 total)
+2026-03-26 02:28:20,412 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:28:20,679 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 7: 20 valid (64/100 total)
+2026-03-26 02:30:09,733 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:30:09,734 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3: expected list but got dict.
+2026-03-26 02:30:14,340 [claude_sonnet4.6__qwen2.5_7b_qlora] httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-03-26 02:30:14,340 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum repair attempt 1/3 succeeded (1 items).
+2026-03-26 02:30:14,340 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Deficit batch 8: 1 valid (65/100 total)
+2026-03-26 02:30:14,340 [claude_sonnet4.6__qwen2.5_7b_qlora] teacher_engine: Curriculum generation complete: 65/100 examples
+2026-03-26 02:30:14,342 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Proficiency: 4  |  Accuracy: 0.11  |  Jaccard: 0.67  |  Parse errors: 0
+2026-03-26 02:30:14,342 [claude_sonnet4.6__qwen2.5_7b_qlora] main: MALFORMED WEAKNESSES (Round 5): 'weaknesses' field is dict instead of a list. Weakness diagnosis is lost — the next round's exam will not target specific weak areas. Check outputs/qwen2.5_7b/batch_1/claude_sonnet4.6__qwen2.5_7b_qlora/round_5/evaluation.json.
+2026-03-26 02:30:14,342 [claude_sonnet4.6__qwen2.5_7b_qlora] main: Curriculum: 65 new examples, 376 accumulated total
+2026-03-26 02:30:14,343 [claude_sonnet4.6__qwen2.5_7b_qlora] main: [Step 4] Fine-tuning student on 376 accumulated examples …
+2026-03-26 02:30:17,672 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Uploaded 376 training examples to gs://smala/training_data/curriculum_5.jsonl
+2026-03-26 02:30:17,672 [claude_sonnet4.6__qwen2.5_7b_qlora] student_trainer: Creating Vertex AI tuning job: model=Qwen/Qwen2.5-7B-Instruct, epochs=3, lora_rank=16
+Training did not produce a Managed Model returning None. Training Pipeline projects/354379933641/locations/asia-southeast1/trainingPipelines/7715826421330870272 is not configured to upload a Model. Create the Training Pipeline with model_serving_container_image_uri and model_display_name passed in. Ensure that your training script saves to model to os.environ['AIP_MODEL_DIR'].
+2026-03-26 02:38:24,846 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Tuning job complete: smala-gemini2.5pro__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round5
+2026-03-26 02:43:09,155 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter downloaded to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_5/adapter
+2026-03-26 02:43:09,155 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Adapter weights verified: 2 file(s) in outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_5/adapter
+2026-03-26 02:43:09,155 [gemini2.5pro__qwen2.5_7b_qlora] student_trainer: Vertex AI metadata saved to outputs/qwen2.5_7b/batch_1/gemini2.5pro__qwen2.5_7b_qlora/round_5/adapter
+2026-03-26 02:43:09,155 [gemini2.5pro__qwen2.5_7b_qlora] main: Distillation loop complete. Best accuracy: 0.6667
+2026-03-26 02:43:09,175 [gemini2.5pro__qwen2.5_7b_qlora] experiments: Experiment gemini2.5pro__qwen2.5_7b_qlora finished in 13695.9s — status: completed

@@ -1,0 +1,168 @@
+{
+  "adapters_evaluated": 1,
+  "questions_per_adapter": 609,
+  "results": [
+    {
+      "label": "gs:",
+      "base_model": "Qwen/Qwen2.5-7B-Instruct",
+      "adapter": "gs://smala/adapters/smala-claude_sonnet4.6__qwen2.5_7b_qlora-Qwen2.5-7B-Instruct-round1",
+      "qlora": true,
+      "total_questions": 609,
+      "correct": 67,
+      "incorrect": 542,
+      "parse_errors": 0,
+      "accuracy": 0.11001642036124795,
+      "avg_jaccard": 0.45985156514713177,
+      "by_topic": {
+        "Risk Assessment": {
+          "correct": 6,
+          "incorrect": 67,
+          "parse_error": 0,
+          "total_jaccard": 37.51309523809523,
+          "count": 73,
+          "accuracy": 0.0821917808219178,
+          "avg_jaccard": 0.5138780169602086
+        },
+        "Persistence Techniques": {
+          "correct": 0,
+          "incorrect": 84,
+          "parse_error": 0,
+          "total_jaccard": 28.896428571428576,
+          "count": 84,
+          "accuracy": 0.0,
+          "avg_jaccard": 0.34400510204081636
+        },
+        "Behavioral Analysis": {
+          "correct": 17,
+          "incorrect": 83,
+          "parse_error": 0,
+          "total_jaccard": 49.40952380952382,
+          "count": 100,
+          "accuracy": 0.17,
+          "avg_jaccard": 0.4940952380952382
+        },
+        "Evasion Techniques": {
+          "correct": 7,
+          "incorrect": 67,
+          "parse_error": 0,
+          "total_jaccard": 33.502380952380946,
+          "count": 74,
+          "accuracy": 0.0945945945945946,
+          "avg_jaccard": 0.45273487773487764
+        },
+        "File Operations": {
+          "correct": 8,
+          "incorrect": 60,
+          "parse_error": 0,
+          "total_jaccard": 39.95119047619047,
+          "count": 68,
+          "accuracy": 0.11764705882352941,
+          "avg_jaccard": 0.587517507002801
+        },
+        "System Interactions": {
+          "correct": 15,
+          "incorrect": 82,
+          "parse_error": 0,
+          "total_jaccard": 47.86666666666667,
+          "count": 97,
+          "accuracy": 0.15463917525773196,
+          "avg_jaccard": 0.4934707903780069
+        },
+        "MITRE ATT&CK Framework Mapping": {
+          "correct": 10,
+          "incorrect": 57,
+          "parse_error": 0,
+          "total_jaccard": 27.391269841269843,
+          "count": 67,
+          "accuracy": 0.14925373134328357,
+          "avg_jaccard": 0.4088249230040275
+        },
+        "Privilege Escalation": {
+          "correct": 4,
+          "incorrect": 42,
+          "parse_error": 0,
+          "total_jaccard": 15.519047619047617,
+          "count": 46,
+          "accuracy": 0.08695652173913043,
+          "avg_jaccard": 0.3373706004140786
+        }
+      },
+      "by_difficulty": {
+        "medium": {
+          "correct": 12,
+          "incorrect": 124,
+          "parse_error": 0,
+          "total_jaccard": 61.27460317460319,
+          "count": 136,
+          "accuracy": 0.08823529411764706,
+          "avg_jaccard": 0.4505485527544352
+        },
+        "easy": {
+          "correct": 54,
+          "incorrect": 397,
+          "parse_error": 0,
+          "total_jaccard": 210.3702380952381,
+          "count": 451,
+          "accuracy": 0.1197339246119734,
+          "avg_jaccard": 0.46645285608700243
+        },
+        "hard": {
+          "correct": 1,
+          "incorrect": 21,
+          "parse_error": 0,
+          "total_jaccard": 8.404761904761905,
+          "count": 22,
+          "accuracy": 0.045454545454545456,
+          "avg_jaccard": 0.38203463203463206
+        }
+      },
+      "by_attack": {
+        "infostealers": {
+          "correct": 16,
+          "incorrect": 151,
+          "parse_error": 0,
+          "total_jaccard": 73.45079365079363,
+          "count": 167,
+          "accuracy": 0.09580838323353294,
+          "avg_jaccard": 0.439825111681399
+        },
+        "um_unhooking": {
+          "correct": 13,
+          "incorrect": 99,
+          "parse_error": 0,
+          "total_jaccard": 53.10952380952383,
+          "count": 112,
+          "accuracy": 0.11607142857142858,
+          "avg_jaccard": 0.4741921768707485
+        },
+        "ransomware": {
+          "correct": 14,
+          "incorrect": 113,
+          "parse_error": 0,
+          "total_jaccard": 55.76547619047619,
+          "count": 127,
+          "accuracy": 0.11023622047244094,
+          "avg_jaccard": 0.439098237720285
+        },
+        "killers": {
+          "correct": 10,
+          "incorrect": 79,
+          "parse_error": 0,
+          "total_jaccard": 40.32261904761904,
+          "count": 89,
+          "accuracy": 0.11235955056179775,
+          "avg_jaccard": 0.4530631353665061
+        },
+        "remcos": {
+          "correct": 14,
+          "incorrect": 100,
+          "parse_error": 0,
+          "total_jaccard": 57.401190476190465,
+          "count": 114,
+          "accuracy": 0.12280701754385964,
+          "avg_jaccard": 0.5035192147034251
+        }
+      }
+    }
+  ]
+}
